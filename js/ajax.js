@@ -4,7 +4,7 @@ var onRequest = function( prParams, callback,load=1) {
 
 		$.ajax({
 		    // la URL para la petición
-		    url :"/presico/php/opciones.php", 
+		    url :"/RedSocialBancaprepa/php/opciones/usuarios.php", 
 
 		     beforeSend: function () { 
 
