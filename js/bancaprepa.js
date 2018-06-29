@@ -27,17 +27,9 @@ $(document).ready(function(){
      });
      // Fin de click en login
 
-<<<<<<< HEAD
-     $("#user").keypress(function(e) {
-        if(e.which == 13) {
-            $( "#password" ).focus();
-        }
-    });
-=======
 
 
 });
->>>>>>> 492cd20b0a166b2b5a780023f51f247e832029d8
 
     $("#password").keypress(function(e) {
         if(e.which == 13) {
@@ -45,7 +37,6 @@ $(document).ready(function(){
         }
     });
 
-});
 
 // Funcion de respuesta de la consulta que aplicamos con ajax
 var respUser = function(data) { 
