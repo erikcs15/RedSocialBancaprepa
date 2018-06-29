@@ -1,50 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" >
 
+
+   
 <head>
-  <meta charset="UTF-8">
-  <title>Inicio de sesión bancaprepa</title>
+    
+        <meta charset="UTF-8">  
+        <title>Sistema Bancaprepa</title>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/materialize.min.css">
 </head>
+    <body>
+    
 
-<body>
-
-  <html>
-
-<head>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="css/materialize.min.css">
-  <style>
-    body {
-      display: flex;
-      min-height: 100vh;
-      flex-direction: column;
-    }
-
-    main {
-      flex: 1 0 auto;
-    }
-
-    body {
-      background: rgb(0, 39, 102);
-    }
-
-    .input-field input[type=date]:focus + label,
-    .input-field input[type=text]:focus + label,
-    .input-field input[type=email]:focus + label,
-    .input-field input[type=password]:focus + label {
-      color: #e91e63;
-    }
-
-    .input-field input[type=date]:focus,
-    .input-field input[type=text]:focus,
-    .input-field input[type=email]:focus,
-    .input-field input[type=password]:focus {
-      border-bottom: 2px solid #e91e63;
-      box-shadow: none;
-    }
-  </style>
-</head>
-
+<<<<<<< HEAD
 <body>
   <div class="section"></div>
   <main>
@@ -90,18 +59,38 @@
         </div>
       </div>
     </center>
+=======
+            
+>>>>>>> 492cd20b0a166b2b5a780023f51f247e832029d8
 
-    <div class="section"></div>
-    <div class="section"></div>
-  </main>
+            <ul id="slide-out" class="sidenav sidenav-fixed sidenavEstatico" >
+              <li><div class="user-view">
+                <div class="background">
+                  <img src="img/fullbp.png"  style="width: 300px;">
+                </div>
+                
+                <a href="#name"><span class="black-text name"><strong>John Doe</strong></span></a>
+                <a href="#email"><span class="black-text email">jdandturk@gmail.com</span></a>
+              </div></li>
+              <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+              <li><a href="#!">Second Link</a></li>
+              <li><div class="divider"></div></li>
+              <li><a class="subheader">Subheader</a></li>
+              <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+            </ul>
+            <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                  
 
-  <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
-  <script type="text/javascript" src="js/materialize.min.js"></script>
-  <script type="text/javascript" src="js/ajax.js"></script>
-  <script type="text/javascript" src="js/bancaprepa.js"></script>
 
-</body>
+    <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/ajax.js"></script>
+    <script type="text/javascript" src="js/bancaprepa.js"></script>
 
-</html>
-</body>
+    <script>
+        $(document).ready(function(){
+            $('.sidenav').sidenav();
+        });
+    </script>
+    </body>
 </html>

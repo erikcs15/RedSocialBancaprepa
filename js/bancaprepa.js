@@ -12,25 +12,32 @@ $(document).ready(function(){
 
         // Validamos que los campos no esten vacios
         if(user==''){
-            M.toast({html: 'El nombre de usuario no puede ir vacio', classes: 'rounded red'}); 
+            M.toast({html: 'El nombre de usuario no puede ir vacio', classes: 'rounded'}); 
             return;
         }
 
         if(pass==''){
-            M.toast({html: 'La contraseña no puede ir vacia', classes: 'rounded red'}); 
+            M.toast({html: 'La contraseña no puede ir vacia', classes: 'rounded'}); 
             return;
         }   
        // llamamos a funcion de ajax para conectar con nuestro servidor php funcion(parametro1,parametro2), el primer parametro es un JSON y el segun una funcion de respuesta en donde recibiremos los datos que nos regrese  ajax
         onRequest({ opcion : 1 ,usuario:user,password:pass },respUser);
+
             
      });
      // Fin de click en login
 
+<<<<<<< HEAD
      $("#user").keypress(function(e) {
         if(e.which == 13) {
             $( "#password" ).focus();
         }
     });
+=======
+
+
+});
+>>>>>>> 492cd20b0a166b2b5a780023f51f247e832029d8
 
     $("#password").keypress(function(e) {
         if(e.which == 13) {
