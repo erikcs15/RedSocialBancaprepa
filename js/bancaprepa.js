@@ -23,7 +23,7 @@ $(document).ready(function(){
        // llamamos a funcion de ajax para conectar con nuestro servidor php funcion(parametro1,parametro2), el primer parametro es un JSON y el segun una funcion de respuesta en donde recibiremos los datos que nos regrese  ajax
        try {
             onRequest({ opcion : 1 ,usuario:user,password:pass },respUser);
-           location.href="/RedSocialBancaprepa/index.html";
+           location.href="/RedSocialBancaprepa/index.php";
        }
         catch(err) {
             M.toast({html: 'Usuario o contraseña incorrectos!', classes: 'rounded'}); 
