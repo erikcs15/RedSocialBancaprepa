@@ -1,7 +1,7 @@
 <ul id="slide-out" class="sidenav sidenav-fixed sidenavEstatico" >
               <li><div class="user-view">
                 <div class="background">
-                  <img src="img/fullbp.png"  style="width: 300px;">
+                  <img src="/RedSocialBancaprepa/img/fullbp.png"  style="width: 300px;">
                 </div>
                 <a href="#name"><span class="black-text name" id="nombreusuario"><strong>John Doe</strong></span></a>
                 <a href="#email"><span class="black-text email" id="emailusuario">jdandturk@gmail.com</span></a>
