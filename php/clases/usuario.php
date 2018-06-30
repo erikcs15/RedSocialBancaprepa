@@ -31,7 +31,7 @@
 					} 
 					
 					if ( count($datos )==0) { 
-						$datos['empleado_id'] =  array('0' => '0' );
+						$datos[0]['empleado_id']  =0;
 						return  $datos; 
 				  	}
 
