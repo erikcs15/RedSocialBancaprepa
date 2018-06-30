@@ -36,7 +36,7 @@ $(document).ready(function(){
      $( "#salirsesion" ).click(function() { 
         location.href="/RedSocialBancaprepa/login.html";
      });
-     
+
      $( "#catemp" ).click(function() { 
         location.href="/RedSocialBancaprepa/catalogos/catemp.php";
      });
