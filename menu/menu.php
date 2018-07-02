@@ -6,7 +6,7 @@
                 <a href="#name"><span class="black-text name" id="nombreusuario"><strong>John Doe</strong></span></a>
                 <a href="#email"><span class="black-text email" id="emailusuario">jdandturk@gmail.com</span></a>
               </div></li>
-              <li><a href="#!" class="waves-effect"><i class="material-icons">home</i>Inicio</a></li>
+              <li><a id="inicio" name ="inicio" class="waves-effect"><i class="material-icons">home</i>Inicio</a></li>
               <li><a href="#!" class="waves-effect"><i class="material-icons">add_circle</i>Agregar publicación</a></li>
               <li><div class="divider"></div></li>
               <li><a class="waves-effect"><i class="material-icons">message</i>Mandar ticket</a></li>

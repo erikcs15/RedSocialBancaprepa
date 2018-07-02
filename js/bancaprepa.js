@@ -24,11 +24,9 @@ $(document).ready(function(){
        // llamamos a funcion de ajax para conectar con nuestro servidor php funcion(parametro1,parametro2), el primer parametro es un JSON y el segun una funcion de respuesta en donde recibiremos los datos que nos regrese  ajax
        
             onRequest({ opcion : 1 ,usuario:user,password:pass },respUser);
-           
-       
-        
 
         //Redirige al index
+        //location.href="/RedSocialBancaprepa/index.php";
         
      });
      // Fin de click en login
@@ -39,6 +37,10 @@ $(document).ready(function(){
 
      $( "#catemp" ).click(function() { 
         location.href="/RedSocialBancaprepa/catalogos/catemp.php";
+     });
+
+     $( "#inicio" ).click(function() { 
+        location.href="/RedSocialBancaprepa/index.php";
      });
 
 
