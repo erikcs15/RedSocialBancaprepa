@@ -25,8 +25,6 @@ $(document).ready(function(){
        
             onRequest({ opcion : 1 ,usuario:user,password:pass },respUser);
            
-       
-        
 
         //Redirige al index
         
