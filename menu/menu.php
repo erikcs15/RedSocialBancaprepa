@@ -1,10 +1,14 @@
-<ul id="slide-out" class="sidenav sidenav-fixed sidenavEstatico" >
+<ul id="slide-out" class="sidenav sidenav-fixed">
               <li><div class="user-view">
                 <div class="background">
-                  <img src="/RedSocialBancaprepa/img/fullbp.png"  style="width: 300px;">
+                  <img src="/RedSocialBancaprepa/img/logo_bancaprepa.png"  style="width: 290px;">
                 </div>
-                <a href="#name"><span class="black-text name" id="nombreusuario"><strong>John Doe</strong></span></a>
-                <a href="#email"><span class="black-text email" id="emailusuario">jdandturk@gmail.com</span></a>
+                <br>
+                <a><span class="black-text name" id="nombreusuario"><strong>
+                  <?php
+                   echo $_COOKIE["b_capturista"];
+                  ?>
+                </strong></span></a>
               </div></li>
               <li><a id="inicio" name ="inicio" class="waves-effect"><i class="material-icons">home</i>Inicio</a></li>
               <li><a href="#!" class="waves-effect"><i class="material-icons">add_circle</i>Agregar publicación</a></li>
