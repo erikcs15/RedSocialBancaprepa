@@ -23,4 +23,6 @@
              </ul>
              <li><a id="salirsesion" name ="salirsesion" class="waves-effect"><i class="material-icons">settings_power</i>Cerrar sesión</a></li>
     </ul>
-<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+
+    
+<a href="#" data-target="slide-out" class="sidenav-trigger  hide-on-large-only"><i class="material-icons">menu</i></a>
