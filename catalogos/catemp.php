@@ -6,19 +6,21 @@
         <meta charset="UTF-8">  
         <title>Catalogo de empresas</title>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
         <link rel="stylesheet" type="text/css" href="../css/materialize.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/bancaprepa.css">
 </head>
     <body>
     
-     <div class="container" ><!-- CONTENEDOR 1 -->
-
-                <div>
+     <div id="container" ><!-- CONTENEDOR 1 -->
+     
+        <center><h2>Catalogo Empresas</h2></center>
+        <hr>
                         <?php
                                 include('../menu/menu.php');
 
-                        ?>
-                </div>
-
+                        ?> 
+        <div id="content">
             <div class="row"><!-- CONTENEDOR 1 -->
                     <div class="col s12"><!-- CONTENEDOR 2 -->
                             <table class="highlight">
@@ -50,6 +52,7 @@
                             </table>
                         </div><!-- CONTENEDOR 2 -->
             </div><!-- CONTENEDOR 1 -->
+        </div>
      </div>
 
                   

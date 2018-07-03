@@ -1,4 +1,5 @@
-<ul id="slide-out" class="sidenav sidenav-fixed">
+<div id="menu">
+<ul id="slide-out" class="sidenav sidenav-fixed" style="transform: translateX(-100%);">
               <li><div class="user-view">
                 <div class="background">
                   <img src="/RedSocialBancaprepa/img/logo_bancaprepa.png"  style="width: 290px;">
@@ -23,6 +24,7 @@
              </ul>
              <li><a id="salirsesion" name ="salirsesion" class="waves-effect"><i class="material-icons">settings_power</i>Cerrar sesión</a></li>
     </ul>
+</div>
 
     
 <a href="#" data-target="slide-out" class="sidenav-trigger  hide-on-large-only"><i class="material-icons">menu</i></a>
