@@ -14,8 +14,22 @@
     
      <div id="container" ><!-- CONTENEDOR 1 -->
      
-        <center><h2>Catalogo Empresas</h2></center>
+        <center><h5>Catalogo Empresas</h5></center>
         <hr>
+        <nav>
+            <div class="nav-wrapper">
+            <form>
+                <div class="input-field">
+                <input id="search" type="search" required>
+                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                <i class="material-icons">close</i>
+                <a class="btn-floating btn-large halfway-fab waves-effect waves-light teal">
+                    <i class="material-icons">add</i>
+                </a>
+                </div>
+            </form>
+            </div>
+        </nav>
                         <?php
                                 include('../menu/menu.php');
 
