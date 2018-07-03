@@ -5,7 +5,7 @@
                   <img src="/RedSocialBancaprepa/img/logo_bancaprepa.png"  style="width: 290px;">
                 </div>
                 <br>
-                <a><span class="black-text name" id="nombreusuario"><strong>
+                <a><span class="black-text name" id="nombreusuario"><i class="small material-icons">account_circle</i><strong>
                   <?php
                    echo $_COOKIE["b_capturista"];
                   ?>
