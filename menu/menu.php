@@ -14,8 +14,8 @@
               <li><a id="inicio" name ="inicio" class="waves-effect"><i class="material-icons">home</i>Inicio</a></li>
               <li><a href="#!" class="waves-effect"><i class="material-icons">add_circle</i>Agregar publicación</a></li>
               <li><div class="divider"></div></li>
-              <li><a class="waves-effect"><i class="material-icons">message</i>Mandar ticket</a></li>
-              <li><a  name ="salirsesion" class="dropdown-trigger" data-target='dropdown1'><i class="material-icons">assignment</i><i class="material-icons right">arrow_drop_down</i>Catalogos</a></li>
+              <li><a class="waves-effect"><i class="material-icons">drafts</i>Mandar ticket</a></li>
+              <li><a  name ="salirsesion" class="dropdown-trigger" data-target='dropdown1'><i class="material-icons">format_list_bulleted</i><i class="material-icons right">arrow_drop_down</i>Catalogos</a></li>
                 <!-- Dropdown Structure -->
                 <ul id='dropdown1' class='dropdown-content'>
                 <li><a id="catemp" name ="catemp" ><i class="material-icons">assignment</i>Catalogo de Empresas</a></li>

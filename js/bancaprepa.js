@@ -30,15 +30,25 @@ $(document).ready(function(){
         
      });
      // Fin de click en login
+     //------------------------------------------------------------------------------------------------------------------//
 
+     //Redirige al login 
      $( "#salirsesion" ).click(function() { 
         location.href="/RedSocialBancaprepa/login.html";
      });
-
+     //Redirige al catalogo de empresas
      $( "#catemp" ).click(function() { 
         location.href="/RedSocialBancaprepa/catalogos/catemp.php";
      });
-
+    //Redirige al catalogo de rolas
+     $( "#catroles" ).click(function() { 
+        location.href="/RedSocialBancaprepa/catalogos/catroles.php";
+     });
+     //Redirige al catalogo de tipo de documentos
+     $( "#catdoc" ).click(function() { 
+        location.href="/RedSocialBancaprepa/catalogos/catdoc.php";
+     });
+     //Redirige al inicio
      $( "#inicio" ).click(function() { 
         location.href="/RedSocialBancaprepa/index.php";
      });
@@ -74,6 +84,6 @@ var respUser = function(data) {
          return;
      }
      else{ 
-        M.toast({html: 'El usuario o la contraseña no son correstos!!', classes: 'rounded red'}); 
+        M.toast({html: 'El usuario o la contraseña no son correctos.', classes: 'rounded red'}); 
      }
 }
