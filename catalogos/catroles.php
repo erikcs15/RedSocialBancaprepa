@@ -16,7 +16,7 @@
         <div class="nav-wrapper">
             <div class="row">
                 <div class="col s12 m10 offset-m1">
-                    <h3 class="header">Catalogo de Roles</h3>
+                    <h3 class="header" style="color:#1a237e;">Catalogo de Roles</h3>
                     <hr>
                 </div>
             </div>
