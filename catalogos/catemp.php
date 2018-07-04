@@ -10,7 +10,7 @@
         <link rel="stylesheet" type="text/css" href="../css/materialize.min.css">
         <link rel="stylesheet" type="text/css" href="../css/bancaprepa.css">
 </head>
-    <body>
+    <body onLoad="cargarEmpresas()">
     
      <div id="container" ><!-- CONTENEDOR 1 -->
         <div class="nav-wrapper">
@@ -24,16 +24,14 @@
         <div class="col s12">      
             <nav>
                 <div class="nav-wrapper">
-                <form>
                     <div class="input-field indigo darken-4" >
-                    <input id="search" type="search" required>
+                    <input id="busquedaEmpleados" type="search" required>
                     <label class="label-icon" for="search"><i class="material-icons ">search</i></label>
                     <i class="material-icons">close</i>
                     <a class="btn-floating btn-large halfway-fab waves-effect waves-light teal">
                         <i class="material-icons blue darken-3">add</i>
                     </a>
                     </div>
-                </form>
                 </div>
             </nav>
         </div>
@@ -51,33 +49,14 @@
                                         <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Nombre de la empresa</th>
+                                            <th>Nombre</th>
                                             <th>Estatus</th>
                                             <th>Acciones</th>
                                         </tr>
                                         </thead>
 
-                                        <tbody>
-                                            <tr class="odd">
-                                                <td class="left">40</td>
-                                                <td>John Doe</td>
-                                                <td>Activo</td>
-                                                <td class="left">
-                                                    <a class="btn-floating blue"><i class="material-icons">edit</i></a> 
-                                                    <a href="" class="btn-floating orange darken-3 "><i class="material-icons">do_not_disturb_alt</i></a> 
-                                                    <a href="" class="btn-floating red accent-4"><i class="material-icons">delete</i></a> 
-                                                </td>
-                                            </tr>
-                                            <tr class="even">
-                                                <td class="left">50</td>
-                                                <td>Axel Doe</td>
-                                                <td>Activo</td>
-                                                <td class="left">
-                                                    <a class="btn-floating blue"><i class="material-icons">edit</i></a> 
-                                                    <a href="" class="btn-floating orange darken-3 "><i class="material-icons">do_not_disturb_alt</i></a> 
-                                                    <a href="" class="btn-floating red accent-4"><i class="material-icons">delete</i></a> 
-                                                </td>
-                                        </tr>
+                                        <tbody id="tablaemp">
+                                           
                                         </tbody>
                                     </table>
                                 </div><!-- CONTENEDOR 2 -->

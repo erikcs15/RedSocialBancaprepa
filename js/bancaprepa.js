@@ -38,6 +38,7 @@ $(document).ready(function(){
      });
      //Redirige al catalogo de empresas
      $( "#catemp" ).click(function() { 
+        
         location.href="/RedSocialBancaprepa/catalogos/catemp.php";
      });
     //Redirige al catalogo de rolas
@@ -52,16 +53,32 @@ $(document).ready(function(){
      $( "#inicio" ).click(function() { 
         location.href="/RedSocialBancaprepa/index.php";
      });
+     //Busqueda por empresa
+     $("#busquedaEmpleados").keypress(function(e) {
+          //inicializamos variables
+        if(e.which == 13) {
+            var busqueda='';
+            busqueda =  $("#busquedaEmpleados").val();
+            console.log(busqueda);
+            onRequest({ opcion : 2,empresa:busqueda},respEmpresas);
+        }
+    });
 
-
-
-});
-
+    //Enter al iniciar
     $("#password").keypress(function(e) {
         if(e.which == 13) {
             $( "#btn_login" ).click();
         }
     });
+
+});
+
+  
+//Funcion que carga las empresas
+function cargarEmpresas(){
+    onRequest({ opcion : 2 ,empresa:""},respEmpresas);
+}
+
 
 
 // Funcion de respuesta de la consulta que aplicamos con ajax
@@ -86,4 +103,42 @@ var respUser = function(data) {
      else{ 
         M.toast({html: 'El usuario o la contraseña no son correctos.', classes: 'rounded red'}); 
      }
+}
+
+// Funcion de respuesta de la consulta que aplicamos con ajax
+var respEmpresas = function(data) { 
+    
+    if (!data && data == null) 
+    return; 
+
+    var d = '';
+
+     for (var i = 0; i < data.length; i++) {
+     d+= '<tr>'+
+     '<td>'+data[i].empresa_id+'</td>'+
+     '<td>'+data[i].nombre+'</td>'+
+     '<td>'+data[i].estatus+'</td>'+ 
+     '<td class="left">'+
+     '<a onclick="editarEmp('+data[i].empresa_id+')" class="waves-effect waves-light btn-floating btn-small blue"><i class="material-icons">edit</i></a>' + 
+     '<a onclick="deshabEmp('+data[i].empresa_id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 "><i class="material-icons">do_not_disturb_alt</i></a>' + 
+     '<a onclick="BorrarEmp('+data[i].empresa_id+')" class="waves-effect waves-light btn-floating btn-small red accent-4"><i class="material-icons">delete</i></a>' +
+     '</td>'  +'</tr> ';
+     }
+     
+     $("#tablaemp").html(d);
+}
+
+function editarEmp(emp_id)
+{
+
+}
+
+function deshabEmp(emp_id)
+{
+
+}
+
+function BorrarEmp(emp_id)
+{
+
 }
