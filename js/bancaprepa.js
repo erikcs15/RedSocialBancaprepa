@@ -59,6 +59,7 @@ $(document).ready(function(){
      $( "#inicio" ).click(function() { 
         location.href="/RedSocialBancaprepa/index.php";
      });
+//----------------------------------busquedas--------------------------------------------------------------------
      //Busqueda por empresa
      $("#busquedaEmpleados").keypress(function(e) {
           //inicializamos variables
@@ -69,6 +70,31 @@ $(document).ready(function(){
             onRequest({ opcion : 2,empresa:busqueda},respEmpresas);
         }
     });
+
+    //Busqueda por roles
+    $("#busquedaRoles").keypress(function(e) {
+        //inicializamos variables
+      if(e.which == 13) {
+          var busqueda='';
+          busqueda =  $("#busquedaRoles").val();
+          console.log(busqueda);
+          onRequest({ opcion : 3,rol:busqueda},respRoles);
+      }
+  });
+
+  //Busqueda por tipo de documentos
+  $("#busquedaDoc").keypress(function(e) {
+    //inicializamos variables
+  if(e.which == 13) {
+      var busqueda='';
+      busqueda =  $("#busquedaDoc").val();
+      console.log(busqueda);
+      onRequest({ opcion : 4,doc:busqueda},respDoc);
+  }
+});
+
+
+
     //--------------------- Accion para agregar empresa dentro del model agregar empresa_----------------------
     $("#BtnAgregarEmpresa").click(function() {
         var nombreEmp='';
@@ -88,8 +114,18 @@ $(document).ready(function(){
   
 //Funcion que carga las empresas
 function cargarEmpresas(){
-    onRequest({ opcion : 2 ,empresa:""},respEmpresas);
+    onRequest({ opcion : 2 ,empresa:""}, respEmpresas);
 }
+//Funcion para cargar roles
+function cargarRoles(){
+    onRequest({ opcion : 3 ,rol:""}, respRoles);
+}
+
+//Funcion para cargar tipo de documentos
+function cargarDoc(){
+    onRequest({ opcion : 4 ,doc:""}, respDoc);
+}
+
 
 
 
@@ -117,7 +153,7 @@ var respUser = function(data) {
      }
 }
 
-// Funcion de respuesta de la consulta que aplicamos con ajax
+// Funcion de respuesta de la consulta que aplicamos con ajax para el catalogo de empresas
 var respEmpresas = function(data) { 
     
     if (!data && data == null) 
@@ -139,7 +175,52 @@ var respEmpresas = function(data) {
      
      $("#tablaemp").html(d);
 }
+// Funcion de respuesta de la consulta que aplicamos con ajax para el catalogo de roles
+var respRoles = function(data) { 
+    
+    if (!data && data == null) 
+    return; 
 
+    var d = '';
+
+     for (var i = 0; i < data.length; i++) {
+     d+= '<tr>'+
+     '<td>'+data[i].rol_id+'</td>'+
+     '<td>'+data[i].descripcion+'</td>'+
+     '<td>'+data[i].estatus+'</td>'+ 
+     '<td class="left">'+
+     '<a onclick="editarRol('+data[i].rol_id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarRol"><i class="material-icons">edit</i></a>' + 
+     '<a onclick="deshabRol('+data[i].rol_id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabRol"><i class="material-icons">do_not_disturb_alt</i></a>' + 
+     '<a onclick="BorrarRol('+data[i].rol_id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarRol"><i class="material-icons">delete</i></a>' +
+     '</td>'  +'</tr> ';
+     }
+     
+     $("#tablarol").html(d);
+}
+// Funcion de respuesta de la consulta que aplicamos con ajax para el catalogo de documentos
+var respDoc = function(data) { 
+    
+    if (!data && data == null) 
+    return; 
+
+    var d = '';
+
+     for (var i = 0; i < data.length; i++) {
+     d+= '<tr>'+
+     '<td>'+data[i].doc_id+'</td>'+
+     '<td>'+data[i].descripcion+'</td>'+
+     '<td>'+data[i].estatus+'</td>'+ 
+     '<td class="left">'+
+     '<a onclick="editarDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarDoc"><i class="material-icons">edit</i></a>' + 
+     '<a onclick="deshabDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabDoc"><i class="material-icons">do_not_disturb_alt</i></a>' + 
+     '<a onclick="BorrarDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarDoc"><i class="material-icons">delete</i></a>' +
+     '</td>'  +'</tr> ';
+     }
+     
+     $("#tabladoc").html(d);
+}
+
+//funciones del catalogo de empresas
 function editarEmp(emp_id)
 {
 
@@ -151,6 +232,36 @@ function deshabEmp(emp_id)
 }
 
 function BorrarEmp(emp_id)
+{
+
+}
+//Funciones del catalogo de roles
+function editarRol(rol_id)
+{
+
+}
+
+function deshabRol(rol_id)
+{
+
+}
+
+function BorrarRol(rol_id)
+{
+
+}
+//Funciones del catalogo de documentos
+function editarDoc(doc_id)
+{
+
+}
+
+function deshabDoc(doc_id)
+{
+
+}
+
+function BorrarDoc(doc_id)
 {
 
 }

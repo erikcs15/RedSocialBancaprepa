@@ -10,13 +10,13 @@
         <link rel="stylesheet" type="text/css" href="../css/materialize.min.css">
         <link rel="stylesheet" type="text/css" href="../css/bancaprepa.css">
 </head>
-    <body>
+    <body onLoad="cargarRoles()">
     
      <div id="container" ><!-- CONTENEDOR 1 -->
         <div class="nav-wrapper">
             <div class="row">
                 <div class="col s12 m10 offset-m1">
-                    <h3 class="header" style="color:#1a237e;">Catalogo de Roles</h3>
+                    <h3 class="header " style="color:#1a237e;">Catalogo de Roles</h3>
                     <hr>
                 </div>
             </div>
@@ -24,23 +24,20 @@
         <div class="col s12">      
             <nav>
                 <div class="nav-wrapper">
-                <form>
                     <div class="input-field indigo darken-4" >
-                    <input id="search" type="search" required>
-                    <label class="label-icon" for="search"><i class="material-icons ">search</i></label>
-                    <i class="material-icons">close</i>
-                    <a class="btn-floating btn-large halfway-fab waves-effect waves-light teal">
-                        <i class="material-icons blue darken-3">add</i>
-                    </a>
+                        <input id="busquedaRoles" type="search" required>
+                        <label class="label-icon" for="search"><i class="material-icons ">search</i></label>
+                        <i class="material-icons">close</i>
+                        <a class="btn-floating btn-large halfway-fab waves-effect waves-light teal btn modal-trigger" href="#modalAgregarRoles">
+                         <i class="material-icons blue darken-3">add</i>
+                        </a>
                     </div>
-                </form>
                 </div>
             </nav>
         </div>
-                        <?php
-                                include('../menu/menu.php');
-
-                        ?> 
+            <?php
+                 include('../menu/menu.php');
+            ?> 
         <div class="col s12">
         <div class="card">
             <div class="card-content">
@@ -57,27 +54,8 @@
                                         </tr>
                                         </thead>
 
-                                        <tbody>
-                                            <tr class="odd">
-                                                <td class="left">40</td>
-                                                <td>Administrador</td>
-                                                <td>Activo</td>
-                                                <td class="left">
-                                                    <a class="btn-floating blue"><i class="material-icons">edit</i></a> 
-                                                    <a href="" class="btn-floating orange darken-3 "><i class="material-icons">do_not_disturb_alt</i></a> 
-                                                    <a href="" class="btn-floating red accent-4"><i class="material-icons">delete</i></a> 
-                                                </td>
-                                            </tr>
-                                            <tr class="even">
-                                                <td class="left">50</td>
-                                                <td>Coordinador</td>
-                                                <td>Activo</td>
-                                                <td class="left">
-                                                    <a class="btn-floating blue"><i class="material-icons">edit</i></a> 
-                                                    <a href="" class="btn-floating orange darken-3 "><i class="material-icons">do_not_disturb_alt</i></a> 
-                                                    <a href="" class="btn-floating red accent-4"><i class="material-icons">delete</i></a> 
-                                                </td>
-                                        </tr>
+                                        <tbody id="tablarol">
+                                           
                                         </tbody>
                                     </table>
                                 </div><!-- CONTENEDOR 2 -->
@@ -100,5 +78,102 @@
             $('.sidenav').sidenav();
         });
     </script>
+    <!-------------------- Modal para agregar roles-------------------------->
+    <div id="modalAgregarRoles" class="modal">
+           <nav class="blue darken-3">
+               <div class="nav-wrapper">
+                   <a href="#!" class="brand-logo">
+                       <i class="large material-icons">add_circle</i>Agregar roles
+                   </a>
+               </div>
+           </nav>
+           <div class="modal-content">
+               <form class="col s12 no-padding">
+                   <div class="row">
+                       <div class="input field col s12">
+                           <input placeholder="Nombre del rol" id="nomrol" type="text" class="validate">
+                           <label for="Nombre del rol" class="activate"></label>
+                       </div>
+                   </div>
+               </form>
+           </div>
+           <div class="modal-footer">
+               <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
+               <a id="BtnAgregarRol"class="waves-effect waves-light btn blue darken-3 right"><i class="material-icons left">add_circle_outline</i>Agregar</a>
+           </div>
+    </div>
+    <!----------------------------- Modal para editar rol ---------------------------------->
+    <div id="modalEditarRol" class="modal">
+           <nav class="blue">
+               <div class="nav-wrapper">
+                   <a href="#!" class="brand-logo">
+                       <i class="large material-icons">edit</i>Editar Rol
+                   </a>
+               </div>
+           </nav>
+           <div class="modal-content">
+               <form class="col s12 no-padding">
+                   <div class="row">
+                       <div class="input field col s12">
+                           <input placeholder="Nombre del rol" id="editNomRol" type="text" class="validate">
+                           <label for="Nombre del rol" class="activate"></label>
+                       </div>
+                   </div>
+               </form>
+           </div>
+           <div class="modal-footer">
+               <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
+               <a class="waves-effect waves-light btn blue right"><i class="material-icons left">edit</i>Aceptar</a>
+           </div>
+    </div>
+    <!----------------------------- Modal para deshabilitar rol ---------------------------------->
+    <div id="modalDeshabRol" class="modal">
+           <nav class="orange darken-3">
+               <div class="nav-wrapper">
+                   <a href="#!" class="brand-logo">
+                       <i class="large material-icons">do_not_disturb_alt</i>Deshabilitar Rol
+                   </a>
+               </div>
+           </nav>
+           <div class="modal-content">
+               <form class="col s12 no-padding">
+                   <div class="row">
+                       <h5>¿Seguro que quiere deshabilitar esta rol?</h5>
+                   </div>
+               </form>
+           </div>
+           <div class="modal-footer">
+               <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
+               <a class="waves-effect waves-light btn orange darken-3 right"><i class="material-icons left">do_not_disturb_alt</i>Deshabilitar</a>
+           </div>
+    </div>
+    <!----------------------------- Modal para eliminar rol ---------------------------------->
+    <div id="modalEliminarRol" class="modal">
+           <nav class="red accent-4">
+               <div class="nav-wrapper">
+                   <a href="#!" class="brand-logo">
+                       <i class="large material-icons">delete</i>Eliminar Rol
+                   </a>
+               </div>
+           </nav>
+           <div class="modal-content">
+               <form class="col s12 no-padding">
+                   <div class="row">
+                       <h5>¿Seguro que desea eliminar esta rol?</h5>
+                   </div>
+               </form>
+           </div>
+           <div class="modal-footer">
+               <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
+               <a class="waves-effect waves-light btn red accent-4 right"><i class="material-icons left">delete</i>Eliminar</a>
+           </div>
+    </div>
+     <!-------------------- Inicializar modal-------------------------->
+    <script>
+            $(document).ready(function(){
+                 $('.modal').modal();
+            });
+    </script>
+                
     </body>
 </html>

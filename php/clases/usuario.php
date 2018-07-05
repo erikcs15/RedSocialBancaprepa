@@ -39,7 +39,8 @@
 			return $datos;  
  
 			}
-			public function catalogoEmpresas($empresa){
+			public function catalogoEmpresas($empresa)
+			{
                 $q="";
 				$res=array();
 				$datos=array();
@@ -69,8 +70,78 @@
 				  }
 
 
-		return $datos;  
+				return $datos;  
 
-		} 
+			}
+
+			public function catalogoRoles($rol)
+			{
+                $q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				if($rol != "")
+				{	
+					$q = "Where descripcion like '%$rol%'";
+				}
+
+				$sql="SELECT  id, descripcion, estatus
+						FROM b_cat_roles ".$q; 
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['rol_id'] = $res[0];
+				   $datos[$i]['descripcion'] = $res[1]; 
+				   $datos[$i]['estatus'] = $res[2]; 
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['rol_id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+			public function catalogoDocumentos($doc)
+			{
+                $q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				if($doc != "")
+				{	
+					$q = "Where descripcion like '%$doc%'";
+				}
+
+				$sql="SELECT  id, descripcion, estatus
+						FROM b_cat_doc ".$q; 
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['doc_id'] = $res[0];
+				   $datos[$i]['descripcion']  = $res[1]; 
+				   $datos[$i]['estatus'] = $res[2]; 
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['doc_id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			} 
 
 	}
