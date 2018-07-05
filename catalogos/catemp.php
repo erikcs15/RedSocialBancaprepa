@@ -25,13 +25,12 @@
             <nav>
                 <div class="nav-wrapper">
                     <div class="input-field indigo darken-4" >
-                    <input id="busquedaEmpleados" type="search" required>
-                    <label class="label-icon" for="search"><i class="material-icons ">search</i></label>
-                    <i class="material-icons">close</i>
-                    <a class="modal-trigger  btn-floating btn-large waves-effect waves-light red" href="#AgregarEmpresa">
-                        <i class="material-icons blue darken-3">add</i>
-                    </a>
-                    
+                        <input id="busquedaEmpleados" type="search" required>
+                        <label class="label-icon" for="search"><i class="material-icons ">search</i></label>
+                        <i class="material-icons">close</i>
+                        <a class="btn-floating btn-large halfway-fab waves-effect waves-light teal btn modal-trigger" href="#modalAgregarEmp">
+                         <i class="material-icons blue darken-3">add</i>
+                        </a>
                     </div>
                 </div>
             </nav>
@@ -79,23 +78,102 @@
             $('.sidenav').sidenav();
         });
     </script>
-    <div id=AgregarEmpresa class="modal open" style="z-index: 1003; display: block; opacity: 1; transform: scaleX(1) top: 10%">
-                        <nav class="red">
-                            <div class="nav-wrapper">
-                                <a href="#!" class="brand-logo"><i class="material-icons">add</i>Agregar Empresa</a>
-                            </div>
-                        </nav>
-                        <div class="model-content">
-                            <form class="col s12 no-padding">
-                                <div class="row">
-                                    <div class="input-field col s12">
-                                        <input placeholder="Nombre de la Empresa" id="nombreEmp" type="text" class="validate">
-                                        <label for="Nombre de la Empresa" class="active"></label>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-
-                    </div>
+    <!-------------------- Modal para agregar empresa-------------------------->
+    <div id="modalAgregarEmp" class="modal">
+           <nav class="blue darken-3">
+               <div class="nav-wrapper">
+                   <a href="#!" class="brand-logo">
+                       <i class="large material-icons">add_circle</i>Agregar Empresa
+                   </a>
+               </div>
+           </nav>
+           <div class="modal-content">
+               <form class="col s12 no-padding">
+                   <div class="row">
+                       <div class="input field col s12">
+                           <input placeholder="Nombre de la empresa" id="nomEmp" type="text" class="validate">
+                           <label for="Nombre de la empresa" class="activate"></label>
+                       </div>
+                   </div>
+               </form>
+           </div>
+           <div class="modal-footer">
+               <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
+               <a id="BtnAgregarEmpresa"class="waves-effect waves-light btn blue darken-3 right"><i class="material-icons left">add_circle_outline</i>Agregar</a>
+           </div>
+    </div>
+    <!----------------------------- Modal para editar empresa ---------------------------------->
+    <div id="modalEditarEmp" class="modal">
+           <nav class="blue">
+               <div class="nav-wrapper">
+                   <a href="#!" class="brand-logo">
+                       <i class="large material-icons">edit</i>Editar Empresa
+                   </a>
+               </div>
+           </nav>
+           <div class="modal-content">
+               <form class="col s12 no-padding">
+                   <div class="row">
+                       <div class="input field col s12">
+                           <input placeholder="Nombre de la empresa" id="nomEmp" type="text" class="validate">
+                           <label for="Nombre de la empresa" class="activate"></label>
+                       </div>
+                   </div>
+               </form>
+           </div>
+           <div class="modal-footer">
+               <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
+               <a class="waves-effect waves-light btn blue right"><i class="material-icons left">edit</i>Aceptar</a>
+           </div>
+    </div>
+    <!----------------------------- Modal para deshabilitar empresa ---------------------------------->
+    <div id="modalDeshabEmp" class="modal">
+           <nav class="orange darken-3">
+               <div class="nav-wrapper">
+                   <a href="#!" class="brand-logo">
+                       <i class="large material-icons">do_not_disturb_alt</i>Deshabilitar Empresa
+                   </a>
+               </div>
+           </nav>
+           <div class="modal-content">
+               <form class="col s12 no-padding">
+                   <div class="row">
+                       <h5>¿Seguro que quiere deshabilitar esta empresa?</h5>
+                   </div>
+               </form>
+           </div>
+           <div class="modal-footer">
+               <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
+               <a class="waves-effect waves-light btn orange darken-3 right"><i class="material-icons left">do_not_disturb_alt</i>Deshabilitar</a>
+           </div>
+    </div>
+    <!----------------------------- Modal para eliminar empresa ---------------------------------->
+    <div id="modalEliminarEmp" class="modal">
+           <nav class="red accent-4">
+               <div class="nav-wrapper">
+                   <a href="#!" class="brand-logo">
+                       <i class="large material-icons">delete</i>Eliminar Empresa
+                   </a>
+               </div>
+           </nav>
+           <div class="modal-content">
+               <form class="col s12 no-padding">
+                   <div class="row">
+                       <h5>¿Seguro que desea eliminar esta empresa?</h5>
+                   </div>
+               </form>
+           </div>
+           <div class="modal-footer">
+               <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
+               <a class="waves-effect waves-light btn red accent-4 right"><i class="material-icons left">delete</i>Eliminar</a>
+           </div>
+    </div>
+     <!-------------------- Inicializar modal-------------------------->
+    <script>
+            $(document).ready(function(){
+                 $('.modal').modal();
+            });
+    </script>
+                
     </body>
 </html>

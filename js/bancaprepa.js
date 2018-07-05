@@ -69,6 +69,12 @@ $(document).ready(function(){
             onRequest({ opcion : 2,empresa:busqueda},respEmpresas);
         }
     });
+    //--------------------- Accion para agregar empresa dentro del model agregar empresa_----------------------
+    $("#BtnAgregarEmpresa").click(function() {
+        var nombreEmp='';
+        nombreEmp = $("#nomEmp").val();
+        console.log("Presionaste el boton del modal para agregar empresa "+nombreEmp);
+    });
 
     //Enter al iniciar
     $("#password").keypress(function(e) {
@@ -125,9 +131,9 @@ var respEmpresas = function(data) {
      '<td>'+data[i].nombre+'</td>'+
      '<td>'+data[i].estatus+'</td>'+ 
      '<td class="left">'+
-     '<a onclick="editarEmp('+data[i].empresa_id+')" class="waves-effect waves-light btn-floating btn-small blue"><i class="material-icons">edit</i></a>' + 
-     '<a onclick="deshabEmp('+data[i].empresa_id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 "><i class="material-icons">do_not_disturb_alt</i></a>' + 
-     '<a onclick="BorrarEmp('+data[i].empresa_id+')" class="waves-effect waves-light btn-floating btn-small red accent-4"><i class="material-icons">delete</i></a>' +
+     '<a onclick="editarEmp('+data[i].empresa_id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarEmp"><i class="material-icons">edit</i></a>' + 
+     '<a onclick="deshabEmp('+data[i].empresa_id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabEmp"><i class="material-icons">do_not_disturb_alt</i></a>' + 
+     '<a onclick="BorrarEmp('+data[i].empresa_id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarEmp"><i class="material-icons">delete</i></a>' +
      '</td>'  +'</tr> ';
      }
      
