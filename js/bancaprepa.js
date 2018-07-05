@@ -223,7 +223,8 @@ var respDoc = function(data) {
 //funciones del catalogo de empresas
 function editarEmp(emp_id)
 {
-
+    var nombreEmp='';
+    nombreEmp = $("#nomEmp").val();
 }
 
 function deshabEmp(emp_id)
