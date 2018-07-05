@@ -28,17 +28,17 @@
                     <input id="busquedaEmpleados" type="search" required>
                     <label class="label-icon" for="search"><i class="material-icons ">search</i></label>
                     <i class="material-icons">close</i>
-                    <a class="btn-floating btn-large halfway-fab waves-effect waves-light teal">
+                    <a class="modal-trigger  btn-floating btn-large waves-effect waves-light red" href="#AgregarEmpresa">
                         <i class="material-icons blue darken-3">add</i>
                     </a>
+                    
                     </div>
                 </div>
             </nav>
         </div>
-                        <?php
-                                include('../menu/menu.php');
-
-                        ?> 
+            <?php
+                 include('../menu/menu.php');
+            ?> 
         <div class="col s12">
         <div class="card">
             <div class="card-content">
@@ -79,5 +79,23 @@
             $('.sidenav').sidenav();
         });
     </script>
+    <div id=AgregarEmpresa class="modal open" style="z-index: 1003; display: block; opacity: 1; transform: scaleX(1) top: 10%">
+                        <nav class="red">
+                            <div class="nav-wrapper">
+                                <a href="#!" class="brand-logo"><i class="material-icons">add</i>Agregar Empresa</a>
+                            </div>
+                        </nav>
+                        <div class="model-content">
+                            <form class="col s12 no-padding">
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input placeholder="Nombre de la Empresa" id="nombreEmp" type="text" class="validate">
+                                        <label for="Nombre de la Empresa" class="active"></label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
     </body>
 </html>

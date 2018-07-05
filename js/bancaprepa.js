@@ -2,6 +2,12 @@
 $(document).ready(function(){
     //Inicializamos menu
     $('.dropdown-trigger').dropdown();
+
+     //inicializar el modal
+     $(document).ready(function(){
+        $('.AgregarEmpresa').modal();
+      });
+
     //Inicia el evento click en el boton del login
     $( "#btn_login" ).click(function() { 
         //inicializamos variables
