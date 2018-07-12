@@ -52,8 +52,9 @@
 					$q = "Where nombre like '%$empresa%'";
 				}
 
-				$sql="SELECT  id, nombre, estatus
-						FROM b_cat_empresas ".$q; 
+				$sql="SELECT emp.id, emp.nombre, e.descripcion
+					FROM b_cat_empresas emp
+					INNER JOIN estatus e ON emp.estatus_id = e.id ".$q; 
 				$resultado = mysqli_query($this->con(), $sql); 
 
 				while ($res = mysqli_fetch_row($resultado)) {
@@ -147,5 +148,24 @@
 
 			//----------------------------------------Cargar empresa por Id--------------------------------------
 			
+			//----------------------------------------Insertar empresas------------------------------------------
 
+			public function guardarEmpresas($empresa)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+				$txtUsuario=$_COOKIE["b_capturista_id"];  
+	
+				$sql="INSERT INTO b_cat_empresas(nombre,capturista_id,fecha_captura,hora_captura) 
+									VALUES('$empresa',$txtUsuario,CURDATE(),CURTIME())";
+			
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['b_cat_empresas'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
 	}

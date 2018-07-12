@@ -99,7 +99,13 @@ $(document).ready(function(){
     $("#BtnAgregarEmpresa").click(function() {
         var nombreEmp='';
         nombreEmp = $("#nomEmp").val();
-        console.log("Presionaste el boton del modal para agregar empresa "+nombreEmp);
+        console.log("Presionaste el boton del modal para agregar empresa: "+nombreEmp);
+        onRequest({ opcion : 5, empresa:nombreEmp},respAgregaEmpresa);
+
+
+
+     
+
     });
 
     //Enter al iniciar
@@ -204,13 +210,24 @@ var respDoc = function(data) {
     return; 
 
     var d = '';
+    var x = '';
+
+
 
      for (var i = 0; i < data.length; i++) {
+     if(i%2==0)
+     {
+         x='even';
+     }
+     else
+     {
+         x='odd';
+     }
      d+= '<tr>'+
      '<td>'+data[i].doc_id+'</td>'+
      '<td>'+data[i].descripcion+'</td>'+
      '<td>'+data[i].estatus+'</td>'+ 
-     '<td class="left">'+
+     '<td class="'+x+' left">'+
      '<a onclick="editarDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarDoc"><i class="material-icons">edit</i></a>' + 
      '<a onclick="deshabDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabDoc"><i class="material-icons">do_not_disturb_alt</i></a>' + 
      '<a onclick="BorrarDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarDoc"><i class="material-icons">delete</i></a>' +
@@ -220,11 +237,27 @@ var respDoc = function(data) {
      $("#tabladoc").html(d);
 }
 
+var respAgregaEmpresa = function(data) { 
+    console.log(data);
+    if (!data && data == null)
+    {
+        M.toast({html: 'Empresa NO agregada', classes: 'rounded red'}); 
+        return;
+    }
+    
+    M.toast({html: 'Empresa agregada', classes: 'rounded blue'}); 
+    
+    $("#modalAgregarEmp").modal("close");
+
+    onRequest({ opcion : 2 ,empresa:""}, respEmpresas);
+
+    
+}
+
 //funciones del catalogo de empresas
 function editarEmp(emp_id)
 {
-    var nombreEmp='';
-    nombreEmp = $("#nomEmp").val();
+    
 }
 
 function deshabEmp(emp_id)

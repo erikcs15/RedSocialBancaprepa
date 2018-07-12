@@ -18,9 +18,9 @@
 		case 4: 
 			echo (json_encode($usuario->catalogoDocumentos($_REQUEST['doc'])));
 		break; 
-		 
- 
- 
+		case 5: 
+			echo (json_encode($usuario->guardarEmpresas($_REQUEST['empresa'])));
+		break; 
  		 
  	}
  
