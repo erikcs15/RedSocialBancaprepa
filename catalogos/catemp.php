@@ -15,7 +15,66 @@
      <div id="container" ><!-- CONTENEDOR 1 -->
         <div class="nav-wrapper">
             <div class="row">
-                <div class="col s12 m10 offset-m1">
+                <div class="nav-wrapper">
+                <nav class=" blue darken-4">
+                    <div class="nav-wrapper">
+                        
+                        <a href="#" class="brand-logo"><i class="material-icons">whatshot</i> Red Social Bancaprepa</a>
+                        <ul class="right hide-on-med-and-down">
+                            <li> <a class='dropdown-button waves-effect waves-dark' href='#' data-activates='dropdown_message'><i class="material-icons">notifications_active</i><span class="counts">9+</span></a>
+                            <ul id='dropdown_message' class='dropdown-content messages collection'>
+                                <!--<li class="collection-item"> <img src="/RedSocialBancaprepa/img/pic2.png" alt="" class="circle"> <span class="title">Max Smith</span>
+                                    <p>Last Updated: 2:00 AM<br>
+                                    <b>Author: maxartkiller.in</b> </p>
+                                </li>
+                                <li class="collection-item avatar"> <i class="material-icons circle">folder</i> <span class="title">Photos</span>
+                                <p>Last Updated: 2:00 AM<br>
+                                    <b>Author: maxartkiller.in</b> </p>
+                                </li>
+                                <li class="collection-item avatar"> <i class="material-icons circle green">insert_chart</i> <span class="title">Analytics</span>
+                                <p>Last Updated: 2:00 AM<br>
+                                    <b>Author: maxartkiller.in</b> </p>
+                                </li>
+                                <li class="collection-item avatar"> <i class="material-icons circle red">play_arrow</i> <span class="title">Play it now!</span>
+                                <p>Last Updated: 2:00 AM<br>
+                                    <b>Author: maxartkiller.in</b> </p>
+                                </li>
+                                <li class="collection-item center-align"> View all </li>-->
+                            </ul>
+                            </li>
+                            <li> <a class='dropdown-button waves-effect waves-dark' href='#' data-activates='dropdown_task'><i class="material-icons">message</i><span class="counts">9+</span></a>
+                            <ul id='dropdown_task' class='dropdown-content listitems collection'>
+                                <li class="collection-item row">
+                                <div class="col s2"> <img src="/RedSocialBancaprepa/img/pic2.png" alt="" class="circle responsive-img"> <!-- notice the "circle" class --> 
+                                </div>
+                                <div class="col s10"> <span class="black-text"> This is best ever template we have seen and it will remain our first choice to select.<br>
+                                    <small>12:00 am</small> </span> </div>
+                                </li>
+                                <li class="collection-item row">
+                                <div class="col s2"> <img src="../img/pic2.png" alt="" class="circle responsive-img"> <!-- notice the "circle" class --> 
+                                </div>
+                                <div class="col s10"> <span class="black-text">This is best ever template we have seen and it will remain our first choice to select.<br>
+                                    <small>12:00 am</small> </span> </div>
+                                </li>
+                                <li class="collection-item row">
+                                <div class="col s2"> <img src="../img/pic2.png" alt="" class="circle responsive-img"> <!-- notice the "circle" class --> 
+                                </div>
+                                <div class="col s10"> <span class="black-text">This is best ever template we have seen and it will remain our first choice to select.<br>
+                                    <small>12:00 am</small> </span> </div>
+                                </li>
+                                <li class="collection-item center-align"> View all </li>
+                            </ul>
+                            </li>
+                            <ul id="dropdownCuenta" class="dropdown-content">
+                                <li class="divider"></li>
+                                <li><a href="#!"><i class="material-icons right">account_circle</i>Cuenta</a></li>
+                                <li><a id="salirsesion" name ="salirsesion" class="waves-effect">Cerrar sesión<i class="material-icons">settings_power</i></a></li>
+                               
+                            </ul>
+                            <li><a class="dropdown-trigger" href="#!" data-target="dropdownCuenta"><i class="material-icons right">account_circle</i></a></li>
+                            
+                    </div>
+            </nav>
                     <h3 class="header " style="color:#1a237e;">Catalogo de Empresas</h3>
                     <hr>
                 </div>
@@ -98,7 +157,7 @@
            </div>
            <div class="modal-footer">
                <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
-               <a id="BtnAgregarEmpresa"class="waves-effect waves-light btn blue darken-3 right"><i class="material-icons left">add_circle_outline</i>Agregar</a>
+               <a id="BtnAgregarEmpresa" class="waves-effect waves-light btn blue darken-3 right"><i class="material-icons left">add_circle_outline</i>Agregar</a>
            </div>
     </div>
     <!----------------------------- Modal para editar empresa ---------------------------------->
@@ -113,8 +172,12 @@
            <div class="modal-content">
                <form class="col s12 no-padding">
                    <div class="row">
-                       <div class="input field col s12">
-                           <input placeholder="Nombre de la empresa" id="nomEmp" type="text" class="validate">
+                        <div class="input field col s2">
+                            <input placeholder="ID de la empresa" id="idEmpEdit" type="text" class="validate" disabled>
+                            <label for="Id de la empresa" class="activate" ></label>
+                        </div>
+                       <div class="input field col s8">
+                           <input placeholder="Nombre de la empresa" id="nomEmpEdit" type="text" class="validate">
                            <label for="Nombre de la empresa" class="activate"></label>
                        </div>
                    </div>
@@ -122,7 +185,7 @@
            </div>
            <div class="modal-footer">
                <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
-               <a class="waves-effect waves-light btn blue right"><i class="material-icons left">edit</i>Aceptar</a>
+               <a id="BtnEditarEmpresa" class="waves-effect waves-light btn blue right"><i class="material-icons left">edit</i>Aceptar</a>
            </div>
     </div>
     <!----------------------------- Modal para deshabilitar empresa ---------------------------------->

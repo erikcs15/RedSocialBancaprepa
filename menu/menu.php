@@ -1,5 +1,5 @@
 <div id="menu">
-<ul id="slide-out" class="sidenav sidenav-fixed" style="transform: translateX(-100%);">
+<ul id="slide-out" class="sidenav sidenav-fixed"  style="transform: translateX(-100%);">
               <li><div class="user-view">
                 <div class="background">
                   <img src="/RedSocialBancaprepa/img/logo_bancaprepa.png"  style="width: 290px;">
@@ -22,7 +22,7 @@
                 <li><a id="catroles" name ="catroles" ><i class="material-icons">assignment</i>Catalogo de Roles</a></li>
                 <li><a id="catdoc" name ="catdoc"><i class="material-icons">assignment</i>Tipos de Documento</a></li>
              </ul>
-             <li><a id="salirsesion" name ="salirsesion" class="waves-effect"><i class="material-icons">settings_power</i>Cerrar sesión</a></li>
+            
     </ul>
 </div>
 

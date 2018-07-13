@@ -63,18 +63,14 @@
                                 <li class="collection-item center-align"> View all </li>
                             </ul>
                             </li>
-                            <li><a href="#" class="waves-effect waves-dark"><i class="material-icons">refresh</i></a></li>
-                            <li><a class='dropdown-button waves-effect waves-dark' href='#' data-activates='dropdown_profile'><i class="material-icons">account_circle</i></a></li>
-                            <li> <a class='dropdown-button waves-effect waves-dark' href='#' data-activates='dropdown_mores'><i class="material-icons">more_vert</i></a>
-                            <ul id='dropdown_mores' class='dropdown-content'>
-                                <li><a href="#!" class="blue-text waves-effect"><i class="material-icons">settings</i>Setting</a></li>
-                                <li><a href="#!" class="blue-text waves-effect"><i class="material-icons">lock_outline</i>Security</a></li>
-                                <li><a href="#!" class="blue-text waves-effect"><i class="material-icons">help</i>Help</a></li>
-                                <li><a href="#!" class="blue-text waves-effect"><i class="material-icons">assignment_ind</i>About RockOn</a></li>
+                            <ul id="dropdownCuenta" class="dropdown-content">
+                                <li class="divider"></li>
+                                <li><a href="#!"><i class="material-icons right">account_circle</i>Cuenta</a></li>
+                                <li><a id="salirsesion" name ="salirsesion" class="waves-effect">Cerrar sesión<i class="material-icons">settings_power</i></a></li>
+                               
                             </ul>
-                            </li>
-                        </ul>
-                       
+                            <li><a class="dropdown-trigger" href="#!" data-target="dropdownCuenta"><i class="material-icons right">account_circle</i></a></li>
+                            
                     </div>
             </nav>
             
@@ -117,5 +113,6 @@
             $('.sidenav').sidenav();
         });
     </script>
+
     </body>
 </html>

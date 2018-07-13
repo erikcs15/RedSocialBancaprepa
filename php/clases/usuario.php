@@ -49,7 +49,7 @@
 
 				if($empresa != "")
 				{	
-					$q = "Where nombre like '%$empresa%'";
+					$q = "Where emp.nombre like '%$empresa%'";
 				}
 
 				$sql="SELECT emp.id, emp.nombre, e.descripcion
@@ -85,11 +85,12 @@
 
 				if($rol != "")
 				{	
-					$q = "Where descripcion like '%$rol%'";
+					$q = "Where rol.descripcion like '%$rol%'";
 				}
 
-				$sql="SELECT  id, descripcion, estatus
-						FROM b_cat_roles ".$q; 
+				$sql="SELECT rol.id, rol.descripcion, e.descripcion
+						FROM b_cat_roles rol
+						INNER JOIN estatus e ON rol.estatus_id = e.id ".$q; 
 				$resultado = mysqli_query($this->con(), $sql); 
 
 				while ($res = mysqli_fetch_row($resultado)) {
@@ -120,11 +121,12 @@
 
 				if($doc != "")
 				{	
-					$q = "Where descripcion like '%$doc%'";
+					$q = "Where doc.descripcion like '%$doc%'";
 				}
 
-				$sql="SELECT  id, descripcion, estatus
-						FROM b_cat_doc ".$q; 
+				$sql="SELECT doc.id, doc.descripcion, e.descripcion
+						FROM b_cat_doc doc
+						INNER JOIN estatus e ON doc.estatus_id = e.id ".$q; 
 				$resultado = mysqli_query($this->con(), $sql); 
 
 				while ($res = mysqli_fetch_row($resultado)) {
@@ -146,9 +148,83 @@
 
 			}
 
-			//----------------------------------------Cargar empresa por Id--------------------------------------
-			
-			//----------------------------------------Insertar empresas------------------------------------------
+			//----------------------------------------Cargar por Id--------------------------------------
+			//-------------------------------CARGAR EMPRESA-------------------------------------------------
+			public function cargarEmpPorId($empresa)
+			{
+                $q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
+				$sql="SELECT id, nombre
+					FROM b_cat_empresas 
+					WHERE id= $empresa"; 
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['empresa_id'] = $res[0];
+				   $datos[$i]['nombre'] = $res[1];
+				   $i++;
+
+				} 
+				if ( count($datos )==0) { 
+					$datos[0]['empresa_id']  =0;
+					return  $datos; 
+				  }
+				return $datos;  
+			}
+			//-------------------------------CARGAR roles-------------------------------------------------
+			public function cargarRolPorId($rol)
+			{
+                $q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
+				$sql="SELECT id, descripcion
+					FROM b_cat_roles 
+					WHERE id= $rol"; 
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['rol_id'] = $res[0];
+				   $datos[$i]['descripcion'] = $res[1];
+				   $i++;
+
+				} 
+				if ( count($datos )==0) { 
+					$datos[0]['rol_id']  =0;
+					return  $datos; 
+				  }
+				return $datos;  
+			}
+//---------------------------------------CARGAR tipo de documentos-------------------------------------------------			
+			public function cargarDocPorId($doc)
+			{
+                $q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
+				$sql="SELECT id, descripcion
+					FROM b_cat_doc
+					WHERE id= $doc"; 
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['doc_id'] = $res[0];
+				   $datos[$i]['descripcion'] = $res[1];
+				   $i++;
+
+				} 
+				if ( count($datos )==0) { 
+					$datos[0]['doc_id']  =0;
+					return  $datos; 
+				  }
+				return $datos;  
+			}
+			//----------------------------------------------Insertar------------------------------------------
 
 			public function guardarEmpresas($empresa)
 			{
@@ -168,4 +244,117 @@
 				return  $datos;	
 				
 			}
+
+			public function guardarRoles($rol)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+				$txtUsuario=$_COOKIE["b_capturista_id"];  
+	
+				$sql="INSERT INTO b_cat_roles(descripcion,capturista_id,fecha_captura,hora_captura) 
+									VALUES('$rol',$txtUsuario,CURDATE(),CURTIME())";
+			
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['b_cat_roles'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
+
+			public function guardarDoc($doc)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+				$txtUsuario=$_COOKIE["b_capturista_id"];  
+	
+				$sql="INSERT INTO b_cat_doc(descripcion,capturista_id,fecha_captura,hora_captura) 
+									VALUES('$doc',$txtUsuario,CURDATE(),CURTIME())";
+			    
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['b_cat_doc'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
+
+//-------------------------------------------------UPDATES---------------------------------------------------
+
+			public function actualizarEmpresa($empId,$emp)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+				
+	
+				$sql="UPDATE b_cat_empresas SET nombre='$emp' WHERE id=$empId";
+			    
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['b_cat_empresas'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
+
+			public function actualizarRol($rolId,$rol)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+				
+	
+				$sql="UPDATE b_cat_roles SET descripcion='$rol' WHERE id=$rolId";
+			    
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['b_cat_roles'] =  array('0' => '0' );
+				return  $datos;	
+			}
+
+			public function actualizarDoc($DocId,$Doc)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+				
+	
+				$sql="UPDATE b_cat_doc SET descripcion='$Doc' WHERE id=$DocId";
+			    
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['b_cat_doc'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
+//----------------------------------Deshabilitar-----------------------------------------
+//----------------------------------Deshabilitar EMPRESA-----------------------------------------
+			public function desEmp($empId)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+
+				$sql="UPDATE b_cat_doc SET estatus_id=6 WHERE id=$empId";
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+
+				$datos['b_cat_doc'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
+
 	}

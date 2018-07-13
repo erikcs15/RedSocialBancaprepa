@@ -3,6 +3,7 @@ $(document).ready(function(){
     //Inicializamos menu
     $('.dropdown-trigger').dropdown();
 
+   
      //inicializar el modal
      $(document).ready(function(){
         $('.AgregarEmpresa').modal();
@@ -94,21 +95,63 @@ $(document).ready(function(){
 });
 
 
-
-    //--------------------- Accion para agregar empresa dentro del model agregar empresa_----------------------
+//-------------------------------Accion para AGREGAR DENTRO DE LOS MODAL--------------------------------
+//-----------------------------------Agregar empresa------------------------------
     $("#BtnAgregarEmpresa").click(function() {
         var nombreEmp='';
         nombreEmp = $("#nomEmp").val();
         console.log("Presionaste el boton del modal para agregar empresa: "+nombreEmp);
         onRequest({ opcion : 5, empresa:nombreEmp},respAgregaEmpresa);
 
-
-
-     
-
     });
 
-    //Enter al iniciar
+//-------------------------------------AGREGAR ROLES------------------------------------
+    $("#BtnAgregarRol").click(function() {
+        var nombreRol='';
+        nombreRol = $("#nomrol").val();
+        console.log("Presionaste el boton del modal para agregar roles: "+nombreRol);
+        onRequest({ opcion : 6, rol:nombreRol},respAgregaRol);
+
+    });
+//-------------------------------------AGREGAR Tipo de documentos------------------------------------
+    $("#BtnAgregarDoc").click(function() {
+        var nombreDoc='';
+        nombreDoc = $("#nomdoc").val();
+        console.log("Presionaste el boton del modal para agregar tipo de documentos: "+nombreDoc);
+        onRequest({ opcion : 7, doc:nombreDoc},respAgregaDoc);
+
+    });
+//-------------------------------Accion para editar DENTRO DE LOS MODAL--------------------------------
+//------------------------------------------Editar empresa--------------------------------
+    $("#BtnEditarEmpresa").click(function() {
+        var empID ='';
+        var nomAct='';
+        empID = $("#idEmpEdit").val();
+        nomAct = $("#nomEmpEdit").val();
+        console.log("Presionaste boton de editar "+empID+nomAct);
+        onRequest({ opcion : 9 ,empresa_id:empID,empresa:nomAct}, respActualizarEmp);
+    });
+//------------------------------------------Editar rol--------------------------------
+$("#BtnEditarRol").click(function() {
+    var rolID ='';
+    var nomAct='';
+    rolID = $("#idRolEdit").val();
+    nomAct = $("#editNomRol").val();
+    console.log("Presionaste boton de editar "+rolID+nomAct);
+    onRequest({ opcion : 11 ,rol_id:rolID,rol:nomAct}, respActualizarRol);
+});
+//------------------------------------------Editar doc--------------------------------
+$("#BtnEditarDoc").click(function() {
+    var docID ='';
+    var nomAct='';
+    docID = $("#idDocEdit").val();
+    nomAct = $("#editNomDoc").val();
+    console.log("Presionaste boton de editar "+docID+nomAct);
+    onRequest({ opcion : 13 ,doc_id:docID,doc:nomAct}, respActualizarDoc);
+});
+
+
+//----------------------------------------------Enter al iniciar------------------------------------
     $("#password").keypress(function(e) {
         if(e.which == 13) {
             $( "#btn_login" ).click();
@@ -135,7 +178,7 @@ function cargarDoc(){
 
 
 
-// Funcion de respuesta de la consulta que aplicamos con ajax
+//----------------------------------------Funcion de respuesta de la consulta que aplicamos con ajax-----------------------------
 var respUser = function(data) { 
 
     if (!data && data == null) 
@@ -158,7 +201,7 @@ var respUser = function(data) {
         M.toast({html: 'El usuario o la contraseña no son correctos.', classes: 'rounded red'}); 
      }
 }
-
+//---------------------------------------------------CARGAR CATALOGOS--------------------------------------------------
 // Funcion de respuesta de la consulta que aplicamos con ajax para el catalogo de empresas
 var respEmpresas = function(data) { 
     
@@ -236,7 +279,8 @@ var respDoc = function(data) {
      
      $("#tabladoc").html(d);
 }
-
+//----------------------------RESPUESTAS PARA INSERTAR DATOS------------------------------
+//----------------------------insertar empresa---------------------------------------
 var respAgregaEmpresa = function(data) { 
     console.log(data);
     if (!data && data == null)
@@ -250,19 +294,154 @@ var respAgregaEmpresa = function(data) {
     $("#modalAgregarEmp").modal("close");
 
     onRequest({ opcion : 2 ,empresa:""}, respEmpresas);
-
-    
 }
+//--------------------------insertar roles-----------------------------------------
+var respAgregaRol = function(data) { 
+    console.log(data);
+    if (!data && data == null)
+    {
+        M.toast({html: 'Rol NO agregado', classes: 'rounded red'}); 
+        return;
+    }
+    
+    M.toast({html: 'Rol agregado', classes: 'rounded blue'}); 
+    
+    $("#modalAgregarRoles").modal("close");
 
+    onRequest({ opcion : 3 ,rol:""}, respRoles);
+}
+//--------------------------insertar tipo de documentos----------------------------------
+var respAgregaDoc = function(data) { 
+    console.log(data);
+    if (!data && data == null)
+    {
+        M.toast({html: 'Tipo de documento NO agregado', classes: 'rounded red'}); 
+        return;
+    }
+    
+    M.toast({html: 'Tipo de documento agregado', classes: 'rounded blue'}); 
+    
+    $("#modalAgregarDoc").modal("close");
+
+    onRequest({ opcion : 4 ,doc:""}, respDoc);
+}
+//-----------------------------------------Respuestas para editar-------------------------
+//--------------------------------Editar empresa---------------------------------------
+var respEditEmp = function(data) { 
+
+    if (!data && data == null) 
+        return;   
+    
+        console.log(data)
+            // validamos que exista una respuesta
+      if (data[0].empresa_id>0) { 
+          console.log(data[0].nombre);
+        $("#idEmpEdit").val(data[0].empresa_id);
+        $("#nomEmpEdit").val(data[0].nombre);
+
+         return;
+     }
+     
+}
+var respActualizarEmp = function(data) { 
+    console.log(data);
+    if (!data && data == null)
+    {
+        M.toast({html: 'Empresa No Actualizada', classes: 'rounded red'}); 
+        return;
+    }
+    
+    M.toast({html: 'Empresa Actualizada!', classes: 'rounded blue'}); 
+
+    $("#modalEditarEmp").modal("close");
+
+    onRequest({ opcion : 2 ,empresa:""}, respEmpresas);
+}
+//------------------------------------Editar ROL-------------------------------
+var respEditRol = function(data) { 
+
+    if (!data && data == null) 
+        return;   
+    
+        console.log(data)
+            // validamos que exista una respuesta
+      if (data[0].rol_id>0) { 
+            $("#idRolEdit").val(data[0].rol_id);
+            $("#editNomRol").val(data[0].descripcion);
+
+         return;
+     }
+     
+}
+var respActualizarRol = function(data) { 
+    console.log(data);
+    if (!data && data == null)
+    {
+        M.toast({html: 'Rol No Actualizado', classes: 'rounded red'}); 
+        return;
+    }
+    
+    M.toast({html: 'Rol Actualizado!', classes: 'rounded blue'}); 
+
+    $("#modalEditarRol").modal("close");
+
+    onRequest({ opcion : 3 ,rol:""}, respRoles);
+}
+//------------------------------------Editar tipo de documento-------------------------------
+var respEditDoc = function(data) { 
+
+    if (!data && data == null) 
+        return;   
+    
+        console.log(data)
+            // validamos que exista una respuesta
+      if (data[0].doc_id>0) { 
+            $("#idDocEdit").val(data[0].doc_id);
+            $("#editNomDoc").val(data[0].descripcion);
+
+         return;
+     }
+     
+}
+var respActualizarDoc = function(data) { 
+    console.log(data);
+    if (!data && data == null)
+    {
+        M.toast({html: 'Tipo de documento No Actualizado', classes: 'rounded red'}); 
+        return;
+    }
+    
+    M.toast({html: 'Tipo de documento Actualizado!', classes: 'rounded blue'}); 
+
+    $("#modalEditarDoc").modal("close");
+
+    onRequest({ opcion : 4 ,doc:""}, respDoc);
+}
+//_---------------------------------Respuestas para deshabilitar-----------------------------
+//---------------------------deshabilitar empresa-------------------------------
+var respDesEmp = function(data) { 
+    console.log(data);
+    if (!data && data == null)
+    {
+        M.toast({html: 'Empresa no deshabilitada', classes: 'rounded red'}); 
+        return;
+    }
+    
+    M.toast({html: 'Empresa deshabilitada', classes: 'rounded blue'}); 
+
+    $("#modalDeshabEmp").modal("close");
+
+    onRequest({ opcion : 2 ,empresa:""}, respEmpresas);
+}
 //funciones del catalogo de empresas
 function editarEmp(emp_id)
 {
-    
+    onRequest({ opcion : 8 ,empresa_id:emp_id}, respEditEmp);
 }
 
 function deshabEmp(emp_id)
 {
-
+    onRequest({ opcion : 14,emp_id:emp_id}, respDesEmp);
 }
 
 function BorrarEmp(emp_id)
@@ -272,7 +451,7 @@ function BorrarEmp(emp_id)
 //Funciones del catalogo de roles
 function editarRol(rol_id)
 {
-
+    onRequest({ opcion : 10 ,rol_id:rol_id}, respEditRol);
 }
 
 function deshabRol(rol_id)
@@ -287,7 +466,7 @@ function BorrarRol(rol_id)
 //Funciones del catalogo de documentos
 function editarDoc(doc_id)
 {
-
+    onRequest({ opcion : 12 ,doc_id:doc_id}, respEditDoc);
 }
 
 function deshabDoc(doc_id)

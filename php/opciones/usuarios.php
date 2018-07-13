@@ -20,8 +20,34 @@
 		break; 
 		case 5: 
 			echo (json_encode($usuario->guardarEmpresas($_REQUEST['empresa'])));
+		break;
+		case 6: 
+			echo (json_encode($usuario->guardarRoles($_REQUEST['rol'])));
 		break; 
- 		 
+		case 7: 
+			echo (json_encode($usuario->guardarDoc($_REQUEST['doc'])));
+		break;
+		case 8: 
+			echo (json_encode($usuario->cargarEmpPorId($_REQUEST['empresa_id'])));
+		break;
+		case 9: 
+			echo (json_encode($usuario->actualizarEmpresa($_REQUEST['empresa_id'],$_REQUEST['empresa'])));
+		break;
+		case 10: 
+			echo (json_encode($usuario->cargarRolPorId($_REQUEST['rol_id'])));
+		break;
+		case 11: 
+			echo (json_encode($usuario->actualizarRol($_REQUEST['rol_id'],$_REQUEST['rol'])));
+		break; 
+		case 12: 
+			echo (json_encode($usuario->cargarDocPorId($_REQUEST['doc_id'])));
+		break;
+		case 13: 
+			echo (json_encode($usuario->actualizarDoc($_REQUEST['doc_id'],$_REQUEST['doc'])));
+		break; 
+		case 14: 
+			echo (json_encode($usuario->desEmp($_REQUEST['emp_id'])));
+		break; 
  	}
  
 ?>
