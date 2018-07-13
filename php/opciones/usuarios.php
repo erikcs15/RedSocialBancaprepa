@@ -47,7 +47,14 @@
 		break; 
 		case 14: 
 			echo (json_encode($usuario->desEmp($_REQUEST['emp_id'])));
+		break;
+		case 15: 
+			echo (json_encode($usuario->desRol($_REQUEST['rol_id'])));
+		break;
+		case 16: 
+			echo (json_encode($usuario->desDoc($_REQUEST['doc_id'])));
 		break; 
+		
  	}
  
 ?>

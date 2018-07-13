@@ -150,6 +150,39 @@ $("#BtnEditarDoc").click(function() {
     onRequest({ opcion : 13 ,doc_id:docID,doc:nomAct}, respActualizarDoc);
 });
 
+//-------------------------------Accion para deshabilitar DENTRO DE LOS MODAL--------------------------------
+//------------------------------------------Deshabilitar empresa-------------------------------
+
+$("#btnDesEmp").click(function() {
+    var empID ='';
+    var nomAct='';
+    empID = $("#idEmpDes").val();
+    nomAct = $("#nomEmpDes").val();
+    console.log("Presionaste boton de deshanilitar "+empID+nomAct);
+    onRequest({ opcion : 14 ,emp_id:empID}, respDesEmpFinal);
+});
+//------------------------------------------Deshabilitar rol--------------------------------------
+
+$("#btnDesRol").click(function() {
+    var rolID ='';
+    var nomAct='';
+    rolID = $("#idRolDes").val();
+    nomAct = $("#nomRolDes").val();
+    console.log("Presionaste boton de deshabilitar "+rolID+nomAct);
+    onRequest({ opcion : 15 ,rol_id:rolID}, respDesRolFinal);
+});
+//------------------------------------------Deshabilitar tipo de documento--------------------------------------
+
+$("#btnDesDoc").click(function() {
+    var docID ='';
+    var nomAct='';
+    docID = $("#idDocDes").val();
+    nomAct = $("#nomDocDes").val();
+    console.log("Presionaste boton de deshabilitar "+docID+nomAct);
+    onRequest({ opcion : 16 ,doc_id:docID}, respDesDocFinal);
+});
+
+
 
 //----------------------------------------------Enter al iniciar------------------------------------
     $("#password").keypress(function(e) {
@@ -224,7 +257,7 @@ var respEmpresas = function(data) {
      
      $("#tablaemp").html(d);
 }
-// Funcion de respuesta de la consulta que aplicamos con ajax para el catalogo de roles
+// ---------------------------------------------------CATALOGO DE ROLES---------------------------------------------------
 var respRoles = function(data) { 
     
     if (!data && data == null) 
@@ -246,7 +279,7 @@ var respRoles = function(data) {
      
      $("#tablarol").html(d);
 }
-// Funcion de respuesta de la consulta que aplicamos con ajax para el catalogo de documentos
+// ---------------------------------------------------CATALOGO DE tipo DE DOCUMENTOS---------------------------------------------------
 var respDoc = function(data) { 
     
     if (!data && data == null) 
@@ -420,6 +453,22 @@ var respActualizarDoc = function(data) {
 //_---------------------------------Respuestas para deshabilitar-----------------------------
 //---------------------------deshabilitar empresa-------------------------------
 var respDesEmp = function(data) { 
+    if (!data && data == null) 
+    return;   
+
+    console.log(data)
+        // validamos que exista una respuesta
+  if (data[0].empresa_id>0) { 
+      console.log(data[0].nombre);
+    $("#idEmpDes").val(data[0].empresa_id);
+    $("#nomEmpDes").val(data[0].nombre);
+
+     return;
+ }
+   
+}
+
+var respDesEmpFinal = function(data) { 
     console.log(data);
     if (!data && data == null)
     {
@@ -433,6 +482,70 @@ var respDesEmp = function(data) {
 
     onRequest({ opcion : 2 ,empresa:""}, respEmpresas);
 }
+//-----------------------------deshabilitar roles--------------------------
+var respDesRol = function(data) { 
+    if (!data && data == null) 
+    return;   
+
+    console.log(data)
+        // validamos que exista una respuesta
+  if (data[0].rol_id>0) { 
+      console.log(data[0].descripcion);
+    $("#idRolDes").val(data[0].rol_id);
+    $("#nomRolDes").val(data[0].descripcion);
+
+     return;
+ }
+   
+}
+
+var respDesRolFinal = function(data) { 
+    console.log(data);
+    if (!data && data == null)
+    {
+        M.toast({html: 'Rol no deshabilitado', classes: 'rounded red'}); 
+        return;
+    }
+    
+    M.toast({html: 'Rol deshabilitado', classes: 'rounded blue'}); 
+
+    $("#modalDeshabRol").modal("close");
+
+    onRequest({ opcion : 3 ,rol:""}, respRoles);
+}
+//-----------------------------deshabilitar tipo de documentos------------------------------
+var respDesDoc = function(data) { 
+    if (!data && data == null) 
+    return;   
+
+    console.log(data)
+        // validamos que exista una respuesta
+  if (data[0].doc_id>0) { 
+      console.log(data[0].descripcion);
+    $("#idDocDes").val(data[0].doc_id);
+    $("#nomDocDes").val(data[0].descripcion);
+
+     return;
+ }
+   
+}
+
+var respDesDocFinal = function(data) { 
+    console.log(data);
+    if (!data && data == null)
+    {
+        M.toast({html: 'Tipo de documento no deshabilitado', classes: 'rounded red'}); 
+        return;
+    }
+    
+    M.toast({html: 'Tipo de documento deshabilitado', classes: 'rounded blue'}); 
+
+    $("#modalDeshabDoc").modal("close");
+
+    onRequest({ opcion : 4 ,doc:""}, respDoc);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////
 //funciones del catalogo de empresas
 function editarEmp(emp_id)
 {
@@ -441,7 +554,7 @@ function editarEmp(emp_id)
 
 function deshabEmp(emp_id)
 {
-    onRequest({ opcion : 14,emp_id:emp_id}, respDesEmp);
+    onRequest({ opcion : 8 ,empresa_id:emp_id}, respDesEmp);
 }
 
 function BorrarEmp(emp_id)
@@ -456,7 +569,7 @@ function editarRol(rol_id)
 
 function deshabRol(rol_id)
 {
-
+    onRequest({ opcion : 10 ,rol_id:rol_id}, respDesRol);
 }
 
 function BorrarRol(rol_id)
@@ -471,7 +584,7 @@ function editarDoc(doc_id)
 
 function deshabDoc(doc_id)
 {
-
+    onRequest({ opcion : 12 ,doc_id:doc_id}, respDesDoc);
 }
 
 function BorrarDoc(doc_id)

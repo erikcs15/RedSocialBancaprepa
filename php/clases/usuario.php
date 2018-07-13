@@ -174,7 +174,7 @@
 				  }
 				return $datos;  
 			}
-			//-------------------------------CARGAR roles-------------------------------------------------
+//--------------------------------------------CARGAR roles-------------------------------------------------
 			public function cargarRolPorId($rol)
 			{
                 $q="";
@@ -348,7 +348,43 @@
 
 				
 
-				$sql="UPDATE b_cat_doc SET estatus_id=6 WHERE id=$empId";
+				$sql="UPDATE b_cat_empresas SET estatus_id=6 WHERE id=$empId";
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+
+				$datos['b_cat_empresas'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
+//----------------------------------Deshabilitar roles-----------------------------------------
+			public function desRol($rolId)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+
+				$sql="UPDATE b_cat_roles SET estatus_id=6 WHERE id=$rolId";
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+
+				$datos['b_cat_roles'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
+//----------------------------------Deshabilitar tipo de documentos-----------------------------------------
+			public function desDoc($docId)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+
+				$sql="UPDATE b_cat_doc SET estatus_id=6 WHERE id=$docId";
 				
 				$resultado = mysqli_query($this->con(), $sql);   
 
@@ -357,4 +393,23 @@
 				
 			}
 
+//-------------------------------------------Eliminar--------------------------------------------------------------
+//------------------------------Eliminar Empresas------------------------
+			public function desEmp($empId)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+
+				$sql="UPDATE b_cat_empresas SET estatus_id=6 WHERE id=$empId";
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+
+				$datos['b_cat_empresas'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
 	}
