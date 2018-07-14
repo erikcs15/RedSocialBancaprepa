@@ -187,7 +187,7 @@
            </div>
            <div class="modal-footer">
                <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
-               <a class="waves-effect waves-light btn red accent-4 right"><i class="material-icons left">delete</i>Eliminar</a>
+               <a id="btnEliDoc" class="waves-effect waves-light btn red accent-4 right"><i class="material-icons left">delete</i>Eliminar</a>
            </div>
     </div>
      <!-------------------- Inicializar modal-------------------------->

@@ -395,7 +395,7 @@
 
 //-------------------------------------------Eliminar--------------------------------------------------------------
 //------------------------------Eliminar Empresas------------------------
-			public function desEmp($empId)
+			public function eliminarEmp($empId)
 			{
 				$res=array();
 				$datos=array();
@@ -404,11 +404,47 @@
 
 				
 
-				$sql="UPDATE b_cat_empresas SET estatus_id=6 WHERE id=$empId";
+				$sql="DELETE FROM b_cat_empresas WHERE id=$empId";
 				
 				$resultado = mysqli_query($this->con(), $sql);   
 
 				$datos['b_cat_empresas'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
+//------------------------------Eliminar roles------------------------
+			public function eliminarRol($rolId)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+
+				$sql="DELETE FROM b_cat_roles WHERE id=$rolId";
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+
+				$datos['b_cat_roles'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
+//------------------------------Eliminar tipo de documentos------------------------
+			public function eliminarDoc($docId)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+
+				$sql="DELETE FROM b_cat_doc WHERE id=$docId";
+			
+				$resultado = mysqli_query($this->con(), $sql);   
+
+				$datos['b_cat_doc'] =  array('0' => '0' );
 				return  $datos;	
 				
 			}

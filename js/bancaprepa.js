@@ -149,37 +149,57 @@ $("#BtnEditarDoc").click(function() {
     console.log("Presionaste boton de editar "+docID+nomAct);
     onRequest({ opcion : 13 ,doc_id:docID,doc:nomAct}, respActualizarDoc);
 });
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 //-------------------------------Accion para deshabilitar DENTRO DE LOS MODAL--------------------------------
 //------------------------------------------Deshabilitar empresa-------------------------------
 
 $("#btnDesEmp").click(function() {
     var empID ='';
-    var nomAct='';
     empID = $("#idEmpDes").val();
-    nomAct = $("#nomEmpDes").val();
-    console.log("Presionaste boton de deshanilitar "+empID+nomAct);
+    console.log("Presionaste boton de deshanilitar "+empID);
     onRequest({ opcion : 14 ,emp_id:empID}, respDesEmpFinal);
 });
 //------------------------------------------Deshabilitar rol--------------------------------------
 
 $("#btnDesRol").click(function() {
     var rolID ='';
-    var nomAct='';
     rolID = $("#idRolDes").val();
-    nomAct = $("#nomRolDes").val();
-    console.log("Presionaste boton de deshabilitar "+rolID+nomAct);
+    console.log("Presionaste boton de deshabilitar "+rolID);
     onRequest({ opcion : 15 ,rol_id:rolID}, respDesRolFinal);
 });
 //------------------------------------------Deshabilitar tipo de documento--------------------------------------
 
 $("#btnDesDoc").click(function() {
     var docID ='';
-    var nomAct='';
     docID = $("#idDocDes").val();
-    nomAct = $("#nomDocDes").val();
-    console.log("Presionaste boton de deshabilitar "+docID+nomAct);
+    console.log("Presionaste boton de deshabilitar "+docID);
     onRequest({ opcion : 16 ,doc_id:docID}, respDesDocFinal);
+});
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//-------------------------------Accion para Eliminar DENTRO DE LOS MODAL--------------------------------
+//------------------------------------------Eliminar empresa-------------------------------
+
+$("#btnEliEmp").click(function() {
+    var empID ='';
+    empID = $("#idEmpEli").val();
+    console.log("Presionaste boton de eliminar "+empID);
+    onRequest({ opcion : 17 ,emp_id:empID}, respEliEmpFinal);
+});
+//------------------------------------------Eliminar rol--------------------------------------
+
+$("#btnEliRol").click(function() {
+    var rolID ='';
+    rolID = $("#idRolEli").val();
+    console.log("Presionaste boton de eliminar "+rolID);
+    onRequest({ opcion : 18 ,rol_id:rolID}, respEliRolFinal);
+});
+//------------------------------------------Eliminar tipo de documento--------------------------------------
+
+$("#btnEliDoc").click(function() {
+    var docID ='';
+    docID = $("#idDocEli").val();
+    console.log("Presionaste boton de eliminar "+docID);
+    onRequest({ opcion : 19 ,doc_id:docID}, respEliDocFinal);
 });
 
 
@@ -545,49 +565,155 @@ var respDesDocFinal = function(data) {
     onRequest({ opcion : 4 ,doc:""}, respDoc);
 }
 
+
+//_---------------------------------------------------------Respuestas para ELIMINAR-------------------------------------------------------------------------
+//---------------------------Eliminar empresa-------------------------------
+var respEliEmp = function(data) { 
+    if (!data && data == null) 
+    return;   
+
+    console.log(data)
+        // validamos que exista una respuesta
+  if (data[0].empresa_id>0) { 
+      console.log(data[0].nombre);
+    $("#idEmpEli").val(data[0].empresa_id);
+    $("#nomEmpEli").val(data[0].nombre);
+
+     return;
+ }
+   
+}
+
+var respEliEmpFinal = function(data) { 
+    console.log(data);
+    if (!data && data == null)
+    {
+        M.toast({html: 'Empresa no eliminada', classes: 'rounded red'}); 
+        return;
+    }
+    
+    M.toast({html: 'Empresa eliminada', classes: 'rounded red accent-4'}); 
+
+    $("#modalEliminarEmp").modal("close");
+
+    onRequest({ opcion : 2 ,empresa:""}, respEmpresas);
+}
+//-----------------------------Eliminar roles--------------------------
+var respEliRol = function(data) { 
+    if (!data && data == null) 
+    return;   
+
+    console.log(data)
+        // validamos que exista una respuesta
+  if (data[0].rol_id>0) { 
+      console.log(data[0].descripcion);
+    $("#idRolEli").val(data[0].rol_id);
+    $("#nomRolEli").val(data[0].descripcion);
+
+     return;
+ }
+   
+}
+
+var respEliRolFinal = function(data) { 
+    console.log(data);
+    if (!data && data == null)
+    {
+        M.toast({html: 'Rol no eliminado', classes: 'rounded red'}); 
+        return;
+    }
+    
+    M.toast({html: 'Rol eliminado', classes: 'rounded red accent-4'}); 
+
+    $("#modalEliminarRol").modal("close");
+
+    onRequest({ opcion : 3 ,rol:""}, respRoles);
+}
+//-----------------------------Eliminar tipo de documentos------------------------------
+var respEliDoc = function(data) { 
+    if (!data && data == null) 
+    return;   
+
+    console.log(data)
+        // validamos que exista una respuesta
+  if (data[0].doc_id>0) { 
+      console.log(data[0].descripcion);
+    $("#idDocEli").val(data[0].doc_id);
+    $("#nomDocEli").val(data[0].descripcion);
+
+     return;
+ }
+   
+}
+
+var respEliDocFinal = function(data) { 
+    console.log(data);
+    if (!data && data == null)
+    {
+        M.toast({html: 'Tipo de documento no eliminado', classes: 'rounded red'}); 
+        return;
+    }
+    
+    M.toast({html: 'Tipo de documento eliminado', classes: 'rounded orange darken-3'}); 
+
+    $("#modalEliminarDoc").modal("close");
+
+    onRequest({ opcion : 4 ,doc:""}, respDoc);
+}
+
+
 ///////////////////////////////////////////////////////////////////////////////////////
 //funciones del catalogo de empresas
 function editarEmp(emp_id)
 {
+    //Carga la empresa por su id para despues editarla
     onRequest({ opcion : 8 ,empresa_id:emp_id}, respEditEmp);
 }
 
 function deshabEmp(emp_id)
 {
+    //Carga la empresa por su id para despues deshabilitarla
     onRequest({ opcion : 8 ,empresa_id:emp_id}, respDesEmp);
 }
 
 function BorrarEmp(emp_id)
 {
-
+    //Carga la empresa por su id para despues borrarla
+    onRequest({ opcion : 8 ,empresa_id:emp_id}, respEliEmp);
 }
 //Funciones del catalogo de roles
 function editarRol(rol_id)
 {
+    //Carga el rol por su id para despues editarlo
     onRequest({ opcion : 10 ,rol_id:rol_id}, respEditRol);
 }
 
 function deshabRol(rol_id)
 {
+    //Carga el rol por su id para despues deshabilitarlo
     onRequest({ opcion : 10 ,rol_id:rol_id}, respDesRol);
 }
 
 function BorrarRol(rol_id)
 {
-
+    //Carga el rol por su id para despues borrarlo  
+    onRequest({ opcion : 10 ,rol_id:rol_id}, respEliRol);
 }
 //Funciones del catalogo de documentos
 function editarDoc(doc_id)
 {
+    //Carga el tipo de documento por su id para despues editarlo
     onRequest({ opcion : 12 ,doc_id:doc_id}, respEditDoc);
 }
 
 function deshabDoc(doc_id)
 {
+    //Carga el tipo de documento por su id para despues deshabilitarlo
     onRequest({ opcion : 12 ,doc_id:doc_id}, respDesDoc);
 }
 
 function BorrarDoc(doc_id)
 {
-
+     //Carga el tipo de documento por su id para despues borrarlo
+     onRequest({ opcion : 12 ,doc_id:doc_id}, respEliDoc);
 }
