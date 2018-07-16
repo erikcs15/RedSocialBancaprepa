@@ -2,7 +2,7 @@
 <nav class=" blue darken-4">
                     <div class="nav-wrapper">
                         
-                        <a href="#" class="brand-logo"><i class="material-icons">whatshot</i> Intranet Bancaprepa</a>
+                        <a href="#" class="brand-logo"><i class="material-icons">grain</i>Intranet Bancaprepa</a>
                         <ul class="right hide-on-med-and-down">
                             <li> <a class='dropdown-button waves-effect waves-dark' href='#' data-activates='dropdown_message'><i class="material-icons">notifications_active</i><span class="counts">9+</span></a>
                             <ul id='dropdown_message' class='dropdown-content messages collection'>
