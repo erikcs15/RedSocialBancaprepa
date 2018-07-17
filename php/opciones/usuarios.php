@@ -83,6 +83,10 @@
 		case 19: 
 			echo (json_encode($usuario->eliminarDoc($_REQUEST['doc_id'])));
 		break; 
+		case 20: 
+			echo (json_encode($usuario->cargarPublicaciones()));
+		break; 
+		
  	}
  
 ?>

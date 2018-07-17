@@ -6,7 +6,7 @@ $(document).ready(function(){
    
      //inicializar el modal
      $(document).ready(function(){
-        $('.AgregarEmpresa').modal();
+        $('.modalAgregarPub').modal();
       });
 
     //Inicia el evento click en el boton del login
@@ -213,7 +213,7 @@ $("#btnEliDoc").click(function() {
 
 });
 
-  
+//-----------------------------Funciones para cargar al iniciar una pagina---------------
 //Funcion que carga las empresas
 function cargarEmpresas(){
     onRequest({ opcion : 2 ,empresa:""}, respEmpresas);
@@ -227,6 +227,13 @@ function cargarRoles(){
 function cargarDoc(){
     onRequest({ opcion : 4 ,doc:""}, respDoc);
 }
+
+//Funcion que carga las publicaciones
+function cargarPublicaciones(){
+    console.log("Cargar publicaciones");
+    onRequest({ opcion : 20}, respCargarPublicaciones);
+}
+
 
 
 
@@ -660,7 +667,22 @@ var respEliDocFinal = function(data) {
 
     onRequest({ opcion : 4 ,doc:""}, respDoc);
 }
+//----------------------------------------Cargar publicaciones en index---------------------------
+var respCargarPublicaciones = function(data) { 
+    
+    if (!data && data == null) 
+    return; 
 
+    var d = '';
+
+     for (var i = 0; i < data.length; i++) {
+     d+= '<li class="collection-item avatar"> <span class="title"> <strong>'+data[i].publicador+'</strong></span>'+
+     '<p>'+data[i].descripcion+'</p>'+
+     '</li>';
+     }
+     
+     $("#cargarPubli").html(d);
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////
 //funciones del catalogo de empresas
