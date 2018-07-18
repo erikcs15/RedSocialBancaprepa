@@ -58,6 +58,8 @@
                             
                     </div>
             </nav>
+
+
 <ul id="slide-out" class="sidenav sidenav-fixed"  style="transform: translateX(-100%);">
               <li><div class="user-view">
                 <div class="background">
@@ -76,10 +78,17 @@
               <li><a class="waves-effect"><i class="material-icons">drafts</i>Mandar ticket</a></li>
               <li><a  name ="salirsesion" class="dropdown-trigger" data-target='dropdown1'><i class="material-icons">format_list_bulleted</i><i class="material-icons right">arrow_drop_down</i>Catalogos</a></li>
                 <!-- Dropdown Structure -->
-                <ul id='dropdown1' class='dropdown-content'>
+              <ul id='dropdown1' class='dropdown-content'>
                 <li><a id="catemp" name ="catemp" ><i class="material-icons">assignment</i>Catalogo de Empresas</a></li>
                 <li><a id="catroles" name ="catroles" ><i class="material-icons">assignment</i>Catalogo de Roles</a></li>
                 <li><a id="catdoc" name ="catdoc"><i class="material-icons">assignment</i>Tipos de Documento</a></li>
+             </ul>
+             <li><div class="divider"></div></li>
+               <!-- Dropdown Structure -->
+               <li><a  name ="salirsesion" class="dropdown-trigger" data-target='mantenimiento'><i class="material-icons">settings</i><i class="material-icons right">arrow_drop_down</i>Mantenimiento</a></li>
+            <ul id='mantenimiento' class='dropdown-content'>
+                <li><a id="" name ="catemp" ><i class="material-icons">person_pin</i>Usuarios</a></li> 
+                <li><a id="" name ="catemp" ><i class="material-icons">build</i>Accesos</a></li>  
              </ul>
             
     </ul>
