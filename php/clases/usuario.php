@@ -448,4 +448,42 @@
 				return  $datos;	
 				
 			}
-	}
+//-----------------------------Cargar publicaciones	-----------------------------
+			public function cargarPublicaciones()
+			{
+				$q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				//if($empresa != "")
+				//{	
+				//	$q = "Where emp.nombre like '%$empresa%'";
+				//}
+
+				$sql="SELECT c.descripcion AS publicador, p.descripcion 
+				      FROM b_publicaciones p 
+					  INNER JOIN capturistas c 
+					  ON p.capturista_id=c.id
+					  ORDER BY fecha_publicacion DESC"; 
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['publicador'] = $res[0];
+				   $datos[$i]['descripcion'] = $res[1]; 
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['publicador']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+				
+			}
+
+}
