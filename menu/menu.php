@@ -71,7 +71,7 @@
                 </strong></span></a>
               </div></li>
               <li><a id="inicio" name ="inicio" class="waves-effect"><i class="material-icons">home</i>Inicio</a></li>
-              <li><a href="#!" class="waves-effect"><i class="material-icons">add_circle</i>Agregar publicación</a></li>
+              <li><a class="waves-effect modal-trigger" href="#modalAgregarPub"><i class="material-icons">add_circle</i>Agregar publicación</a></li>
               <li><a class="waves-effect"><i class="material-icons">drafts</i>Mandar ticket</a></li>
               <li><div class="divider"></div></li>
               <li><a  name ="salirsesion" class="dropdown-trigger" data-target='dropdown1'><i class="material-icons">format_list_bulleted</i><i class="material-icons right">arrow_drop_down</i>Catalogos</a></li>
@@ -87,3 +87,37 @@
 
     
 <a href="#" data-target="slide-out" class="sidenav-trigger  hide-on-large-only"><i class="material-icons">menu</i></a>
+
+<!--------------------------------------------Modal agregar publicacion-------------------------------------------->
+    <div id="modalAgregarPub" class="modal">
+            <nav class="blue darken-3">
+                <div class="nav-wrapper">
+                    <a href="#!" class="brand-logo">
+                        <i class="large material-icons">add_circle</i>Agregar publicación
+                    </a> 
+                </div>
+            </nav>
+            <div class="modal-content">
+                <form class="col s12 no-padding">
+                    <div class="row">
+                        <div class="input field col s12">
+                            <input placeholder="Escriba su publicación" id="textopub" type="text" class="validate">
+                            <label for="Escriba su publicación" class="activate"></label>
+                        </div>
+                        <div class="input-field col s12">
+                            <select id="tipoPub">
+                            <option value="" disabled selected>Seleccione el tipo de publicacion</option>
+                            <option value="1">Comunicado</option>
+                            <option value="2">Imagenes</option>
+                            
+                            </select>
+                            <label>Seleccion el tipo de publicacion</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
+                <a id="BtnAgregarPub" class="waves-effect waves-light btn blue darken-3 right"><i class="material-icons left">add_circle_outline</i>Publicar</a>
+            </div>
+    </div>

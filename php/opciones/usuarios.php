@@ -85,6 +85,9 @@
 		break; 
 		case 20: 
 			echo (json_encode($usuario->cargarPublicaciones()));
+		break;
+		case 21: 
+			echo (json_encode($usuario->agregarPublicaciones($_REQUEST['texto'],$_REQUEST['tipopub'])));
 		break; 
 		
  	}

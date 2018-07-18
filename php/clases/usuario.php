@@ -448,6 +448,7 @@
 				return  $datos;	
 				
 			}
+//------------------------------------------------------PUBLICACIONES-------------------------------------------
 //-----------------------------Cargar publicaciones	-----------------------------
 			public function cargarPublicaciones()
 			{
@@ -465,7 +466,7 @@
 				      FROM b_publicaciones p 
 					  INNER JOIN capturistas c 
 					  ON p.capturista_id=c.id
-					  ORDER BY fecha_publicacion DESC"; 
+					  ORDER BY fecha_publicacion DESC,hora_publicacion DESC"; 
 				$resultado = mysqli_query($this->con(), $sql); 
 
 				while ($res = mysqli_fetch_row($resultado)) {
@@ -485,5 +486,22 @@
 				return $datos;  
 				
 			}
-
+	//-------------------------------Agregar publicaciones-------------------------
+			public function agregarPublicaciones($texto,$tipopub)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+				$txtUsuario=$_COOKIE["b_capturista_id"];  
+	
+				$sql="INSERT INTO b_publicaciones(capturista_id,descripcion,fecha_publicacion,hora_publicacion, tipo_doc, empresa_id) 
+									VALUES($txtUsuario,'$texto',CURDATE(),CURTIME(),$tipopub,1)";
+			    
+				$resultado = mysqli_query($this->con(), $sql);   
+				
+				$datos['b_publicaciones'] =  array('0' => '0' );
+				return  $datos;	
+			}
 }

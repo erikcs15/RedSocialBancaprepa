@@ -6,7 +6,11 @@ $(document).ready(function(){
    
      //inicializar el modal
      $(document).ready(function(){
-        $('.modalAgregarPub').modal();
+        $('.modal').modal();
+      });
+
+      $(document).ready(function(){
+        $('select').formSelect();
       });
 
     //Inicia el evento click en el boton del login
@@ -200,6 +204,17 @@ $("#btnEliDoc").click(function() {
     docID = $("#idDocEli").val();
     console.log("Presionaste boton de eliminar "+docID);
     onRequest({ opcion : 19 ,doc_id:docID}, respEliDocFinal);
+});
+///------------------------------------------PUBLICACIONES--------------------------------------------------------
+//----------------------------------------------Agregar publicacion modal---------------------------------------- 
+$("#BtnAgregarPub").click(function() {
+    var textoPublicacion='';
+    var tipodoc='';
+    textoPublicacion = $("#textopub").val();
+    tipodoc=$("#tipoPub").val();
+    console.log("Presionaste "+textoPublicacion+" "+tipodoc);
+    onRequest({ opcion : 21, texto:textoPublicacion, tipopub:tipodoc},respAgregaPublicacion);
+
 });
 
 
@@ -667,6 +682,7 @@ var respEliDocFinal = function(data) {
 
     onRequest({ opcion : 4 ,doc:""}, respDoc);
 }
+//------------------------------------------------PUBLICACIONES------------------------------------------
 //----------------------------------------Cargar publicaciones en index---------------------------
 var respCargarPublicaciones = function(data) { 
     
@@ -682,6 +698,21 @@ var respCargarPublicaciones = function(data) {
      }
      
      $("#cargarPubli").html(d);
+}
+//---------------------------------------------Agregar publicaciones------------------------------
+var respAgregaPublicacion = function(data) { 
+    console.log(data);
+    if (!data && data == null)
+    {
+        M.toast({html: 'Publicacion no agregada, consulte con el area de sistemas', classes: 'rounded red'}); 
+        return;
+    }
+    
+    M.toast({html: 'Publicacion Agregada!', classes: 'rounded #43a047 green darken-1'}); 
+
+    $("#modalAgregarPub").modal("close");
+
+    onRequest({ opcion : 20}, respCargarPublicaciones);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
