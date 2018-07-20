@@ -1,17 +1,31 @@
 // Funcion principal de Jquery la cual escanea en tiempo real nuestro documento para verificar que los eventos se ejecuten correctamente
 $(document).ready(function(){
+    //inicializamos selects
+    onRequest({ opcion : 4,doc:''},respTpublic);
+    onRequest({ opcion : 2,empresa:''},respEmpresa);
+    onRequest({ opcion : 3,rol:''},respRol);
+
     //Inicializamos menu
     $('.dropdown-trigger').dropdown();
-
-   
+    //contador de caracteres para tex area
+    $('textarea#textopub').characterCounter();
      //inicializar el modal
      $(document).ready(function(){
         $('.modal').modal();
       });
-
-      $(document).ready(function(){
-        $('select').formSelect();
-      });
+      
+       
+     //evento de switch de logeo 
+     $( "#chkDoc" ).click(function() {  
+        if($(this).is(":checked")) {
+             $("#btnDocumento").removeClass('grey');
+             $("#documentoCargado").removeAttr("disabled");
+          }
+          else {
+            $("#btnDocumento").addClass('grey');
+            $("#documentoCargado").attr('disabled','disabled');
+          }
+     });
 
     //Inicia el evento click en el boton del login
     $( "#btn_login" ).click(function() { 
@@ -740,6 +754,51 @@ var respAgregaPublicacion = function(data) {
 
     onRequest({ opcion : 20}, respCargarPublicaciones);
 }
+// ---------------------------------------CARGAMOS TODOS LOS SELECTS ---------------------------------------
+ 
+
+var respTpublic = function(data) { 
+    if (!data && data == null)
+        return; 
+
+     
+    var documento='<option value="0" disabled selected>Seleccione el Tipo de publicacion</option>';
+
+    for(var i=0; i<data.length; i++){
+        documento+='<option value='+data[i].doc_id+'>'+data[i].descripcion+'</option>';
+    }
+    
+    $('#tipoPub').html(documento);
+    $('#tipoPub').formSelect();  
+
+}
+var respEmpresa = function(data) { 
+    if (!data && data == null)
+        return;  
+     
+    var documento='<option value="0" disabled selected>Seleccione el Tipo de publicacion</option>';
+
+    for(var i=0; i<data.length; i++){
+        documento+='<option value='+data[i].empresa_id+'>'+data[i].nombre+'</option>';
+    }
+    
+    $('#tipoEmpresa').html(documento);
+    $('#tipoEmpresa').formSelect(); 
+}
+var respRol = function(data) { 
+    if (!data && data == null)
+        return;  
+ 
+    var documento='<option value="0" disabled selected>Seleccione el Tipo de publicacion</option>';
+
+    for(var i=0; i<data.length; i++){
+        documento+='<option value='+data[i].rol_id+'>'+data[i].descripcion+'</option>';
+    }
+    
+    $('#tipoRol').html(documento);
+    $('#tipoRol').formSelect(); 
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////////////
 //funciones del catalogo de empresas

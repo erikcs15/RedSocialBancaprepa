@@ -1,3 +1,4 @@
+ 
 <div id="menu">
 <nav class=" blue darken-4">
                     <div class="nav-wrapper">
@@ -98,7 +99,7 @@
 <a href="#" data-target="slide-out" class="sidenav-trigger  hide-on-large-only"><i class="material-icons">menu</i></a>
 
 <!--------------------------------------------Modal agregar publicacion-------------------------------------------->
-    <div id="modalAgregarPub" class="modal">
+    <div id="modalAgregarPub" class="modal modal-fixed-footer">
             <nav class="blue darken-3">
                 <div class="nav-wrapper">
                     <a href="#!" class="brand-logo">
@@ -109,18 +110,45 @@
             <div class="modal-content">
                 <form class="col s12 no-padding">
                     <div class="row">
-                        <div class="input field col s12">
-                            <input placeholder="Escriba su publicación" id="textopub" type="text" class="validate">
-                            <label for="Escriba su publicación" class="activate"></label>
-                        </div>
                         <div class="input-field col s12">
-                            <select id="tipoPub">
-                            <option value="" disabled selected>Seleccione el tipo de publicacion</option>
-                            <option value="1">Comunicado</option>
-                            <option value="2">Imagenes</option>
+                            <i class="material-icons prefix">mode_edit</i>
+                            <textarea id="textopub" class="materialize-textarea" data-length="300"></textarea>
+                            <label for="textopub">Publicacion</label>
+                        </div> 
+                        <div class=" col s12">
+                            <div class='input-field col s4'>
+                                    <select id="tipoPub"> 
+                                    </select>
+                                    <label>Seleccion el tipo de publicacion</label>
+                            </div>
+                            <div class='input-field col s4'>
+                                    <select id="tipoEmpresa"> 
+                                    </select>
+                                    <label>Seleccion la Empresa</label>
+                            </div>
+                            <div class='input-field col s4'>
+                                    <select id="tipoRol"> 
+                                    </select>
+                                    <label>Seleccione el Rol de Visualizacion</label>
+                            </div>
                             
-                            </select>
-                            <label>Seleccion el tipo de publicacion</label>
+                        </div>
+                        <div class="switch">¿Desea incluir algun documento?
+                            <label>
+                            No
+                            <input id='chkDoc' type="checkbox">
+                            <span class="lever"></span>
+                            Si
+                            </label>
+                        </div>
+                        <div class="file-field input-field">
+                            <div id="btnDocumento" class="btn grey">
+                                <span>Archivo</span>
+                                <input id="documentoCargado" disabled type="file">
+                            </div>
+                            <div class="file-path-wrapper" >
+                                <input class="file-path validate" type="text">
+                            </div>
                         </div>
                     </div>
                 </form>
