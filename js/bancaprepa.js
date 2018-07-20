@@ -103,7 +103,12 @@ $(document).ready(function(){
 //-----------------------------------Agregar empresa------------------------------
     $("#BtnAgregarEmpresa").click(function() {
         var nombreEmp='';
-        nombreEmp = $("#nomEmp").val();
+        nombreEmp = $("#nomEmp").val().toUpperCase();
+
+        if(nombreEmp==""){
+            M.toast({html: 'Los datos ingresados no son correctos.', classes: 'rounded red'}); 
+            return;
+        }
         console.log("Presionaste el boton del modal para agregar empresa: "+nombreEmp);
         onRequest({ opcion : 5, empresa:nombreEmp},respAgregaEmpresa);
 
@@ -112,7 +117,12 @@ $(document).ready(function(){
 //-------------------------------------AGREGAR ROLES------------------------------------
     $("#BtnAgregarRol").click(function() {
         var nombreRol='';
-        nombreRol = $("#nomrol").val();
+        nombreRol = $("#nomrol").val().toUpperCase();
+
+        if(nombreRol==""){
+            M.toast({html: 'Los datos ingresados no son correctos.', classes: 'rounded red'}); 
+            return;
+        }
         console.log("Presionaste el boton del modal para agregar roles: "+nombreRol);
         onRequest({ opcion : 6, rol:nombreRol},respAgregaRol);
 
@@ -120,7 +130,11 @@ $(document).ready(function(){
 //-------------------------------------AGREGAR Tipo de documentos------------------------------------
     $("#BtnAgregarDoc").click(function() {
         var nombreDoc='';
-        nombreDoc = $("#nomdoc").val();
+        nombreDoc = $("#nomdoc").val().toUpperCase();
+        if(nombreDoc==""){
+            M.toast({html: 'Los datos ingresados no son correctos.', classes: 'rounded red'}); 
+            return;
+        }
         console.log("Presionaste el boton del modal para agregar tipo de documentos: "+nombreDoc);
         onRequest({ opcion : 7, doc:nombreDoc},respAgregaDoc);
 
@@ -131,7 +145,11 @@ $(document).ready(function(){
         var empID ='';
         var nomAct='';
         empID = $("#idEmpEdit").val();
-        nomAct = $("#nomEmpEdit").val();
+        nomAct = $("#nomEmpEdit").val().toUpperCase();
+        if(nomAct==""){
+            M.toast({html: 'Los datos ingresados no son correctos.', classes: 'rounded red'}); 
+            return;
+        }
         console.log("Presionaste boton de editar "+empID+nomAct);
         onRequest({ opcion : 9 ,empresa_id:empID,empresa:nomAct}, respActualizarEmp);
     });
@@ -140,7 +158,11 @@ $("#BtnEditarRol").click(function() {
     var rolID ='';
     var nomAct='';
     rolID = $("#idRolEdit").val();
-    nomAct = $("#editNomRol").val();
+    nomAct = $("#editNomRol").val().toUpperCase();
+    if(nomAct==""){
+        M.toast({html: 'Los datos ingresados no son correctos.', classes: 'rounded red'}); 
+        return;
+    }
     console.log("Presionaste boton de editar "+rolID+nomAct);
     onRequest({ opcion : 11 ,rol_id:rolID,rol:nomAct}, respActualizarRol);
 });
@@ -149,7 +171,11 @@ $("#BtnEditarDoc").click(function() {
     var docID ='';
     var nomAct='';
     docID = $("#idDocEdit").val();
-    nomAct = $("#editNomDoc").val();
+    nomAct = $("#editNomDoc").val().toUpperCase();
+    if(nomAct==""){
+        M.toast({html: 'Los datos ingresados no son correctos.', classes: 'rounded red'}); 
+        return;
+    }
     console.log("Presionaste boton de editar "+docID+nomAct);
     onRequest({ opcion : 13 ,doc_id:docID,doc:nomAct}, respActualizarDoc);
 });

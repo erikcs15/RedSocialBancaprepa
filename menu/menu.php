@@ -4,7 +4,7 @@
                         
                         <a href="#" class="brand-logo"><i class="material-icons">grain</i>Intranet Bancaprepa</a>
                         <ul class="right hide-on-med-and-down">
-                            <li> <a class='dropdown-button waves-effect waves-dark' href='#' data-activates='dropdown_message'><i class="material-icons">notifications_active</i><span class="counts">9+</span></a>
+                            <li> <a class='dropdown-button waves-effect waves-dark ' href='#' data-activates='dropdown_message'><i class="material-icons">notifications_active</i><span class="counts black-text">9+</span></a>
                             <ul id='dropdown_message' class='dropdown-content messages collection'>
                                 <!--<li class="collection-item"> <img src="/RedSocialBancaprepa/img/pic2.png" alt="" class="circle"> <span class="title">Max Smith</span>
                                     <p>Last Updated: 2:00 AM<br>
@@ -25,7 +25,7 @@
                                 <li class="collection-item center-align"> View all </li>-->
                             </ul>
                             </li>
-                            <li> <a class='dropdown-button waves-effect waves-dark' href='#' data-activates='dropdown_task'><i class="material-icons">message</i><span class="counts">9+</span></a>
+                            <li> <a class='dropdown-button waves-effect waves-dark' href='#' data-activates='dropdown_task'><i class="material-icons">message</i><span class="counts black-text">9+</span></a>
                             <ul id='dropdown_task' class='dropdown-content listitems collection'>
                                 <li class="collection-item row">
                                 <div class="col s2"> <img src="/RedSocialBancaprepa/img/pic2.png" alt="" class="circle responsive-img"> <!-- notice the "circle" class --> 
