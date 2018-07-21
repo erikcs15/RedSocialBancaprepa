@@ -250,9 +250,21 @@ $("#btnEliDoc").click(function() {
 $("#BtnAgregarPub").click(function() {
     var textoPublicacion='';
     var tipodoc='';
+    var empresa_id='';
+    var rol_id='';
+    var documento='';
+
+
     textoPublicacion = $("#textopub").val();
     tipodoc=$("#tipoPub").val();
-    console.log("Presionaste "+textoPublicacion+" "+tipodoc);
+    empresa_id=$("#tipoEmpresa").val();
+    rol_id=$("#tipoRol").val();
+    docuemento =$("#documentoCargado").val();
+   
+    
+    console.log(documento);
+ 
+    return;
     onRequest({ opcion : 21, texto:textoPublicacion, tipopub:tipodoc},respAgregaPublicacion);
 
 });

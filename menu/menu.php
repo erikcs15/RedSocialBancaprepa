@@ -1,9 +1,29 @@
- 
-<div id="menu">
+<script>
+     $(function(){
+        $("input[name='file']").on("change", function(){
+            var formData = new FormData($("#uploadimage")[0]);
+            var ruta = "cargarImagenes.php";
+            $.ajax({
+                url: ruta,
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(datos)
+                {
+                    $("#respuesta").html(datos);
+                }
+            });
+        });
+     });
+</script>
+
+<div id="menu" >
 <nav class=" blue darken-4">
                     <div class="nav-wrapper">
                         
                         <a href="#" class="brand-logo"><i class="material-icons">grain</i>Intranet Bancaprepa</a>
+                    
                         <ul class="right hide-on-med-and-down">
                             <li> <a class='dropdown-button waves-effect waves-dark ' href='#' data-activates='dropdown_message'><i class="material-icons">notifications_active</i><span class="counts black-text">9+</span></a>
                             <ul id='dropdown_message' class='dropdown-content messages collection'>
@@ -73,7 +93,7 @@
                 </div>
             </nav>
             <div class="modal-content">
-                <form class="col s12 no-padding">
+                <form class="col s12 no-padding" id="uploadimage" action="" method="post" enctype="multipart/form-data">
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">mode_edit</i>
@@ -121,5 +141,6 @@
             <div class="modal-footer">
                 <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
                 <a id="BtnAgregarPub" class="waves-effect waves-light btn blue darken-3 right"><i class="material-icons left">add_circle_outline</i>Publicar</a>
+                
             </div>
     </div>
