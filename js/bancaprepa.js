@@ -1,5 +1,6 @@
 // Funcion principal de Jquery la cual escanea en tiempo real nuestro documento para verificar que los eventos se ejecuten correctamente
 $(document).ready(function(){
+ 
     //inicializamos selects
     onRequest({ opcion : 4,doc:''},respTpublic);
     onRequest({ opcion : 2,empresa:''},respEmpresa);
@@ -867,3 +868,5 @@ function BorrarDoc(doc_id)
      //Carga el tipo de documento por su id para despues borrarlo
      onRequest({ opcion : 12 ,doc_id:doc_id}, respEliDoc);
 }
+
+ 

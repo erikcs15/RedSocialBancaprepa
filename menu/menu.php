@@ -1,22 +1,9 @@
-<script>
-     $(function(){
-        $("input[name='file']").on("change", function(){
-            var formData = new FormData($("#uploadimage")[0]);
-            var ruta = "cargarImagenes.php";
-            $.ajax({
-                url: ruta,
-                type: "POST",
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(datos)
-                {
-                    $("#respuesta").html(datos);
-                }
-            });
-        });
-     });
-</script>
+<?php
+if(is_null($_COOKIE["b_capturista"])){
+        header('Location: http://localhost/RedSocialBancaprepa/login.html');
+}
+
+?>
 
 <div id="menu" >
 <nav class=" blue darken-4">
@@ -69,6 +56,7 @@
                 <li><a id="catroles" name ="catroles" ><i class="material-icons">assignment</i>Catalogo de Roles</a></li>
                 <li><a id="catdoc" name ="catdoc"><i class="material-icons">assignment</i>Tipos de Documento</a></li>
              </ul>
+             <li><a href="http:\\localhost\RedSocialBancaprepa\documentos\addfile.php" class="waves-effect"><i class="material-icons">file_upload</i>Carga de Archivos</a></li>
              <li><div class="divider"></div></li>
                <!-- Dropdown Structure -->
                <li><a  name ="salirsesion" class="dropdown-trigger" data-target='mantenimiento'><i class="material-icons">settings</i><i class="material-icons right">arrow_drop_down</i>Mantenimiento</a></li>
@@ -83,6 +71,7 @@
     
 <a href="#" data-target="slide-out" class="sidenav-trigger  hide-on-large-only"><i class="material-icons">menu</i></a>
 
+
 <!--------------------------------------------Modal agregar publicacion-------------------------------------------->
     <div id="modalAgregarPub" class="modal modal-fixed-footer">
             <nav class="blue darken-3">
@@ -93,7 +82,7 @@
                 </div>
             </nav>
             <div class="modal-content">
-                <form class="col s12 no-padding" id="uploadimage" action="" method="post" enctype="multipart/form-data">
+                <form class="col s12 no-padding" action="<?php echo $_SERVER["PHP_SELF"]?>" method="post" enctype="multipart/form-data" name="inscripcion">
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">mode_edit</i>
@@ -129,14 +118,16 @@
                         <div class="file-field input-field">
                             <div id="btnDocumento" class="btn grey">
                                 <span>Archivo</span>
-                                <input id="documentoCargado" disabled type="file">
+                                <input id="documentoCargado" disabled type="file"  name="archivo[]" multiple="multiple">
                             </div>
                             <div class="file-path-wrapper" >
                                 <input class="file-path validate" type="text">
                             </div>
                         </div>
                     </div>
+                    <input type="submit" value="Enviar"  />
                 </form>
+                <div id="fileuploader">Upload</div>     
             </div>
             <div class="modal-footer">
                 <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
