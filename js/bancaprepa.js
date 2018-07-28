@@ -5,6 +5,7 @@ $(document).ready(function(){
     onRequest({ opcion : 4,doc:''},respTpublic);
     onRequest({ opcion : 2,empresa:''},respEmpresa);
     onRequest({ opcion : 3,rol:''},respRol);
+    onRequest({ opcion : 3,rol:''},respRolAccesos);
 
     //Inicializamos menu
     $('.dropdown-trigger').dropdown();
@@ -78,6 +79,14 @@ $(document).ready(function(){
      //Redirige al inicio
      $( "#inicio" ).click(function() { 
         location.href="/RedSocialBancaprepa/index.php";
+     });
+      //Redirige a los accesos
+     $( "#accesos" ).click(function() { 
+        location.href="/RedSocialBancaprepa/mantenimiento/accesos.php";
+     });
+     
+     $( "#tipoRolAc" ).keypress(function() { 
+        console.log("Presionaste");
      });
 //----------------------------------busquedas--------------------------------------------------------------------
      //Busqueda por empresa
@@ -301,6 +310,7 @@ function cargarPublicaciones(){
     console.log("Cargar publicaciones");
     onRequest({ opcion : 20}, respCargarPublicaciones);
 }
+
 
 
 
@@ -812,6 +822,20 @@ var respRol = function(data) {
     $('#tipoRol').formSelect(); 
 }
 
+var respRolAccesos = function(data) { 
+    if (!data && data == null)
+        return;  
+ 
+    var documento='<option value="0" disabled selected>Seleccione el Tipo de rol</option>';
+
+    for(var i=0; i<data.length; i++){
+        documento+='<option value='+data[i].rol_id+'>'+data[i].descripcion+'</option>';
+    }
+    console.log(documento);
+    
+    $('#tipoRolAc').html(documento);
+    $('#tipoRolAc').formSelect(); 
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////
 //funciones del catalogo de empresas
@@ -867,6 +891,13 @@ function BorrarDoc(doc_id)
 {
      //Carga el tipo de documento por su id para despues borrarlo
      onRequest({ opcion : 12 ,doc_id:doc_id}, respEliDoc);
+}
+
+function cargarAccesos(rol_id){
+    console.log("Cargar accesos "+rol_id);
+    
+        documento=' <h6>Menu</h6> <p><label><input type="checkbox" checked="checked" /><span>Yellow</span></label></p>';
+        $('#accesosRol').html(documento);
 }
 
  

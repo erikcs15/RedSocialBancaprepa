@@ -62,7 +62,7 @@ if(is_null($_COOKIE["b_capturista"])){
                <li><a  name ="salirsesion" class="dropdown-trigger" data-target='mantenimiento'><i class="material-icons">settings</i><i class="material-icons right">arrow_drop_down</i>Mantenimiento</a></li>
             <ul id='mantenimiento' class='dropdown-content'>
                 <li><a id="" name ="catemp" ><i class="material-icons">person_pin</i>Usuarios</a></li> 
-                <li><a id="" name ="catemp" ><i class="material-icons">build</i>Accesos</a></li>  
+                <li><a id="accesos" name ="catemp" ><i class="material-icons">build</i>Accesos</a></li>  
              </ul>
             
     </ul>
