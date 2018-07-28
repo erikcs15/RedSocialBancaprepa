@@ -504,4 +504,58 @@
 				$datos['b_publicaciones'] =  array('0' => '0' );
 				return  $datos;	
 			}
+//----------------------------------CARGAR MENU para accesos--------------------------------------
+			public function cargarAccesos($id_rol)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+
+				$sql="SELECT id_rol,agregarPub, mandarTicket,catEmp,catRol,tipdoc,cargaArchivos,usuarios,accesos FROM b_menu_roles WHERE id_rol=$id_rol";
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+				
+				while ($res = mysqli_fetch_row($resultado)) {
+
+					$datos[$i]['id_rol'] = $res[0];
+					$datos[$i]['agregarPub'] = $res[1];
+					$datos[$i]['mandarTicket'] = $res[2];
+					$datos[$i]['catEmp'] = $res[3]; 
+					$datos[$i]['catRol'] = $res[4];
+					$datos[$i]['tipdoc'] = $res[5];
+					$datos[$i]['cargaArchivos'] = $res[6]; 
+					$datos[$i]['usuarios'] = $res[7];
+					$datos[$i]['accesos'] = $res[8]; 
+					$i++;
+ 
+				 } 
+				  
+				 if ( count($datos )==0) { 
+					 $datos[0]['id_rol']  =0;
+					 return  $datos; 
+				   }
+ 
+ 
+				 return $datos;
+			}
+//----------------------------------CARGAR MENU para accesos--------------------------------------
+			public function updateAcceso($rol_id,$nom_menu,$valor)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				$txtUsuario=$_COOKIE["b_menu_roles"];  
+
+				$sql="UPDATE b_menu_roles SET $nom_menu=$valor WHERE id_rol=$rol_id";
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+				
+				$datos['b_menu_roles'] =  array('0' => '0' );
+				return  $datos;	
+			}
 }

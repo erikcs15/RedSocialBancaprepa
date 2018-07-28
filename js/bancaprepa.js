@@ -88,6 +88,9 @@ $(document).ready(function(){
      $( "#tipoRolAc" ).keypress(function() { 
         console.log("Presionaste");
      });
+     
+     
+
 //----------------------------------busquedas--------------------------------------------------------------------
      //Busqueda por empresa
      $("#busquedaEmpleados").keypress(function(e) {
@@ -836,6 +839,105 @@ var respRolAccesos = function(data) {
     $('#tipoRolAc').html(documento);
     $('#tipoRolAc').formSelect(); 
 }
+var respAccesosPorRol  = function(data) { 
+    if (!data && data == null)
+        return;  
+    var agregarPub,mandarTicket,catEmp,catRol,tipdoc,cargaArchivos,usuarios,accesos;
+    var documento='';
+    for(var i=0; i<data.length; i++){
+        if(data[i].agregarPub==1)
+        {
+            agregarPub='checked="checked"';
+        }
+        else
+        {
+            agregarPub='';
+        }
+        if(data[i].mandarTicket==1)
+        {
+            mandarTicket='checked="checked"';
+        }
+        else
+        {
+            mandarTicket='';
+        }
+        if(data[i].catEmp==1)
+        {
+            catEmp='checked="checked"';
+        }
+        else
+        {
+            catEmp='';
+        }
+        if(data[i].catRol==1)
+        {
+            catRol='checked="checked"';
+        }
+        else
+        {
+            catRol='';
+        }
+        if(data[i].tipdoc==1)
+        {
+            tipdoc='checked="checked"';
+        }
+        else
+        {
+            tipdoc='';
+        }
+        if(data[i].cargaArchivos==1)
+        {
+            cargaArchivos='checked="checked"';
+        }
+        else
+        {
+            cargaArchivos='';
+        }
+        if(data[i].usuarios==1)
+        {
+            usuarios='checked="checked"';
+        }
+        else
+        {
+            usuarios='';
+        }
+        if(data[i].accesos==1)
+        {
+            accesos='checked="checked"';
+        }
+        else
+        {
+            accesos='';
+        }
+        
+        documento+=' <h6>Menu</h6> <p><label><input type="checkbox" id="cbAgegarPub" onChange="habDesAccesosAgregarPub('+data[i].id_rol+')" '+agregarPub+'/><span>Agregar Publicacion</span></label></p>'+
+        '<p><label><input type="checkbox" '+mandarTicket+'/><span>Mandar Ticket</span></label></p>'+
+        '<p><label><input type="checkbox" '+catEmp+'/><span>Catalogo de empresas</span></label></p>'+
+        '<p><label><input type="checkbox" '+catRol+'/><span>Catalogo de roles</span></label></p>'+
+        '<p><label><input type="checkbox" '+tipdoc+'/><span>Tipo de documentos</span></label></p>'+
+        '<p><label><input type="checkbox" '+cargaArchivos+'/><span>Cargar Archivos</span></label></p>'+
+        '<p><label><input type="checkbox" '+usuarios+'/><span>Usuarios</span></label></p>'+
+        '<p><label><input type="checkbox" '+accesos+'/><span>Accesos</span></label></p>';
+    }
+    
+    $('#accesosRol').html(documento);
+}
+
+
+//---------Respuesta para actualizar los accesos al menu de agregar publicacion
+var respUpdateAccesos = function(data) { 
+    console.log(data);
+    if (!data && data == null)
+    {
+        M.toast({html: 'Acceso no actualizado, consulte con el area de sistemas', classes: 'rounded red'}); 
+        return;
+    }
+    
+    M.toast({html: 'Acceso Actualizado!', classes: 'rounded #43a047 green darken-1'}); 
+
+    //Actualiza de nuevo los accesos
+    
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////
 //funciones del catalogo de empresas
@@ -895,9 +997,23 @@ function BorrarDoc(doc_id)
 
 function cargarAccesos(rol_id){
     console.log("Cargar accesos "+rol_id);
-    
-        documento=' <h6>Menu</h6> <p><label><input type="checkbox" checked="checked" /><span>Yellow</span></label></p>';
-        $('#accesosRol').html(documento);
+    onRequest({ opcion : 22 ,id_rol:rol_id}, respAccesosPorRol);
+       
+}
+
+function habDesAccesosAgregarPub(id_rol)
+{
+    var menu = "agregarPub";
+    console.log("prueba check "+id_rol+" "+menu);
+    if(document.getElementById("cbAgegarPub").checked == true)
+    {
+        onRequest({ opcion : 23 ,id_rol:id_rol, nom_menu:menu, valor:1}, respUpdateAccesos);
+        console.log("Esta check");
+    }
+    else{
+        console.log("No esta check");
+        onRequest({ opcion : 23 ,id_rol:id_rol, nom_menu:menu, valor:0}, respUpdateAccesos);
+    }   
 }
 
  

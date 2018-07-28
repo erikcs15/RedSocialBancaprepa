@@ -89,6 +89,12 @@
 		case 21: 
 			echo (json_encode($usuario->agregarPublicaciones($_REQUEST['texto'],$_REQUEST['tipopub'])));
 		break;  
+		case 22: 
+			echo (json_encode($usuario->cargarAccesos($_REQUEST['id_rol'])));
+		break; 
+		case 23: 
+			echo (json_encode($usuario->updateAcceso($_REQUEST['id_rol'],$_REQUEST['nom_menu'],$_REQUEST['valor'])));
+		break;
 		
  	}
  
