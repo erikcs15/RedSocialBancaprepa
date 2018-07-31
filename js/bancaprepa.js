@@ -1,5 +1,8 @@
 // Funcion principal de Jquery la cual escanea en tiempo real nuestro documento para verificar que los eventos se ejecuten correctamente
 $(document).ready(function(){
+
+    //inicializamos contador de caracteres
+    $('#pDescripcion').characterCounter();
  
     //inicializamos selects
     onRequest({ opcion : 4,doc:''},respTpublic);
@@ -788,7 +791,7 @@ var respTpublic = function(data) {
         return; 
 
      
-    var documento='<option value="0" disabled selected>Seleccione el Tipo de publicacion</option>';
+    var documento='<option  disabled selected>Seleccione el Tipo de publicacion</option>';
 
     for(var i=0; i<data.length; i++){
         documento+='<option value='+data[i].doc_id+'>'+data[i].descripcion+'</option>';
@@ -797,12 +800,18 @@ var respTpublic = function(data) {
     $('#tipoPub').html(documento);
     $('#tipoPub').formSelect();  
 
+    $('#tipoPubAddFile').html(documento);
+    $('#tipoPubAddFile').formSelect();
+
+
+    
+
 }
 var respEmpresa = function(data) { 
     if (!data && data == null)
         return;  
      
-    var documento='<option value="0" disabled selected>Seleccione el Tipo de publicacion</option>';
+    var documento='<option  disabled selected>Seleccione la Empresa</option>';
 
     for(var i=0; i<data.length; i++){
         documento+='<option value='+data[i].empresa_id+'>'+data[i].nombre+'</option>';
@@ -810,12 +819,15 @@ var respEmpresa = function(data) {
     
     $('#tipoEmpresa').html(documento);
     $('#tipoEmpresa').formSelect(); 
+
+    $('#tipoEmpresaAddFile').html(documento);
+    $('#tipoEmpresaAddFile').formSelect(); 
 }
 var respRol = function(data) { 
     if (!data && data == null)
         return;  
  
-    var documento='<option value="0" disabled selected>Seleccione el Tipo de publicacion</option>';
+    var documento='<option   disabled selected>Seleccione el Rol</option>';
 
     for(var i=0; i<data.length; i++){
         documento+='<option value='+data[i].rol_id+'>'+data[i].descripcion+'</option>';
@@ -823,6 +835,9 @@ var respRol = function(data) {
     
     $('#tipoRol').html(documento);
     $('#tipoRol').formSelect(); 
+
+    $('#tipoRolAddFile').html(documento);
+    $('#tipoRolAddFile').formSelect(); 
 }
 
 var respRolAccesos = function(data) { 
@@ -834,10 +849,12 @@ var respRolAccesos = function(data) {
     for(var i=0; i<data.length; i++){
         documento+='<option value='+data[i].rol_id+'>'+data[i].descripcion+'</option>';
     }
-    console.log(documento);
     
     $('#tipoRolAc').html(documento);
     $('#tipoRolAc').formSelect(); 
+
+    $('#tipoRolAcAddFile').html(documento);
+    $('#tipoRolAcAddFile').formSelect(); 
 }
 
 var respAccesosPorRol  = function(data) { 

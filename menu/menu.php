@@ -124,10 +124,8 @@ if(is_null($_COOKIE["b_capturista"])){
                                 <input class="file-path validate" type="text">
                             </div>
                         </div>
-                    </div>
-                    <input type="submit" value="Enviar"  />
-                </form>
-                <div id="fileuploader">Upload</div>     
+                    </div> 
+                </form>   
             </div>
             <div class="modal-footer">
                 <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
