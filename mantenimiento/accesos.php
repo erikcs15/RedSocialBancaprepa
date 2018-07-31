@@ -32,8 +32,15 @@
                             <label><strong>Seleccione el Rol:</strong></label>
                     </div>
                     <div class=' col s6' id="accesosRol">
-                   
-                        
+                        <h6>Menu</h6> 
+                        <p><label><input type="checkbox" id="agregarPub"/><span>Agregar Publicacion</span></label></p>
+                        <p><label><input type="checkbox" id="mandarTickket"/><span>Mandar Ticket</span></label></p>
+                        <p><label><input type="checkbox" id="catEmp"/><span>Catalogo de empresas</span></label></p>
+                        <p><label><input type="checkbox" id="catRoles"/><span>Catalogo de roles</span></label></p>
+                        <p><label><input type="checkbox" id="tipoDoc"/><span>Tipo de documentos</span></label></p>
+                        <p><label><input type="checkbox" id="cargarArchivos"/><span>Cargar Archivos</span></label></p>
+                        <p><label><input type="checkbox" id="usuarios"/><span>Usuarios</span></label></p>
+                        <p><label><input type="checkbox" id="accesos"/><span>Accesos</span></label></p>
                     </div>
             </div>             
            

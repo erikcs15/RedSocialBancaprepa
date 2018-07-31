@@ -514,24 +514,21 @@
 
 				
 
-				$sql="SELECT id_rol,agregarPub, mandarTicket,catEmp,catRol,tipdoc,cargaArchivos,usuarios,accesos FROM b_menu_roles WHERE id_rol=$id_rol";
-				
+				$sql="SELECT mr.id_rol, mr.id_menu
+				FROM b_menu_roles mr
+				INNER JOIN b_menu m
+				ON mr.id_menu=m.id
+				WHERE mr.id_rol=$id_rol";
+			
 				$resultado = mysqli_query($this->con(), $sql);   
 				
 				while ($res = mysqli_fetch_row($resultado)) {
 
-					$datos[$i]['id_rol'] = $res[0];
-					$datos[$i]['agregarPub'] = $res[1];
-					$datos[$i]['mandarTicket'] = $res[2];
-					$datos[$i]['catEmp'] = $res[3]; 
-					$datos[$i]['catRol'] = $res[4];
-					$datos[$i]['tipdoc'] = $res[5];
-					$datos[$i]['cargaArchivos'] = $res[6]; 
-					$datos[$i]['usuarios'] = $res[7];
-					$datos[$i]['accesos'] = $res[8]; 
+					$datos[$i]['id_rol'] = $res[0]; 	
+					$datos[$i]['id_menu'] = $res[1];
 					$i++;
  
-				 } 
+				 }     
 				  
 				 if ( count($datos )==0) { 
 					 $datos[0]['id_rol']  =0;

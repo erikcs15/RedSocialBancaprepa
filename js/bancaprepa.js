@@ -839,88 +839,43 @@ var respRolAccesos = function(data) {
     $('#tipoRolAc').html(documento);
     $('#tipoRolAc').formSelect(); 
 }
+
 var respAccesosPorRol  = function(data) { 
     if (!data && data == null)
         return;  
-    var agregarPub,mandarTicket,catEmp,catRol,tipdoc,cargaArchivos,usuarios,accesos;
-    var documento='';
+
     for(var i=0; i<data.length; i++){
-        if(data[i].agregarPub==1)
+        switch(data[i].id_menu)
         {
-            agregarPub='checked="checked"';
-        }
-        else
-        {
-            agregarPub='';
-        }
-        if(data[i].mandarTicket==1)
-        {
-            mandarTicket='checked="checked"';
-        }
-        else
-        {
-            mandarTicket='';
-        }
-        if(data[i].catEmp==1)
-        {
-            catEmp='checked="checked"';
-        }
-        else
-        {
-            catEmp='';
-        }
-        if(data[i].catRol==1)
-        {
-            catRol='checked="checked"';
-        }
-        else
-        {
-            catRol='';
-        }
-        if(data[i].tipdoc==1)
-        {
-            tipdoc='checked="checked"';
-        }
-        else
-        {
-            tipdoc='';
-        }
-        if(data[i].cargaArchivos==1)
-        {
-            cargaArchivos='checked="checked"';
-        }
-        else
-        {
-            cargaArchivos='';
-        }
-        if(data[i].usuarios==1)
-        {
-            usuarios='checked="checked"';
-        }
-        else
-        {
-            usuarios='';
-        }
-        if(data[i].accesos==1)
-        {
-            accesos='checked="checked"';
-        }
-        else
-        {
-            accesos='';
-        }
-        
-        documento+=' <h6>Menu</h6> <p><label><input type="checkbox" id="cbAgegarPub" onChange="habDesAccesosAgregarPub('+data[i].id_rol+')" '+agregarPub+'/><span>Agregar Publicacion</span></label></p>'+
-        '<p><label><input type="checkbox" '+mandarTicket+'/><span>Mandar Ticket</span></label></p>'+
-        '<p><label><input type="checkbox" '+catEmp+'/><span>Catalogo de empresas</span></label></p>'+
-        '<p><label><input type="checkbox" '+catRol+'/><span>Catalogo de roles</span></label></p>'+
-        '<p><label><input type="checkbox" '+tipdoc+'/><span>Tipo de documentos</span></label></p>'+
-        '<p><label><input type="checkbox" '+cargaArchivos+'/><span>Cargar Archivos</span></label></p>'+
-        '<p><label><input type="checkbox" '+usuarios+'/><span>Usuarios</span></label></p>'+
-        '<p><label><input type="checkbox" '+accesos+'/><span>Accesos</span></label></p>';
+            case '1': 
+                $('#agregarPub').prop('checked', true);
+                console.log(data[i].id_menu+"Prueba");
+                break;
+            case '2':
+                $('#mandarTickket').prop('checked', true);
+                break;
+            case '3':
+                $('#catEmp').prop('checked', true);
+                break;
+            case '4':
+                $('#catRoles').prop('checked', true);
+                break;
+            case '5':
+                $('#tipoDoc').prop('checked', true);
+                break;
+            case '6':
+                $('#cargarArchivos').prop('checked', true);
+                break;
+            case '7':
+                $('#usuarios').prop('checked', true);
+                break;
+            case '8':
+                $('#accesos').prop('checked', true);
+                break;
+
+        }    
     }
-    
-    $('#accesosRol').html(documento);
+  //  $('#accesosRol').html(documento);
 }
 
 
