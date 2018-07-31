@@ -1,6 +1,16 @@
 // Funcion principal de Jquery la cual escanea en tiempo real nuestro documento para verificar que los eventos se ejecuten correctamente
 $(document).ready(function(){
 
+
+    //validacion del submit
+    $( "#btnEnviarForm" ).click(function() {
+
+        M.toast({html: 'El nombre de usuario no puede ir vacio', classes: 'rounded red'}); 
+        return;
+
+        $( "#pTitulo" ).submit();
+      });
+ 
     //inicializamos contador de caracteres
     $('#pDescripcion').characterCounter();
  
@@ -996,4 +1006,5 @@ function habDesAccesosAgregarPub(id_rol)
     }   
 }
 
+ 
  
