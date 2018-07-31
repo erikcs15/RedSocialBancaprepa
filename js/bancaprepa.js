@@ -843,13 +843,12 @@ var respRolAccesos = function(data) {
 var respAccesosPorRol  = function(data) { 
     if (!data && data == null)
         return;  
-
+ 
     for(var i=0; i<data.length; i++){
         switch(data[i].id_menu)
         {
             case '1': 
-                $('#agregarPub').prop('checked', true);
-                console.log(data[i].id_menu+"Prueba");
+                $('#agregarPub').prop('checked', true); 
                 break;
             case '2':
                 $('#mandarTickket').prop('checked', true);
@@ -870,7 +869,7 @@ var respAccesosPorRol  = function(data) {
                 $('#usuarios').prop('checked', true);
                 break;
             case '8':
-                $('#accesos').prop('checked', true);
+                $('#accesosCheck').prop('checked', true); 
                 break;
 
         }    
@@ -950,8 +949,17 @@ function BorrarDoc(doc_id)
      onRequest({ opcion : 12 ,doc_id:doc_id}, respEliDoc);
 }
 
-function cargarAccesos(rol_id){
-    console.log("Cargar accesos "+rol_id);
+function cargarAccesos(rol_id){ 
+
+    $('#agregarPub').prop('checked', false);  
+    $('#mandarTickket').prop('checked', false); 
+    $('#catEmp').prop('checked', false); 
+    $('#catRoles').prop('checked', false); 
+    $('#tipoDoc').prop('checked', false); 
+    $('#cargarArchivos').prop('checked', false); 
+    $('#usuarios').prop('checked', false); 
+    $('#accesosCheck').prop('checked', false);
+
     onRequest({ opcion : 22 ,id_rol:rol_id}, respAccesosPorRol);
        
 }

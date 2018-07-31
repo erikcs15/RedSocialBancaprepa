@@ -26,12 +26,12 @@
             </div>
           
             <div class="row">
-                    <div class='input-field col s4'>
+                    <div class='input-field col s4 offset-s2'>
                             <select id="tipoRolAc" onChange="cargarAccesos(tipoRolAc.value)"> 
                             </select>
                             <label><strong>Seleccione el Rol:</strong></label>
                     </div>
-                    <div class=' col s6' id="accesosRol">
+                    <div class=' col s4' id="accesosRol">
                         <h6>Menu</h6> 
                         <p><label><input type="checkbox" id="agregarPub"/><span>Agregar Publicacion</span></label></p>
                         <p><label><input type="checkbox" id="mandarTickket"/><span>Mandar Ticket</span></label></p>
@@ -40,7 +40,7 @@
                         <p><label><input type="checkbox" id="tipoDoc"/><span>Tipo de documentos</span></label></p>
                         <p><label><input type="checkbox" id="cargarArchivos"/><span>Cargar Archivos</span></label></p>
                         <p><label><input type="checkbox" id="usuarios"/><span>Usuarios</span></label></p>
-                        <p><label><input type="checkbox" id="accesos"/><span>Accesos</span></label></p>
+                        <p><label><input type="checkbox" id="accesosCheck"/><span>Accesos</span></label></p>
                     </div>
             </div>             
            
