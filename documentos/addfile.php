@@ -22,7 +22,7 @@
                 include('../menu/menu.php');
 
                     # definimos la carpeta destino
-                    $carpetaDestino="../imagenes/";
+                    $carpetaDestino="../imagenes/publicaciones";
                 
                     # si hay algun archivo que subir
                     if(isset($_FILES["archivo"]) && $_FILES["archivo"]["name"][0])
@@ -62,7 +62,7 @@
             ?>
 
             
-  <div class="col s12" style="border:black solid 1px">
+  <div class="col s12"  >
             <div class="row"></div>
             <div class="row"></div>
             
@@ -74,17 +74,26 @@
                     <label for="pTitulo">TItulo</label>
                     </div> 
                 </div>
+                <div class="switch">¿Desea incluir algun documento?
+                            <label>
+                            No
+                            <input id='chkDoc' type="checkbox">
+                            <span class="lever"></span>
+                            Si
+                            </label>
+                </div>
                 <div class="row" >
                         <div class="file-field input-field">
-                            <div class="btn blue">
+                            <div id="btndocId" class="btn grey">
                                 <span>Documento</span>
-                                <input type="file" name="archivo[]" >
+                                <input id="docId" type="file" name="archivo[]" disabled>
                             </div>
                             <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text" value="<?php echo $documento;?>">
+                                <input id="tittleDoc" class="file-path validate" type="text" value="<?php echo $documento;?>">
                             </div>
                         </div>
                 </div>
+               
                 <div class="row" > 
                     <div class="row">
                         <div class="input-field col s12"> 
@@ -129,6 +138,34 @@
            
         
   </div>
+
+
+     <div id="modalAceptarDoc" class="modal">
+           <nav class=" orange accent-4">
+               <div class="nav-wrapper">
+                   <a href="#!" class="brand-logo">
+                       <i class="large material-icons right">record_voice_over</i>Aceptar Publicacion
+                   </a>
+               </div>
+           </nav>
+           <div class="modal-content"> 
+              <center> <h5><strong>¿Seguro que desea realizar la publicacion?</strong></h5></center>
+           </div>
+           <div class="row" >
+                    <div class="col s6 right"    >
+                    <a id="aceptarPublicacion" class="waves-effect waves-light btn  accent-4 blue"><i class="material-icons left">done</i>Aceptar</a>
+                         
+                    </div>
+                    <div class="col s6 "   >
+                    <a id="" class="waves-effect modal-close waves-light btn right accent-4 red"><i class="material-icons left">close</i>Cancelar</a>
+                    </div>
+           </div>
+           
+           
+           <div class="modal-footer"> 
+               
+           </div>
+    </div>
 
 
     <script type="text/javascript" src="../js/jquery-3.2.1.js"></script>

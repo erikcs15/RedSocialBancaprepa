@@ -1,14 +1,82 @@
 // Funcion principal de Jquery la cual escanea en tiempo real nuestro documento para verificar que los eventos se ejecuten correctamente
 $(document).ready(function(){
 
-
-    //validacion del submit
+    //inicializamos modals
+        $('#modalAceptarDoc').modal();
+    //validacion del submit de publicaciones
     $( "#btnEnviarForm" ).click(function() {
+         
+        var titulo = $("#pTitulo").val();
+        var documento = $("#docId").val();
+        var descripcion = $("#pDescripcion").val();
+        var tipopublic = $("#tipoPubAddFile").val();
+        var tipoempresa = $("#tipoEmpresaAddFile").val();
+        var tiporol = $("#tipoRolAddFile").val();
+        var docname="SIN DOCUMENTO";
 
-        M.toast({html: 'El nombre de usuario no puede ir vacio', classes: 'rounded red'}); 
-        return;
+        if($('#chkDoc').is(":checked")) { 
+            if(documento.length<=0){
+                M.toast({html: 'Es necesario incluir un documento', classes: 'rounded red'});
+                return;
+            }
+            docname = $("#tittleDoc").val();
+            var cdocumento ='S';
+         } 
+         else{
+            cdocumento ='N';
+         }
+ 
 
-        $( "#pTitulo" ).submit();
+        if(titulo.length<=0){
+            M.toast({html: 'El Titulo de la publicacion no puede estar vacio', classes: 'rounded red'});
+            return;
+        }
+ 
+        if(descripcion.length<=0){
+            M.toast({html: 'Es necesario incluir una descripcion en la publicacion', classes: 'rounded red'});
+            return;
+        }
+        if(tipopublic <=0){
+            M.toast({html: 'Es necesario especificar el tipo de publicacion', classes: 'rounded red'});
+            return;
+        }
+        if(tipoempresa<=0){
+            M.toast({html: 'Es necesario especificar la empresa ala que se dirige', classes: 'rounded red'});
+            return;
+        }
+        if(tiporol<=0){
+            M.toast({html: 'Es necesario especificar el rol al que se dirige la publicacion', classes: 'rounded red'});
+            return;
+        } 
+        
+
+        $('#modalAceptarDoc').modal('open');
+
+        //$( "#formFiles" ).submit();
+      });
+
+      //gurdar datos  de la publicacion
+
+      $( "#aceptarPublicacion" ).click(function() {
+            var titulo = $("#pTitulo").val();
+            var documento = $("#docId").val();
+            var descripcion = $("#pDescripcion").val();
+            var tipopublic = $("#tipoPubAddFile").val();
+            var tipoempresa = $("#tipoEmpresaAddFile").val();
+            var tiporol = $("#tipoRolAddFile").val();
+            var docname="SIN DOCUMENTO";
+            var cdocumento="";
+
+            if($('#chkDoc').is(":checked")) {  
+                 docname = $("#tittleDoc").val();
+                 cdocumento ='S';
+            } 
+            else{
+                 cdocumento ='N';
+            }
+            
+            onRequest({ opcion : 24,},respPublicacion);
+
       });
  
     //inicializamos contador de caracteres
@@ -30,15 +98,15 @@ $(document).ready(function(){
       });
       
        
-     //evento de switch de logeo 
+     //evento de switch de documentos 
      $( "#chkDoc" ).click(function() {  
         if($(this).is(":checked")) {
-             $("#btnDocumento").removeClass('grey');
-             $("#documentoCargado").removeAttr("disabled");
+             $("#btndocId").removeClass('grey');
+             $("#docId").removeAttr("disabled");
           }
           else {
-            $("#btnDocumento").addClass('grey');
-            $("#documentoCargado").attr('disabled','disabled');
+            $("#btndocId").addClass('grey');
+            $("#docId").attr('disabled','disabled');
           }
      });
 

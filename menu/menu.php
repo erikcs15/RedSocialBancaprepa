@@ -107,14 +107,7 @@ if(is_null($_COOKIE["b_capturista"])){
                             </div>
                             
                         </div>
-                        <div class="switch">¿Desea incluir algun documento?
-                            <label>
-                            No
-                            <input id='chkDoc' type="checkbox">
-                            <span class="lever"></span>
-                            Si
-                            </label>
-                        </div>
+                         
                         <div class="file-field input-field">
                             <div id="btnDocumento" class="btn grey">
                                 <span>Archivo</span>
