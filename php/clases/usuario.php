@@ -538,8 +538,8 @@
  
 				 return $datos;
 			}
-//----------------------------------CARGAR MENU para accesos--------------------------------------
-			public function updateAcceso($rol_id,$nom_menu,$valor)
+//----------------------------------habilitar y deshabilitar accesos--------------------------------------
+			public function habilitarAcceso($rol_id,$menu_id)
 			{
 				$res=array();
 				$datos=array();
@@ -548,7 +548,24 @@
 
 				$txtUsuario=$_COOKIE["b_menu_roles"];  
 
-				$sql="UPDATE b_menu_roles SET $nom_menu=$valor WHERE id_rol=$rol_id";
+				$sql="INSERT INTO b_menu_roles (id_rol, id_menu) VALUES ($rol_id,$menu_id);";
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+				
+				$datos['b_menu_roles'] =  array('0' => '0' );
+				return  $datos;	
+			}
+			
+			public function deshabilitarAcceso($rol_id,$menu_id)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				$txtUsuario=$_COOKIE["b_menu_roles"];  
+
+				$sql="DELETE FROM b_menu_roles WHERE id_rol=$rol_id AND id_menu=$menu_id";
 				
 				$resultado = mysqli_query($this->con(), $sql);   
 				

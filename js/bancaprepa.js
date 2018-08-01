@@ -946,7 +946,7 @@ var respAccesosPorRol  = function(data) {
                 $('#agregarPub').prop('checked', true); 
                 break;
             case '2':
-                $('#mandarTickket').prop('checked', true);
+                $('#mandarTicket').prop('checked', true);
                 break;
             case '3':
                 $('#catEmp').prop('checked', true);
@@ -1059,20 +1059,21 @@ function cargarAccesos(rol_id){
        
 }
 
-function habDesAccesosAgregarPub(id_rol)
+function habDesAccesos(id_rol,id_cb,menu_id)
 {
-    var menu = "agregarPub";
-    console.log("prueba check "+id_rol+" "+menu);
-    if(document.getElementById("cbAgegarPub").checked == true)
+    
+    console.log("prueba check "+id_rol+" "+id_cb+" "+menu_id);
+    if($('#'+id_cb).is(':checked'))
     {
-        onRequest({ opcion : 23 ,id_rol:id_rol, nom_menu:menu, valor:1}, respUpdateAccesos);
+        onRequest({ opcion : 23 ,id_rol:id_rol, id_menu:menu_id }, respUpdateAccesos);
         console.log("Esta check");
     }
     else{
         console.log("No esta check");
-        onRequest({ opcion : 23 ,id_rol:id_rol, nom_menu:menu, valor:0}, respUpdateAccesos);
-    }   
+        onRequest({ opcion : 24 ,id_rol:id_rol, id_menu:menu_id }, respUpdateAccesos);
+    }  
 }
+
 
  
  

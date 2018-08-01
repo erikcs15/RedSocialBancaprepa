@@ -33,14 +33,14 @@
                     </div>
                     <div class=' col s4' id="accesosRol">
                         <h6>Menu</h6> 
-                        <p><label><input type="checkbox" id="agregarPub"/><span>Agregar Publicacion</span></label></p>
-                        <p><label><input type="checkbox" id="mandarTickket"/><span>Mandar Ticket</span></label></p>
-                        <p><label><input type="checkbox" id="catEmp"/><span>Catalogo de empresas</span></label></p>
-                        <p><label><input type="checkbox" id="catRoles"/><span>Catalogo de roles</span></label></p>
-                        <p><label><input type="checkbox" id="tipoDoc"/><span>Tipo de documentos</span></label></p>
-                        <p><label><input type="checkbox" id="cargarArchivos"/><span>Cargar Archivos</span></label></p>
-                        <p><label><input type="checkbox" id="usuarios"/><span>Usuarios</span></label></p>
-                        <p><label><input type="checkbox" id="accesosCheck"/><span>Accesos</span></label></p>
+                        <p><label><input type="checkbox" id="agregarPub" onChange="habDesAccesos(tipoRolAc.value,'agregarPub',1)"/><span>Agregar Publicacion</span></label></p>
+                        <p><label><input type="checkbox" id="mandarTicket" onChange="habDesAccesos(tipoRolAc.value,'mandarTicket',2)"/><span>Mandar Ticket</span></label></p>
+                        <p><label><input type="checkbox" id="catEmp" onChange="habDesAccesos(tipoRolAc.value,'catEmp',3)"/><span>Catalogo de empresas</span></label></p>
+                        <p><label><input type="checkbox" id="catRoles" onChange="habDesAccesos(tipoRolAc.value,'catRoles',4)"/><span>Catalogo de roles</span></label></p>
+                        <p><label><input type="checkbox" id="tipoDoc" onChange="habDesAccesos(tipoRolAc.value,'tipoDoc',5)"/><span>Tipo de documentos</span></label></p>
+                        <p><label><input type="checkbox" id="cargarArchivos" onChange="habDesAccesos(tipoRolAc.value,'cargarArchivos',6)"/><span>Cargar Archivos</span></label></p>
+                        <p><label><input type="checkbox" id="usuarios" onChange="habDesAccesos(tipoRolAc.value,'usuarios',7)"/><span>Usuarios</span></label></p>
+                        <p><label><input type="checkbox" id="accesosCheck" onChange="habDesAccesos(tipoRolAc.value,'accesosCheck',8)"/><span>Accesos</span></label></p>
                     </div>
             </div>             
            

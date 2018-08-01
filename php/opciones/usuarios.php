@@ -93,9 +93,11 @@
 			echo (json_encode($usuario->cargarAccesos($_REQUEST['id_rol'])));
 		break; 
 		case 23: 
-			echo (json_encode($usuario->updateAcceso($_REQUEST['id_rol'],$_REQUEST['nom_menu'],$_REQUEST['valor'])));
+			echo (json_encode($usuario->habilitarAcceso($_REQUEST['id_rol'],$_REQUEST['id_menu'])));
 		break;
-		
+		case 24: 
+			echo (json_encode($usuario->deshabilitarAcceso($_REQUEST['id_rol'],$_REQUEST['id_menu'])));
+		break;
  	}
  
 ?>
