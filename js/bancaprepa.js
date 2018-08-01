@@ -58,6 +58,7 @@ $(document).ready(function(){
       //gurdar datos  de la publicacion
 
       $( "#aceptarPublicacion" ).click(function() {
+          
             var titulo = $("#pTitulo").val();
             var documento = $("#docId").val();
             var descripcion = $("#pDescripcion").val();
@@ -100,6 +101,7 @@ $(document).ready(function(){
        
      //evento de switch de documentos 
      $( "#chkDoc" ).click(function() {  
+
         if($(this).is(":checked")) {
              $("#btndocId").removeClass('grey');
              $("#docId").removeAttr("disabled");
