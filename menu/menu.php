@@ -55,6 +55,7 @@ if(is_null($_COOKIE["b_capturista"])){
                 <li><a id="catemp" name ="catemp" ><i class="material-icons">assignment</i>Catalogo de Empresas</a></li>
                 <li><a id="catroles" name ="catroles" ><i class="material-icons">assignment</i>Catalogo de Roles</a></li>
                 <li><a id="catdoc" name ="catdoc"><i class="material-icons">assignment</i>Tipos de Documento</a></li>
+                <li><a id="correos" name ="correos"><i class="material-icons">local_post_office</i>Correos</a></li> 
              </ul>
              <li><a href="http:\\localhost\RedSocialBancaprepa\documentos\addfile.php" class="waves-effect"><i class="material-icons">file_upload</i>Carga de Archivos</a></li>
              <li><div class="divider"></div></li>
