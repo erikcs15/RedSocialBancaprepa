@@ -58,9 +58,8 @@ $(document).ready(function(){
       //gurdar datos  de la publicacion
 
       $( "#aceptarPublicacion" ).click(function() {
-          
+
             var titulo = $("#pTitulo").val();
-            var documento = $("#docId").val();
             var descripcion = $("#pDescripcion").val();
             var tipopublic = $("#tipoPubAddFile").val();
             var tipoempresa = $("#tipoEmpresaAddFile").val();
@@ -76,7 +75,7 @@ $(document).ready(function(){
                  cdocumento ='N';
             }
             
-            onRequest({ opcion : 24,},respPublicacion);
+            onRequest({ opcion : 25,titulo:titulo,descripcion:descripcion,imagen:docname,documento_id:tipopublic,rol_id:tiporol,empresa_id:tipoempresa,docuemento:cdocumento},respPublicacion);
 
       });
  
@@ -989,6 +988,19 @@ var respUpdateAccesos = function(data) {
     //Actualiza de nuevo los accesos
     
 }
+//---------Respuesta de la imagen insertada
+var respPublicacion = function(data) { 
+    if (!data && data == null)
+             return;  
+
+             $( "#formFiles" ).submit();
+    
+    console.log(data); 
+
+
+    
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////////////
 //funciones del catalogo de empresas

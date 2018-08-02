@@ -572,4 +572,29 @@
 				$datos['b_menu_roles'] =  array('0' => '0' );
 				return  $datos;	
 			}
+
+			//--------------------------GUARDAMOS LA INFORMACION BASICA DE UNA PUBLICACION -----------------------------------//////
+
+
+			public function guardarPublicacion($titulo,$descripcion,$imagen,$documento_id,$rol_id,$empresa_id,$docuemento)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0; 
+				$capturista_id=$_COOKIE["b_capturista_id"]; 
+				
+				
+
+				$sql="INSERT INTO b_publicaciones_bancaprepa(titulo,descripcion,imagen,documento_id,rol_id,empresa_id,documento,capturista_id,fecha,hora)
+														VALUES('$titulo','$descripcion','$imagen',$documento_id,$rol_id,$empresa_id,'$docuemento',$capturista_id,CURDATE(),CURTIME())";
+				
+				
+				//return $sql;
+				$resultado = mysqli_query($this->con(), $sql);   
+				
+				$datos[0]['publicacion'] ='1' ;
+				return  $datos;	
+			}
 }
+

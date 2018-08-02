@@ -22,7 +22,7 @@
                 include('../menu/menu.php');
 
                     # definimos la carpeta destino
-                    $carpetaDestino="../imagenes/publicaciones";
+                    $carpetaDestino="../imagenes/publicaciones/";
                 
                     # si hay algun archivo que subir
                     if(isset($_FILES["archivo"]) && $_FILES["archivo"]["name"][0])
