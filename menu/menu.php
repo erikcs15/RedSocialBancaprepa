@@ -12,12 +12,12 @@ if(is_null($_COOKIE["b_capturista"])){
                         <a href="#" class="brand-logo"><i class="material-icons">grain</i>Intranet Bancaprepa</a>
                     
                         <ul class="right hide-on-med-and-down">
-                            <li> <a class='dropdown-button waves-effect waves-dark ' href='#' data-activates='dropdown_message'><i class="material-icons">notifications_active</i><span class="counts black-text">9+</span></a>
+                            <li><span class="counts white-text">9+</span> <a class='dropdown-button waves-effect waves-dark ' href='#' data-activates='dropdown_message'><i class="material-icons">notifications_active</i> </a>
                             <ul id='dropdown_message' class='dropdown-content messages collection'>
                              
                             </ul>
                             </li>
-                            <li> <a class='dropdown-button waves-effect waves-dark' href='#' data-activates='dropdown_task'><i class="material-icons">message</i><span class="counts black-text">9+</span></a>
+                            <li> <span class="counts white-text">9+</span><a class='dropdown-button waves-effect waves-dark' href='#' data-activates='dropdown_task'><i class="material-icons">message</i></a>
                             
                             </li>
                             <ul id="dropdownCuenta" class="dropdown-content">
@@ -46,6 +46,7 @@ if(is_null($_COOKIE["b_capturista"])){
                 <br> 
               </div></li>
               <li><a id="inicio" name ="inicio" class="waves-effect"><i class="material-icons">home</i>Inicio</a></li>
+              <li><a href="http:\\localhost\RedSocialBancaprepa\bancaprepa.php" name ="inicio" class="waves-effect"><i class="material-icons">assignment</i>Bancaprepa</a></li>
               <li><a class="waves-effect modal-trigger" href="#modalAgregarPub"><i class="material-icons">add_circle</i>Agregar publicación</a></li>
               <li><a class="waves-effect"><i class="material-icons">drafts</i>Mandar ticket</a></li>
               <li><div class="divider"></div></li>
