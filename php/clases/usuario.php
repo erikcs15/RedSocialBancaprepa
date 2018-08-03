@@ -147,7 +147,41 @@
 				return $datos;  
 
 			}
+			public function catalogoCorreos($nombre)
+			{
+                $q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
 
+				if($nombre != "")
+				{	
+					$q = "WHERE nombre LIKE '%$nombre%' OR apellido_paterno LIKE '%$nombre%' OR apellido_materno LIKE '%$nombre%'";
+				}
+
+				$sql="SELECT dominio, sucursal, nombre, apellido_paterno, apellido_materno, correo
+						FROM b_correos ".$q; 
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['dominio'] = $res[0];
+				   $datos[$i]['sucursal']  = $res[1]; 
+				   $datos[$i]['nombrecompleto'] = $res[2]." ".$res[3]." ".$res[4];
+				   $datos[$i]['correo']=$res[5]; 
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['dominio']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
 			//----------------------------------------Cargar por Id--------------------------------------
 			//-------------------------------CARGAR EMPRESA-------------------------------------------------
 			public function cargarEmpPorId($empresa)
@@ -224,6 +258,7 @@
 				  }
 				return $datos;  
 			}
+
 			//----------------------------------------------Insertar------------------------------------------
 
 			public function guardarEmpresas($empresa)

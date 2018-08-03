@@ -101,6 +101,9 @@
 		case 25: 
 			echo (json_encode($usuario->guardarPublicacion($_REQUEST['titulo'],$_REQUEST['descripcion'],$_REQUEST['imagen'],$_REQUEST['documento_id'],$_REQUEST['rol_id'],$_REQUEST['empresa_id'],$_REQUEST['docuemento'])));
 		break;
+		case 26: 
+			echo (json_encode($usuario->catalogoCorreos($_REQUEST['nombre'])));
+		break;
  	}
  
 ?>

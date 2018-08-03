@@ -171,6 +171,9 @@ $(document).ready(function(){
         console.log("Presionaste");
      });
      
+     $( "#correos" ).click(function() { 
+        location.href="/RedSocialBancaprepa/catalogos/catcorreos.php";
+     });
      
 
 //----------------------------------busquedas--------------------------------------------------------------------
@@ -204,6 +207,16 @@ $(document).ready(function(){
       busqueda =  $("#busquedaDoc").val();
       console.log(busqueda);
       onRequest({ opcion : 4,doc:busqueda},respDoc);
+  }
+});
+ //Busqueda de correos por nombre
+ $("#busquedaCorreos").keypress(function(e) {
+    //inicializamos variables
+  if(e.which == 13) {
+      var busqueda='';
+      busqueda =  $("#busquedaCorreos").val();
+      console.log(busqueda);
+      onRequest({ opcion : 26,nombre:busqueda},respCorreos);
   }
 });
 
@@ -396,6 +409,10 @@ function cargarPublicaciones(){
     onRequest({ opcion : 20}, respCargarPublicaciones);
 }
 
+function cargarCorreos(){
+    onRequest({ opcion : 26 ,nombre:""}, respCorreos);
+}
+
 
 
 
@@ -501,6 +518,41 @@ var respDoc = function(data) {
      }
      
      $("#tabladoc").html(d);
+}
+
+// ---------------------------------------------------CATALOGO DE CORREOS---------------------------------------------------
+var respCorreos = function(data) { 
+    
+    if (!data && data == null) 
+    return; 
+
+    var d = '';
+    var x = '';
+
+
+
+     for (var i = 0; i < data.length; i++) {
+     if(i%2==0)
+     {
+         x='even';
+     }
+     else
+     {
+         x='odd';
+     }
+     d+= '<tr>'+
+     '<td>'+data[i].dominio+'</td>'+
+     '<td>'+data[i].sucursal+'</td>'+
+     '<td>'+data[i].nombrecompleto+'</td>'+ 
+     '<td>'+data[i].correo+'</td>'+ 
+     '<td class="'+x+' left">'+
+     '<a onclick="editarDoc('+data[i].correo+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarDoc"><i class="material-icons">edit</i></a>' + 
+     '<a onclick="deshabDoc('+data[i].correo+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabDoc"><i class="material-icons">do_not_disturb_alt</i></a>' + 
+     '<a onclick="BorrarDoc('+data[i].correo+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarDoc"><i class="material-icons">delete</i></a>' +
+     '</td>'  +'</tr> ';
+     }
+     
+     $("#tablaCorreos").html(d);
 }
 //----------------------------RESPUESTAS PARA INSERTAR DATOS------------------------------
 //----------------------------insertar empresa---------------------------------------
