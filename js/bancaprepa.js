@@ -1,6 +1,7 @@
 // Funcion principal de Jquery la cual escanea en tiempo real nuestro documento para verificar que los eventos se ejecuten correctamente
 $(document).ready(function(){
 
+
     //inicializamos modals
         $('#modalAceptarDoc').modal();
     //validacion del submit de publicaciones
@@ -137,9 +138,22 @@ $(document).ready(function(){
         //Redirige al index
         //location.href="/RedSocialBancaprepa/index.php";
         
+        
+        
      });
+     var rolid="";
+     rolid=Cookies.get('b_rol_id');
+     console.log("ee"+rolid);
+     onRequest({ opcion : 22 ,id_rol:rolid },respCargarMenu);
+     
      // Fin de click en login
      //------------------------------------------------------------------------------------------------------------------//
+//--------------------------------------------Cargar el menu por roles------------------------------------------------
+
+
+
+
+//--------------------------------------------------------------------------------------------------------------------------
 
      //Redirige al login 
      $( "#salirsesion" ).click(function() { 
@@ -412,7 +426,6 @@ function cargarPublicaciones(){
 function cargarCorreos(){
     onRequest({ opcion : 26 ,nombre:""}, respCorreos);
 }
-
 
 
 
@@ -1047,12 +1060,51 @@ var respPublicacion = function(data) {
 
              $( "#formFiles" ).submit();
     
-    console.log(data); 
-
-
-    
+    console.log(data);     
 }
 
+
+//---------------Respuesta para cargar menus---------
+
+var respCargarMenu  = function(data) { 
+    if (!data && data == null)
+        return;  
+ 
+    for(var i=0; i<data.length; i++){
+        switch(data[i].id_menu)
+        {
+            case '1': 
+                $('#m_agregarPub').removeClass("subheader"); 
+                break;
+            case '2':
+                $('#m_mandarT').removeClass("subheader"); 
+                break;
+            case '3':
+                $('#catemp').removeClass("subheader"); 
+                break;
+            case '4':
+                $('#catroles').removeClass("subheader"); 
+                break;
+            case '5':
+                $('#catdoc').removeClass("subheader"); 
+                break;
+            case '6':
+                $('#M_cargaA').removeClass("subheader"); 
+                break;
+            case '7':
+                $('#m_usuarios').removeClass("subheader"); 
+                break;
+            case '8':
+                $('#m_accesos').removeClass("subheader"); 
+                break;
+            case '9':
+                 $('#correos').removeClass("subheader"); 
+                break;
+
+        }    
+    }
+  //  $('#accesosRol').html(documento);
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////
 //funciones del catalogo de empresas
