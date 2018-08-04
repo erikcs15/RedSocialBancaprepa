@@ -185,6 +185,10 @@ $(document).ready(function(){
      $( "#correos" ).click(function() { 
         location.href="/RedSocialBancaprepa/catalogos/catcorreos.php";
      });
+
+     $( "#m_rol_usu" ).click(function() { 
+        location.href="/RedSocialBancaprepa/mantenimiento/rolusu.php";
+     });
      
 
 //----------------------------------busquedas--------------------------------------------------------------------
@@ -444,7 +448,12 @@ function cargarCorreos(){
     console.log("ee"+rolid);
     onRequest({ opcion : 22 ,id_rol:rolid },respCargarMenu);
 }
-
+function cargarMenuPorRol(){
+    var rolid="";
+    rolid=Cookies.get('b_rol_id');
+    console.log("ee"+rolid);
+    onRequest({ opcion : 22 ,id_rol:rolid },respCargarMenu);
+}
 
 
 
@@ -1056,7 +1065,6 @@ var respAccesosPorRol  = function(data) {
             case '10':
                 $('#rolesUsuCh').prop('checked', true); 
                 break;
-
         }    
     }
 }
