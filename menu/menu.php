@@ -44,17 +44,16 @@ if(is_null($_COOKIE["b_capturista"])){
                   <img src="/RedSocialBancaprepa/img/logo_bancaprepa.png"  style="width: 250px;">
                 </div>
                 <br> 
-              </div></li>
-<<<<<<< HEAD
-              <li><a id="m_inicio" name ="inicio" class="subheader waves-effect" ><i class="material-icons">home</i>Inicio</a></li>
+              </div></li> 
+               <!--li><a id="m_inicio" name ="inicio" class="subheader waves-effect" ><i class="material-icons">home</i>Inicio</a></li>
               <li><a id="m_agregarPub" class="subheader waves-effect modal-trigger" href="#modalAgregarPub"><i class="material-icons">add_circle</i>Agregar publicación</a></li>
-              <li><a id="m_mandarT" class="subheader waves-effect"><i class="material-icons">drafts</i>Mandar ticket</a></li>
-=======
+              <li><a id="m_mandarT" class="subheader waves-effect"><i class="material-icons">drafts</i>Mandar ticket</a></li-->
+ 
               <li><a id="inicio" name ="inicio" class="waves-effect"><i class="material-icons">home</i>Inicio</a></li>
               <li><a href="http:\\localhost\RedSocialBancaprepa\bancaprepa.php" name ="inicio" class="waves-effect"><i class="material-icons">assignment</i>Bancaprepa</a></li>
               <li><a class="waves-effect modal-trigger" href="#modalAgregarPub"><i class="material-icons">add_circle</i>Agregar publicación</a></li>
               <li><a class="waves-effect"><i class="material-icons">drafts</i>Mandar ticket</a></li>
->>>>>>> d022bdc121545b804ee9871ecb0bb9c9b18deea5
+ 
               <li><div class="divider"></div></li>
               <li><a  name ="salirsesion" class="dropdown-trigger" data-target='dropdown1'><i class="material-icons">format_list_bulleted</i><i class="material-icons right">arrow_drop_down</i>Catalogos</a></li>
                 <!-- Dropdown Structure -->
@@ -64,7 +63,7 @@ if(is_null($_COOKIE["b_capturista"])){
                 <li><a id="catdoc" class="subheader" name ="catdoc"><i class="material-icons">assignment</i>Tipos de Documento</a></li>
                 <li><a id="correos" class="subheader" name ="correos"><i class="material-icons">local_post_office</i>Correos</a></li> 
              </ul>
-             <li><a id="M_cargaA" href="http:\\localhost\RedSocialBancaprepa\documentos\addfile.php" class="subheader waves-effect"><i class="material-icons">file_upload</i>Carga de Archivos</a></li>
+             <li><a id="M_cargaA" href="http:\\localhost\RedSocialBancaprepa\documentos\addfile.php" class=" waves-effect"><i class="material-icons">file_upload</i>Carga de Archivos</a></li>
              <li><div class="divider"></div></li>
                <!-- Dropdown Structure -->
                <li><a  name ="mantenimiento" class="dropdown-trigger" data-target='mantenimiento'><i class="material-icons">settings</i><i class="material-icons right">arrow_drop_down</i>Mantenimiento</a></li>

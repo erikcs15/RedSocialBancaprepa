@@ -1191,7 +1191,51 @@ function habDesAccesos(id_rol,id_cb,menu_id)
         onRequest({ opcion : 24 ,id_rol:id_rol, id_menu:menu_id }, respUpdateAccesos);
     }  
 }
-
-
+//cargamos el menu de publicaciones
+function cargarPublicacionesB(){
  
+
+    onRequest({ opcion : 27}, respCargaPublicacionesB);
+
+}
+//respuesta de menu publicaciones 
+var respCargaPublicacionesB = function(data) { 
+    if (!data && data == null)
+             return;  
+
+                //console.log(data)
+             var documento='';
+             var primerMenu=0;
+
+             for(var i=0; i<data.length; i++){
+
+                if(i==0){
+                    primerMenu = data[i].id;
+                    documento+="<li class='tab active'><a onClick='cargarPublicacion("+data[i].id+")' >"+data[i].docuemento+"</a></li>";
+                } 
+                else{
+                    documento+="<li class='tab'><a onClick='cargarPublicacion("+data[i].id+")' >"+data[i].docuemento+"</a></li>";
+                }
+                  
+             }
+              
+         
+             $('#tipoPublicacion').html(documento); 
+
+             cargarPublicacion(primerMenu);
+}
+
+function cargarPublicacion(primerMenu){
+    var capturista_id="";
+    capturista_id=Cookies.get('b_capturista_id');
+
+    onRequest({ opcion : 28,capturista_id:capturista_id,menu:primerMenu}, respLasPublicaciones);
+
+}
+
+var respLasPublicaciones = function(data) { 
+    if (!data && data == null)
+             return;  
  
+             console.log(data)
+}

@@ -631,5 +631,113 @@
 				$datos[0]['publicacion'] ='1' ;
 				return  $datos;	
 			}
+
+			//-------------------------------------------cargamos los tipos de documentos--------------------------------------------------------------
+			//-----------------------------------------------------
+			public function catDocumentos()
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0; 
+
+				$sql="SELECT id,descripcion FROM b_cat_doc WHERE estatus_id=5"; 
+				$resultado = mysqli_query($this->con(), $sql);    
+				while ($res = mysqli_fetch_row($resultado)) {
+
+					$datos[$i]['id'] = $res[0]; 	
+					$datos[$i]['docuemento'] = $res[1];
+					$i++;
+ 
+				 }     
+				  
+ 
+				 return $datos;
+				
+			}
+
+			public function catPublicaciones($capturista_id,$menu)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0; 
+				$ql='';
+				$qlempresas='';
+
+				
+				
+				$sql="SELECT rol_id FROM b_capturista_roles WHERE capturista_id=$capturista_id ORDER BY rol_id ASC limit 1";  
+				$resultado = mysqli_query($this->con(), $sql);    
+				while ($res = mysqli_fetch_row($resultado)) {
+					// cargamos los roles que tiene el usuario
+						$rol_id = $res[0]; 	
+						
+						if($rol_id==1){
+							// cargamos las publicaciones que el rol puede visualizar
+							$sqlm="SELECT titulo,descripcion,imagen,b_cat_empresas.nombre ,bp.fecha,bp.hora ,bp.fecha_modificacion,bp.hora_modificacion,documento 
+									FROM b_publicaciones_bancaprepa AS bp
+									JOIN b_cat_empresas ON b_cat_empresas.id=bp.empresa_id
+									WHERE documento_id=$menu"; 
+							$resultadom = mysqli_query($this->con(), $sqlm);    
+							while ($resm = mysqli_fetch_row($resultadom)) {
+			
+								$datos[$i]['titulo'] = $resm[0]; 	 
+								$datos[$i]['descripcion'] = $resm[1]; 	
+								$datos[$i]['imagen'] = $resm[2]; 	
+								$datos[$i]['empresa'] = $resm[3]; 	
+								$datos[$i]['fecha'] = $resm[4]; 	
+								$datos[$i]['hora'] = $resm[5]; 	
+								$datos[$i]['fecha_modificacion'] = $resm[6]; 	
+								$datos[$i]['hora_modificacion'] = $resm[7]; 
+								$datos[$i]['documento'] = $resm[8]; 
+								
+								$i++;
+			
+							}  
+							
+							return $datos;
+						}
+						else{
+									$sqlempresas="SELECT empresa_id FROM b_capturista_empresa WHERE capturista_id=$capturista_id";  
+									$resultado = mysqli_query($this->con(), $sqlempresas);    
+									while ($res = mysqli_fetch_row($resultado)) {
+										// cargamos las empresas que tiene el usuario
+										$qlempresas .= $res[0].','; 	
+											
+									}
+					
+									
+										//CONCATENAMOS TODAS LAS EMPRESAS QUE EL USUARIO TIENE Y PONEMOS LA GENERAL MISMA QUE SE MOSTRARA A TODOS LOS USUARIOS
+									$qlempresas =   $qlempresas.'5';
+								// cargamos las publicaciones que el rol puede visualizar
+									$sqlm="SELECT titulo,descripcion,imagen,b_cat_empresas.nombre ,bp.fecha,bp.hora ,bp.fecha_modificacion,bp.hora_modificacion ,documento
+									FROM b_publicaciones_bancaprepa AS bp
+									JOIN b_cat_empresas ON b_cat_empresas.id=bp.empresa_id
+									WHERE documento_id=$menu AND rol_id >=$rol_id AND empresa_id IN($qlempresas)"; 
+
+											
+									$resultadom = mysqli_query($this->con(), $sqlm);    
+									while ($resm = mysqli_fetch_row($resultadom)) {
+
+										$datos[$i]['titulo'] = $resm[0]; 	 
+										$datos[$i]['descripcion'] = $resm[1]; 	
+										$datos[$i]['imagen'] = $resm[2]; 	
+										$datos[$i]['empresa'] = $resm[3]; 	
+										$datos[$i]['fecha'] = $resm[4]; 	
+										$datos[$i]['hora'] = $resm[5]; 	
+										$datos[$i]['fecha_modificacion'] = $resm[6]; 	
+										$datos[$i]['hora_modificacion'] = $resm[7]; 
+										$datos[$i]['documento'] = $resm[8]; 
+										
+										$i++;
+
+									}  
+							return $datos;
+						}
+				}
+ 
+			
+			}
 }
 

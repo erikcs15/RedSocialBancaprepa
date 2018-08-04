@@ -104,6 +104,12 @@
 		case 26: 
 			echo (json_encode($usuario->catalogoCorreos($_REQUEST['nombre'])));
 		break;
+		case 27: 
+			echo (json_encode($usuario->catDocumentos()));
+		break;
+		case 28: 
+			echo (json_encode($usuario->catPublicaciones($_REQUEST['capturista_id'],$_REQUEST['menu'])));
+		break;
  	}
  
 ?>
