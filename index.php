@@ -40,6 +40,7 @@
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <script type="text/javascript" src="js/ajax.js"></script>
     <script type="text/javascript" src="js/bancaprepa.js"></script>
+    <script type="text/javascript" src="js/js.cookie.js"></script>
 
     <script>
         $(document).ready(function(){

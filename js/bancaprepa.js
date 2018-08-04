@@ -141,10 +141,7 @@ $(document).ready(function(){
         
         
      });
-     var rolid="";
-     rolid=Cookies.get('b_rol_id');
-     console.log("ee"+rolid);
-     onRequest({ opcion : 22 ,id_rol:rolid },respCargarMenu);
+     
      
      // Fin de click en login
      //------------------------------------------------------------------------------------------------------------------//
@@ -173,11 +170,11 @@ $(document).ready(function(){
         location.href="/RedSocialBancaprepa/catalogos/catdoc.php";
      });
      //Redirige al inicio
-     $( "#inicio" ).click(function() { 
+     $( "#m_inicio" ).click(function() { 
         location.href="/RedSocialBancaprepa/index.php";
      });
       //Redirige a los accesos
-     $( "#accesos" ).click(function() { 
+     $( "#m_accesos" ).click(function() { 
         location.href="/RedSocialBancaprepa/mantenimiento/accesos.php";
      });
      
@@ -406,25 +403,46 @@ $("#BtnAgregarPub").click(function() {
 //Funcion que carga las empresas
 function cargarEmpresas(){
     onRequest({ opcion : 2 ,empresa:""}, respEmpresas);
+    var rolid="";
+    rolid=Cookies.get('b_rol_id');
+    console.log("ee"+rolid);
+    onRequest({ opcion : 22 ,id_rol:rolid },respCargarMenu);
 }
 //Funcion para cargar roles
 function cargarRoles(){
     onRequest({ opcion : 3 ,rol:""}, respRoles);
+    var rolid="";
+    rolid=Cookies.get('b_rol_id');
+    console.log("ee"+rolid);
+    onRequest({ opcion : 22 ,id_rol:rolid },respCargarMenu);
 }
 
 //Funcion para cargar tipo de documentos
 function cargarDoc(){
     onRequest({ opcion : 4 ,doc:""}, respDoc);
+    var rolid="";
+    rolid=Cookies.get('b_rol_id');
+    console.log("ee"+rolid);
+    onRequest({ opcion : 22 ,id_rol:rolid },respCargarMenu);
 }
 
 //Funcion que carga las publicaciones
 function cargarPublicaciones(){
     console.log("Cargar publicaciones");
     onRequest({ opcion : 20}, respCargarPublicaciones);
+    var rolid="";
+    rolid=Cookies.get('b_rol_id');
+    console.log("ee"+rolid);
+    onRequest({ opcion : 22 ,id_rol:rolid },respCargarMenu);
+    
 }
 
 function cargarCorreos(){
     onRequest({ opcion : 26 ,nombre:""}, respCorreos);
+    var rolid="";
+    rolid=Cookies.get('b_rol_id');
+    console.log("ee"+rolid);
+    onRequest({ opcion : 22 ,id_rol:rolid },respCargarMenu);
 }
 
 
@@ -1032,10 +1050,15 @@ var respAccesosPorRol  = function(data) {
             case '8':
                 $('#accesosCheck').prop('checked', true); 
                 break;
+            case '9':
+                $('#correosCheck').prop('checked', true); 
+                break;
+            case '10':
+                $('#rolesUsuCh').prop('checked', true); 
+                break;
 
         }    
     }
-  //  $('#accesosRol').html(documento);
 }
 
 
@@ -1172,6 +1195,9 @@ function cargarAccesos(rol_id){
     $('#cargarArchivos').prop('checked', false); 
     $('#usuarios').prop('checked', false); 
     $('#accesosCheck').prop('checked', false);
+    $('#correosCheck').prop('checked', false);
+    $('#rolesUsuCh').prop('checked', false);
+
 
     onRequest({ opcion : 22 ,id_rol:rol_id}, respAccesosPorRol);
        

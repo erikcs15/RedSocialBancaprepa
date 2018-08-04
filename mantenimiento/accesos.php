@@ -38,9 +38,12 @@
                         <p><label><input type="checkbox" id="catEmp" onChange="habDesAccesos(tipoRolAc.value,'catEmp',3)"/><span>Catalogo de empresas</span></label></p>
                         <p><label><input type="checkbox" id="catRoles" onChange="habDesAccesos(tipoRolAc.value,'catRoles',4)"/><span>Catalogo de roles</span></label></p>
                         <p><label><input type="checkbox" id="tipoDoc" onChange="habDesAccesos(tipoRolAc.value,'tipoDoc',5)"/><span>Tipo de documentos</span></label></p>
+                        <p><label><input type="checkbox" id="correosCheck" onChange="habDesAccesos(tipoRolAc.value,'correosCheck',9)"/><span>Correos</span></label></p>
                         <p><label><input type="checkbox" id="cargarArchivos" onChange="habDesAccesos(tipoRolAc.value,'cargarArchivos',6)"/><span>Cargar Archivos</span></label></p>
                         <p><label><input type="checkbox" id="usuarios" onChange="habDesAccesos(tipoRolAc.value,'usuarios',7)"/><span>Usuarios</span></label></p>
                         <p><label><input type="checkbox" id="accesosCheck" onChange="habDesAccesos(tipoRolAc.value,'accesosCheck',8)"/><span>Accesos</span></label></p>
+                        <p><label><input type="checkbox" id="rolesUsuCh" onChange="habDesAccesos(tipoRolAc.value,'rolesUsuCh',10)"/><span>Roles-Usuarios</span></label></p>
+                        
                     </div>
             </div>             
            
@@ -53,6 +56,7 @@
     <script type="text/javascript" src="../js/materialize.min.js"></script>
     <script type="text/javascript" src="../js/ajax.js"></script>
     <script type="text/javascript" src="../js/bancaprepa.js"></script>
+    <script type="text/javascript" src="js/js.cookie.js"></script>
 
     <script>
         $(document).ready(function(){
