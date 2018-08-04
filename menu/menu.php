@@ -43,27 +43,16 @@ if(is_null($_COOKIE["b_capturista"])){
                 <div class="background">
                   <img src="/RedSocialBancaprepa/img/logo_bancaprepa.png"  style="width: 250px;">
                 </div>
-                <br> 
-<<<<<<< HEAD
-              </div></li> 
-               <!--li><a id="m_inicio" name ="inicio" class="subheader waves-effect" ><i class="material-icons">home</i>Inicio</a></li>
-              <li><a id="m_agregarPub" class="subheader waves-effect modal-trigger" href="#modalAgregarPub"><i class="material-icons">add_circle</i>Agregar publicación</a></li>
-              <li><a id="m_mandarT" class="subheader waves-effect"><i class="material-icons">drafts</i>Mandar ticket</a></li-->
- 
-              <li><a id="inicio" name ="inicio" class="waves-effect"><i class="material-icons">home</i>Inicio</a></li>
-              <li><a href="http:\\localhost\RedSocialBancaprepa\bancaprepa.php" name ="inicio" class="waves-effect"><i class="material-icons">assignment</i>Bancaprepa</a></li>
-              <li><a class="waves-effect modal-trigger" href="#modalAgregarPub"><i class="material-icons">add_circle</i>Agregar publicación</a></li>
-              <li><a class="waves-effect"><i class="material-icons">drafts</i>Mandar ticket</a></li>
- 
-=======
-              </div></li>
+                <br>  
+            
 
               <li><a id="m_inicio" name ="inicio" class="waves-effect" ><i class="material-icons">home</i>Inicio</a></li>
+              <li><a href="http:\\localhost\RedSocialBancaprepa\bancaprepa.php" name ="inicio" class="waves-effect"><i class="material-icons">assignment</i>Bancaprepa</a></li>
               <li><a id="m_agregarPub" class="subheader waves-effect modal-trigger" href="#modalAgregarPub"><i class="material-icons">add_circle</i>Agregar publicación</a></li>
               <li><a id="m_mandarT" class="subheader waves-effect"><i class="material-icons">drafts</i>Mandar ticket</a></li>
 
 
->>>>>>> d5d0143c1d4dc56f0b1bf4117f05cdb0a453ced8
+ 
               <li><div class="divider"></div></li>
               <li><a  name ="salirsesion" class="dropdown-trigger" data-target='dropdown1'><i class="material-icons">format_list_bulleted</i><i class="material-icons right">arrow_drop_down</i>Catalogos</a></li>
                 <!-- Dropdown Structure -->
