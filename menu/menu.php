@@ -44,6 +44,7 @@ if(is_null($_COOKIE["b_capturista"])){
                   <img src="/RedSocialBancaprepa/img/logo_bancaprepa.png"  style="width: 250px;">
                 </div>
                 <br> 
+<<<<<<< HEAD
               </div></li> 
                <!--li><a id="m_inicio" name ="inicio" class="subheader waves-effect" ><i class="material-icons">home</i>Inicio</a></li>
               <li><a id="m_agregarPub" class="subheader waves-effect modal-trigger" href="#modalAgregarPub"><i class="material-icons">add_circle</i>Agregar publicación</a></li>
@@ -54,6 +55,15 @@ if(is_null($_COOKIE["b_capturista"])){
               <li><a class="waves-effect modal-trigger" href="#modalAgregarPub"><i class="material-icons">add_circle</i>Agregar publicación</a></li>
               <li><a class="waves-effect"><i class="material-icons">drafts</i>Mandar ticket</a></li>
  
+=======
+              </div></li>
+
+              <li><a id="m_inicio" name ="inicio" class="waves-effect" ><i class="material-icons">home</i>Inicio</a></li>
+              <li><a id="m_agregarPub" class="subheader waves-effect modal-trigger" href="#modalAgregarPub"><i class="material-icons">add_circle</i>Agregar publicación</a></li>
+              <li><a id="m_mandarT" class="subheader waves-effect"><i class="material-icons">drafts</i>Mandar ticket</a></li>
+
+
+>>>>>>> d5d0143c1d4dc56f0b1bf4117f05cdb0a453ced8
               <li><div class="divider"></div></li>
               <li><a  name ="salirsesion" class="dropdown-trigger" data-target='dropdown1'><i class="material-icons">format_list_bulleted</i><i class="material-icons right">arrow_drop_down</i>Catalogos</a></li>
                 <!-- Dropdown Structure -->
@@ -69,7 +79,8 @@ if(is_null($_COOKIE["b_capturista"])){
                <li><a  name ="mantenimiento" class="dropdown-trigger" data-target='mantenimiento'><i class="material-icons">settings</i><i class="material-icons right">arrow_drop_down</i>Mantenimiento</a></li>
             <ul id='mantenimiento' class='dropdown-content'>
                 <li><a id="m_usuarios" class="subheader" name ="usuarios" ><i class="material-icons">person_pin</i>Usuarios</a></li> 
-                <li><a id="m_accesos" class="subheader" name ="accesos" ><i class="material-icons">build</i>Accesos</a></li>  
+                <li><a id="m_accesos" class="subheader" name ="accesos" ><i class="material-icons">build</i>Accesos</a></li>
+                <li><a id="m_rol_usu" class="subheader" name ="accesos" ><i class="material-icons">build</i>Roles-usuarios</a></li>   
              </ul>
             
     </ul>

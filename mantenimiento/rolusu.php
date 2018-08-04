@@ -4,7 +4,7 @@
 <head>
     
         <meta charset="UTF-8">  
-        <title>Accesos</title>
+        <title>Configuracion de los roles de usuarios</title>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
         <link rel="stylesheet" type="text/css" href="../css/materialize.min.css">
@@ -19,7 +19,7 @@
                         <?php
                             include('../menu/menu.php');
                         ?> 
-                        <h4 class="header " style="color:#1a237e;">Accesos</h4>
+                        <h4 class="header " style="color:#1a237e;">Configuracion de los roles de los usuarios</h4>
                         <hr>
                     </div>
                 </div>
