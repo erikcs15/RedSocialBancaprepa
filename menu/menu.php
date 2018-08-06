@@ -47,7 +47,7 @@ if(is_null($_COOKIE["b_capturista"])){
             
 
               <li><a id="m_inicio" name ="inicio" class="waves-effect" ><i class="material-icons">home</i>Inicio</a></li>
-              <li><a href="http:\\localhost\RedSocialBancaprepa\bancaprepa.php" name ="inicio" class="waves-effect"><i class="material-icons">assignment</i>Bancaprepa</a></li>
+              <li><a href="http:\\localhost\RedSocialBancaprepa\bancaprepa.php" name ="bancaprepa" id="m_bancaprepa" class="waves-effect"><i class="material-icons">assignment</i>Bancaprepa</a></li>
               <li><a id="m_agregarPub" class="subheader waves-effect modal-trigger" href="#modalAgregarPub"><i class="material-icons">add_circle</i>Agregar publicación</a></li>
               <li><a id="m_mandarT" class="subheader waves-effect"><i class="material-icons">drafts</i>Mandar ticket</a></li>
 
@@ -69,7 +69,7 @@ if(is_null($_COOKIE["b_capturista"])){
             <ul id='mantenimiento' class='dropdown-content'>
                 <li><a id="m_usuarios" class="subheader" name ="usuarios" ><i class="material-icons">person_pin</i>Usuarios</a></li> 
                 <li><a id="m_accesos" class="subheader" name ="accesos" ><i class="material-icons">build</i>Accesos</a></li>
-                <li><a id="m_rol_usu" class="subheader" name ="accesos" ><i class="material-icons">build</i>Roles-usuarios</a></li>   
+                <li><a id="m_rol_usu" class="subheader" name ="accesos" ><i class="material-icons">build</i>Configuracion de usuarios</a></li>   
              </ul>
             
     </ul>

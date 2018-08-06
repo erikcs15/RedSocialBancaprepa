@@ -88,6 +88,9 @@ $(document).ready(function(){
     onRequest({ opcion : 2,empresa:''},respEmpresa);
     onRequest({ opcion : 3,rol:''},respRol);
     onRequest({ opcion : 3,rol:''},respRolAccesos);
+    onRequest({ opcion : 29,rol:''},respUsuariosDD);
+
+
 
     //Inicializamos menu
     $('.dropdown-trigger').dropdown();
@@ -368,6 +371,19 @@ $("#btnEliDoc").click(function() {
     console.log("Presionaste boton de eliminar "+docID);
     onRequest({ opcion : 19 ,doc_id:docID}, respEliDocFinal);
 });
+//------------------------------------------Boton agregar configuracion de usuarios-----------------------------
+$("#btnConf_usuarios").click(function() {
+    usuario = $("#UsuariosDD").val();
+    rol = $("#tipoRolAc").val();
+    empresa = $("#tipoEmpresaAddFile").val();
+    console.log("Presionaste boton "+usuario+" "+rol+" "+empresa);
+    onRequest({ opcion : 30 ,usuario:usuario,empresa:empresa, rol:rol}, respUsuarios_empresa_rol);
+
+});
+ 
+
+
+
 ///------------------------------------------PUBLICACIONES--------------------------------------------------------
 //----------------------------------------------Agregar publicacion modal---------------------------------------- 
 $("#BtnAgregarPub").click(function() {
@@ -407,52 +423,50 @@ $("#BtnAgregarPub").click(function() {
 //Funcion que carga las empresas
 function cargarEmpresas(){
     onRequest({ opcion : 2 ,empresa:""}, respEmpresas);
-    var rolid="";
-    rolid=Cookies.get('b_rol_id');
-    console.log("ee"+rolid);
-    onRequest({ opcion : 22 ,id_rol:rolid },respCargarMenu);
+    empleadoid = Cookies.get('b_capturista_id');
+    console.log("id empleado= "+empleadoid);
+    onRequest({ opcion : 31 ,id_usuario:empleadoid },respCargarRolesPorUsuario);
 }
 //Funcion para cargar roles
 function cargarRoles(){
     onRequest({ opcion : 3 ,rol:""}, respRoles);
-    var rolid="";
-    rolid=Cookies.get('b_rol_id');
-    console.log("ee"+rolid);
-    onRequest({ opcion : 22 ,id_rol:rolid },respCargarMenu);
+    empleadoid = Cookies.get('b_capturista_id');
+    console.log("id empleado= "+empleadoid);
+    onRequest({ opcion : 31 ,id_usuario:empleadoid },respCargarRolesPorUsuario);
 }
 
 //Funcion para cargar tipo de documentos
 function cargarDoc(){
     onRequest({ opcion : 4 ,doc:""}, respDoc);
-    var rolid="";
-    rolid=Cookies.get('b_rol_id');
-    console.log("ee"+rolid);
-    onRequest({ opcion : 22 ,id_rol:rolid },respCargarMenu);
+    empleadoid = Cookies.get('b_capturista_id');
+    console.log("id empleado= "+empleadoid);
+    onRequest({ opcion : 31 ,id_usuario:empleadoid },respCargarRolesPorUsuario);
 }
 
 //Funcion que carga las publicaciones
 function cargarPublicaciones(){
     console.log("Cargar publicaciones");
     onRequest({ opcion : 20}, respCargarPublicaciones);
-    var rolid="";
-    rolid=Cookies.get('b_rol_id');
-    console.log("ee"+rolid);
-    onRequest({ opcion : 22 ,id_rol:rolid },respCargarMenu);
+   
+    empleadoid = Cookies.get('b_capturista_id');
+    console.log("id empleado= "+empleadoid);
+    onRequest({ opcion : 31 ,id_usuario:empleadoid },respCargarRolesPorUsuario);
     
 }
 
 function cargarCorreos(){
     onRequest({ opcion : 26 ,nombre:""}, respCorreos);
-    var rolid="";
-    rolid=Cookies.get('b_rol_id');
-    console.log("ee"+rolid);
-    onRequest({ opcion : 22 ,id_rol:rolid },respCargarMenu);
+    
+    empleadoid = Cookies.get('b_capturista_id');
+    console.log("id empleado= "+empleadoid);
+    onRequest({ opcion : 31 ,id_usuario:empleadoid },respCargarRolesPorUsuario);
 }
+
 function cargarMenuPorRol(){
-    var rolid="";
-    rolid=Cookies.get('b_rol_id');
-    console.log("ee"+rolid);
-    onRequest({ opcion : 22 ,id_rol:rolid },respCargarMenu);
+   
+    empleadoid = Cookies.get('b_capturista_id');
+    console.log("id empleado= "+empleadoid);
+    onRequest({ opcion : 31 ,id_usuario:empleadoid },respCargarRolesPorUsuario);
 }
 
 
@@ -978,6 +992,7 @@ var respTpublic = function(data) {
     
 
 }
+///---------------------------------------RESPUESTAS PARA LOS DROPDOWNLIST
 var respEmpresa = function(data) { 
     if (!data && data == null)
         return;  
@@ -1028,6 +1043,22 @@ var respRolAccesos = function(data) {
     $('#tipoRolAcAddFile').formSelect(); 
 }
 
+
+var respUsuariosDD = function(data) { 
+    if (!data && data == null)
+        return;  
+ 
+    var documento='<option value="0" disabled selected>Seleccione el usuario</option>';
+
+    for(var i=0; i<data.length; i++){
+        documento+='<option value='+data[i].id+'>'+data[i].nombre+'</option>';
+    }
+    
+    $('#UsuariosDD').html(documento);
+    $('#UsuariosDD').formSelect(); 
+
+}
+//---------------------------------------respuesta para los check de los accesos dependiendo del rol---------
 var respAccesosPorRol  = function(data) { 
     if (!data && data == null)
         return;  
@@ -1065,9 +1096,12 @@ var respAccesosPorRol  = function(data) {
             case '10':
                 $('#rolesUsuCh').prop('checked', true); 
                 break;
+            case '11':
+                $('#bancaprepaCh').prop('checked', true); 
+                break;
         }    
     }
-}
+} 
 
 
 //---------Respuesta para actualizar los accesos al menu de agregar publicacion
@@ -1084,6 +1118,7 @@ var respUpdateAccesos = function(data) {
     //Actualiza de nuevo los accesos
     
 }
+
 //---------Respuesta de la imagen insertada
 var respPublicacion = function(data) { 
     if (!data && data == null)
@@ -1131,6 +1166,12 @@ var respCargarMenu  = function(data) {
             case '9':
                  $('#correos').removeClass("subheader"); 
                 break;
+            case '10':
+                $('#m_rol_usu').removeClass("subheader"); 
+               break;
+            case '11':
+               $('#m_bancaprepa').removeClass("subheader"); 
+              break;
 
         }    
     }
@@ -1205,6 +1246,7 @@ function cargarAccesos(rol_id){
     $('#accesosCheck').prop('checked', false);
     $('#correosCheck').prop('checked', false);
     $('#rolesUsuCh').prop('checked', false);
+    $('#bancaprepaCh').prop('checked', false);
 
 
     onRequest({ opcion : 22 ,id_rol:rol_id}, respAccesosPorRol);
@@ -1269,7 +1311,34 @@ function cargarPublicacion(primerMenu){
 
 var respLasPublicaciones = function(data) { 
     if (!data && data == null)
-             return;  
- 
+             return;
              console.log(data)
+}
+
+var respUsuarios_empresa_rol = function(data) { 
+    console.log(data);
+    if (!data && data == null)
+    {
+        M.toast({html: 'Usuario no actualizado, consulte con el area de sistemas', classes: 'rounded red'}); 
+        return;
+    }
+    
+    M.toast({html: 'Usuario Actualizado!', classes: 'rounded #43a047 green darken-1'}); 
+
+    //Actualiza de nuevo los accesos
+    
+}
+
+var respCargarRolesPorUsuario = function(data){
+    if (!data && data == null)
+    {
+        M.toast({html: 'Usuario sin roles', classes: 'rounded red'}); 
+        return;
+    }
+    
+    for(var i=0; i<data.length; i++){
+        var idrol=data[i].rolid;
+        console.log(idrol);
+        onRequest({ opcion : 22 ,id_rol:idrol },respCargarMenu);
+    }
 }

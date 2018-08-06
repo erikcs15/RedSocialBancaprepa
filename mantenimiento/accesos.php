@@ -34,6 +34,7 @@
                     <div class=' col s4' id="accesosRol">
                         <h6>Menu</h6> 
                         <p><label><input type="checkbox" id="agregarPub" onChange="habDesAccesos(tipoRolAc.value,'agregarPub',1)"/><span>Agregar Publicacion</span></label></p>
+                        <p><label><input type="checkbox" id="bancaprepaCh" onChange="habDesAccesos(tipoRolAc.value,'bancaprepaCh',11)"/><span>Bancaprepa</span></label></p>
                         <p><label><input type="checkbox" id="mandarTicket" onChange="habDesAccesos(tipoRolAc.value,'mandarTicket',2)"/><span>Mandar Ticket</span></label></p>
                         <p><label><input type="checkbox" id="catEmp" onChange="habDesAccesos(tipoRolAc.value,'catEmp',3)"/><span>Catalogo de empresas</span></label></p>
                         <p><label><input type="checkbox" id="catRoles" onChange="habDesAccesos(tipoRolAc.value,'catRoles',4)"/><span>Catalogo de roles</span></label></p>
@@ -56,7 +57,7 @@
     <script type="text/javascript" src="../js/materialize.min.js"></script>
     <script type="text/javascript" src="../js/ajax.js"></script>
     <script type="text/javascript" src="../js/bancaprepa.js"></script>
-    <script type="text/javascript" src="js/js.cookie.js"></script>
+    <script type="text/javascript" src="../js/js.cookie.js"></script>
 
     <script>
         $(document).ready(function(){

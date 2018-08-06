@@ -19,33 +19,34 @@
                         <?php
                             include('../menu/menu.php');
                         ?> 
-                        <h4 class="header " style="color:#1a237e;">Configuracion de los roles de los usuarios</h4>
+                        <h4 class="header" style="color:#1a237e;">Configuracion usuarios</h4>
                         <hr>
                     </div>
                 </div>
             </div>
           
             <div class="row">
-                    <div class='input-field col s4 offset-s2'>
-                            <select id="tipoRolAc" onChange="cargarAccesos(tipoRolAc.value)"> 
+                    <div class='input-field col s4'>
+                            <select id="UsuariosDD"> 
+                            </select>
+                            <label><strong>Seleccione el usuario:</strong></label>
+                    </div>
+                   
+                    <div class='input-field col s4 '>
+                            <select id="tipoRolAc"> 
                             </select>
                             <label><strong>Seleccione el Rol:</strong></label>
                     </div>
-                    <div class=' col s4' id="accesosRol">
-                        <h6>Menu</h6> 
-                        <p><label><input type="checkbox" id="agregarPub" onChange="habDesAccesos(tipoRolAc.value,'agregarPub',1)"/><span>Agregar Publicacion</span></label></p>
-                        <p><label><input type="checkbox" id="mandarTicket" onChange="habDesAccesos(tipoRolAc.value,'mandarTicket',2)"/><span>Mandar Ticket</span></label></p>
-                        <p><label><input type="checkbox" id="catEmp" onChange="habDesAccesos(tipoRolAc.value,'catEmp',3)"/><span>Catalogo de empresas</span></label></p>
-                        <p><label><input type="checkbox" id="catRoles" onChange="habDesAccesos(tipoRolAc.value,'catRoles',4)"/><span>Catalogo de roles</span></label></p>
-                        <p><label><input type="checkbox" id="tipoDoc" onChange="habDesAccesos(tipoRolAc.value,'tipoDoc',5)"/><span>Tipo de documentos</span></label></p>
-                        <p><label><input type="checkbox" id="correosCheck" onChange="habDesAccesos(tipoRolAc.value,'correosCheck',9)"/><span>Correos</span></label></p>
-                        <p><label><input type="checkbox" id="cargarArchivos" onChange="habDesAccesos(tipoRolAc.value,'cargarArchivos',6)"/><span>Cargar Archivos</span></label></p>
-                        <p><label><input type="checkbox" id="usuarios" onChange="habDesAccesos(tipoRolAc.value,'usuarios',7)"/><span>Usuarios</span></label></p>
-                        <p><label><input type="checkbox" id="accesosCheck" onChange="habDesAccesos(tipoRolAc.value,'accesosCheck',8)"/><span>Accesos</span></label></p>
-                        <p><label><input type="checkbox" id="rolesUsuCh" onChange="habDesAccesos(tipoRolAc.value,'rolesUsuCh',10)"/><span>Roles-Usuarios</span></label></p>
-                        
+                    <div class='input-field col s4'>
+                            <select id="tipoEmpresaAddFile"> 
+                            </select>
+                            <label><strong>Seleccion la Empresa:</strong></label>
                     </div>
-            </div>             
+                   
+            </div> 
+            <div align="center">
+                 <a id="btnConf_usuarios" class="waves-effect waves-light btn"><i class="material-icons left">check_circle</i>Agregar Empresa y Rol</a>
+            </div>         
            
            
      </div>
@@ -56,7 +57,7 @@
     <script type="text/javascript" src="../js/materialize.min.js"></script>
     <script type="text/javascript" src="../js/ajax.js"></script>
     <script type="text/javascript" src="../js/bancaprepa.js"></script>
-    <script type="text/javascript" src="js/js.cookie.js"></script>
+    <script type="text/javascript" src="../js/js.cookie.js"></script>
 
     <script>
         $(document).ready(function(){

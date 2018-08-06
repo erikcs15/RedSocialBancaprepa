@@ -110,6 +110,15 @@
 		case 28: 
 			echo (json_encode($usuario->catPublicaciones($_REQUEST['capturista_id'],$_REQUEST['menu'])));
 		break;
+		case 29: 
+			echo (json_encode($usuario->cargarUsuarios($_REQUEST['usuario'])));
+		break;
+		case 30: 
+			echo (json_encode($usuario->insertarUsuario_Empresa_rol($_REQUEST['usuario'],$_REQUEST['empresa'],$_REQUEST['rol'])));
+		break;
+		case 31: 
+			echo (json_encode($usuario->cargarRolesUsuarios($_REQUEST['id_usuario'])));
+		break;
  	}
  
 ?>

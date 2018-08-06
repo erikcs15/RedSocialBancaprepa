@@ -22,7 +22,7 @@
 
 				    while ($res = mysqli_fetch_row($resultado)) {
 
-				       $datos[$i]['empleado_id'] 	= $res[0];
+				       $datos[$i]['empleado_id'] = $res[0];
                        $datos[$i]['usuario'] = $res[1]; 
 					   $datos[$i]['capturista'] = $res[2]; 
 					   $datos[$i]['rol_id'] = $res[3]; 
@@ -738,6 +738,86 @@
 				}
  
 			
+				}
+			public function cargarUsuarios($usuario)
+			{
+				$q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				if($usuario != "")
+				{	
+					$q = "Where nombre like '%$usuario%'";
+				}
+
+				$sql="SELECT empleado,nombre FROM usuarios ".$q." Order by nombre asc"; 
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['nombre'] = $res[1]; 
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+			}
+			public function insertarUsuario_Empresa_rol($empleado_id,$empresa_id,$rol)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+
+				$sql="INSERT INTO b_usuario_empresa (usuario_id, empresa_id) VALUES ($empleado_id,$empresa_id);";
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+				
+				$sql="INSERT INTO b_usuario_rol (usuario_id, rol_id) VALUES ($empleado_id,$rol);";
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+
+				$datos['usuario_id'] =  array('0' => '0' );
+				return  $datos;	
+			}
+			public function cargarRolesUsuarios($idusuario)
+			{
+				$q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+			
+
+				$sql="SELECT ur.usuario_id, ur.rol_id FROM usuarios u INNER JOIN b_usuario_rol ur 
+						ON ur.usuario_id=u.empleado WHERE u.empleado=$idusuario"; 
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['usuarioid'] = $res[0];
+				   $datos[$i]['rolid'] = $res[1]; 
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['usuarioid']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
 			}
 }
 
