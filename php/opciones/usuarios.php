@@ -114,10 +114,19 @@
 			echo (json_encode($usuario->cargarUsuarios($_REQUEST['usuario'])));
 		break;
 		case 30: 
-			echo (json_encode($usuario->insertarUsuario_Empresa_rol($_REQUEST['usuario'],$_REQUEST['empresa'],$_REQUEST['rol'])));
+			echo (json_encode($usuario->insertarUsuario_rol($_REQUEST['usuario'],$_REQUEST['rol'])));
 		break;
 		case 31: 
 			echo (json_encode($usuario->cargarRolesUsuarios($_REQUEST['id_usuario'])));
+		break;
+		case 32: 
+			echo (json_encode($usuario->insertarUsuario_Empresa($_REQUEST['usuario'],$_REQUEST['empresa'])));
+		break;
+		case 33:  
+			echo (json_encode($usuario->verificarUsuario_rol($_REQUEST['usuario'],$_REQUEST['rol'])));
+		break;
+		case 34: 
+			echo (json_encode($usuario->verificarUsuario_empresa($_REQUEST['usuario'],$_REQUEST['empresa'])));
 		break;
  	}
  

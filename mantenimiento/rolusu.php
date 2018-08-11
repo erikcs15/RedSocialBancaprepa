@@ -45,8 +45,12 @@
                    
             </div> 
             <div align="center">
-                 <a id="btnConf_usuarios" class="waves-effect waves-light btn"><i class="material-icons left">check_circle</i>Agregar Empresa y Rol</a>
-            </div>         
+                 <a id="btnAgregarUsu_Rol" class="waves-effect waves-light btn"><i class="material-icons left">check_circle</i>Agregar Rol</a>
+            </div>
+            <div><br></br></div>
+            <div align="center">
+                 <a id="btnAgregarUsu_Empresa" class="waves-effect waves-light btn"><i class="material-icons left">check_circle</i>Agregar Empresa</a>
+            </div>             
            
            
      </div>
