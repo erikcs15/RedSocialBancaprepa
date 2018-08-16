@@ -1035,7 +1035,9 @@ var respRol = function(data) {
 var respRolAccesos = function(data) { 
     if (!data && data == null)
         return;  
- 
+        
+
+        console.log(data)
     var documento='<option value="0" disabled selected>Seleccione el Tipo de rol</option>';
 
     for(var i=0; i<data.length; i++){
@@ -1053,6 +1055,8 @@ var respRolAccesos = function(data) {
 var respUsuariosDD = function(data) { 
     if (!data && data == null)
         return;  
+
+    console.log(data)
  
     var documento='<option value="0" disabled selected>Seleccione el usuario</option>';
 
@@ -1141,6 +1145,8 @@ var respPublicacion = function(data) {
 var respCargarMenu  = function(data) { 
     if (!data && data == null)
         return;  
+
+       // console.log(data)
  
     for(var i=0; i<data.length; i++){
         switch(data[i].id_menu)
@@ -1358,7 +1364,7 @@ var respCargarRolesPorUsuario = function(data){
     
     for(var i=0; i<data.length; i++){
         var idrol=data[i].rolid;
-        console.log(idrol);
+      //  console.log(idrol);
         onRequest({ opcion : 22 ,id_rol:idrol },respCargarMenu);
     }
 }

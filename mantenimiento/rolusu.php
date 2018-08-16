@@ -29,7 +29,7 @@
                     <div class='input-field col s4'>
                             <select id="UsuariosDD"> 
                             </select>
-                            <label><strong>Seleccione el usuario:</strong></label>
+                            <label><strong>Seleccione el usuario :</strong></label>
                     </div>
                    
                     <div class='input-field col s4 '>
@@ -60,8 +60,9 @@
     <script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
     <script type="text/javascript" src="../js/materialize.min.js"></script>
     <script type="text/javascript" src="../js/ajax.js"></script>
-    <script type="text/javascript" src="../js/bancaprepa.js"></script>
     <script type="text/javascript" src="../js/js.cookie.js"></script>
+    <script type="text/javascript" src="../js/bancaprepa.js"></script>
+   
 
     <script>
         $(document).ready(function(){
