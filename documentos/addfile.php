@@ -85,11 +85,21 @@
                 <div class="row" >
                         <div class="file-field input-field">
                             <div id="btndocId" class="btn grey">
-                                <span>Documento</span>
+                                <span><i class="material-icons left">cloud</i>Documento</span>
                                 <input id="docId" type="file" name="archivo[]" disabled>
                             </div>
-                            <div class="file-path-wrapper">
+                            <div class="file-path-wrapper col s7">
                                 <input id="tittleDoc" class="file-path validate" type="text" value="<?php echo $documento;?>">
+                            </div>
+                            <div class=" col s2"> 
+                                <label>
+                                    <input name="group1" type="radio" checked  disabled/>
+                                    <span>Imagen</span>
+                                </label> 
+                                <label>
+                                    <input name="group1" type="radio"  disabled/>
+                                    <span>PDF</span>
+                                </label> 
                             </div>
                         </div>
                 </div>
