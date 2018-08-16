@@ -770,18 +770,13 @@
 
 				return $datos;  
 			}
-			public function insertarUsuario_Empresa_rol($empleado_id,$empresa_id,$rol)
+			public function insertarUsuario_rol($empleado_id,$rol)
 			{
 				$res=array();
 				$datos=array();
 				$resultado  =array();
 				$i=0;
 
-				
-
-				$sql="INSERT INTO b_usuario_empresa (usuario_id, empresa_id) VALUES ($empleado_id,$empresa_id);";
-				
-				$resultado = mysqli_query($this->con(), $sql);   
 				
 				$sql="INSERT INTO b_usuario_rol (usuario_id, rol_id) VALUES ($empleado_id,$rol);";
 				
@@ -790,6 +785,23 @@
 				$datos['usuario_id'] =  array('0' => '0' );
 				return  $datos;	
 			}
+
+			public function insertarUsuario_Empresa($empleado_id,$empresa)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+				$sql="INSERT INTO b_usuario_empresa (usuario_id, empresa_id) VALUES ($empleado_id,$empresa);";
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+
+				$datos['usuario_id'] =  array('0' => '0' );
+				return  $datos;	
+			}
+
 			public function cargarRolesUsuarios($idusuario)
 			{
 				$q="";
@@ -813,6 +825,55 @@
 				
 				if ( count($datos )==0) { 
 					$datos[0]['usuarioid']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+			}
+
+			public function verificarUsuario_rol($usuario, $rol)
+			{
+				$q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+
+				$sql="SELECT COUNT(usuario_id) FROM b_usuario_rol WHERE usuario_id=$usuario AND rol_id=$rol"; 
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['contador'] = $res[0];
+				   $i++;
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['contador']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+			}
+			public function verificarUsuario_empresa($usuario, $empresa)
+			{
+				$q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+
+				$sql="SELECT COUNT(usuario_id) FROM b_usuario_empresa WHERE usuario_id=$usuario AND empresa_id=$empresa"; 
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['contador'] = $res[0];
+				   $i++;
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['contador']  =0;
 					return  $datos; 
 				  }
 

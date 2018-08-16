@@ -372,15 +372,21 @@ $("#btnEliDoc").click(function() {
     onRequest({ opcion : 19 ,doc_id:docID}, respEliDocFinal);
 });
 //------------------------------------------Boton agregar configuracion de usuarios-----------------------------
-$("#btnConf_usuarios").click(function() {
+$("#btnAgregarUsu_Rol").click(function() {
     usuario = $("#UsuariosDD").val();
     rol = $("#tipoRolAc").val();
-    empresa = $("#tipoEmpresaAddFile").val();
-    console.log("Presionaste boton "+usuario+" "+rol+" "+empresa);
-    onRequest({ opcion : 30 ,usuario:usuario,empresa:empresa, rol:rol}, respUsuarios_empresa_rol);
+    console.log("Presionaste boton "+usuario+" "+rol);
+    onRequest({ opcion : 33 ,usuario:usuario,rol:rol}, respVerificar_usu_rol);
+});
+
+
+$("#btnAgregarUsu_Empresa").click(function() {
+    usuario = $("#UsuariosDD").val();
+    empresa = $("#tipoEmpresaAddFile").val();  
+    console.log("Presionaste boton "+usuario+" "+empresa);
+    onRequest({ opcion : 34 ,usuario:usuario,empresa:empresa}, respVerificar_usu_empresa);
 
 });
- 
 
 
 
@@ -1315,7 +1321,7 @@ var respLasPublicaciones = function(data) {
              console.log(data)
 }
 
-var respUsuarios_empresa_rol = function(data) { 
+var respUsuarios_rol = function(data) { 
     console.log(data);
     if (!data && data == null)
     {
@@ -1323,7 +1329,21 @@ var respUsuarios_empresa_rol = function(data) {
         return;
     }
     
-    M.toast({html: 'Usuario Actualizado!', classes: 'rounded #43a047 green darken-1'}); 
+    M.toast({html: 'Agregado rol a usuario!', classes: 'rounded #43a047 green darken-1'}); 
+
+    //Actualiza de nuevo los accesos
+    
+}
+
+var respUsuarios_empresa = function(data) { 
+    console.log(data);
+    if (!data && data == null)
+    {
+        M.toast({html: 'Usuario no actualizado, consulte con el area de sistemas', classes: 'rounded red'}); 
+        return;
+    }
+    
+    M.toast({html: 'Agregado empresa a usuario!', classes: 'rounded #43a047 green darken-1'}); 
 
     //Actualiza de nuevo los accesos
     
@@ -1341,4 +1361,47 @@ var respCargarRolesPorUsuario = function(data){
         console.log(idrol);
         onRequest({ opcion : 22 ,id_rol:idrol },respCargarMenu);
     }
+}
+
+
+var respVerificar_usu_rol  = function(data) { 
+    if (!data && data == null)
+        return;  
+    
+    
+    for(var i=0; i<data.length; i++){
+        if(data[i].contador >= 1)
+        {
+            M.toast({html: '¡El usuario ya cuenta con el rol seleccionado!.', classes: 'rounded red'}); 
+        }
+        else{
+            usuario = $("#UsuariosDD").val();
+            rol = $("#tipoRolAc").val();
+            console.log("usuario y rol"+usuario+" "+rol);
+            onRequest({ opcion : 30 ,usuario:usuario,rol:rol}, respUsuarios_rol);
+        }
+    }
+
+}
+
+
+var respVerificar_usu_empresa  = function(data) { 
+    if (!data && data == null)
+        return;  
+    
+    
+    for(var i=0; i<data.length; i++){
+        if(data[i].contador >= 1)
+        {
+            M.toast({html: '¡El usuario ya cuenta con la empresa seleccionada!.', classes: 'rounded red'}); 
+        }
+        else{
+            usuario = $("#UsuariosDD").val();
+            empresa = $("#tipoEmpresaAddFile").val();  
+            console.log("Presionaste boton "+usuario+" "+empresa);
+            onRequest({ opcion : 32 ,usuario:usuario,empresa:empresa}, respUsuarios_empresa);
+
+        }
+    }
+
 }
