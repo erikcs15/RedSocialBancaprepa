@@ -90,7 +90,7 @@ $(document).ready(function(){
     onRequest({ opcion : 3,rol:''},respRolAccesos);
     onRequest({ opcion : 29,rol:''},respUsuariosDD);
 
-
+///----------------------------------------------------------------
 
     //Inicializamos menu
     $('.dropdown-trigger').dropdown();
