@@ -88,7 +88,7 @@ $(document).ready(function(){
     onRequest({ opcion : 2,empresa:''},respEmpresa);
     onRequest({ opcion : 3,rol:''},respRol);
     onRequest({ opcion : 3,rol:''},respRolAccesos);
-    onRequest({ opcion : 29,rol:''},respUsuariosDD);
+    onRequest({ opcion : 29,usuario:''},respUsuariosDD);
 
 ///----------------------------------------------------------------
 
@@ -1055,14 +1055,13 @@ var respRolAccesos = function(data) {
 var respUsuariosDD = function(data) { 
     if (!data && data == null)
         return;  
-
-    console.log(data)
  
     var documento='<option value="0" disabled selected>Seleccione el usuario</option>';
 
     for(var i=0; i<data.length; i++){
         documento+='<option value='+data[i].id+'>'+data[i].nombre+'</option>';
     }
+    console.log("checarc");
     
     $('#UsuariosDD').html(documento);
     $('#UsuariosDD').formSelect(); 

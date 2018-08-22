@@ -746,13 +746,13 @@
 				$datos=array();
 				$i=0; 
 
-				/*if($usuario != "")
+				if($usuario != "")
 				{	
 					$q = "Where nombre like '%$usuario%'";
-				}*/
+				}
 
-				$sql="SELECT empleado,nombre FROM usuarios ";/*.$q." Order by nombre asc"; */
- 
+				$sql="SELECT empleado,nombre FROM usuarios ".$q." Order by nombre asc";
+				
 				$resultado = mysqli_query($this->con(), $sql); 
 
 				while ($res = mysqli_fetch_row($resultado)) {
