@@ -192,6 +192,10 @@ $(document).ready(function(){
      $( "#m_rol_usu" ).click(function() { 
         location.href="/RedSocialBancaprepa/mantenimiento/rolusu.php";
      });
+
+     $( "#m_usuarios" ).click(function() { 
+        location.href="/RedSocialBancaprepa/mantenimiento/usuariosTabla.php";
+     });
      
 
 //----------------------------------busquedas--------------------------------------------------------------------
@@ -474,6 +478,22 @@ function cargarMenuPorRol(){
     console.log("id empleado= "+empleadoid);
     onRequest({ opcion : 31 ,id_usuario:empleadoid },respCargarRolesPorUsuario);
 }
+
+//cargamos el menu de publicaciones
+function cargarPublicacionesB(){
+    onRequest({ opcion : 27}, respCargaPublicacionesB);
+    empleadoid = Cookies.get('b_capturista_id');
+    console.log("id empleado= "+empleadoid);
+    onRequest({ opcion : 31 ,id_usuario:empleadoid },respCargarRolesPorUsuario);
+
+}
+
+function cargarUsuariosT(){
+    onRequest({ opcion : 35, usuario_id:""}, respCargaUsuarios);
+   
+
+}
+
 
 
 
@@ -1278,13 +1298,7 @@ function habDesAccesos(id_rol,id_cb,menu_id)
         onRequest({ opcion : 24 ,id_rol:id_rol, id_menu:menu_id }, respUpdateAccesos);
     }  
 }
-//cargamos el menu de publicaciones
-function cargarPublicacionesB(){
- 
 
-    onRequest({ opcion : 27}, respCargaPublicacionesB);
-
-}
 //respuesta de menu publicaciones 
 var respCargaPublicacionesB = function(data) { 
     if (!data && data == null)
@@ -1410,3 +1424,27 @@ var respVerificar_usu_empresa  = function(data) {
     }
 
 }
+var respCargaUsuarios  = function(data) { 
+    
+    if (!data && data == null) 
+    return; 
+
+    var d = '';
+
+     for (var i = 0; i < data.length; i++) {
+     d+= '<tr>'+
+     '<td>'+data[i].id+'</td>'+
+     '<td>'+data[i].nombre+'</td>'+
+     '<td>'+data[i].usuario+'</td>'+ 
+     '<td>'+data[i].estatus+'</td>' +
+     '<td class="left">'+
+     '<a onclick="editarUsu('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarEmp"><i class="material-icons">edit</i></a>'+
+     //'<a onclick="deshabEmp('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabEmp"><i class="material-icons">do_not_disturb_alt</i></a>' + 
+     //'<a onclick="BorrarEmp('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarEmp"><i class="material-icons">delete</i></a>' +
+     '</td>'  +'</tr> ';
+     }
+     
+     $("#tablaUsuarios").html(d);
+
+}
+

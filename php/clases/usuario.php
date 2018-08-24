@@ -881,5 +881,43 @@
 
 				return $datos;  
 			}
+
+			public function cargarListadodeUsuarios($usuario)
+			{
+				$q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				if($usuario != "")
+				{	
+					$q = "Where c.id='$usuario'";
+				}
+
+				$sql="SELECT c.id, c.`descripcion` AS Nombre, u.`nombre` AS Usuario, e.descripcion AS estatus
+					FROM usuarios u
+					INNER JOIN capturistas c ON c.id=u.`empleado`
+					INNER JOIN estatus e ON u.`activo`=e.id ".$q;
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['nombre'] = $res[1]; 
+				   $datos[$i]['usuario'] = $res[2]; 
+				   $datos[$i]['estatus'] = $res[3]; 
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+			}
 }
 

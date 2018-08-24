@@ -128,6 +128,10 @@
 		case 34: 
 			echo (json_encode($usuario->verificarUsuario_empresa($_REQUEST['usuario'],$_REQUEST['empresa'])));
 		break;
+		
+		case 35: 
+			echo (json_encode($usuario->cargarListadodeUsuarios($_REQUEST['usuario_id'])));
+		break;
  	}
  
 ?>

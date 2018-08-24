@@ -24,20 +24,36 @@
                     </div>
                 </div>
             </div>
-          
+           
             <div class="row">
-                    <div class='input-field col s4'>
+                    <div class="col s12">
+                    <table class="highlight">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Usuario</th>
+                                <th>Roles</th>
+                                <th>Empresas</th>
+                            </tr>
+                            </thead>
+
+                            <tbody id="tablaRolEmpUsuario">
+                            
+                            </tbody>
+                    </table>
+                    </div>
+                    <div class="input-field col s4">
                             <select id="UsuariosDD"> 
                             </select>
-                            <label><strong>Seleccione el usuario :</strong></label>
+                            <label><strong>Seleccione el usuario: </strong></label>
                     </div>
                    
-                    <div class='input-field col s4 '>
+                    <div class="input-field col s4">
                             <select id="tipoRolAc"> 
                             </select>
                             <label><strong>Seleccione el Rol:</strong></label>
                     </div>
-                    <div class='input-field col s4'>
+                    <div class="input-field col s4">
                             <select id="tipoEmpresaAddFile"> 
                             </select>
                             <label><strong>Seleccion la Empresa:</strong></label>
