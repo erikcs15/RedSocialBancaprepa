@@ -69,7 +69,7 @@ if(is_null($_COOKIE["b_capturista"])){
             <ul id='mantenimiento' class='dropdown-content'>
                 <li><a id="m_usuarios" class="subheader" name ="usuarios" ><i class="material-icons">person_pin</i>Usuarios</a></li> 
                 <li><a id="m_accesos" class="subheader" name ="accesos" ><i class="material-icons">build</i>Accesos</a></li>
-                <li><a id="m_rol_usu" class="subheader" name ="accesos" ><i class="material-icons">build</i>Configuracion de usuarios</a></li>   
+                
              </ul>
             
     </ul>

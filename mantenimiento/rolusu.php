@@ -10,7 +10,7 @@
         <link rel="stylesheet" type="text/css" href="../css/materialize.min.css">
         <link rel="stylesheet" type="text/css" href="../css/bancaprepa.css">
 </head>
-    <body onLoad="cargarMenuPorRol()">
+    <body onLoad="cargarConfUsuarios()">
     
      <div id="container" ><!-- CONTENEDOR 1 -->
             <div class="nav-wrapper">
@@ -26,24 +26,9 @@
             </div>
            
             <div class="row">
-                    <div class="col s12">
-                    <table class="highlight">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Usuario</th>
-                                <th>Roles</th>
-                                <th>Empresas</th>
-                            </tr>
-                            </thead>
-
-                            <tbody id="tablaRolEmpUsuario">
-                            
-                            </tbody>
-                    </table>
-                    </div>
+                   
                     <div class="input-field col s4">
-                            <select id="UsuariosDD"> 
+                            <select id="UsuariosDD2"> 
                             </select>
                             <label><strong>Seleccione el usuario: </strong></label>
                     </div>
@@ -57,6 +42,36 @@
                             <select id="tipoEmpresaAddFile"> 
                             </select>
                             <label><strong>Seleccion la Empresa:</strong></label>
+                    </div>
+                    <div class="col s6">
+                    <table class="highlight">
+                            <thead>
+                            <tr>
+                    
+                                <th>Roles</th>
+                                
+                            </tr>
+                            </thead>
+
+                            <tbody id="tablaRolUsuario">
+                            
+                            </tbody>
+                    </table>
+                    </div>
+                    <div class="col s6">
+                    <table class="highlight">
+                            <thead>
+                            <tr>
+                        
+                                <th>Empresas</th>
+                                
+                            </tr>
+                            </thead>
+
+                            <tbody id="tablaEmpUsuario">
+                            
+                            </tbody>
+                    </table>
                     </div>
                    
             </div> 

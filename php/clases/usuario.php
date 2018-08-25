@@ -739,6 +739,7 @@
  
 			
 				}
+				
 			public function cargarUsuarios($usuario)
 			{
 				$q="";
@@ -748,7 +749,7 @@
 
 				if($usuario != "")
 				{	
-					$q = "Where nombre like '%$usuario%'";
+					$q = "Where empleado = '$usuario'";
 				}
 
 				$sql="SELECT empleado,nombre FROM usuarios ".$q." Order by nombre asc";
@@ -919,5 +920,152 @@
 
 				return $datos;  
 			}
+
+			public function cargarRolesDeUsuarios($usuario)
+			{
+				$q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				$sql="SELECT c.id, u.nombre AS usuario,cr.`descripcion` AS Roles, cr.`id`AS id_rol
+						FROM usuarios u 
+						INNER JOIN capturistas c ON c.id=u.empleado
+						INNER JOIN b_usuario_rol ur ON ur.usuario_id=u.empleado
+						INNER JOIN b_cat_roles cr ON cr.id=ur.rol_id
+						WHERE c.id='$usuario'";
+				 
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['usuario'] = $res[1]; 
+				   $datos[$i]['roles'] = $res[2];
+				   $datos[$i]['id_rol'] = $res[3];  
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+			}
+
+			public function cargarEmpresasDeUsuarios($usuario)
+			{
+				$q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				$sql="SELECT c.id, u.nombre AS usuario, ce.`nombre`,ce.id AS id_emp
+						FROM usuarios u 
+						INNER JOIN capturistas c ON c.id=u.empleado
+						INNER JOIN b_usuario_empresa ue ON ue.usuario_id=u.empleado
+						INNER JOIN b_cat_empresas ce ON ce.id = ue.`empresa_id`
+						WHERE c.id='$usuario'";
+				 
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['usuario'] = $res[1]; 
+				   $datos[$i]['empresas'] = $res[2];
+				   $datos[$i]['id_emp'] = $res[3];   
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+				}
+
+				
+
+				public function borrarRoldeUsuario($usuario,$rol)
+				{
+					$res=array();
+					$datos=array();
+					$resultado  =array();
+					$i=0;
+
+					
+					$sql="DELETE FROM b_usuario_rol WHERE usuario_id='$usuario' AND rol_id='$rol'";
+					
+					$resultado = mysqli_query($this->con(), $sql);   
+					
+					$datos['b_usuario_rol'] =  array('0' => '0' );
+					return  $datos;	
+				}
+
+				public function borrarEmpdeUsuario($usuario,$emp)
+				{
+					$res=array();
+					$datos=array();
+					$resultado  =array();
+					$i=0;
+				
+					$sql="DELETE FROM b_usuario_empresa WHERE usuario_id=$usuario AND empresa_id=$emp";
+					
+					$resultado = mysqli_query($this->con(), $sql);   
+					
+					$datos['b_usuario_empresa'] =  array('0' => '0' );
+					return  $datos;	
+				}
+				
+			public function cargarUsuariosXnombre($usuario)
+			{
+				$q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				if($usuario != "")
+				{	
+					$q = "WHERE c.descripcion LIKE '%$usuario%'";
+				}
+
+				$sql="SELECT c.id, c.`descripcion` AS Nombre, u.`nombre` AS Usuario, e.descripcion AS estatus
+					FROM usuarios u
+					INNER JOIN capturistas c ON c.id=u.`empleado`
+					INNER JOIN estatus e ON u.`activo`=e.id ".$q;
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['nombre'] = $res[1]; 
+				   $datos[$i]['usuario'] = $res[2]; 
+				   $datos[$i]['estatus'] = $res[3]; 
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+
+
 }
 

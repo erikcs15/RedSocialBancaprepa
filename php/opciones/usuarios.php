@@ -128,9 +128,24 @@
 		case 34: 
 			echo (json_encode($usuario->verificarUsuario_empresa($_REQUEST['usuario'],$_REQUEST['empresa'])));
 		break;
-		
 		case 35: 
 			echo (json_encode($usuario->cargarListadodeUsuarios($_REQUEST['usuario_id'])));
+		break;
+		case 36: 
+			echo (json_encode($usuario->cargarRolesDeUsuarios($_REQUEST['usuario_id'])));
+		break;
+		
+		case 37: 
+			echo (json_encode($usuario->cargarEmpresasDeUsuarios($_REQUEST['usuario_id'])));
+		break;
+		case 38: 
+			echo (json_encode($usuario->borrarRoldeUsuario($_REQUEST['usuario_id'],$_REQUEST['rol_id'])));
+		break;
+		case 39: 
+			echo (json_encode($usuario->borrarEmpdeUsuario($_REQUEST['usuario_id'],$_REQUEST['empresa_id'])));
+		break;
+		case 40: 
+			echo (json_encode($usuario->cargarUsuariosXnombre($_REQUEST['nom_usuario'])));
 		break;
  	}
  

@@ -90,6 +90,22 @@ $(document).ready(function(){
     onRequest({ opcion : 3,rol:''},respRolAccesos);
     onRequest({ opcion : 29,usuario:''},respUsuariosDD);
 
+    (function($) {  
+        $.get = function(key)   {  
+            key = key.replace(/[\[]/, '\\[');  
+            key = key.replace(/[\]]/, '\\]');  
+            var pattern = "[\\?&]" + key + "=([^&#]*)";  
+            var regex = new RegExp(pattern);  
+            var url = unescape(window.location.href);  
+            var results = regex.exec(url);  
+            if (results === null) {  
+                return null;  
+            } else {  
+                return results[1];  
+            }  
+        }  
+    })(jQuery); 
+
 ///----------------------------------------------------------------
 
     //Inicializamos menu
@@ -241,6 +257,16 @@ $(document).ready(function(){
       onRequest({ opcion : 26,nombre:busqueda},respCorreos);
   }
 });
+//Busqueda de usuarios
+$("#busquedaUsuarios").keypress(function(e) {
+    //inicializamos variables
+  if(e.which == 13) {
+      var busqueda='';
+      busqueda =  $("#busquedaUsuarios").val();
+      console.log(busqueda);
+      onRequest({ opcion : 40,nom_usuario:busqueda},respCargaUsuarios);
+  }
+});
 
 
 //-------------------------------Accion para AGREGAR DENTRO DE LOS MODAL--------------------------------
@@ -377,18 +403,20 @@ $("#btnEliDoc").click(function() {
 });
 //------------------------------------------Boton agregar configuracion de usuarios-----------------------------
 $("#btnAgregarUsu_Rol").click(function() {
-    usuario = $("#UsuariosDD").val();
+    usuario = $("#UsuariosDD2").val();
     rol = $("#tipoRolAc").val();
     console.log("Presionaste boton "+usuario+" "+rol);
     onRequest({ opcion : 33 ,usuario:usuario,rol:rol}, respVerificar_usu_rol);
+    
 });
 
 
 $("#btnAgregarUsu_Empresa").click(function() {
-    usuario = $("#UsuariosDD").val();
+    usuario = $("#UsuariosDD2").val();
     empresa = $("#tipoEmpresaAddFile").val();  
     console.log("Presionaste boton "+usuario+" "+empresa);
     onRequest({ opcion : 34 ,usuario:usuario,empresa:empresa}, respVerificar_usu_empresa);
+    
 
 });
 
@@ -433,24 +461,18 @@ $("#BtnAgregarPub").click(function() {
 //Funcion que carga las empresas
 function cargarEmpresas(){
     onRequest({ opcion : 2 ,empresa:""}, respEmpresas);
-    empleadoid = Cookies.get('b_capturista_id');
-    console.log("id empleado= "+empleadoid);
-    onRequest({ opcion : 31 ,id_usuario:empleadoid },respCargarRolesPorUsuario);
+   
 }
 //Funcion para cargar roles
 function cargarRoles(){
     onRequest({ opcion : 3 ,rol:""}, respRoles);
-    empleadoid = Cookies.get('b_capturista_id');
-    console.log("id empleado= "+empleadoid);
-    onRequest({ opcion : 31 ,id_usuario:empleadoid },respCargarRolesPorUsuario);
+    
 }
 
 //Funcion para cargar tipo de documentos
 function cargarDoc(){
     onRequest({ opcion : 4 ,doc:""}, respDoc);
-    empleadoid = Cookies.get('b_capturista_id');
-    console.log("id empleado= "+empleadoid);
-    onRequest({ opcion : 31 ,id_usuario:empleadoid },respCargarRolesPorUsuario);
+   
 }
 
 //Funcion que carga las publicaciones
@@ -458,22 +480,17 @@ function cargarPublicaciones(){
     console.log("Cargar publicaciones");
     onRequest({ opcion : 20}, respCargarPublicaciones);
    
-    empleadoid = Cookies.get('b_capturista_id');
-    console.log("id empleado= "+empleadoid);
-    onRequest({ opcion : 31 ,id_usuario:empleadoid },respCargarRolesPorUsuario);
+   
     
 }
 
 function cargarCorreos(){
     onRequest({ opcion : 26 ,nombre:""}, respCorreos);
     
-    empleadoid = Cookies.get('b_capturista_id');
-    console.log("id empleado= "+empleadoid);
-    onRequest({ opcion : 31 ,id_usuario:empleadoid },respCargarRolesPorUsuario);
 }
 
 function cargarMenuPorRol(){
-   
+    
     empleadoid = Cookies.get('b_capturista_id');
     console.log("id empleado= "+empleadoid);
     onRequest({ opcion : 31 ,id_usuario:empleadoid },respCargarRolesPorUsuario);
@@ -482,21 +499,54 @@ function cargarMenuPorRol(){
 //cargamos el menu de publicaciones
 function cargarPublicacionesB(){
     onRequest({ opcion : 27}, respCargaPublicacionesB);
-    empleadoid = Cookies.get('b_capturista_id');
-    console.log("id empleado= "+empleadoid);
-    onRequest({ opcion : 31 ,id_usuario:empleadoid },respCargarRolesPorUsuario);
-
+    
 }
 
 function cargarUsuariosT(){
     onRequest({ opcion : 35, usuario_id:""}, respCargaUsuarios);
-   
-
 }
 
 
+function cargarConfUsuarios(){
+    var a = getParameterByName("usuario_id");
+    console.log("usuario:"+a);
+    onRequest({ opcion : 36 ,usuario_id:a}, respCargarConfRoles);
+    onRequest({ opcion : 37 ,usuario_id:a}, respCargarConfEmpresas);
+    onRequest({ opcion : 29,usuario:a},respUsuariosDDConf);
+    empleadoid = Cookies.get('b_capturista_id');
+    console.log("id empleado= "+empleadoid);
+    onRequest({ opcion : 31 ,id_usuario:empleadoid },respCargarRolesPorUsuario);
+    
+}
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+    results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
 
 
+function eliminarRol(rolid) {    
+   var usuario = $("#UsuariosDD2").val();
+   var rol = rolid;
+   console.log("----------Eliminar ROl---------");
+   console.log("usuario= "+ usuario);
+   console.log("rol= "+ rol);
+   onRequest({ opcion : 38 ,usuario_id:usuario,rol_id:rol },respEliminarRolUsu);
+
+}
+
+function eliminarEmp(empid) {    
+    var usuario = $("#UsuariosDD2").val();
+    var empresa = empid;
+    console.log("----------Eliminar empresa---------");
+    console.log("usuario= "+ usuario);
+    console.log("empresa= "+ empresa);
+    onRequest({ opcion : 39 ,usuario_id:usuario,empresa_id:empresa },respEliminarEmpUsu);
+ 
+ }
+ 
 
 //----------------------------------------Funcion de respuesta de la consulta que aplicamos con ajax-----------------------------
 var respUser = function(data) { 
@@ -543,6 +593,8 @@ var respEmpresas = function(data) {
      }
      
      $("#tablaemp").html(d);
+
+     cargarMenuPorRol();
 }
 // ---------------------------------------------------CATALOGO DE ROLES---------------------------------------------------
 var respRoles = function(data) { 
@@ -565,6 +617,8 @@ var respRoles = function(data) {
      }
      
      $("#tablarol").html(d);
+
+     cargarMenuPorRol();
 }
 // ---------------------------------------------------CATALOGO DE tipo DE DOCUMENTOS---------------------------------------------------
 var respDoc = function(data) { 
@@ -598,6 +652,8 @@ var respDoc = function(data) {
      }
      
      $("#tabladoc").html(d);
+
+     cargarMenuPorRol();
 }
 
 // ---------------------------------------------------CATALOGO DE CORREOS---------------------------------------------------
@@ -633,6 +689,8 @@ var respCorreos = function(data) {
      }
      
      $("#tablaCorreos").html(d);
+
+     cargarMenuPorRol();
 }
 //----------------------------RESPUESTAS PARA INSERTAR DATOS------------------------------
 //----------------------------insertar empresa---------------------------------------
@@ -978,6 +1036,8 @@ var respCargarPublicaciones = function(data) {
      }
      
      $("#cargarPubli").html(d);
+
+     cargarConfUsuarios();
 }
 //---------------------------------------------Agregar publicaciones------------------------------
 var respAgregaPublicacion = function(data) { 
@@ -993,6 +1053,8 @@ var respAgregaPublicacion = function(data) {
     $("#modalAgregarPub").modal("close");
 
     onRequest({ opcion : 20}, respCargarPublicaciones);
+
+
 }
 // ---------------------------------------CARGAMOS TODOS LOS SELECTS ---------------------------------------
  
@@ -1085,6 +1147,23 @@ var respUsuariosDD = function(data) {
     
     $('#UsuariosDD').html(documento);
     $('#UsuariosDD').formSelect(); 
+
+}
+
+var respUsuariosDDConf = function(data) { 
+    if (!data && data == null)
+        return;  
+ 
+    var documento='';
+
+    for(var i=0; i<data.length; i++){
+        documento+='<option value='+data[i].id+' selected>'+data[i].nombre+'</option>';
+        console.log("checarc2 "+data[i].id);
+    }
+    console.log("checarc2");
+    
+    $('#UsuariosDD2').html(documento);
+    $('#UsuariosDD2').formSelect(); 
 
 }
 //---------------------------------------respuesta para los check de los accesos dependiendo del rol---------
@@ -1265,6 +1344,17 @@ function BorrarDoc(doc_id)
      onRequest({ opcion : 12 ,doc_id:doc_id}, respEliDoc);
 }
 
+function editarUsu(usuarioid)
+{
+     //Carga los datos del usuario, su empresa(s) y rol(es)
+     //
+
+     var a = document.createElement('a');
+     a.href="/RedSocialBancaprepa/mantenimiento/rolusu.php?usuario_id="+usuarioid;
+     document.body.appendChild(a);
+     a.click();
+}
+
 function cargarAccesos(rol_id){ 
 
     $('#agregarPub').prop('checked', false);  
@@ -1324,6 +1414,8 @@ var respCargaPublicacionesB = function(data) {
              $('#tipoPublicacion').html(documento); 
 
              cargarPublicacion(primerMenu);
+
+             cargarMenuPorRol();
 }
 
 function cargarPublicacion(primerMenu){
@@ -1350,7 +1442,8 @@ var respUsuarios_rol = function(data) {
     
     M.toast({html: 'Agregado rol a usuario!', classes: 'rounded #43a047 green darken-1'}); 
 
-    //Actualiza de nuevo los accesos
+    //Actualiza la pagina
+    cargarConfUsuarios();
     
 }
 
@@ -1364,7 +1457,8 @@ var respUsuarios_empresa = function(data) {
     
     M.toast({html: 'Agregado empresa a usuario!', classes: 'rounded #43a047 green darken-1'}); 
 
-    //Actualiza de nuevo los accesos
+    //Actualiza la pagina
+    cargarConfUsuarios();
     
 }
 
@@ -1394,12 +1488,14 @@ var respVerificar_usu_rol  = function(data) {
             M.toast({html: '¡El usuario ya cuenta con el rol seleccionado!.', classes: 'rounded red'}); 
         }
         else{
-            usuario = $("#UsuariosDD").val();
+            usuario = $("#UsuariosDD2").val();
             rol = $("#tipoRolAc").val();
             console.log("usuario y rol"+usuario+" "+rol);
             onRequest({ opcion : 30 ,usuario:usuario,rol:rol}, respUsuarios_rol);
         }
     }
+
+    
 
 }
 
@@ -1415,13 +1511,15 @@ var respVerificar_usu_empresa  = function(data) {
             M.toast({html: '¡El usuario ya cuenta con la empresa seleccionada!.', classes: 'rounded red'}); 
         }
         else{
-            usuario = $("#UsuariosDD").val();
+            usuario = $("#UsuariosDD2").val();
             empresa = $("#tipoEmpresaAddFile").val();  
             console.log("Presionaste boton "+usuario+" "+empresa);
             onRequest({ opcion : 32 ,usuario:usuario,empresa:empresa}, respUsuarios_empresa);
 
         }
     }
+    cargarConfUsuarios();
+        
 
 }
 var respCargaUsuarios  = function(data) { 
@@ -1438,7 +1536,7 @@ var respCargaUsuarios  = function(data) {
      '<td>'+data[i].usuario+'</td>'+ 
      '<td>'+data[i].estatus+'</td>' +
      '<td class="left">'+
-     '<a onclick="editarUsu('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarEmp"><i class="material-icons">edit</i></a>'+
+     '<a onclick="editarUsu('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger"><i class="material-icons">edit</i></a>'+
      //'<a onclick="deshabEmp('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabEmp"><i class="material-icons">do_not_disturb_alt</i></a>' + 
      //'<a onclick="BorrarEmp('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarEmp"><i class="material-icons">delete</i></a>' +
      '</td>'  +'</tr> ';
@@ -1446,5 +1544,81 @@ var respCargaUsuarios  = function(data) {
      
      $("#tablaUsuarios").html(d);
 
+     cargarMenuPorRol();
+
 }
+
+var respCargarConfRoles = function(data) { 
+    
+    if (!data && data == null) 
+    return; 
+
+    var d = '';
+
+     for (var i = 0; i < data.length; i++) {
+     d+= '<tr>'+
+     '<td>'+data[i].roles+'</td>'+
+     '<td class="left">'+
+     '<a onclick="eliminarRol('+data[i].id_rol+')" class="waves-effect waves-light btn-floating btn-small red darken-4 btn modal-trigger"><i class="material-icons">delete_forever</i></a>'+ 
+     '</tr> ';
+     }
+     
+     $("#tablaRolUsuario").html(d);
+
+}
+
+
+var respCargarConfEmpresas = function(data) { 
+    
+    if (!data && data == null) 
+    return; 
+
+    var d = '';
+
+     for (var i = 0; i < data.length; i++) {
+     d+= '<tr>'+
+     '<td>'+data[i].empresas+'</td>'+ 
+     '<td class="left">'+
+     '<a onclick="eliminarEmp('+data[i].id_emp+')" class="waves-effect waves-light btn-floating btn-small red darken-4 btn modal-trigger"><i class="material-icons">delete_forever</i></a>'+ 
+     '</tr> ';
+     }
+     
+     $("#tablaEmpUsuario").html(d);
+
+}
+
+
+var respEliminarRolUsu = function(data) { 
+    console.log("--------------"+data);
+    if (!data && data == null)
+    {
+        M.toast({html: 'Rol no actualizado, contacte con el departamento de sistemas', classes: 'rounded red'});  
+        return;
+    }
+    
+    M.toast({html: 'Rol eliminado!.', classes: 'rounded red'});  
+
+    //Actualiza de nuevo los accesos
+
+    cargarConfUsuarios();
+    console.log("Actualizado!!");
+}
+
+var respEliminarEmpUsu = function(data) { 
+    console.log("--------------"+data);
+    if (!data && data == null)
+    {
+        M.toast({html: 'Empresa no actualizado, contacte con el departamento de sistemas', classes: 'rounded red'});  
+        return;
+    }
+    
+    M.toast({html: 'Empresa eliminada!.', classes: 'rounded red'});  
+
+    //Actualiza de nuevo los accesos
+
+    cargarConfUsuarios();
+    console.log("Actualizado!!");
+}
+
+
 
