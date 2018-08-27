@@ -76,11 +76,15 @@
                    
             </div> 
             <div align="center">
-                 <a id="btnAgregarUsu_Rol" class="waves-effect waves-light btn"><i class="material-icons left">check_circle</i>Agregar Rol</a>
+                 <a id="btnAgregarUsu_Rol" class="waves-effect waves-light btn light-blue darken-4"><i class="material-icons left">add_circle_outline</i>Agregar Rol</a>
             </div>
             <div><br></br></div>
             <div align="center">
-                 <a id="btnAgregarUsu_Empresa" class="waves-effect waves-light btn"><i class="material-icons left">check_circle</i>Agregar Empresa</a>
+                 <a id="btnAgregarUsu_Empresa" class="waves-effect waves-light btn light-blue darken-4"><i class="material-icons left">add_circle_outline</i>Agregar Empresa</a>
+            </div>
+            <div><br></br></div>
+            <div align="center">
+                 <a id="btn_regresar_rolusu" class="waves-effect waves-light btn light-blue darken-4"><i class="material-icons left">replay</i>Regresar</a>
             </div>             
            
            

@@ -943,7 +943,7 @@
 				   $datos[$i]['id'] = $res[0];
 				   $datos[$i]['usuario'] = $res[1]; 
 				   $datos[$i]['roles'] = $res[2];
-				   $datos[$i]['id_rol'] = $res[3];  
+				   $datos[$i]['id_rol'] = $res[3];
 				   $i++;
 
 				} 
@@ -979,7 +979,7 @@
 				   $datos[$i]['id'] = $res[0];
 				   $datos[$i]['usuario'] = $res[1]; 
 				   $datos[$i]['empresas'] = $res[2];
-				   $datos[$i]['id_emp'] = $res[3];   
+				   $datos[$i]['id_emp'] = $res[3]; 
 				   $i++;
 
 				} 

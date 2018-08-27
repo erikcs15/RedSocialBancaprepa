@@ -67,6 +67,7 @@ $(document).ready(function(){
             var tiporol = $("#tipoRolAddFile").val();
             var docname="SIN DOCUMENTO";
             var cdocumento="";
+            var esPDF="";
 
             if($('#chkDoc').is(":checked")) {  
                  docname = $("#tittleDoc").val();
@@ -75,6 +76,14 @@ $(document).ready(function(){
             else{
                  cdocumento ='N';
             }
+            /*
+            if($('#chkPdfImg').is(":checked")) {  
+                esPDF="PDF"
+           } 
+           else{
+               esPDF="IMG"
+           }
+           */
             
             onRequest({ opcion : 25,titulo:titulo,descripcion:descripcion,imagen:docname,documento_id:tipopublic,rol_id:tiporol,empresa_id:tipoempresa,docuemento:cdocumento},respPublicacion);
 
@@ -406,7 +415,12 @@ $("#btnAgregarUsu_Rol").click(function() {
     usuario = $("#UsuariosDD2").val();
     rol = $("#tipoRolAc").val();
     console.log("Presionaste boton "+usuario+" "+rol);
-    onRequest({ opcion : 33 ,usuario:usuario,rol:rol}, respVerificar_usu_rol);
+    if(rol==null){
+        M.toast({html: 'No tiene ningun rol seleccionado!', classes: 'rounded red'});
+    }
+    else{
+        onRequest({ opcion : 33 ,usuario:usuario,rol:rol}, respVerificar_usu_rol);
+    }
     
 });
 
@@ -415,8 +429,17 @@ $("#btnAgregarUsu_Empresa").click(function() {
     usuario = $("#UsuariosDD2").val();
     empresa = $("#tipoEmpresaAddFile").val();  
     console.log("Presionaste boton "+usuario+" "+empresa);
-    onRequest({ opcion : 34 ,usuario:usuario,empresa:empresa}, respVerificar_usu_empresa);
-    
+    if(empresa==null){
+        M.toast({html: 'No tiene ninguna empresa seleccionada!', classes: 'rounded red'});
+    }
+    else{
+        onRequest({ opcion : 34 ,usuario:usuario,empresa:empresa}, respVerificar_usu_empresa);
+    }
+
+});
+
+$("#btn_regresar_rolusu").click(function() {
+    location.href="/RedSocialBancaprepa/mantenimiento/usuariosTabla.php";
 
 });
 
@@ -1556,14 +1579,28 @@ var respCargarConfRoles = function(data) {
     var d = '';
 
      for (var i = 0; i < data.length; i++) {
-     d+= '<tr>'+
-     '<td>'+data[i].roles+'</td>'+
-     '<td class="left">'+
-     '<a onclick="eliminarRol('+data[i].id_rol+')" class="waves-effect waves-light btn-floating btn-small red darken-4 btn modal-trigger"><i class="material-icons">delete_forever</i></a>'+ 
-     '</tr> ';
-     }
-     
-     $("#tablaRolUsuario").html(d);
+         
+         var roles=String(data[i].roles);
+         console.log("-------"+roles);
+         if(roles=="undefined")
+         {
+            d+= '<tr>'+
+            '<td>Sin Roles</td>'+
+            '<td class="left">'+ 
+            '</tr> ';  
+            $("#tablaRolUsuario").html(d);
+         }
+         else
+         {
+            d+= '<tr>'+
+            '<td>'+data[i].roles+'</td>'+
+            '<td class="left">'+
+            '<a onclick="eliminarRol('+data[i].id_rol+')" class="waves-effect waves-light btn-floating btn-small red darken-4 btn modal-trigger"><i class="material-icons">delete_forever</i></a>'+ 
+            '</tr> ';  
+            $("#tablaRolUsuario").html(d);
+         }
+
+    }
 
 }
 
@@ -1576,14 +1613,29 @@ var respCargarConfEmpresas = function(data) {
     var d = '';
 
      for (var i = 0; i < data.length; i++) {
-     d+= '<tr>'+
-     '<td>'+data[i].empresas+'</td>'+ 
-     '<td class="left">'+
-     '<a onclick="eliminarEmp('+data[i].id_emp+')" class="waves-effect waves-light btn-floating btn-small red darken-4 btn modal-trigger"><i class="material-icons">delete_forever</i></a>'+ 
-     '</tr> ';
+        var empresas=String(data[i].empresas);
+        console.log("-------"+empresas);
+        if(empresas=="undefined")
+        {
+           d+= '<tr>'+
+           '<td>Sin Empresas</td>'+
+           '<td class="left">'+ 
+           '</tr> ';  
+           $("#tablaEmpUsuario").html(d);
+        }
+        else
+        {
+            d+= '<tr>'+
+            '<td>'+data[i].empresas+'</td>'+ 
+            '<td class="left">'+
+            '<a onclick="eliminarEmp('+data[i].id_emp+')" class="waves-effect waves-light btn-floating btn-small red darken-4 btn modal-trigger"><i class="material-icons">delete_forever</i></a>'+ 
+            '</tr> ';
+
+            $("#tablaEmpUsuario").html(d);
+        }
      }
      
-     $("#tablaEmpUsuario").html(d);
+     
 
 }
 
