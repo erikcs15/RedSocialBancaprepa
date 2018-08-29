@@ -1,7 +1,10 @@
 // Funcion principal de Jquery la cual escanea en tiempo real nuestro documento para verificar que los eventos se ejecuten correctamente
 $(document).ready(function(){
 
-
+    
+        $('.tooltipped').tooltip();
+      
+          
     //inicializamos modals
         $('#modalAceptarDoc').modal();
     //validacion del submit de publicaciones
@@ -1788,7 +1791,7 @@ var respCargarRolesXemp = function(data) {
             d+= '<tr>'+
             '<td>'+data[i].nombre+'</td>'+
             '<td class="left">'+
-            '<a onclick="eliminarRoldeEmp('+data[i].id_rol+')" class="waves-effect waves-light btn-floating btn-small red darken-4 btn modal-trigger"><i class="material-icons">delete_forever</i></a>'+ 
+            '<a onclick="eliminarRoldeEmp('+data[i].id_rol+')" class="waves-effect waves-light btn-floating btn-small red darken-4 btn modal-trigger" class="btn tooltipped" data-tooltip="I am a tooltip"><i class="material-icons">delete_forever</i></a>'+ 
             '</tr> ';  
             $("#tablaRolEmpresa").html(d);
          }
