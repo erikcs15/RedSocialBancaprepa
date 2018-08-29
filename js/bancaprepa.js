@@ -2,7 +2,7 @@
 $(document).ready(function(){
 
     
-        $('.tooltipped').tooltip();
+    $('.tooltipped').tooltip({delay: 50});
       
           
     //inicializamos modals
@@ -1791,7 +1791,7 @@ var respCargarRolesXemp = function(data) {
             d+= '<tr>'+
             '<td>'+data[i].nombre+'</td>'+
             '<td class="left">'+
-            '<a onclick="eliminarRoldeEmp('+data[i].id_rol+')" class="waves-effect waves-light btn-floating btn-small red darken-4 btn modal-trigger" class="btn tooltipped" data-tooltip="I am a tooltip"><i class="material-icons">delete_forever</i></a>'+ 
+            '<a onclick="eliminarRoldeEmp('+data[i].id_rol+')"  class="waves-effect waves-light btn-floating btn-small red darken-4 btn modal-trigger tooltipped" data-tooltip="I am a tooltip" data-delay="50"  ><i class="material-icons">delete_forever</i></a>'+ 
             '</tr> ';  
             $("#tablaRolEmpresa").html(d);
          }
