@@ -43,27 +43,29 @@
                             </select>
                             <label><strong>Seleccion la Empresa:</strong></label>
                     </div>
-                    <div class="col s6">
-                    <table class="highlight">
-                            <thead>
-                            <tr>
-                    
-                                <th>Roles</th>
-                                
-                            </tr>
-                            </thead>
+                    <div class="col s5 offset-s1">
+                        <table class="highlight">
 
-                            <tbody id="tablaRolUsuario">
-                            
-                            </tbody>
-                    </table>
+                                <thead> 
+                                    <tr>
+                                        <th>Roles</th> 
+                                        <th>Acciones</th>
+                                    </tr>
+                                    
+                                </thead> 
+
+                                <tbody id="tablaRolUsuario">
+                                
+                                </tbody>
+                        </table>
                     </div>
-                    <div class="col s6">
+                    <div class="col s5">
                     <table class="highlight">
                             <thead>
                             <tr>
                         
                                 <th>Empresas</th>
+                                <th>Acciones</th>
                                 
                             </tr>
                             </thead>
