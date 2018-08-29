@@ -424,6 +424,19 @@ $("#btnAgregarUsu_Rol").click(function() {
     
 });
 
+$("#btnAgregarEmp_Rol").click(function() {
+    empresa = $("#Empresarol").val();
+    rol = $("#tipoRolAc").val();
+    console.log("Presionaste boton "+empresa+" "+rol);
+    if(rol==null){
+        M.toast({html: 'No tiene ningun rol seleccionado!', classes: 'rounded red'});
+    }
+    else{
+        onRequest({ opcion : 42 ,idemp:empresa,idrol:rol}, respVerificar_emp_rol);
+    }
+    
+});
+
 
 $("#btnAgregarUsu_Empresa").click(function() {
     usuario = $("#UsuariosDD2").val();
@@ -440,6 +453,10 @@ $("#btnAgregarUsu_Empresa").click(function() {
 
 $("#btn_regresar_rolusu").click(function() {
     location.href="/RedSocialBancaprepa/mantenimiento/usuariosTabla.php";
+
+});
+$("#btn_regresar_rolemp").click(function() {
+    location.href="/RedSocialBancaprepa/catalogos/catemp.php";
 
 });
 
@@ -542,6 +559,14 @@ function cargarConfUsuarios(){
     
 }
 
+function cargarConfEmpresa(){
+    var a = getParameterByName("empresa_id");
+    console.log("empresa:"+a);
+    onRequest({ opcion : 8 ,empresa_id:a },respCargarEmpresaXid);
+    onRequest({ opcion : 43 ,idemp:a}, respCargarRolesXemp);
+    
+}
+
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -567,6 +592,15 @@ function eliminarEmp(empid) {
     console.log("usuario= "+ usuario);
     console.log("empresa= "+ empresa);
     onRequest({ opcion : 39 ,usuario_id:usuario,empresa_id:empresa },respEliminarEmpUsu);
+ }
+
+ function eliminarRoldeEmp(rolid) {    
+    var empresa = $("#Empresarol").val();
+    var rol = rolid;
+    console.log("----------Eliminar rol de empresa---------");
+    console.log("empresa= "+ empresa);
+    console.log("rol= "+ rol);
+    onRequest({ opcion : 44 ,idemp:empresa,idrol:rol },respEliminarRolEmp);
  
  }
  
@@ -612,6 +646,7 @@ var respEmpresas = function(data) {
      '<a onclick="editarEmp('+data[i].empresa_id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarEmp"><i class="material-icons">edit</i></a>' + 
      '<a onclick="deshabEmp('+data[i].empresa_id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabEmp"><i class="material-icons">do_not_disturb_alt</i></a>' + 
      '<a onclick="BorrarEmp('+data[i].empresa_id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarEmp"><i class="material-icons">delete</i></a>' +
+     '<a onclick="editRolesdeEmp('+data[i].empresa_id+')" class="waves-effect waves-light btn-floating btn-small indigo darken-4 btn modal-trigger"><i class="material-icons">build</i></a>' +
      '</td>'  +'</tr> ';
      }
      
@@ -1412,6 +1447,16 @@ function habDesAccesos(id_rol,id_cb,menu_id)
     }  
 }
 
+function editRolesdeEmp(id_emp)
+{
+    var a = document.createElement('a');
+     a.href="/RedSocialBancaprepa/mantenimiento/rolemp.php?empresa_id="+id_emp;
+     document.body.appendChild(a);
+     a.click();
+
+}
+
+
 //respuesta de menu publicaciones 
 var respCargaPublicacionesB = function(data) { 
     if (!data && data == null)
@@ -1517,9 +1562,6 @@ var respVerificar_usu_rol  = function(data) {
             onRequest({ opcion : 30 ,usuario:usuario,rol:rol}, respUsuarios_rol);
         }
     }
-
-    
-
 }
 
 
@@ -1672,5 +1714,103 @@ var respEliminarEmpUsu = function(data) {
     console.log("Actualizado!!");
 }
 
+var respCargarEmpresaXid = function(data) { 
+    if (!data && data == null)
+        return;  
+ 
+    var documento='';
 
+    for(var i=0; i<data.length; i++){
+        documento+='<option value='+data[i].empresa_id+' selected>'+data[i].nombre+'</option>';
+        console.log("empresa "+data[i].empresa_id);
+    }
+   
+    
+    $('#Empresarol').html(documento);
+    $('#Empresarol').formSelect();    
+}
+
+var respVerificar_emp_rol  = function(data) { 
+    if (!data && data == null)
+        return;  
+    
+    
+    for(var i=0; i<data.length; i++){
+        if(data[i].contador >= 1)
+        {
+            M.toast({html: '¡La empresa ya cuenta con el rol seleccionado!.', classes: 'rounded red'}); 
+        }
+        else{
+            empresa = $("#Empresarol").val();
+            rol = $("#tipoRolAc").val();
+            console.log("empresa y rol"+empresa+" "+rol);
+            onRequest({ opcion : 41 ,idemp:empresa,idrol:rol}, respEmpresas_rol);
+        }
+    }
+}
+
+var respEmpresas_rol  = function(data) { 
+
+    console.log(data);
+    if (!data && data == null)
+    {
+        M.toast({html: 'Empresa no actualizado, consulte con el area de sistemas', classes: 'rounded red'}); 
+        return;
+    }
+    
+    M.toast({html: 'Agregado rol a empresa!', classes: 'rounded #43a047 green darken-1'}); 
+
+    //Actualiza la pagina
+    cargarConfEmpresa();
+}
+
+var respCargarRolesXemp = function(data) { 
+    
+    if (!data && data == null) 
+    return; 
+
+    var d = '';
+
+     for (var i = 0; i < data.length; i++) {
+         
+         var roles=String(data[i].nombre);
+         console.log("-------"+roles);
+         if(roles=="undefined")
+         {
+            d+= '<tr>'+
+            '<td>Sin Roles</td>'+
+            '<td class="left">'+ 
+            '</tr> ';  
+            $("#tablaRolEmpresa").html(d);
+         }
+         else
+         {
+            d+= '<tr>'+
+            '<td>'+data[i].nombre+'</td>'+
+            '<td class="left">'+
+            '<a onclick="eliminarRoldeEmp('+data[i].id_rol+')" class="waves-effect waves-light btn-floating btn-small red darken-4 btn modal-trigger"><i class="material-icons">delete_forever</i></a>'+ 
+            '</tr> ';  
+            $("#tablaRolEmpresa").html(d);
+         }
+
+    }
+    cargarMenuPorRol();
+}
+
+
+var respEliminarRolEmp = function(data) { 
+    console.log("--------------"+data);
+    if (!data && data == null)
+    {
+        M.toast({html: 'Rol no eliminado, contacte con el departamento de sistemas', classes: 'rounded red'});  
+        return;
+    }
+    
+    M.toast({html: 'Rol eliminado!.', classes: 'rounded red'});  
+
+    //Actualiza de nuevo los accesos
+
+    cargarConfEmpresa();
+    console.log("Actualizado!!");
+}
 

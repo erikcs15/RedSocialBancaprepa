@@ -147,6 +147,20 @@
 		case 40: 
 			echo (json_encode($usuario->cargarUsuariosXnombre($_REQUEST['nom_usuario'])));
 		break;
+		case 41: 
+			echo (json_encode($usuario->insertarEmpresa_rol($_REQUEST['idemp'], $_REQUEST['idrol'])));
+		break;
+		case 42: 
+			echo (json_encode($usuario->VerifInsertarEmpresa_rol($_REQUEST['idemp'], $_REQUEST['idrol'])));
+		break;
+		case 43: 
+			echo (json_encode($usuario->CargarRolXEmp($_REQUEST['idemp'])));
+		break;
+		case 44: 
+			echo (json_encode($usuario->borrarRoldeEmp($_REQUEST['idemp'],$_REQUEST['idrol'])));
+		break;
+
+
  	}
  
 ?>

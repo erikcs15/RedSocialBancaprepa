@@ -1065,6 +1065,94 @@
 
 			}
 
+			public function insertarEmpresa_rol($empresa,$rol)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+				$sql="INSERT INTO b_emp_rol (id_emp, id_rol) VALUES ($empresa,$rol)";
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+
+				$datos['id_emp'] =  array('0' => '0' );
+				return  $datos;	
+			}
+
+			public function VerifInsertarEmpresa_rol($empresa,$rol)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+				$sql="SELECT COUNT(id_emp) FROM b_emp_rol WHERE id_emp=$empresa AND id_Rol=$rol";
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['contador'] = $res[0];				   
+				   $i++;
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['contador']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+			}
+
+			public function CargarRolXEmp($empresa)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+				$sql="SELECT cr.id, cr.descripcion FROM b_cat_roles cr INNER JOIN b_emp_rol er ON cr.id=er.id_rol
+						WHERE er.id_emp=$empresa";
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['id_rol'] = $res[0];	
+				   $datos[$i]['nombre'] = $res[1];					   
+				   $i++;
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id_rol']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+			}
+
+			public function borrarRoldeEmp($emp,$rol)
+				{
+					$res=array();
+					$datos=array();
+					$resultado  =array();
+					$i=0;
+				
+					$sql="DELETE FROM b_emp_rol WHERE id_emp=$emp AND id_rol=$rol";
+					
+					$resultado = mysqli_query($this->con(), $sql);   
+					
+					$datos['b_emp_rol'] =  array('0' => '0' );
+					return  $datos;	
+				}
+				
+
 
 
 }
