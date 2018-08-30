@@ -7,6 +7,8 @@ $(document).ready(function(){
           
     //inicializamos modals
         $('#modalAceptarDoc').modal();
+        
+        
     //validacion del submit de publicaciones
     $( "#btnEnviarForm" ).click(function() {
          
@@ -124,10 +126,9 @@ $(document).ready(function(){
     $('.dropdown-trigger').dropdown();
     //contador de caracteres para tex area
     $('textarea#textopub').characterCounter();
-     //inicializar el modal
-     $(document).ready(function(){
-        $('.modal').modal();
-      });
+    //inicializar el modal        
+    $('.modal').modal();
+      
       
        
      //evento de switch de documentos 
@@ -361,6 +362,11 @@ $("#BtnEditarDoc").click(function() {
     console.log("Presionaste boton de editar "+docID+nomAct);
     onRequest({ opcion : 13 ,doc_id:docID,doc:nomAct}, respActualizarDoc);
 });
+
+/*
+$( "#btnPrueba" ).click(function() {
+     var p = $('#'+id_cb).is(':checked')
+});*/
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 //-------------------------------Accion para deshabilitar DENTRO DE LOS MODAL--------------------------------
 //------------------------------------------Deshabilitar empresa-------------------------------
@@ -606,7 +612,13 @@ function eliminarEmp(empid) {
     onRequest({ opcion : 44 ,idemp:empresa,idrol:rol },respEliminarRolEmp);
  
  }
- 
+ //Cargar los roles en la pagina addfile
+ function cargarRolesAf(empid) {    
+     var empresa = empid;
+     console.log("------------------------ "+empresa);
+     onRequest({ opcion : 43 ,idemp:empresa}, respCargarRolesXempChb);
+
+ }
 
 //----------------------------------------Funcion de respuesta de la consulta que aplicamos con ajax-----------------------------
 var respUser = function(data) { 
@@ -1815,5 +1827,32 @@ var respEliminarRolEmp = function(data) {
 
     cargarConfEmpresa();
     console.log("Actualizado!!");
+}
+
+
+var respCargarRolesXempChb = function(data) { 
+    
+    if (!data && data == null) 
+    return; 
+
+    var d = '';
+
+     for (var i = 0; i < data.length; i++) {
+         
+         var roles=String(data[i].nombre);
+         console.log("-------"+roles);
+         if(roles=="undefined")
+         {
+            d+= '<p>Sin roles</p>';  
+            $("#rolesXempresaCb").html(d);
+         }
+         else
+         {
+            d+= '<p><label><input type="checkbox" id="'+data[i].nombre+'Cb" /><span style="font-size:12px">'+data[i].nombre+'</span></label></p> ';  
+            $("#rolesXempresaCb").html(d);
+         }
+
+    }
+    cargarMenuPorRol();
 }
 

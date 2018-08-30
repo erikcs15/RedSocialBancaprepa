@@ -115,24 +115,33 @@
                                 <label>Seleccion el tipo de publicacion</label>
                         </div>
                         <div class='input-field col s4'>
-                                <select id="tipoEmpresaAddFile"> 
+                                <select id="tipoEmpresaAddFile" onChange="cargarRolesAf(tipoEmpresaAddFile.value)">> 
                                 </select>
                                 <label>Seleccion la Empresa</label>
                         </div>
-                        <div class='input-field col s4'>
-                                <select id="tipoRolAddFile" > 
-                                </select>
-                                <label>Seleccione el Rol de Visualizacion</label>
+                        <div>
+                            <h8>Roles</h8> 
+                        </div>
+                        <div class='col s4 scroller' id="rolesXempresaCb">
+                            
+                              
                         </div>
                         
                  </div> 
             </form>
-            <div class="row  "  >
-                <div class="col s6 offset-s3" >
-                    <button id="btnEnviarForm" class="btn waves-effect waves-light right"  >Realizar Carga
+            
+            <div class="row" style="width: 330px; margin: 0 auto">
+            
+                <div class="col s6 offset-s3">
+                    <button id="btnEnviarForm" class="btn waves-effect waves-light right">Realizar Carga
                         <i class="material-icons right">send</i>
                     </button>
-                </div> 
+                </div>
+             <!--   <div class="col s6 offset-s3">
+                    <button id="btnPrueba" class="btn waves-effect waves-light right">prueba Carga
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>   -->
             </div>
         </div>
               
@@ -179,8 +188,7 @@
             $('.sidenav').sidenav();
         });
     </script> 
-
-    
+   
  
     </body>
 </html>

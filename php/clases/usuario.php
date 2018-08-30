@@ -1138,19 +1138,21 @@
 			}
 
 			public function borrarRoldeEmp($emp,$rol)
-				{
-					$res=array();
-					$datos=array();
-					$resultado  =array();
-					$i=0;
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+			
+				$sql="DELETE FROM b_emp_rol WHERE id_emp=$emp AND id_rol=$rol";
 				
-					$sql="DELETE FROM b_emp_rol WHERE id_emp=$emp AND id_rol=$rol";
-					
-					$resultado = mysqli_query($this->con(), $sql);   
-					
-					$datos['b_emp_rol'] =  array('0' => '0' );
-					return  $datos;	
-				}
+				$resultado = mysqli_query($this->con(), $sql);   
+				
+				$datos['b_emp_rol'] =  array('0' => '0' );
+				return  $datos;	
+			}
+
+			
 				
 
 
