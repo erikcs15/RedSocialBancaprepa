@@ -35,16 +35,23 @@
                             <label><strong>Seleccion la Empresa:</strong></label>
                     </div>
                     <div class="input-field col s4">
-                            <select id="tipoRolAc"> 
+                            <select id="tipoPuestoAc"> 
                             </select>
-                            <label><strong>Seleccione el Rol:</strong></label>
+                            <label><strong>Seleccione el puesto:</strong></label>
+                            <div><br></br></div>
+                            <div align="center">
+                                <a id="btnAgregarEmp_Rol" class="waves-effect waves-light btn light-blue darken-4"><i class="material-icons left">add_circle_outline</i>Agregar puesto</a>
+                            </div>
                     </div>
-                    <div class="col s9 offset-s1">
+                    <div class="col s3">
+                                <a id="btn_regresar_rolemp" class="waves-effect waves-light btn light-blue darken-4"><i class="material-icons left">replay</i>Regresar</a>
+                            </div>     
+                    <div class="col s9 offset-s1 scroller2">
                         <table class="highlight">
 
                                 <thead> 
                                     <tr>
-                                        <th>Roles</th> 
+                                        <th>Puestos</th> 
                                         <th>Acciones</th>
                                     </tr>
                                     
@@ -56,14 +63,10 @@
                         </table>
                     </div>           
             </div> 
-            <div align="center">
-                 <a id="btnAgregarEmp_Rol" class="waves-effect waves-light btn light-blue darken-4"><i class="material-icons left">add_circle_outline</i>Agregar Rol</a>
-            </div>
+          
             
-            <div><br></br></div>
-            <div align="center">
-                 <a id="btn_regresar_rolemp" class="waves-effect waves-light btn light-blue darken-4"><i class="material-icons left">replay</i>Regresar</a>
-            </div>             
+          
+                    
            
            
      </div>

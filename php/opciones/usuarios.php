@@ -159,6 +159,9 @@
 		case 44: 
 			echo (json_encode($usuario->borrarRoldeEmp($_REQUEST['idemp'],$_REQUEST['idrol'])));
 		break;
+		case 45: 
+			echo (json_encode($usuario->CargarPuestos()));
+		break;
 
 
  	}

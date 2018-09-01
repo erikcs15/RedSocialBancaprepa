@@ -1065,7 +1065,7 @@
 
 			}
 
-			public function insertarEmpresa_rol($empresa,$rol)
+			public function insertarEmpresa_rol($empresa,$puesto)
 			{
 				$res=array();
 				$datos=array();
@@ -1073,7 +1073,7 @@
 				$i=0;
 
 				
-				$sql="INSERT INTO b_emp_rol (id_emp, id_rol) VALUES ($empresa,$rol)";
+				$sql="INSERT INTO b_empresa_puesto (empresa_id, puesto_id) VALUES ($empresa,$puesto)";
 				
 				$resultado = mysqli_query($this->con(), $sql);   
 
@@ -1081,7 +1081,7 @@
 				return  $datos;	
 			}
 
-			public function VerifInsertarEmpresa_rol($empresa,$rol)
+			public function VerifInsertarEmpresa_rol($empresa,$puesto)
 			{
 				$res=array();
 				$datos=array();
@@ -1089,7 +1089,7 @@
 				$i=0;
 
 				
-				$sql="SELECT COUNT(id_emp) FROM b_emp_rol WHERE id_emp=$empresa AND id_Rol=$rol";
+				$sql="SELECT COUNT(empresa_id) FROM b_empresa_puesto WHERE empresa_id=$empresa AND puesto_id=$puesto";
 				
 				$resultado = mysqli_query($this->con(), $sql); 
 
@@ -1116,8 +1116,8 @@
 				$i=0;
 
 				
-				$sql="SELECT cr.id, cr.descripcion FROM b_cat_roles cr INNER JOIN b_emp_rol er ON cr.id=er.id_rol
-						WHERE er.id_emp=$empresa";
+				$sql="SELECT r.id,r.`descripcion` FROM roles r INNER JOIN b_empresa_puesto ep ON ep.puesto_id=r.`id`
+						WHERE ep.empresa_id=$empresa order by r.descripcion asc";
 				
 				$resultado = mysqli_query($this->con(), $sql); 
 
@@ -1144,12 +1144,40 @@
 				$resultado  =array();
 				$i=0;
 			
-				$sql="DELETE FROM b_emp_rol WHERE id_emp=$emp AND id_rol=$rol";
+				$sql="DELETE FROM b_empresa_puesto WHERE empresa_id=$emp AND puesto_id=$rol";
 				
 				$resultado = mysqli_query($this->con(), $sql);   
 				
 				$datos['b_emp_rol'] =  array('0' => '0' );
 				return  $datos;	
+			}
+
+			public function CargarPuestos()
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+				$sql="SELECT id, descripcion FROM roles";
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['id'] = $res[0];	
+				   $datos[$i]['nombre'] = $res[1];					   
+				   $i++;
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
 			}
 
 			

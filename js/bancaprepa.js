@@ -435,13 +435,13 @@ $("#btnAgregarUsu_Rol").click(function() {
 
 $("#btnAgregarEmp_Rol").click(function() {
     empresa = $("#Empresarol").val();
-    rol = $("#tipoRolAc").val();
-    console.log("Presionaste boton "+empresa+" "+rol);
-    if(rol==null){
-        M.toast({html: 'No tiene ningun rol seleccionado!', classes: 'rounded red'});
+    puesto = $("#tipoPuestoAc").val();
+    console.log("Presionaste boton "+empresa+" "+puesto);
+    if(puesto==null){
+        M.toast({html: 'No tiene ningun puesto seleccionado!', classes: 'rounded red'});
     }
     else{
-        onRequest({ opcion : 42 ,idemp:empresa,idrol:rol}, respVerificar_emp_rol);
+        onRequest({ opcion : 42 ,idemp:empresa,idrol:puesto}, respVerificar_emp_rol);
     }
     
 });
@@ -572,6 +572,7 @@ function cargarConfEmpresa(){
     var a = getParameterByName("empresa_id");
     console.log("empresa:"+a);
     onRequest({ opcion : 8 ,empresa_id:a },respCargarEmpresaXid);
+    onRequest({ opcion : 45 },respCargarPuestos);
     onRequest({ opcion : 43 ,idemp:a}, respCargarRolesXemp);
     
 }
@@ -606,9 +607,9 @@ function eliminarEmp(empid) {
  function eliminarRoldeEmp(rolid) {    
     var empresa = $("#Empresarol").val();
     var rol = rolid;
-    console.log("----------Eliminar rol de empresa---------");
+    console.log("----------Eliminar puesto de empresa---------");
     console.log("empresa= "+ empresa);
-    console.log("rol= "+ rol);
+    console.log("pusto= "+ rol);
     onRequest({ opcion : 44 ,idemp:empresa,idrol:rol },respEliminarRolEmp);
  
  }
@@ -1753,11 +1754,11 @@ var respVerificar_emp_rol  = function(data) {
     for(var i=0; i<data.length; i++){
         if(data[i].contador >= 1)
         {
-            M.toast({html: '¡La empresa ya cuenta con el rol seleccionado!.', classes: 'rounded red'}); 
+            M.toast({html: '¡La empresa ya cuenta con el puesto seleccionado!.', classes: 'rounded red'}); 
         }
         else{
             empresa = $("#Empresarol").val();
-            rol = $("#tipoRolAc").val();
+            rol = $("#tipoPuestoAc").val();
             console.log("empresa y rol"+empresa+" "+rol);
             onRequest({ opcion : 41 ,idemp:empresa,idrol:rol}, respEmpresas_rol);
         }
@@ -1773,7 +1774,7 @@ var respEmpresas_rol  = function(data) {
         return;
     }
     
-    M.toast({html: 'Agregado rol a empresa!', classes: 'rounded #43a047 green darken-1'}); 
+    M.toast({html: 'Agregado puesto a empresa!', classes: 'rounded #43a047 green darken-1'}); 
 
     //Actualiza la pagina
     cargarConfEmpresa();
@@ -1793,7 +1794,7 @@ var respCargarRolesXemp = function(data) {
          if(roles=="undefined")
          {
             d+= '<tr>'+
-            '<td>Sin Roles</td>'+
+            '<td>Sin puestos seleccionados</td>'+
             '<td class="left">'+ 
             '</tr> ';  
             $("#tablaRolEmpresa").html(d);
@@ -1817,11 +1818,11 @@ var respEliminarRolEmp = function(data) {
     console.log("--------------"+data);
     if (!data && data == null)
     {
-        M.toast({html: 'Rol no eliminado, contacte con el departamento de sistemas', classes: 'rounded red'});  
+        M.toast({html: 'Puesto no eliminado, contacte con el departamento de sistemas', classes: 'rounded red'});  
         return;
     }
     
-    M.toast({html: 'Rol eliminado!.', classes: 'rounded red'});  
+    M.toast({html: 'Puesto eliminado!.', classes: 'rounded red'});  
 
     //Actualiza de nuevo los accesos
 
@@ -1848,7 +1849,7 @@ var respCargarRolesXempChb = function(data) {
          }
          else
          {
-            d+= '<p><label><input type="checkbox" id="'+data[i].nombre+'Cb" /><span style="font-size:12px">'+data[i].nombre+'</span></label></p> ';  
+            d+= '<p><label><input type="checkbox" id="'+data[i].nombre+'Cb" class="filled-in"/><span style="font-size:12px">'+data[i].nombre+'</span></label></p> ';  
             $("#rolesXempresaCb").html(d);
          }
 
@@ -1856,3 +1857,19 @@ var respCargarRolesXempChb = function(data) {
     cargarMenuPorRol();
 }
 
+var respCargarPuestos = function(data) { 
+    if (!data && data == null)
+        return;  
+        
+
+        console.log(data)
+    var documento='<option value="0" disabled selected>Seleccione el puesto</option>';
+
+    for(var i=0; i<data.length; i++){
+        documento+='<option value='+data[i].id+'>'+data[i].nombre+'</option>';
+    }
+    
+    $('#tipoPuestoAc').html(documento);
+    $('#tipoPuestoAc').formSelect(); 
+
+}
