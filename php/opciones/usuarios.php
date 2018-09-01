@@ -162,6 +162,17 @@
 		case 45: 
 			echo (json_encode($usuario->CargarPuestos()));
 		break;
+		case 46: 
+			echo (json_encode($usuario->insertarTablaTmp($_REQUEST['idemp'],$_REQUEST['idpuesto'],$_REQUEST['idusuario'])));
+		break;
+		case 47: 
+			echo (json_encode($usuario->CargarTablaTemp($_REQUEST['idusuario'])));
+		break;
+		case 48: 
+			echo (json_encode($usuario->EliminarDatoDeTmp($_REQUEST['empresa'],$_REQUEST['puesto'])));
+		break;
+
+
 
 
  	}

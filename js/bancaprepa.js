@@ -468,7 +468,15 @@ $("#btn_regresar_rolemp").click(function() {
     location.href="/RedSocialBancaprepa/catalogos/catemp.php";
 
 });
+$("#btnAgEmp_PuestoTmp").click(function() {
+    var usuario = Cookies.get('b_capturista_id');
+    var empresa = $("#tipoEmpresaAddFile").val();  
+    var puesto = $("#tipoPuestoXemp").val(); 
+    console.log(usuario+" "+empresa+" "+puesto);
+    onRequest({ opcion : 46 ,idemp:empresa,idpuesto:puesto, idusuario:usuario}, respTablaTmp);
 
+
+});
 
 
 ///------------------------------------------PUBLICACIONES--------------------------------------------------------
@@ -620,6 +628,7 @@ function eliminarEmp(empid) {
      onRequest({ opcion : 43 ,idemp:empresa}, respCargarRolesXempChb);
 
  }
+ 
 
 //----------------------------------------Funcion de respuesta de la consulta que aplicamos con ajax-----------------------------
 var respUser = function(data) { 
@@ -1472,6 +1481,12 @@ function editRolesdeEmp(id_emp)
 
 }
 
+function eliminarDeTablaTmp(id_emp,id_puesto)
+{
+    console.log("empresa y sueldo "+id_emp," ",id_puesto);
+    onRequest({ opcion : 48 ,empresa:id_emp, puesto:id_puesto }, respEliminarDatoDeTmp);
+
+}
 
 //respuesta de menu publicaciones 
 var respCargaPublicacionesB = function(data) { 
@@ -1838,23 +1853,14 @@ var respCargarRolesXempChb = function(data) {
 
     var d = '';
 
-     for (var i = 0; i < data.length; i++) {
-         
-         var roles=String(data[i].nombre);
-         console.log("-------"+roles);
-         if(roles=="undefined")
-         {
-            d+= '<p>Sin roles</p>';  
-            $("#rolesXempresaCb").html(d);
-         }
-         else
-         {
-            d+= '<p><label><input type="checkbox" id="'+data[i].nombre+'Cb" class="filled-in"/><span style="font-size:12px">'+data[i].nombre+'</span></label></p> ';  
-            $("#rolesXempresaCb").html(d);
-         }
+    var documento='<option value="0"  selected>Todos</option>';
 
+    for(var i=0; i<data.length; i++){
+        documento+='<option value='+data[i].id_rol+'>'+data[i].nombre+'</option>';
     }
-    cargarMenuPorRol();
+    $('#tipoPuestoXemp').html(documento);
+    $('#tipoPuestoXemp').formSelect(); 
+    
 }
 
 var respCargarPuestos = function(data) { 
@@ -1868,8 +1874,52 @@ var respCargarPuestos = function(data) {
     for(var i=0; i<data.length; i++){
         documento+='<option value='+data[i].id+'>'+data[i].nombre+'</option>';
     }
-    
+   
     $('#tipoPuestoAc').html(documento);
     $('#tipoPuestoAc').formSelect(); 
+   
+}
 
+var respTablaTmp = function(data) { 
+    console.log("--------------"+data);
+    if (!data && data == null)
+    {
+        M.toast({html: 'Datos no actualizados, contacte con el departamento de sistemas', classes: 'rounded red'});  
+        return;
+    }
+    
+    M.toast({html: 'Datos actualizados!', classes: 'rounded green'});  
+    var usuario = Cookies.get('b_capturista_id');
+    onRequest({ opcion : 47 ,idusuario:usuario}, respCargarTablaTmp);
+}
+
+var respCargarTablaTmp = function(data) { 
+    if (!data && data == null) 
+    return; 
+
+    var d = '';
+
+     for (var i = 0; i < data.length; i++) {    
+            d+= '<tr>'+
+            '<td>'+data[i].empresa+'</td>'+
+            '<td>'+data[i].puesto+'</td>'+
+            '<td class="left">'+
+            '<a onclick="eliminarDeTablaTmp('+data[i].id_empresa+','+data[i].id_puesto+')"  class="waves-effect waves-light btn-floating btn-small red darken-4 btn modal-trigger tooltipped" data-tooltip="I am a tooltip" data-delay="50"  ><i class="material-icons">delete_forever</i></a>'+ 
+            '</tr> '; 
+    }
+    $("#tablaPuestoEmpresa").html(d);
+}
+
+var respEliminarDatoDeTmp = function(data) { 
+    
+    if (!data && data == null)
+    {
+        M.toast({html: 'Datos no eliminados, contacte con el departamento de sistemas', classes: 'rounded red'});  
+        return;
+    }
+    
+    M.toast({html: 'Datos Eliminados!', classes: 'rounded green'});  
+    var usuario = Cookies.get('b_capturista_id');
+    onRequest({ opcion : 47 ,idusuario:usuario}, respCargarTablaTmp);
+    
 }

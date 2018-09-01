@@ -1179,6 +1179,70 @@
 
 				return $datos;  
 			}
+			public function insertarTablaTmp( $empid,$puestoid,$usuario)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+				$sql="INSERT INTO b_tmp_pub (id_emp, id_puesto, id_usuario) VALUES ($empid,$puestoid,$usuario)";
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+
+				$datos['id_emp'] =  array('0' => '0' );
+				return  $datos;	
+			}
+
+			public function CargarTablaTemp($usuario)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+				$sql="SELECT bt.id_emp, emp. nombre, bt.id_puesto, r.descripcion
+				FROM b_tmp_pub bt
+				INNER JOIN roles r ON r.id=bt.id_puesto
+				INNER JOIN b_cat_empresas emp ON emp.id=bt.id_emp
+				WHERE bt.id_usuario=$usuario";
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['id_empresa'] = $res[0];	
+				   $datos[$i]['empresa'] = $res[1];
+				   $datos[$i]['id_puesto'] = $res[2];	
+				   $datos[$i]['puesto'] = $res[3];						   
+				   $i++;
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id_empresa']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+			}
+			
+			public function EliminarDatoDeTmp($emp,$puesto)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+			
+				$sql="DELETE FROM b_tmp_pub WHERE id_emp=$emp AND id_puesto=$puesto";
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+				
+				$datos['b_tmp_pub'] =  array('0' => '0' );
+				return  $datos;	
+			}
 
 			
 				

@@ -118,20 +118,42 @@
                                 <select id="tipoEmpresaAddFile" onChange="cargarRolesAf(tipoEmpresaAddFile.value)">> 
                                 </select>
                                 <label>Seleccion la Empresa</label>
+                                
                         </div>
-                        <div>
-                            <h8>Roles</h8> 
-                        </div>
-                        <div class='col s4 scroller' id="rolesXempresaCb">
-                            
-                              
+                        <div class='input-field col s4'>
+                            <select id="tipoPuestoXemp"> 
+                            </select>
+                            <label><strong>Seleccione el puesto:</strong></label>
+                            <div><br></br></div>
+                            <div align="center">
+                                <a id="btnAgEmp_PuestoTmp" class="waves-effect waves-light btn light-blue darken-4"><i class="material-icons left">add_circle_outline</i>Agregar puesto</a>
+                            </div>  
                         </div>
                         
                  </div> 
             </form>
-            
+            <div class="row" style="width: 560px; margin: 0 auto">
+                <div class="col s10 offset-s1 scroller2">
+                        <table class="highlight">
+
+                                <thead> 
+                                    <tr>
+                                        <th>Empresas</th> 
+                                        <th>Puestos</th> 
+                                        <th>Acciones</th>
+                                    </tr>
+                                    
+                                </thead> 
+
+                                <tbody id="tablaPuestoEmpresa">
+                                
+                                </tbody>
+                        </table>
+                </div> 
+               
+            </div>          
             <div class="row" style="width: 330px; margin: 0 auto">
-            
+                <div><br></br></div>
                 <div class="col s6 offset-s3">
                     <button id="btnEnviarForm" class="btn waves-effect waves-light right">Realizar Carga
                         <i class="material-icons right">send</i>
