@@ -52,7 +52,7 @@
         <link rel="stylesheet" type="text/css" href="../css/bancaprepa.css"> 
         
 </head>
-    <body onLoad="cargarMenuPorRol()">
+    <body onLoad="cargarAddfile()">
     <div id="container" ><!-- CONTENEDOR 1 -->
         
     
@@ -80,7 +80,9 @@
                             <input id='chkDoc' type="checkbox">
                             <span class="lever"></span>
                             Si
+                            <input id="idpublicacion1" style="visibility:hidden">
                             </label>
+                            
                 </div> 
                 <div class="file-field input-field">
                     <div id="btndocId" class="btn grey"> 

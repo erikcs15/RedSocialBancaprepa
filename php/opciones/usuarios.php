@@ -99,7 +99,7 @@
 			echo (json_encode($usuario->deshabilitarAcceso($_REQUEST['id_rol'],$_REQUEST['id_menu'])));
 		break;
 		case 25: 
-			echo (json_encode($usuario->guardarPublicacion($_REQUEST['titulo'],$_REQUEST['descripcion'],$_REQUEST['imagen'],$_REQUEST['documento_id'],$_REQUEST['rol_id'],$_REQUEST['empresa_id'],$_REQUEST['docuemento'])));
+			echo (json_encode($usuario->guardarPublicacion($_REQUEST['titulo'],$_REQUEST['descripcion'],$_REQUEST['imagen'],$_REQUEST['documento_id'],$_REQUEST['docuemento'],$_REQUEST['chbPDF'])));
 		break;
 		case 26: 
 			echo (json_encode($usuario->catalogoCorreos($_REQUEST['nombre'])));
@@ -171,7 +171,18 @@
 		case 48: 
 			echo (json_encode($usuario->EliminarDatoDeTmp($_REQUEST['empresa'],$_REQUEST['puesto'])));
 		break;
-
+		case 49: 
+			echo (json_encode($usuario->verificarTablaTmp($_REQUEST['id_usuario'])));
+		break;
+		case 50:
+			echo (json_encode($usuario->EliminarTodoDeTmp()));
+		break;
+		case 51:
+			echo (json_encode($usuario->idParaTablaTmp($_REQUEST['id_usuario'])));
+		break;
+		case 52:
+			echo (json_encode($usuario->insertarTablaDetalle($_REQUEST['publicacion_id'],$_REQUEST['empresa_id'],$_REQUEST['puesto_id'])));
+		break;
 
 
 

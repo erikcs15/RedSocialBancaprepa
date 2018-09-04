@@ -611,7 +611,7 @@
 			//--------------------------GUARDAMOS LA INFORMACION BASICA DE UNA PUBLICACION -----------------------------------//////
 
 
-			public function guardarPublicacion($titulo,$descripcion,$imagen,$documento_id,$rol_id,$empresa_id,$docuemento)
+			public function guardarPublicacion($titulo,$descripcion,$imagen,$documento_id,$docuemento,$chbPDF)
 			{
 				$res=array();
 				$datos=array();
@@ -621,8 +621,8 @@
 				
 				
 
-				$sql="INSERT INTO b_publicaciones_bancaprepa(titulo,descripcion,imagen,documento_id,rol_id,empresa_id,documento,capturista_id,fecha,hora)
-														VALUES('$titulo','$descripcion','$imagen',$documento_id,$rol_id,$empresa_id,'$docuemento',$capturista_id,CURDATE(),CURTIME())";
+				$sql="INSERT INTO b_publicaciones_bancaprepa(titulo,descripcion,imagen,documento_id,documento,capturista_id,fecha,hora,formato)
+														VALUES('$titulo','$descripcion','$imagen',$documento_id,'$docuemento',$capturista_id,CURDATE(),CURTIME(),'$chbPDF')";
 				
 				
 				//return $sql;
@@ -1175,7 +1175,7 @@
 					$datos[0]['id']  =0;
 					return  $datos; 
 				  }
-
+  
 
 				return $datos;  
 			}
@@ -1243,6 +1243,93 @@
 				$datos['b_tmp_pub'] =  array('0' => '0' );
 				return  $datos;	
 			}
+			public function verificarTablaTmp($usuario)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+				$sql="SELECT COUNT(id)
+				FROM b_tmp_pub t
+				WHERE id_usuario=$usuario";
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['contador'] = $res[0];				   
+				   $i++;
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['contador']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+			}
+
+			public function EliminarTodoDeTmp()
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+			
+				$sql="DELETE FROM b_tmp_pub";
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+				
+				$datos['b_tmp_pub'] =  array('0' => '0' );
+				return  $datos;	
+			}
+
+			public function idParaTablaTmp($usuario)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+				$sql="SELECT MAX(id) AS id FROM b_publicaciones_bancaprepa";
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['id'] = $res[0];				   
+				   $i++;
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+			}
+			public function insertarTablaDetalle( $pub,$emp,$puesto)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+				$sql="INSERT INTO b_detalle_publicacion (publicacion_id, empresa_id, puesto_id) VALUES ($pub,$emp,$puesto)";
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+
+				$datos['id_emp'] =  array('0' => '0' );
+				return  $datos;	
+			}
+
+
 
 			
 				

@@ -39,7 +39,7 @@
 
                     <div class="card ">
                             <div class="card-image waves-effect waves-block waves-light">
-                            <iframe src="imagenes/publicaciones/GENERAL PRESICO SINALOA NORTE.pdf"  class="col s12" style="border: none;height:700px"></iframe>
+                            <iframe src="imagenes/publicaciones/image003.png"  class="col s12" style="border: none;height:700px"></iframe>
                                 </div>
                                 <div class="card-content">
                                 <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
@@ -57,7 +57,7 @@
 
 <div class="card ">
         <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="imagenes/publicaciones/p.jpg">
+            <img class="activator" src="imagenes/publicaciones/image003.png">
             </div>
             <div class="card-content">
             <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>

@@ -16,8 +16,8 @@ $(document).ready(function(){
         var documento = $("#docId").val();
         var descripcion = $("#pDescripcion").val();
         var tipopublic = $("#tipoPubAddFile").val();
-        var tipoempresa = $("#tipoEmpresaAddFile").val();
-        var tiporol = $("#tipoRolAddFile").val();
+       /* var tipoempresa = $("#tipoEmpresaAddFile").val();
+        var tiporol = $("#tipoRolAddFile").val(); */
         var docname="SIN DOCUMENTO";
 
         if($('#chkDoc').is(":checked")) { 
@@ -46,14 +46,14 @@ $(document).ready(function(){
             M.toast({html: 'Es necesario especificar el tipo de publicacion', classes: 'rounded red'});
             return;
         }
-        if(tipoempresa<=0){
+        /*if(tipoempresa<=0){
             M.toast({html: 'Es necesario especificar la empresa ala que se dirige', classes: 'rounded red'});
             return;
         }
         if(tiporol<=0){
             M.toast({html: 'Es necesario especificar el rol al que se dirige la publicacion', classes: 'rounded red'});
             return;
-        } 
+        } */
         
 
         $('#modalAceptarDoc').modal('open');
@@ -68,8 +68,8 @@ $(document).ready(function(){
             var titulo = $("#pTitulo").val();
             var descripcion = $("#pDescripcion").val();
             var tipopublic = $("#tipoPubAddFile").val();
-            var tipoempresa = $("#tipoEmpresaAddFile").val();
-            var tiporol = $("#tipoRolAddFile").val();
+            /*var tipoempresa = $("#tipoEmpresaAddFile").val();
+            var tiporol = $("#tipoRolAddFile").val();*/
             var docname="SIN DOCUMENTO";
             var cdocumento="";
             var esPDF="";
@@ -81,16 +81,16 @@ $(document).ready(function(){
             else{
                  cdocumento ='N';
             }
-            /*
+            
             if($('#chkPdfImg').is(":checked")) {  
                 esPDF="PDF"
            } 
            else{
                esPDF="IMG"
            }
-           */
+           
             
-            onRequest({ opcion : 25,titulo:titulo,descripcion:descripcion,imagen:docname,documento_id:tipopublic,rol_id:tiporol,empresa_id:tipoempresa,docuemento:cdocumento},respPublicacion);
+            onRequest({ opcion : 25,titulo:titulo,descripcion:descripcion,imagen:docname,documento_id:tipopublic,docuemento:cdocumento,chbPDF:esPDF},respPublicacion);
 
       });
  
@@ -628,7 +628,13 @@ function eliminarEmp(empid) {
      onRequest({ opcion : 43 ,idemp:empresa}, respCargarRolesXempChb);
 
  }
- 
+ function cargarAddfile()
+ {
+    var usuario="";
+    usuario=Cookies.get('b_capturista_id');
+    onRequest({ opcion : 49 ,id_usuario:usuario}, respVerificarTablaTmp);
+    
+ }
 
 //----------------------------------------Funcion de respuesta de la consulta que aplicamos con ajax-----------------------------
 var respUser = function(data) { 
@@ -1315,7 +1321,12 @@ var respPublicacion = function(data) {
     if (!data && data == null)
              return;  
 
-             $( "#formFiles" ).submit();
+    
+    var usuario = Cookies.get('b_capturista_id');
+    onRequest({ opcion : 51,id_usuario:usuario}, respInsertarTablaTemp); 
+   
+             
+
     
     console.log(data);     
 }
@@ -1922,4 +1933,81 @@ var respEliminarDatoDeTmp = function(data) {
     var usuario = Cookies.get('b_capturista_id');
     onRequest({ opcion : 47 ,idusuario:usuario}, respCargarTablaTmp);
     
+}
+
+var respVerificarTablaTmp = function(data) { 
+    
+    if (!data && data == null)
+    {
+        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
+        return;
+    }
+    
+    for (var i = 0; i < data.length; i++) {    
+       if(data[i].contador>=1)
+       {  
+            onRequest({ opcion : 50}, respEliminarTodos);
+       }
+    }
+    cargarMenuPorRol();
+}
+
+var respEliminarTodos = function(data) { 
+    
+    if (!data && data == null)
+    {
+        M.toast({html: 'Datos no eliminados, contacte con el departamento de sistemas', classes: 'rounded red'});  
+        return;
+    }
+    cargarMenuPorRol();
+}
+    
+
+var respInsertarTablaTemp = function(data) { 
+    
+    if (!data && data == null)
+    {
+        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
+        return;
+    }
+    
+    for (var i = 0; i < data.length; i++) {    
+       var id_publicacion=data[i].id;
+       $("#idpublicacion1").val(id_publicacion);
+    }
+    var usuario = Cookies.get('b_capturista_id');
+    onRequest({ opcion : 47 ,idusuario:usuario}, respInsertarDetallePub);
+    
+}
+
+var respInsertarDetallePub = function(data) { 
+    
+    if (!data && data == null)
+    {
+        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
+        return;
+    }
+    var publicacion=$("#idpublicacion1").val()
+    for (var i = 0; i < data.length; i++) {    
+       var empresa=data[i].id_empresa;
+       var puesto=data[i].id_puesto;
+       console.log(publicacion+" "+empresa+" "+puesto);
+       onRequest({ opcion : 52 ,publicacion_id:publicacion,empresa_id:empresa,puesto_id:puesto}, respInsertarDetallePubF);
+
+    }
+    M.toast({html: 'Publicacion Realizada correctamente', classes: 'rounded green'});
+    $( "#formFiles" ).submit();
+     
+   
+}
+
+var respInsertarDetallePubF = function(data) { 
+    
+    if (!data && data == null)
+    {
+        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
+        return;
+    }
+
+       
 }
