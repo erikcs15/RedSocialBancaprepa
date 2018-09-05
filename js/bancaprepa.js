@@ -556,6 +556,9 @@ function cargarMenuPorRol(){
 //cargamos el menu de publicaciones
 function cargarPublicacionesB(){
     onRequest({ opcion : 27}, respCargaPublicacionesB);
+    var usuario=Cookies.get('b_capturista_id');
+    console.log("-----------------"+usuario);
+    onRequest({ opcion : 37 ,usuario_id:usuario}, respCargarEmpParaPublicaciones);    
     
 }
 
@@ -650,6 +653,8 @@ var respUser = function(data) {
             Cookies.set("b_usuario", data[0].usuario );
             Cookies.set("b_capturista",data[0].capturista);
             Cookies.set("b_rol_id",data[0].rol_id); 
+            Cookies.set("b_empresa_id",data[0].empresa_id); 
+            Cookies.set("b_puesto_id",data[0].puesto_id);             
 
             location.href="/RedSocialBancaprepa/index.php";
 
@@ -1247,7 +1252,7 @@ var respUsuariosDDConf = function(data) {
 
     for(var i=0; i<data.length; i++){
         documento+='<option value='+data[i].id+' selected>'+data[i].nombre+'</option>';
-        console.log("checarc2 "+data[i].id);
+        
     }
     console.log("checarc2");
     
@@ -1324,9 +1329,10 @@ var respPublicacion = function(data) {
     
     var usuario = Cookies.get('b_capturista_id');
     onRequest({ opcion : 51,id_usuario:usuario}, respInsertarTablaTemp); 
-   
-             
 
+   
+    
+    
     
     console.log(data);     
 }
@@ -1964,7 +1970,7 @@ var respEliminarTodos = function(data) {
     
 
 var respInsertarTablaTemp = function(data) { 
-    
+    //Se toma el ultimo id de la ultima publicacion insertada 
     if (!data && data == null)
     {
         M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
@@ -1974,7 +1980,10 @@ var respInsertarTablaTemp = function(data) {
     for (var i = 0; i < data.length; i++) {    
        var id_publicacion=data[i].id;
        $("#idpublicacion1").val(id_publicacion);
+       //se le asigna a un input que esta oculto para guardarlo y que no se borro
+
     }
+    //se toma el id del usuario para cargar los datos de la tabla temporal
     var usuario = Cookies.get('b_capturista_id');
     onRequest({ opcion : 47 ,idusuario:usuario}, respInsertarDetallePub);
     
@@ -1987,6 +1996,7 @@ var respInsertarDetallePub = function(data) {
         M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
         return;
     }
+    //Se insertan los datos en la tabla b_detalle_pub uno por uno dependiendo de los datos cargados de la tabla temporal
     var publicacion=$("#idpublicacion1").val()
     for (var i = 0; i < data.length; i++) {    
        var empresa=data[i].id_empresa;
@@ -1995,8 +2005,7 @@ var respInsertarDetallePub = function(data) {
        onRequest({ opcion : 52 ,publicacion_id:publicacion,empresa_id:empresa,puesto_id:puesto}, respInsertarDetallePubF);
 
     }
-    M.toast({html: 'Publicacion Realizada correctamente', classes: 'rounded green'});
-    $( "#formFiles" ).submit();
+    
      
    
 }
@@ -2008,6 +2017,138 @@ var respInsertarDetallePubF = function(data) {
         M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
         return;
     }
+    //por cada dato insertado en b_detalle_publicacion va a checar el rol de cada inserción para encontrar los usuarios 
+    //que tengan dicho rol para insertalos en la tabla de confirmaciones para saber que usuario vio y quien no vio la publicacion.
+    var publicacion=$("#idpublicacion1").val() // se toma la ultima publicacion insertada para buscar los datos en b_detalle para 
+    // luego insertarlos en la tabla de confirmaciones
+    onRequest({ opcion : 53 ,publicacion_id:publicacion}, respCargarParaInsertarTablaConfirmaciones);
+}
 
-       
+var respCargarParaInsertarTablaConfirmaciones = function(data) { 
+    //Se buscan los empleados para ingresar
+    if (!data && data == null)
+    {
+        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
+        return;
+    }
+    for (var i = 0; i < data.length; i++) {    
+        var publicacion=data[i].publicacion_id;
+        var puesto=data[i].puesto_id;
+        var empresa=data[i].empresa_id;
+        console.log("publicacion:"+publicacion+" puesto"+puesto+" empresa:"+empresa);
+        if(puesto==0)
+        {
+            onRequest({ opcion : 54 ,empresa_id:empresa}, respInsertarTablaConfirmaciones);
+        }
+        else
+        {
+            onRequest({ opcion : 55 ,puesto_id:puesto}, respInsertarTablaConfirmaciones);
+        }
+     }
+    
+}
+
+var respInsertarTablaConfirmaciones = function(data) { 
+    //se insertan los datos en la tabla confirmaciones!
+    if (!data && data == null)
+    {
+        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
+        return;
+    }
+    var publicacion=$("#idpublicacion1").val()
+    for (var i = 0; i < data.length; i++) 
+    {
+        var empleado=data[i].empleado_id;
+        var puesto=data[i].puesto_id;
+        var empresa=data[i].empresa_id;
+        console.log("publicacion:"+publicacion+" puesto"+puesto+" empresa:"+empresa);
+
+        onRequest({ opcion : 56 ,publicacion_id:publicacion,empleado_id:empleado,puesto_id:puesto,empresa_id:empresa}, respTablaConfirmaciones);
+
+    }
+
+    M.toast({html: 'Publicacion Realizada correctamente', classes: 'rounded green'});
+    $( "#formFiles" ).submit();
+}
+
+var respTablaConfirmaciones = function(data) { 
+    if (!data && data == null)
+    {
+        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
+        return;
+    }
+    
+    console.log("INSERCCION REALIZADA");
+
+    
+}
+var pubdd = '';
+var respCargaPublicacionesFinal = function(data) { 
+    if (!data && data == null) 
+    return; 
+
+    
+
+     for (var i = 0; i < data.length; i++) {
+         if(data[i].formato=="PDF"){    
+            pubdd+= '<div class="col s8 offset-s2" > '+
+                '<div class="card"> '+
+                '       <div class="card-image waves-effect waves-block waves-light">'+
+                '          <iframe src="imagenes/publicaciones/'+data[i].ruta+'"  class="col s12" style="border: none;height:700px"></iframe>'+
+                '     </div>'+
+                '    <div class="card-content">'+
+                '        <span class="card-title activator grey-text text-darken-4">'+data[i].titulo+'<i class="material-icons right">more_vert</i></span>'+
+                '         <p><a class="waves-effect waves-light btn"><i class="material-icons left">remove_red_eye</i>Visto</a></p>'+
+                '      </div>'+
+                '      <div class="card-reveal">'+
+                '           <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>'+data[i].titulo+'</span>'+
+                '            <p>'+data[i].descripcion+'.</p>'+
+                '         </div>'+
+                '  </div>'+
+                '</div> ';
+         }
+         else{
+            pubdd+= '<div class="col s8 offset-s2" > '+
+            '<div class="card"> '+
+            '       <div class="card-image waves-effect waves-block waves-light">'+
+            '          <img class="activator" src="imagenes/publicaciones/'+data[i].ruta+'">'+
+            '     </div>'+
+            '    <div class="card-content">'+
+            '        <span class="card-title activator grey-text text-darken-4">'+data[i].titulo+'<i class="material-icons right">more_vert</i></span>'+
+            '         <p><a class="waves-effect waves-light btn"><i class="material-icons left">remove_red_eye</i>Visto</a></p>'+
+            '      </div>'+
+            '      <div class="card-reveal">'+
+            '           <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>'+data[i].titulo+'</span>'+
+            '            <p>'+data[i].descripcion+'.</p>'+
+            '         </div>'+
+            '  </div>'+
+            '</div> ';
+
+         }
+    }
+    $("#CargarPublicacionesFinal").html(pubdd);
+}
+
+var respCargarEmpParaPublicaciones = function(data) { 
+    //se insertan los datos en la tabla confirmaciones!
+    if (!data && data == null)
+    {
+        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
+        return;
+    }
+    
+    for (var i = 0; i < data.length; i++) 
+    {
+        var empresa=data[i].id_emp;
+        var puesto=Cookies.get('b_puesto_id');
+        console.log("_______________EMPRESA Y PUESTO DESDE COOKIES"+ empresa+" "+puesto);
+        onRequest({ opcion : 57, empresa_id:empresa, puesto_id:puesto}, respCargaPublicacionesFinal);
+        console.log("---Reiniciar variable");
+        pubdd=' ';
+        console.log("---variable reiniciada"+pubdd+"sda");
+    }
+
+    
+
+   
 }

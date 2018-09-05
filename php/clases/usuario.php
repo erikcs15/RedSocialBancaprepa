@@ -11,13 +11,12 @@
 					$datos=array();
 					$i=0; 
 
-					$sql="SELECT  usuarios.empleado,
-                                  usuarios.nombre,
-                                  capturistas.descripcion, 
-								  usuarios.b_rol_id
-                            FROM usuarios
-                                JOIN capturistas ON capturistas.id=usuarios.empleado	
-                            WHERE nombre='$user' AND clave=MD5('$pass')"; 
+					$sql="SELECT  u.empleado, u.nombre, c.descripcion, ur.rol_id, eu.empresa_id, c.rol_id
+							FROM usuarios u
+							JOIN capturistas c ON c.id=u.empleado
+							INNER JOIN b_usuario_empresa eu ON u.empleado=eu.usuario_id
+							INNER JOIN b_usuario_rol ur ON ur.usuario_id=u.empleado
+                            WHERE u.nombre='$user' AND u.clave=MD5('$pass')"; 
 					$resultado = mysqli_query($this->con(), $sql); 
 
 				    while ($res = mysqli_fetch_row($resultado)) {
@@ -25,7 +24,9 @@
 				       $datos[$i]['empleado_id'] = $res[0];
                        $datos[$i]['usuario'] = $res[1]; 
 					   $datos[$i]['capturista'] = $res[2]; 
-					   $datos[$i]['rol_id'] = $res[3]; 
+					   $datos[$i]['rol_id'] = $res[3];
+					   $datos[$i]['empresa_id'] = $res[4];
+					   $datos[$i]['puesto_id'] = $res[5];  
 					   $i++;
  
 					} 
@@ -1328,6 +1329,151 @@
 				$datos['id_emp'] =  array('0' => '0' );
 				return  $datos;	
 			}
+
+			public function cargarRolesParaConfirmaciones($publicacion)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+				$sql="SELECT publicacion_id, puesto_id, empresa_id FROM b_detalle_publicacion WHERE publicacion_id=$publicacion";
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['publicacion_id'] = $res[0];	
+				   $datos[$i]['puesto_id'] = $res[1];
+				   $datos[$i]['empresa_id'] = $res[2];				   
+				   $i++;
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['publicacion_id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+			}
+
+			public function cargarEmpleadosXempresa($empresa)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+				$sql="SELECT c.id, c.descripcion, ue.empresa_id, c.rol_id 
+				FROM capturistas c
+				INNER JOIN b_usuario_empresa ue ON ue.usuario_id=c.id
+				WHERE ue.empresa_id=$empresa";
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['empleado_id'] = $res[0];	
+				   $datos[$i]['nombre'] = $res[1];
+				   $datos[$i]['empresa_id'] = $res[2];
+				   $datos[$i]['puesto_id'] = $res[3];				   
+				   $i++;
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['empleado_id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+			}
+			public function cargarEmpleadosXpuesto($puesto)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+				$sql="SELECT id, descripcion, ue.empresa_id,c.rol_id  
+				FROM capturistas c
+				INNER JOIN b_usuario_empresa ue ON ue.usuario_id=c.id
+				WHERE c.rol_id=$puesto";
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['empleado_id'] = $res[0];	
+				   $datos[$i]['nombre'] = $res[1];
+				   $datos[$i]['empresa_id'] = $res[2];
+				   $datos[$i]['puesto_id'] = $res[3];				   
+				   $i++;
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['empleado_id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+			}
+
+			public function insertarTablaConfirmaciones($pub,$empleado,$puesto,$empresa)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+				
+				$sql="INSERT INTO b_confirmaciones (publicacion_id, empleado_id, puesto_id, empresa_id) VALUES ($pub,$empleado,$puesto,$empresa)";
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+				$datos['id'] =  array('0' => '0' );
+				return  $datos;	
+			}
+
+			public function cargaPublicacionesBancaprepa($empresa, $puesto)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+				$sql="SELECT p.id, p.titulo, p.descripcion,p.imagen,p.formato, d.empresa_id,d.puesto_id 
+				FROM b_publicaciones_bancaprepa p
+				INNER JOIN b_detalle_publicacion d ON d.publicacion_id=p.id
+				WHERE d.empresa_id=$empresa AND (d.puesto_id=$puesto OR d.puesto_id=0)";
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['id_publicacion'] = $res[0];	
+				   $datos[$i]['titulo'] = $res[1];
+				   $datos[$i]['descripcion'] = $res[2];
+				   $datos[$i]['ruta'] = $res[3];
+				   $datos[$i]['formato'] = $res[4];	
+				   $datos[$i]['empresa_id'] = $res[5];
+				   $datos[$i]['puesto_id'] = $res[6];						   
+				   $i++;
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id_publicacion']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+			}
+
 
 
 
