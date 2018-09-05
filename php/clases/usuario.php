@@ -1446,10 +1446,11 @@
 				$i=0;
 
 				
-				$sql="SELECT p.id, p.titulo, p.descripcion,p.imagen,p.formato, d.empresa_id,d.puesto_id 
+				$sql="SELECT p.id, p.titulo, p.descripcion,p.imagen,p.formato, conf.empresa_id,conf.puesto_id, conf.visto 
 				FROM b_publicaciones_bancaprepa p
-				INNER JOIN b_detalle_publicacion d ON d.publicacion_id=p.id
-				WHERE d.empresa_id=$empresa AND (d.puesto_id=$puesto OR d.puesto_id=0)";
+				INNER JOIN b_confirmaciones conf ON conf.publicacion_id=p.id
+				INNER JOIN capturistas c ON c.id=conf.puesto_id
+				WHERE conf.empresa_id=$empresa AND conf.puesto_id=$puesto ORDER BY p.id DESC";
 				
 				$resultado = mysqli_query($this->con(), $sql); 
 
@@ -1461,7 +1462,8 @@
 				   $datos[$i]['ruta'] = $res[3];
 				   $datos[$i]['formato'] = $res[4];	
 				   $datos[$i]['empresa_id'] = $res[5];
-				   $datos[$i]['puesto_id'] = $res[6];						   
+				   $datos[$i]['puesto_id'] = $res[6];	
+				   $datos[$i]['visto'] = $res[7];					   
 				   $i++;
 				} 
 				
@@ -1472,6 +1474,20 @@
 
 
 				return $datos;  
+			}
+
+			public function ActualizarVisto($pub,$empleado)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+				$visto="S";
+				$sql="UPDATE b_confirmaciones SET visto='$visto', fecha_visto=CURDATE(), hora_visto=CURTIME() WHERE publicacion_id=$pub AND empleado_id=$empleado";
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+				$datos['publicacion_id'] =  array('0' => '0' );
+				return  $datos;	
 			}
 
 

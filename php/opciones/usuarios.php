@@ -198,6 +198,9 @@
 		case 57:
 			echo (json_encode($usuario->cargaPublicacionesBancaprepa($_REQUEST['empresa_id'],$_REQUEST['puesto_id'])));
 		break;
+		case 58:
+			echo (json_encode($usuario->ActualizarVisto($_REQUEST['publicacion_id'],$_REQUEST['empleado_id'])));
+		break;
 
 
 

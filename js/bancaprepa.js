@@ -1505,6 +1505,14 @@ function eliminarDeTablaTmp(id_emp,id_puesto)
 
 }
 
+function btnVista(id_publicacion)
+{
+    var empleado = Cookies.get('b_capturista_id');
+    console.log("----Publicacion---- "+id_publicacion+" "+empleado);
+    
+    onRequest({ opcion : 58 ,publicacion_id:id_publicacion, empleado_id:empleado }, respVisto);
+}
+
 //respuesta de menu publicaciones 
 var respCargaPublicacionesB = function(data) { 
     if (!data && data == null)
@@ -2091,14 +2099,15 @@ var respCargaPublicacionesFinal = function(data) {
 
      for (var i = 0; i < data.length; i++) {
          if(data[i].formato=="PDF"){    
-            pubdd+= '<div class="col s8 offset-s2" > '+
+             if(data[i].visto=="N"){
+                pubdd+= '<div class="col s8 offset-s2" > '+
                 '<div class="card"> '+
                 '       <div class="card-image waves-effect waves-block waves-light">'+
-                '          <iframe src="imagenes/publicaciones/'+data[i].ruta+'"  class="col s12" style="border: none;height:700px"></iframe>'+
+                '          <iframe src="imagenes/publicaciones/'+data[i].ruta+'"  class="col s12" style="border: none;height:500px"></iframe>'+
                 '     </div>'+
                 '    <div class="card-content">'+
                 '        <span class="card-title activator grey-text text-darken-4">'+data[i].titulo+'<i class="material-icons right">more_vert</i></span>'+
-                '         <p><a class="waves-effect waves-light btn"><i class="material-icons left">remove_red_eye</i>Visto</a></p>'+
+                '         <p><a onclick="btnVista('+data[i].id_publicacion+')" class="btn-floating waves-effect waves-light btn indigo darken-4"><i class="material-icons left">remove_red_eye</i></a></p>'+
                 '      </div>'+
                 '      <div class="card-reveal">'+
                 '           <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>'+data[i].titulo+'</span>'+
@@ -2106,23 +2115,61 @@ var respCargaPublicacionesFinal = function(data) {
                 '         </div>'+
                 '  </div>'+
                 '</div> ';
+             }
+             else{
+                pubdd+= '<div class="col s8 offset-s2" > '+
+                '<div class="card"> '+
+                '       <div class="card-image waves-effect waves-block waves-light">'+
+                '          <iframe src="imagenes/publicaciones/'+data[i].ruta+'"  class="col s12" style="border: none;height:500px"></iframe>'+
+                '     </div>'+
+                '    <div class="card-content">'+
+                '        <span class="card-title activator grey-text text-darken-4">'+data[i].titulo+'<i class="material-icons right">more_vert</i></span>'+
+                '         <p><a onclick="btnVista('+data[i].id_publicacion+')" class="btn-floating waves-effect waves-light btn indigo darken-4" disabled><i class="material-icons left">remove_red_eye</i></a></p>'+
+                '      </div>'+
+                '      <div class="card-reveal">'+
+                '           <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>'+data[i].titulo+'</span>'+
+                '            <p>'+data[i].descripcion+'.</p>'+
+                '         </div>'+
+                '  </div>'+
+                '</div> ';
+             }
+            
          }
          else{
-            pubdd+= '<div class="col s8 offset-s2" > '+
-            '<div class="card"> '+
-            '       <div class="card-image waves-effect waves-block waves-light">'+
-            '          <img class="activator" src="imagenes/publicaciones/'+data[i].ruta+'">'+
-            '     </div>'+
-            '    <div class="card-content">'+
-            '        <span class="card-title activator grey-text text-darken-4">'+data[i].titulo+'<i class="material-icons right">more_vert</i></span>'+
-            '         <p><a class="waves-effect waves-light btn"><i class="material-icons left">remove_red_eye</i>Visto</a></p>'+
-            '      </div>'+
-            '      <div class="card-reveal">'+
-            '           <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>'+data[i].titulo+'</span>'+
-            '            <p>'+data[i].descripcion+'.</p>'+
-            '         </div>'+
-            '  </div>'+
-            '</div> ';
+            if(data[i].visto=="N"){
+                pubdd+= '<div class="col s8 offset-s2" > '+
+                '<div class="card"> '+
+                '       <div class="card-image waves-effect waves-block waves-light">'+
+                '          <img class="activator" src="imagenes/publicaciones/'+data[i].ruta+'">'+
+                '     </div>'+
+                '    <div class="card-content">'+
+                '        <span class="card-title activator grey-text text-darken-4">'+data[i].titulo+'<i class="material-icons right">more_vert</i></span>'+
+                '         <p><a onclick="btnVista('+data[i].id_publicacion+')" class="btn-floating waves-effect waves-light btn indigo darken-4"><i class="material-icons left">remove_red_eye</i></a></p>'+
+                '      </div>'+
+                '      <div class="card-reveal">'+
+                '           <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>'+data[i].titulo+'</span>'+
+                '            <p>'+data[i].descripcion+'.</p>'+
+                '         </div>'+
+                '  </div>'+
+                '</div> ';
+            }
+            else{
+                pubdd+= '<div class="col s8 offset-s2" > '+
+                '<div class="card"> '+
+                '       <div class="card-image waves-effect waves-block waves-light">'+
+                '          <img class="activator" src="imagenes/publicaciones/'+data[i].ruta+'">'+
+                '     </div>'+
+                '    <div class="card-content">'+
+                '        <span class="card-title activator grey-text text-darken-4">'+data[i].titulo+'<i class="material-icons right">more_vert</i></span>'+
+                '         <p><a onclick="btnVista('+data[i].id_publicacion+')" class="btn-floating waves-effect waves-light btn indigo darken-4" disabled><i class="material-icons left">remove_red_eye</i></a></p>'+
+                '      </div>'+
+                '      <div class="card-reveal">'+
+                '           <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>'+data[i].titulo+'</span>'+
+                '            <p>'+data[i].descripcion+'.</p>'+
+                '         </div>'+
+                '  </div>'+
+                '</div> ';
+            }
 
          }
     }
@@ -2146,9 +2193,19 @@ var respCargarEmpParaPublicaciones = function(data) {
         console.log("---Reiniciar variable");
         pubdd=' ';
         console.log("---variable reiniciada"+pubdd+"sda");
+    }  
+}
+
+var respVisto = function(data) { 
+    if (!data && data == null)
+    {
+        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
+        return;
     }
+    
+    console.log("VISTO");
+    M.toast({html: 'Marco la publicación como vista, gracias!', classes: 'rounded  blue darken-4'}); 
+    cargarPublicacionesB();
 
     
-
-   
 }
