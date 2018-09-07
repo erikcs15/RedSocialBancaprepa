@@ -555,13 +555,16 @@ function cargarMenuPorRol(){
 
 //cargamos el menu de publicaciones
 function cargarPublicacionesB(){
-    onRequest({ opcion : 27}, respCargaPublicacionesB);
-    var usuario=Cookies.get('b_capturista_id');
-    console.log("-----------------"+usuario);
-    onRequest({ opcion : 37 ,usuario_id:usuario}, respCargarEmpParaPublicaciones);    
+    onRequest({ opcion : 27}, respCargaPublicacionesVistas);
+     
     
 }
 
+function cargarPublicacionesNuevas(){
+    onRequest({ opcion : 27}, respCargaPublicacionesB);
+     
+    
+}
 function cargarUsuariosT(){
     onRequest({ opcion : 35, usuario_id:""}, respCargaUsuarios);
 }
@@ -1526,10 +1529,10 @@ var respCargaPublicacionesB = function(data) {
 
                 if(i==0){
                     primerMenu = data[i].id;
-                    documento+="<li class='tab active'><a onClick='cargarPublicacion("+data[i].id+")' >"+data[i].docuemento+"</a></li>";
+                    documento+="<li class='tab'><a class='white-text' id='tab"+data[i].id+"' onClick='cargarPublicacion("+data[i].id+")' >"+data[i].docuemento+"</a></li>";
                 } 
                 else{
-                    documento+="<li class='tab'><a onClick='cargarPublicacion("+data[i].id+")' >"+data[i].docuemento+"</a></li>";
+                    documento+="<li class='tab'><a class='white-text' id='tab"+data[i].id+"' onClick='cargarPublicacion("+data[i].id+")' >"+data[i].docuemento+"</a></li>";
                 }
                   
              }
@@ -1545,15 +1548,66 @@ var respCargaPublicacionesB = function(data) {
 function cargarPublicacion(primerMenu){
     var capturista_id="";
     capturista_id=Cookies.get('b_capturista_id');
+    
+    
+    $('a').removeClass("active indigo darken-4"); 
 
-    onRequest({ opcion : 28,capturista_id:capturista_id,menu:primerMenu}, respLasPublicaciones);
+    $('#tab'+primerMenu).addClass("active indigo darken-4"); 
+
+    Cookies.set("b_tipodoc",primerMenu);
+    
+    var usuario=Cookies.get('b_capturista_id');
+    console.log("-----------------"+usuario);
+    onRequest({ opcion : 37 ,usuario_id:usuario}, respCargarEmpParaPublicacionesNuevas);  
+
+    
 
 }
-
-var respLasPublicaciones = function(data) { 
+var respCargaPublicacionesVistas = function(data) { 
     if (!data && data == null)
-             return;
-             console.log(data)
+             return;  
+
+                //console.log(data)
+             var documento='';
+             var primerMenu=0;
+
+             for(var i=0; i<data.length; i++){
+
+                if(i==0){
+                    primerMenu = data[i].id;
+                    documento+="<li class='tab'><a class='white-text' id='tab"+data[i].id+"' onClick='cargarPublicacionVistas("+data[i].id+")' >"+data[i].docuemento+"</a></li>";
+                } 
+                else{
+                    documento+="<li class='tab'><a class='white-text' id='tab"+data[i].id+"' onClick='cargarPublicacionVistas("+data[i].id+")' >"+data[i].docuemento+"</a></li>";
+                }
+                  
+             }
+              
+         
+             $('#tipoPublicacion').html(documento); 
+
+             cargarPublicacionVistas(primerMenu);
+
+             cargarMenuPorRol();
+}
+ 
+function cargarPublicacionVistas(primerMenu){
+    var capturista_id="";
+    capturista_id=Cookies.get('b_capturista_id');
+    
+    
+    $('a').removeClass("active indigo darken-4"); 
+
+    $('#tab'+primerMenu).addClass("active indigo darken-4"); 
+
+    Cookies.set("b_tipodoc",primerMenu);
+    
+    var usuario=Cookies.get('b_capturista_id');
+    console.log("-----------------"+usuario);
+    onRequest({ opcion : 37 ,usuario_id:usuario}, respCargarEmpParaPublicaciones);  
+
+    
+
 }
 
 var respUsuarios_rol = function(data) { 
@@ -2093,37 +2147,17 @@ var respTablaConfirmaciones = function(data) {
 var pubdd = '';
 var respCargaPublicacionesFinal = function(data) { 
     if (!data && data == null) 
-    return; 
-
-    
+    return;  
 
      for (var i = 0; i < data.length; i++) {
          if(data[i].formato=="PDF"){    
-             if(data[i].visto=="N"){
                 pubdd+= '<div class="col s8 offset-s2" > '+
                 '<div class="card"> '+
                 '       <div class="card-image waves-effect waves-block waves-light">'+
                 '          <iframe src="imagenes/publicaciones/'+data[i].ruta+'"  class="col s12" style="border: none;height:500px"></iframe>'+
                 '     </div>'+
                 '    <div class="card-content">'+
-                '        <span class="card-title activator grey-text text-darken-4">'+data[i].titulo+'<i class="material-icons right">more_vert</i></span>'+
-                '         <p><a onclick="btnVista('+data[i].id_publicacion+')" class="btn-floating waves-effect waves-light btn indigo darken-4"><i class="material-icons left">remove_red_eye</i></a></p>'+
-                '      </div>'+
-                '      <div class="card-reveal">'+
-                '           <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>'+data[i].titulo+'</span>'+
-                '            <p>'+data[i].descripcion+'.</p>'+
-                '         </div>'+
-                '  </div>'+
-                '</div> ';
-             }
-             else{
-                pubdd+= '<div class="col s8 offset-s2" > '+
-                '<div class="card"> '+
-                '       <div class="card-image waves-effect waves-block waves-light">'+
-                '          <iframe src="imagenes/publicaciones/'+data[i].ruta+'"  class="col s12" style="border: none;height:500px"></iframe>'+
-                '     </div>'+
-                '    <div class="card-content">'+
-                '        <span class="card-title activator grey-text text-darken-4">'+data[i].titulo+'<i class="material-icons right">more_vert</i></span>'+
+                '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+
                 '         <p><a onclick="btnVista('+data[i].id_publicacion+')" class="btn-floating waves-effect waves-light btn indigo darken-4" disabled><i class="material-icons left">remove_red_eye</i></a></p>'+
                 '      </div>'+
                 '      <div class="card-reveal">'+
@@ -2131,36 +2165,16 @@ var respCargaPublicacionesFinal = function(data) {
                 '            <p>'+data[i].descripcion+'.</p>'+
                 '         </div>'+
                 '  </div>'+
-                '</div> ';
-             }
-            
+                '</div> ';     
          }
          else{
-            if(data[i].visto=="N"){
                 pubdd+= '<div class="col s8 offset-s2" > '+
                 '<div class="card"> '+
                 '       <div class="card-image waves-effect waves-block waves-light">'+
                 '          <img class="activator" src="imagenes/publicaciones/'+data[i].ruta+'">'+
                 '     </div>'+
                 '    <div class="card-content">'+
-                '        <span class="card-title activator grey-text text-darken-4">'+data[i].titulo+'<i class="material-icons right">more_vert</i></span>'+
-                '         <p><a onclick="btnVista('+data[i].id_publicacion+')" class="btn-floating waves-effect waves-light btn indigo darken-4"><i class="material-icons left">remove_red_eye</i></a></p>'+
-                '      </div>'+
-                '      <div class="card-reveal">'+
-                '           <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>'+data[i].titulo+'</span>'+
-                '            <p>'+data[i].descripcion+'.</p>'+
-                '         </div>'+
-                '  </div>'+
-                '</div> ';
-            }
-            else{
-                pubdd+= '<div class="col s8 offset-s2" > '+
-                '<div class="card"> '+
-                '       <div class="card-image waves-effect waves-block waves-light">'+
-                '          <img class="activator" src="imagenes/publicaciones/'+data[i].ruta+'">'+
-                '     </div>'+
-                '    <div class="card-content">'+
-                '        <span class="card-title activator grey-text text-darken-4">'+data[i].titulo+'<i class="material-icons right">more_vert</i></span>'+
+                '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+
                 '         <p><a onclick="btnVista('+data[i].id_publicacion+')" class="btn-floating waves-effect waves-light btn indigo darken-4" disabled><i class="material-icons left">remove_red_eye</i></a></p>'+
                 '      </div>'+
                 '      <div class="card-reveal">'+
@@ -2169,8 +2183,6 @@ var respCargaPublicacionesFinal = function(data) {
                 '         </div>'+
                 '  </div>'+
                 '</div> ';
-            }
-
          }
     }
     $("#CargarPublicacionesFinal").html(pubdd);
@@ -2188,8 +2200,9 @@ var respCargarEmpParaPublicaciones = function(data) {
     {
         var empresa=data[i].id_emp;
         var puesto=Cookies.get('b_puesto_id');
+        var tipodoc=Cookies.get('b_tipodoc');
         console.log("_______________EMPRESA Y PUESTO DESDE COOKIES"+ empresa+" "+puesto);
-        onRequest({ opcion : 57, empresa_id:empresa, puesto_id:puesto}, respCargaPublicacionesFinal);
+        onRequest({ opcion : 57, empresa_id:empresa, puesto_id:puesto,tipo_doc:tipodoc}, respCargaPublicacionesFinal);
         console.log("---Reiniciar variable");
         pubdd=' ';
         console.log("---variable reiniciada"+pubdd+"sda");
@@ -2205,7 +2218,84 @@ var respVisto = function(data) {
     
     console.log("VISTO");
     M.toast({html: 'Marco la publicación como vista, gracias!', classes: 'rounded  blue darken-4'}); 
-    cargarPublicacionesB();
+    cargarPublicacionesNuevas();
 
     
+}
+
+var pubdd2 = '';
+var respCargarEmpParaPublicacionesNuevas = function(data) { 
+    //se insertan los datos en la tabla confirmaciones!
+    if (!data && data == null)
+    {
+        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
+        return;
+    }
+    
+    for (var i = 0; i < data.length; i++) 
+    {
+        var empresa=data[i].id_emp;
+        var puesto=Cookies.get('b_puesto_id');
+        var tipodoc=Cookies.get('b_tipodoc');
+        console.log("_______________EMPRESA Y PUESTO DESDE COOKIES"+ empresa+" "+puesto);
+        onRequest({ opcion : 59, empresa_id:empresa, puesto_id:puesto,tipo_doc:tipodoc}, respCargaPublicacionesFinalNuevas);
+        console.log("---Reiniciar variable");
+        pubdd2=' ';
+        console.log("---variable reiniciada"+pubdd+"sda");
+    }  
+}
+
+
+var respCargaPublicacionesFinalNuevas = function(data) { 
+    if (!data && data == null) 
+    return; 
+    var nombre=Cookies.get('b_capturista');
+     for (var i = 0; i < data.length; i++) {
+        var titulo=String(data[i].titulo);
+        console.log("-------"+titulo);
+        if(titulo=="undefined"){
+            pubdd2+='<div class="sinPub">'+
+            '<h4>Sin publicaciones nuevas</h4>'+
+            '<h5>Bienvenido '+nombre+'!</h5>'+
+            '</div>';
+
+        }
+        else{
+                if(data[i].formato=="PDF"){    
+                        pubdd2+= '<div class="col s8 offset-s2" > '+
+                        '<div class="card"> '+
+                        '       <div class="card-image waves-effect waves-block waves-light">'+
+                        '          <iframe src="imagenes/publicaciones/'+data[i].ruta+'"  class="col s12" style="border: none;height:500px"></iframe>'+
+                        '     </div>'+
+                        '    <div class="card-content">'+
+                        '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+
+                        '         <p><a onclick="btnVista('+data[i].id_publicacion+')" class="btn-floating waves-effect waves-light btn indigo darken-4" ><i class="material-icons left">remove_red_eye</i></a></p>'+
+                        '      </div>'+
+                        '      <div class="card-reveal">'+
+                        '           <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>'+data[i].titulo+'</span>'+
+                        '            <p>'+data[i].descripcion+'.</p>'+
+                        '         </div>'+
+                        '  </div>'+
+                        '</div> ';     
+                }
+                else{
+                        pubdd2+= '<div class="col s8 offset-s2" > '+
+                        '<div class="card"> '+
+                        '       <div class="card-image waves-effect waves-block waves-light">'+
+                        '          <img class="activator" src="imagenes/publicaciones/'+data[i].ruta+'">'+
+                        '     </div>'+
+                        '    <div class="card-content">'+
+                        '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+
+                        '         <p><a onclick="btnVista('+data[i].id_publicacion+')" class="btn-floating waves-effect waves-light btn indigo darken-4" ><i class="material-icons left">remove_red_eye</i></a></p>'+
+                        '      </div>'+
+                        '      <div class="card-reveal">'+
+                        '           <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>'+data[i].titulo+'</span>'+
+                        '            <p>'+data[i].descripcion+'.</p>'+
+                        '         </div>'+
+                        '  </div>'+
+                        '</div> ';
+                }
+        }
+    }
+    $("#CargarPublicacionesN").html(pubdd2);
 }

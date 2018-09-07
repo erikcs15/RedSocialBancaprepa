@@ -5,8 +5,8 @@ if(is_null($_COOKIE["b_capturista"])){
 
 ?>
 
-<div id="menu">
-<nav class=" blue darken-4">
+<div id="menu" style="margin:0;border:0px">
+<nav class=" blue darken-4" style="margin:0;border:0px">
                     <div class="nav-wrapper">
                         
                         <a href="#" class="brand-logo"><i class="material-icons">grain</i>Intranet Bancaprepa</a>
@@ -47,14 +47,14 @@ if(is_null($_COOKIE["b_capturista"])){
             
 
               <li><a id="m_inicio" name ="inicio" class="waves-effect" ><i class="material-icons">home</i>Inicio</a></li>
-              <li><a href="http:\\localhost\RedSocialBancaprepa\bancaprepa.php" name ="bancaprepa" id="m_bancaprepa" class="waves-effect"><i class="material-icons">assignment</i>Bancaprepa</a></li>
+              <li><a href="http:\\localhost\RedSocialBancaprepa\bancaprepa.php" name ="bancaprepa" id="m_bancaprepa" class="waves-effect"><i class="material-icons">assignment</i>Publicaciones</a></li>
               <li><a id="m_agregarPub" class="subheader waves-effect modal-trigger" href="#modalAgregarPub"><i class="material-icons">add_circle</i>Agregar publicación</a></li>
               <li><a id="m_mandarT" class="subheader waves-effect"><i class="material-icons">drafts</i>Mandar ticket</a></li>
 
 
  
               <li><div class="divider"></div></li>
-              <li><a  name ="salirsesion" class="dropdown-trigger" data-target='dropdown1'><i class="material-icons">format_list_bulleted</i><i class="material-icons right">arrow_drop_down</i>Catalogos</a></li>
+              <li><a class="dropdown-trigger" data-target='dropdown1'><i class="material-icons">format_list_bulleted</i><i class="material-icons right">arrow_drop_down</i>Catalogos</a></li>
                 <!-- Dropdown Structure -->
               <ul id='dropdown1' class='dropdown-content'>
                 <li><a id="catemp" class="subheader" name ="catemp" ><i class="material-icons">assignment</i>Catalogo de Empresas</a></li>

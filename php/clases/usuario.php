@@ -1438,19 +1438,20 @@
 				return  $datos;	
 			}
 
-			public function cargaPublicacionesBancaprepa($empresa, $puesto)
+			public function cargaPublicacionesBancaprepa($empresa, $puesto, $tipodoc)
 			{
 				$res=array();
 				$datos=array();
 				$resultado  =array();
 				$i=0;
-
+				$var="S";
 				
 				$sql="SELECT p.id, p.titulo, p.descripcion,p.imagen,p.formato, conf.empresa_id,conf.puesto_id, conf.visto 
 				FROM b_publicaciones_bancaprepa p
 				INNER JOIN b_confirmaciones conf ON conf.publicacion_id=p.id
 				INNER JOIN capturistas c ON c.id=conf.puesto_id
-				WHERE conf.empresa_id=$empresa AND conf.puesto_id=$puesto ORDER BY p.id DESC";
+				WHERE conf.empresa_id=$empresa AND conf.puesto_id=$puesto AND conf.visto='$var' AND p.documento_id=$tipodoc
+				ORDER BY p.id DESC";
 				
 				$resultado = mysqli_query($this->con(), $sql); 
 
@@ -1489,6 +1490,46 @@
 				$datos['publicacion_id'] =  array('0' => '0' );
 				return  $datos;	
 			}
+
+			public function cargaPubNuevas($empresa, $puesto, $tipodoc)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+				$var="N";
+				
+				$sql="SELECT p.id, p.titulo, p.descripcion,p.imagen,p.formato, conf.empresa_id,conf.puesto_id, conf.visto 
+				FROM b_publicaciones_bancaprepa p
+				INNER JOIN b_confirmaciones conf ON conf.publicacion_id=p.id
+				INNER JOIN capturistas c ON c.id=conf.puesto_id
+				WHERE conf.empresa_id=$empresa AND conf.puesto_id=$puesto AND conf.visto='$var' AND p.documento_id=$tipodoc
+				ORDER BY p.id DESC";
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['id_publicacion'] = $res[0];	
+				   $datos[$i]['titulo'] = $res[1];
+				   $datos[$i]['descripcion'] = $res[2];
+				   $datos[$i]['ruta'] = $res[3];
+				   $datos[$i]['formato'] = $res[4];	
+				   $datos[$i]['empresa_id'] = $res[5];
+				   $datos[$i]['puesto_id'] = $res[6];	
+				   $datos[$i]['visto'] = $res[7];					   
+				   $i++;
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id_publicacion']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+			}
+
 
 
 

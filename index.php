@@ -6,13 +6,13 @@
 <head>
     
         <meta charset="UTF-8">  
-        <title>Sistema Bancaprepa</title>
+        <title>Intranet Bancaprepa</title>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="css/materialize.min.css">
         <link rel="stylesheet" type="text/css" href="css/bancaprepa.css"> 
         
 </head>
-    <body onLoad="cargarPublicaciones()">
+    <body onLoad="cargarPublicacionesNuevas()">
     <div id="container" ><!-- CONTENEDOR 1 -->
         <div class="nav-wrapper">
             
@@ -21,20 +21,22 @@
             <?php
                 include('menu/menu.php');
             ?>
-            
-  <div class="col s12">
-    <div class="card">
-      <div class="card-content todotitle"> <span class="card-title  grey-text text-darken-4">Recent Comments</span>
-        </div>
-          <ul class="collection" id="cargarPubli">
-            
-          </ul>
-        </div>
-       </div>
-      </div>
-    </div>
-  </div>
 
+              <nav class="nav-extended " style="margin:0">
+       
+                <div class="nav-content blue darken-4" style="margin:0">
+                    <center>
+                    <ul id='tipoPublicacion' class="tabs blue darken-4" style="margin:0" >
+                    
+                    </ul>
+                    </center>
+                </div>
+                </nav>
+            <div class="row" id="CargarPublicacionesN">
+
+            </div>
+    
+    </div>
 
     <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
     <script type="text/javascript" src="js/materialize.min.js"></script>

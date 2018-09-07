@@ -6,7 +6,7 @@
 <head>
     
         <meta charset="UTF-8">  
-        <title>Sistema Bancaprepa</title>
+        <title>Intranet Bancaprepa</title>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="css/materialize.min.css">
         <link rel="stylesheet" type="text/css" href="css/bancaprepa.css"> 
@@ -22,17 +22,17 @@
                 include('menu/menu.php');
             ?>
 
-              <nav class="nav-extended ">
+              <nav class="nav-extended " style="margin:0">
        
-                <div class="nav-content">
+                <div class="nav-content blue darken-4" style="margin:0">
                     <center>
-                    <ul id='tipoPublicacion' class="tabs tabs-transparent">
+                    <ul id='tipoPublicacion' class="tabs blue darken-4" style="margin:0" >
                     
                     </ul>
                     </center>
                 </div>
                 </nav>
-            <div class="row" id="CargarPublicacionesFinal">
+            <div class="row" id="CargarPublicacionesN">
 
             </div>
     

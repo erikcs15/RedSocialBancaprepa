@@ -196,10 +196,13 @@
 			echo (json_encode($usuario->insertarTablaConfirmaciones($_REQUEST['publicacion_id'],$_REQUEST['empleado_id'],$_REQUEST['puesto_id'],$_REQUEST['empresa_id'])));
 		break;
 		case 57:
-			echo (json_encode($usuario->cargaPublicacionesBancaprepa($_REQUEST['empresa_id'],$_REQUEST['puesto_id'])));
+			echo (json_encode($usuario->cargaPublicacionesBancaprepa($_REQUEST['empresa_id'],$_REQUEST['puesto_id'],$_REQUEST['tipo_doc'])));
 		break;
 		case 58:
 			echo (json_encode($usuario->ActualizarVisto($_REQUEST['publicacion_id'],$_REQUEST['empleado_id'])));
+		break;
+		case 59:
+			echo (json_encode($usuario->cargaPubNuevas($_REQUEST['empresa_id'],$_REQUEST['puesto_id'],$_REQUEST['tipo_doc'])));
 		break;
 
 
