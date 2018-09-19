@@ -57,14 +57,16 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
               <li><a class="dropdown-trigger" data-target='dropdown1'><i class="material-icons">format_list_bulleted</i><i class="material-icons right">arrow_drop_down</i>Catalogos</a></li>
                 <!-- Dropdown Structure -->
               <ul id='dropdown1' class='dropdown-content'>
-                <li><a id="catemp" class="subheader" name ="catemp" ><i class="material-icons">assignment</i>Catalogo de Empresas</a></li>
-                <li><a id="catroles" class="subheader" name ="catroles" ><i class="material-icons">assignment</i>Catalogo de Roles</a></li>
-                <li><a id="catdoc" class="subheader" name ="catdoc"><i class="material-icons">assignment</i>Tipos de Documento</a></li>
+                <li><a id="catemp" class="subheader" name ="catemp" ><i class="material-icons">location_city</i>Catalogo de Empresas</a></li>
+                <li><a id="catroles" class="subheader" name ="catroles" ><i class="material-icons">group</i>Catalogo de Roles</a></li>
+                <li><a id="catdoc" class="subheader" name ="catdoc"><i class="material-icons">folder_open</i>Tipos de Documento</a></li>
+                <li><a id="catEquipo" class="subheader" name ="catEquipo"><i class="material-icons">important_devices</i>Catalogo de equipo</a></li>
                 
              </ul>
              <li><a id="M_cargaA" class="subheader" href="\documentos\addfile.php" class=" waves-effect"><i class="material-icons">file_upload</i>Carga de Archivos</a></li>
              <li><div class="divider"></div></li>
              <li><a id="correos" class="subheader" name ="correos"><i class="material-icons">local_post_office</i>Correos</a></li> 
+             
                <!-- Dropdown Structure -->
                <li><a  name ="mantenimiento" class="dropdown-trigger" data-target='mantenimiento'><i class="material-icons">settings</i><i class="material-icons right">arrow_drop_down</i>Mantenimiento</a></li>
             <ul id='mantenimiento' class='dropdown-content'>

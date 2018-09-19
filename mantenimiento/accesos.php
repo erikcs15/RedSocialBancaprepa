@@ -45,6 +45,7 @@
                         <p><label><input type="checkbox" id="usuarios" onChange="habDesAccesos(tipoRolAc.value,'usuarios',7)"/><span>Usuarios</span></label></p>
                         <p><label><input type="checkbox" id="accesosCheck" onChange="habDesAccesos(tipoRolAc.value,'accesosCheck',8)"/><span>Accesos</span></label></p>
                         <p><label><input type="checkbox" id="rolesUsuCh" onChange="habDesAccesos(tipoRolAc.value,'rolesUsuCh',10)"/><span>Roles-Usuarios</span></label></p>
+                        <p><label><input type="checkbox" id="tipoEquipo" onChange="habDesAccesos(tipoRolAc.value,'tipoEquipo',12)"/><span>Catalogo de equipos</span></label></p>
                         
                     </div>
             </div>             

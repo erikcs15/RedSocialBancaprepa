@@ -243,6 +243,10 @@ $(document).ready(function(){
         location.href="/RedSocialBancaprepa/mantenimiento/usuariosTabla.php";
      });
      
+     $( "#catEquipo" ).click(function() { 
+        location.href="/RedSocialBancaprepa/catalogos/cattiposequipo.php";
+     });
+     
 
 //----------------------------------busquedas--------------------------------------------------------------------
      //Busqueda por empresa
@@ -803,6 +807,10 @@ function eliminarEmp(empid) {
       
  }
 
+ function cargarEquipo()
+ {
+
+ }
 //----------------------------------------Funcion de respuesta de la consulta que aplicamos con ajax-----------------------------
 var respUser = function(data) { 
 
@@ -1498,6 +1506,9 @@ var respAccesosPorRol  = function(data) {
             case '11':
                 $('#bancaprepaCh').prop('checked', true); 
                 break;
+            case '12':
+                $('#tipoEquipo').prop('checked', true); 
+                break;
         }    
     }
 } 
@@ -1584,6 +1595,9 @@ var respCargarMenu  = function(data) {
                break;
             case '11':
                $('#m_bancaprepa').removeClass("subheader"); 
+              break;
+            case '12':
+               $('#catEquipo').removeClass("subheader"); 
               break;
 
         }    
@@ -1680,6 +1694,7 @@ function cargarAccesos(rol_id){
     $('#correosCheck').prop('checked', false);
     $('#rolesUsuCh').prop('checked', false);
     $('#bancaprepaCh').prop('checked', false);
+    $('#tipoEquipo').prop('checked', false);
 
 
     onRequest({ opcion : 22 ,id_rol:rol_id}, respAccesosPorRol);
