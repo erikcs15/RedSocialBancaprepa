@@ -10,8 +10,8 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="css/materialize.min.css">
         <link rel="stylesheet" type="text/css" href="css/bancaprepa.css"> 
-        
 </head>
+<link rel="icon" type="image/png" href="/img/favicon.ico" />
     <body onLoad="cargarPublicacionesNuevas()">
     <div id="container" ><!-- CONTENEDOR 1 -->
         <div class="nav-wrapper">
@@ -35,6 +35,7 @@
             <div class="row" id="CargarPublicacionesN">
 
             </div>
+            
     
     </div>
 

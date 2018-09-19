@@ -1,9 +1,11 @@
 <?php
-if(is_null($_COOKIE["b_capturista"])){
-        header('Location: http://localhost/RedSocialBancaprepa/login.html');
+if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_null($_COOKIE["b_capturista"])){
+       // header('http://wwww.intranet.bancaprepa.com/login.html');
+     echo "<script> window.location='http://www.intranet.bancaprepa.com/login.html'; </script>";
 }
 
 ?>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 <div id="menu" style="margin:0;border:0px">
 <nav class=" blue darken-4" style="margin:0;border:0px">
@@ -12,20 +14,18 @@ if(is_null($_COOKIE["b_capturista"])){
                         <a href="#" class="brand-logo"><i class="material-icons">grain</i>Intranet Bancaprepa</a>
                     
                         <ul class="right hide-on-med-and-down">
-                            <li><span class="counts white-text">9+</span> <a class='dropdown-button waves-effect waves-dark ' href='#' data-activates='dropdown_message'><i class="material-icons">notifications_active</i> </a>
-                            <ul id='dropdown_message' class='dropdown-content messages collection'>
-                             
+                            <li><span id="btnNotiF" class="counts white-text"></span> <a class='dropdown-button waves-effect waves-dark' href='#' data-activates='dropdown_message'><i id="iconNotiF" class="material-icons">notifications_active</i> </a>
+                            <ul id="dropdownNotificacion" class="dropdown-content">
+                               
+                                
                             </ul>
-                            </li>
-                            <li> <span class="counts white-text">9+</span><a class='dropdown-button waves-effect waves-dark' href='#' data-activates='dropdown_task'><i class="material-icons">message</i></a>
                             
-                            </li>
                             <ul id="dropdownCuenta" class="dropdown-content">
                                 <li class="divider"></li>
                                 <li><a href="#!"><i class="material-icons right">account_circle</i><?php
                                 echo $_COOKIE["b_capturista"];
                                 ?></a></li>
-                                <li><a id="salirsesion" name ="salirsesion" class="waves-effect">Cerrar sesión<i class="material-icons">settings_power</i></a></li>
+                                <li><a id="btnCerrarSession" name ="salirsesion" class="waves-effect">Cerrar sesión<i class="material-icons">settings_power</i></a></li>
                                
                             </ul>
                             <li><a class="dropdown-trigger" href="#!" data-target="dropdownCuenta"><i class="material-icons left">account_circle</i>
@@ -47,8 +47,8 @@ if(is_null($_COOKIE["b_capturista"])){
             
 
               <li><a id="m_inicio" name ="inicio" class="waves-effect" ><i class="material-icons">home</i>Inicio</a></li>
-              <li><a href="http:\\localhost\RedSocialBancaprepa\bancaprepa.php" name ="bancaprepa" id="m_bancaprepa" class="waves-effect"><i class="material-icons">assignment</i>Publicaciones</a></li>
-              <li><a id="m_agregarPub" class="subheader waves-effect modal-trigger" href="#modalAgregarPub"><i class="material-icons">add_circle</i>Agregar publicación</a></li>
+              <li><a href="/RedSocialBancaprepa/bancaprepa.php" name ="bancaprepa" id="m_bancaprepa" class="waves-effect"><i class="material-icons">assignment</i>Publicaciones Vistas</a></li>
+              <!--<li><a id="m_agregarPub" class="subheader waves-effect modal-trigger" href="#modalAgregarPub"><i class="material-icons">add_circle</i>Agregar publicación</a></li>  -->
               <li><a id="m_mandarT" class="subheader waves-effect"><i class="material-icons">drafts</i>Mandar ticket</a></li>
 
 
@@ -60,10 +60,11 @@ if(is_null($_COOKIE["b_capturista"])){
                 <li><a id="catemp" class="subheader" name ="catemp" ><i class="material-icons">assignment</i>Catalogo de Empresas</a></li>
                 <li><a id="catroles" class="subheader" name ="catroles" ><i class="material-icons">assignment</i>Catalogo de Roles</a></li>
                 <li><a id="catdoc" class="subheader" name ="catdoc"><i class="material-icons">assignment</i>Tipos de Documento</a></li>
-                <li><a id="correos" class="subheader" name ="correos"><i class="material-icons">local_post_office</i>Correos</a></li> 
+                
              </ul>
-             <li><a id="M_cargaA" href="http:\\localhost\RedSocialBancaprepa\documentos\addfile.php" class=" waves-effect"><i class="material-icons">file_upload</i>Carga de Archivos</a></li>
+             <li><a id="M_cargaA" class="subheader" href="\documentos\addfile.php" class=" waves-effect"><i class="material-icons">file_upload</i>Carga de Archivos</a></li>
              <li><div class="divider"></div></li>
+             <li><a id="correos" class="subheader" name ="correos"><i class="material-icons">local_post_office</i>Correos</a></li> 
                <!-- Dropdown Structure -->
                <li><a  name ="mantenimiento" class="dropdown-trigger" data-target='mantenimiento'><i class="material-icons">settings</i><i class="material-icons right">arrow_drop_down</i>Mantenimiento</a></li>
             <ul id='mantenimiento' class='dropdown-content'>
@@ -71,7 +72,7 @@ if(is_null($_COOKIE["b_capturista"])){
                 <li><a id="m_accesos" class="subheader" name ="accesos" ><i class="material-icons">build</i>Accesos</a></li>
                 
              </ul>
-            
+                         
     </ul>
 </div>
 

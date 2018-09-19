@@ -50,6 +50,7 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="../css/materialize.min.css">
         <link rel="stylesheet" type="text/css" href="../css/bancaprepa.css"> 
+        <link rel="icon" type="image/png" href="../img/favicon.ico" /> 
         
 </head>
     <body onLoad="cargarAddfile()">

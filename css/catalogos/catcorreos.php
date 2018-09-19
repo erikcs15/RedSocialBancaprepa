@@ -33,10 +33,9 @@
                         <input id="busquedaCorreos" type="search" required>
                         <label class="label-icon" for="search"><i class="material-icons ">search</i></label>
                         <i class="material-icons">close</i>
-                        <a id="AgregaCorreosBtnFlotante" class="btn-floating btn-large halfway-fab waves-effect waves-light teal btn modal-trigger right" href="#modalAgregarCorreos" style='display:none;'>
+                        <a class="btn-floating btn-large halfway-fab waves-effect waves-light teal btn modal-trigger" href="#modalAgregarCorreos">
                          <i class="material-icons blue darken-3">add</i>
                         </a>
-
                     </div>
                 </div>
             </nav>
@@ -48,7 +47,7 @@
                     <div class="row"><!-- CONTENEDOR 1 -->
                             <div class="col s12"><!-- CONTENEDOR 2 -->
                                     <table class="highlight">
-                                        <thead >
+                                        <thead>
                                         <tr>
                                             <th>Id</th>
                                             <th>Nombre</th>
@@ -56,7 +55,6 @@
                                             <th>Correo</th>
                                             <th id="password" style='display:none;'>Pass</th>
                                             <th>Entregado</th>
-                                            <th>Estatus</th>
                                             <th id="accionesC" style='display:none;'>Acciones</th>
                                             
                                         </tr>
@@ -105,27 +103,25 @@
                        </div>
                        <div class="input field col s6">
                            <input placeholder="Nombre" id="nombreEmpleadoCorreo" type="text" class="validate">
-                           <label for="Nombre" class="activate"></label>
+                           <label for="Nombre:" class="activate"></label>
                        </div>
                        <div class="input field col s6">
                            <input placeholder="Correo" id="correoEmpleado" type="text" class="validate" >
-                           <label for="Correo" class="activate"></label>
+                           <label for="Correo:" class="activate"></label>
                        </div>
                        <div class="input field col s6">
-                           <input placeholder="Contraseña" id="passEmpleado" type="password" class="validate" ><a onClick="mostrarPassAgregarcorreo()" class="waves-effect waves-light btn-floating btn-small blue btn right" >
-                                    <i class="material-icons right">remove_red_eye</i></a>
+                           <input placeholder="Contraseña" id="passEmpleado" type="password" class="validate" >
                            <label for="Contraseña:" class="activate"></label>
                        </div>
                        <div id="dominioDD" align="left" class="input-field col s3">
-                            <select id="selectDominio" class="browser-default">
-                                <option value="" disabled selected>Dominio:</option>
+                            <select>
+                                <option value="" disabled selected>Seleccione su dominio</option>
                                 <option value="bancaprepa">bancaprepa</option>
                                 <option value="valeamigo">valeamigo</option>
                                 <option value="prestamoslacasita">prestamoslacasita</option>
                                 <option value="presico">presico</option>
-                                <option value="fundacionamiga">fundacionamiga</option>
                             </select>
-                            <label></label>
+                            <label>Dominio</label>
                         </div>
                    </div>
                </form>
@@ -133,7 +129,6 @@
            <div class="modal-footer">
                <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
                <a id="BtnAgregarCorreo" class="waves-effect waves-light btn blue darken-3 right"><i class="material-icons left">add_circle_outline</i>Agregar</a>
-              
            </div>
     </div>
     <!----------------------------- Modal para editar correos ---------------------------------->
@@ -162,15 +157,11 @@
                                 <label for="Correo" class="activate"></label>
                             </div>
                             <div class="input field col s4">
-                                <input placeholder="Contraseña" id="editPass" type="password" class="validate"><a onClick="mostrarPass()" class="waves-effect waves-light btn-floating btn-small blue btn right" >
-                                    <i class="material-icons right">remove_red_eye</i></a>
+                                <input placeholder="Contraseña" id="editPass" type="password" class="validate">
                                 <label for="Contraseña" class="activate"></label>
                             </div>
-                            <div class="col s2">
+                            <div class="col s4">
                                 <p><label><input type="checkbox" id="cbEntregado"/><span>Entregado</span></label></p>
-                            </div>
-                            <div class="col s2">
-                                <p><label><input type="checkbox" id="cbEstatus"/><span>Estatus</span></label></p>
                             </div>
                         </div>
                    </div>

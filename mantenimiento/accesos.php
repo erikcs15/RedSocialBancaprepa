@@ -9,6 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
         <link rel="stylesheet" type="text/css" href="../css/materialize.min.css">
         <link rel="stylesheet" type="text/css" href="../css/bancaprepa.css">
+        <link rel="icon" type="image/png" href="../img/favicon.ico" /> 
 </head>
     <body onLoad="cargarMenuPorRol()">
     
@@ -34,7 +35,7 @@
                     <div class=' col s4' id="accesosRol">
                         <h6>Menu</h6> 
                         <p><label><input type="checkbox" id="agregarPub" onChange="habDesAccesos(tipoRolAc.value,'agregarPub',1)"/><span>Agregar Publicacion</span></label></p>
-                        <p><label><input type="checkbox" id="bancaprepaCh" onChange="habDesAccesos(tipoRolAc.value,'bancaprepaCh',11)"/><span>Bancaprepa</span></label></p>
+                        <p><label><input type="checkbox" id="bancaprepaCh" onChange="habDesAccesos(tipoRolAc.value,'bancaprepaCh',11)"/><span>Publicaciones Vistas</span></label></p>
                         <p><label><input type="checkbox" id="mandarTicket" onChange="habDesAccesos(tipoRolAc.value,'mandarTicket',2)"/><span>Mandar Ticket</span></label></p>
                         <p><label><input type="checkbox" id="catEmp" onChange="habDesAccesos(tipoRolAc.value,'catEmp',3)"/><span>Catalogo de empresas</span></label></p>
                         <p><label><input type="checkbox" id="catRoles" onChange="habDesAccesos(tipoRolAc.value,'catRoles',4)"/><span>Catalogo de roles</span></label></p>

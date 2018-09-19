@@ -12,6 +12,7 @@
         <link rel="stylesheet" type="text/css" href="css/bancaprepa.css"> 
         
 </head>
+<link rel="icon" type="image/png" href="/img/favicon.ico" /> 
     <body onLoad="cargarPublicacionesB()">
     <div id="container" ><!-- CONTENEDOR 1 -->
         <div class="nav-wrapper">
@@ -32,9 +33,11 @@
                     </center>
                 </div>
                 </nav>
-            <div class="row" id="CargarPublicacionesN">
+            <div class="row" id="CargarPublicacionesFinal">
 
             </div>
+            
+            
     
     </div>
 

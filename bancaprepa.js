@@ -1,9 +1,6 @@
 // Funcion principal de Jquery la cual escanea en tiempo real nuestro documento para verificar que los eventos se ejecuten correctamente
 $(document).ready(function(){
 
-   
-
-    $('select').formSelect();
     
     $('.tooltipped').tooltip({delay: 50});
       
@@ -21,13 +18,7 @@ $(document).ready(function(){
     //inicializamos modals
         $('#modalAceptarDoc').modal();
         
-    //Autocomplete
-    
-    
-
-
-
-    //-----------------------------------
+        
     //validacion del submit de publicaciones
     $( "#btnEnviarForm" ).click(function() {
          
@@ -196,35 +187,37 @@ $(document).ready(function(){
      
      // Fin de click en login
      //------------------------------------------------------------------------------------------------------------------//
+//--------------------------------------------Cargar el menu por roles------------------------------------------------
 
-     
+
+
 
 //--------------------------------------------------------------------------------------------------------------------------
 
      //Redirige al login 
      $( "#salirsesion" ).click(function() { 
-        location.href="/RedSocialBancaprepa/login.html";
+        location.href="/login.html";
      });
      //Redirige al catalogo de empresas
      $( "#catemp" ).click(function() { 
         
-        location.href="/RedSocialBancaprepa/catalogos/catemp.php";
+        location.href="/catalogos/catemp.php";
      });
     //Redirige al catalogo de rolas
      $( "#catroles" ).click(function() { 
-        location.href="/RedSocialBancaprepa/catalogos/catroles.php";
+        location.href="/catalogos/catroles.php";
      });
      //Redirige al catalogo de tipo de documentos
      $( "#catdoc" ).click(function() { 
-        location.href="/RedSocialBancaprepa/catalogos/catdoc.php";
+        location.href="/catalogos/catdoc.php";
      });
      //Redirige al inicio
      $( "#m_inicio" ).click(function() { 
-        location.href="/RedSocialBancaprepa/index.php";
+        location.href="/index.php";
      });
       //Redirige a los accesos
      $( "#m_accesos" ).click(function() { 
-        location.href="/RedSocialBancaprepa/mantenimiento/accesos.php";
+        location.href="/mantenimiento/accesos.php";
      });
      
      $( "#tipoRolAc" ).keypress(function() { 
@@ -232,15 +225,15 @@ $(document).ready(function(){
      });
      
      $( "#correos" ).click(function() { 
-        location.href="/RedSocialBancaprepa/catalogos/catcorreos.php";
+        location.href="/catalogos/catcorreos.php";
      });
 
      $( "#m_rol_usu" ).click(function() { 
-        location.href="/RedSocialBancaprepa/mantenimiento/rolusu.php";
+        location.href="/mantenimiento/rolusu.php";
      });
 
      $( "#m_usuarios" ).click(function() { 
-        location.href="/RedSocialBancaprepa/mantenimiento/usuariosTabla.php";
+        location.href="/mantenimiento/usuariosTabla.php";
      });
      
 
@@ -295,16 +288,6 @@ $("#busquedaUsuarios").keypress(function(e) {
       busqueda =  $("#busquedaUsuarios").val();
       console.log(busqueda);
       onRequest({ opcion : 40,nom_usuario:busqueda},respCargaUsuarios);
-  }
-});
-
-$("#idEmpleadoCorreo").keypress(function(e) {
-    //inicializamos variables
-  if(e.which == 13) {
-       idempleado =  $("#idEmpleadoCorreo").val();
-      console.log("ENTER!!"+idempleado);
-      onRequest({ opcion : 63,usuario_id:idempleado},respCargarEmpleadoCorreo);
-      
   }
 });
 
@@ -446,13 +429,6 @@ $("#btnEliDoc").click(function() {
     console.log("Presionaste boton de eliminar "+docID);
     onRequest({ opcion : 19 ,doc_id:docID}, respEliDocFinal);
 });
-//--------------------------------------------Eliminar Correo----------------------------
-$("#btnBorrarCorreo").click(function() {
-    var idusuario ='';
-    idusuario = $("#idBorrarCorreo").val();
-    console.log("Presionaste boton de eliminar "+idusuario);
-    onRequest({ opcion : 67 ,usuario_id:idusuario}, respBorrarCorreoFinal);
-});
 //------------------------------------------Boton agregar configuracion de usuarios-----------------------------
 $("#btnAgregarUsu_Rol").click(function() {
     usuario = $("#UsuariosDD2").val();
@@ -536,93 +512,7 @@ $("#BtnAgregarPub").click(function() {
     onRequest({ opcion : 21, texto:textoPublicacion, tipopub:tipodoc},respAgregaPublicacion);
 
 });
-//----------------------------------------CORREOS------------------------------------
-$( "#BtnAgregarCorreo" ).click(function() { 
-    var idusuario=$("#idEmpleadoCorreo").val();
-    var correo=$("#correoEmpleado").val();
-    var pass=$("#passEmpleado").val();
-    var dominio=$("#dominioDD option:selected").text();
-    console.log(idusuario+" "+correo+" "+pass+" "+dominio);
 
-    if(correo=="" || pass=="")
-    {
-        M.toast({html: 'Correo y/o contraseña vacios, favor de ingresar correo y contraseña', classes: 'rounded red'}); 
-        console.log(correo+" "+pass+" "+dominio);
-    }
-    else
-    {
-        if(dominio=="Dominio:")
-        {
-            M.toast({html: 'Dominio no seleccionado, favor de seleccionar uno.', classes: 'rounded red'}); 
-        }
-        else
-        {
-            var correoarmado="";
-
-            if(dominio=="presico")
-            {
-                correoarmado=correo+"@"+dominio+".mx";
-            }
-            else
-            {
-                correoarmado=correo+"@"+dominio+".com";
-            }
-            console.log(correoarmado);
-
-            onRequest({ opcion : 64, usuario_id:idusuario, dominio:dominio,correo:correoarmado, pass:pass },respAgregaCorreo);
-
-        }
-        
-    }
-
-
-    
-    
-});
-$( "#BtnEditarCorreo" ).click(function() { 
-    var idusuario=$("#idCorreoEdit").val();
-    var correo=$("#editCorreo").val();
-    var pass=$("#editPass").val();
-    var entregado="";
-    var estatus="";
-    if($("#cbEntregado").prop('checked') )
-    {
-        entregado="Si";
-    }
-    else
-    {
-        entregado="No";
-    }
-
-    if($("#cbEstatus").prop('checked') )
-    {
-        estatus="Activo";
-    }
-    else
-    {
-        estatus="Baja";
-    }
-
-    console.log(idusuario+" "+correo+" "+pass+" "+entregado+" "+estatus);
-
-    onRequest({ opcion : 66, usuario_id:idusuario, correo:correo, pass:pass,entregado:entregado, estatus:estatus },respEditarCorreoF);
-    
-});
-
-
-
-//-----------------------------------------------------------------------------
-$("#passEmpleado").keypress(function(e) {
-    //inicializamos variables
-  if(e.which == 13) {
-    var idusuario=$("#idEmpleadoCorreo").val();
-    var correo=$("#correoEmpleado").val();
-    var pass=$("#passEmpleado").val();
-    var dominio=$("#dominioDD option:selected").text();
-    console.log(idusuario+" "+correo+" "+pass+" "+dominio);
-    onRequest({ opcion : 64, usuario_id:idusuario, dominio:dominio,correo:correo, pass:pass },respAgregaCorreo);  
-  }
-});
 
 
 //----------------------------------------------Enter al iniciar------------------------------------
@@ -633,10 +523,6 @@ $("#passEmpleado").keypress(function(e) {
     });
 
 });
-
-
-//------------------------------------------------------------------------------------------------------------------------////
-//-----------------------------------------------------NOTIFICACIONES
 
 //-----------------------------Funciones para cargar al iniciar una pagina---------------
 //Funcion que carga las empresas
@@ -675,9 +561,6 @@ function cargarMenuPorRol(){
     empleadoid = Cookies.get('b_capturista_id');
     console.log("id empleado= "+empleadoid);
     onRequest({ opcion : 31 ,id_usuario:empleadoid },respCargarRolesPorUsuario);
-    
-    onRequest({ opcion : 62 ,usuario_id:empleadoid}, respNotificaciones);
-
 }
 
 //cargamos el menu de publicaciones
@@ -689,7 +572,6 @@ function cargarPublicacionesB(){
 
 function cargarPublicacionesNuevas(){
     onRequest({ opcion : 27}, respCargaPublicacionesB);
-    
      
     
 }
@@ -770,39 +652,6 @@ function eliminarEmp(empid) {
     
  }
 
- function mostrarPass()
- {
-   console.log("Mostrar contraseña");
-   
-   if($("#editPass").attr("type")=="password" )
-   {
-        console.log("Es tipo contraseña"); 
-        $("#editPass").attr("type","text");
-   }
-   else
-   {
-        console.log("Es tipo text"); 
-        $("#editPass").attr("type","password");
-   }
-      
- }
- function mostrarPassAgregarcorreo()
- {
-   console.log("Mostrar contraseña");
-   
-   if($("#passEmpleado").attr("type")=="password" )
-   {
-        console.log("Es tipo contraseña"); 
-        $("#passEmpleado").attr("type","text");
-   }
-   else
-   {
-        console.log("Es tipo text"); 
-        $("#passEmpleado").attr("type","password");
-   }
-      
- }
-
 //----------------------------------------Funcion de respuesta de la consulta que aplicamos con ajax-----------------------------
 var respUser = function(data) { 
 
@@ -820,7 +669,7 @@ var respUser = function(data) {
             Cookies.set("b_empresa_id",data[0].empresa_id); 
             Cookies.set("b_puesto_id",data[0].puesto_id);             
 
-            location.href="/RedSocialBancaprepa/index.php";
+            location.href="/index.php";
 
          return;
      }
@@ -923,66 +772,33 @@ var respCorreos = function(data) {
     var d = '';
     var x = '';
 
-    var usuario=Cookies.get('b_capturista_id');
-    if(usuario==1251 || usuario==1597 || usuario==118 || usuario==3)
-    {
-        document.getElementById('password').style.display = 'block';
-        document.getElementById('accionesC').style.display = 'block';
-        document.getElementById('AgregaCorreosBtnFlotante').style.display = 'block';
-        for (var i = 0; i < data.length; i++) {
-            if(i%2==0)
-            {
-                x='even';
-            }
-            else
-            {
-                x='odd';
-            }
-            d+= '<tr>'+
-            '<td>'+data[i].id_empleado+'</td>'+ 
-            '<td>'+data[i].nombrecompleto+'</td>'+ 
-            '<td>'+data[i].sucursal+'</td>'+   
-            '<td>'+data[i].correo+'</td>'+
-            '<td>'+data[i].pass+'</td>'+ 
-            '<td>'+data[i].entregado+'</td>'+ 
-            '<td>'+data[i].estatus+'</td>'+ 
-            '<td class="'+x+' left">'+
-            '<a onclick="editarCorreo('+data[i].id_empleado+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarCorreo"><i class="material-icons">edit</i></a>' + 
-            //'<a onclick="deshabDoc('+data[i].id_empleado+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabDoc"><i class="material-icons">do_not_disturb_alt</i></a>' + 
-            '<a onclick="BorrarCorreo('+data[i].id_empleado+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarCorreo"><i class="material-icons">delete</i></a>' +
-            '</td>'  +'</tr> ';
-            }
-            
-            $("#tablaCorreos").html(d);
-    }
-    else
-    {
-        for (var i = 0; i < data.length; i++) {
-        if(i%2==0)
-        {
-            x='even';
-        }
-        else
-        {
-            x='odd';
-        }
-        d+= '<tr>'+
-        '<td>'+data[i].id_empleado+'</td>'+
-        '<td>'+data[i].nombrecompleto+'</td>'+  
-        '<td>'+data[i].sucursal+'</td>'+
-        '<td>'+data[i].correo+'</td>'+
-        '<td>'+data[i].entregado+'</td>'+ 
-        '<td>'+data[i].estatus+'</td>'+  
-        '<td class="'+x+' left">'+
-        '</td>'  +'</tr> ';
-        }
-        
-        $("#tablaCorreos").html(d);
-       
-    }
-    cargarMenuPorRol();
-}
 
+
+     for (var i = 0; i < data.length; i++) {
+     if(i%2==0)
+     {
+         x='even';
+     }
+     else
+     {
+         x='odd';
+     }
+     d+= '<tr>'+
+     '<td>'+data[i].dominio+'</td>'+
+     '<td>'+data[i].sucursal+'</td>'+
+     '<td>'+data[i].nombrecompleto+'</td>'+ 
+     '<td>'+data[i].correo+'</td>'+ 
+     '<td class="'+x+' left">'+
+     '<a onclick="editarDoc('+data[i].correo+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarDoc"><i class="material-icons">edit</i></a>' + 
+     '<a onclick="deshabDoc('+data[i].correo+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabDoc"><i class="material-icons">do_not_disturb_alt</i></a>' + 
+     '<a onclick="BorrarDoc('+data[i].correo+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarDoc"><i class="material-icons">delete</i></a>' +
+     '</td>'  +'</tr> ';
+     }
+     
+     $("#tablaCorreos").html(d);
+
+     cargarMenuPorRol();
+}
 //----------------------------RESPUESTAS PARA INSERTAR DATOS------------------------------
 //----------------------------insertar empresa---------------------------------------
 var respAgregaEmpresa = function(data) { 
@@ -1355,7 +1171,7 @@ var respTpublic = function(data) {
         return; 
 
      
-    var documento='<option  disabled selected>Tipo de publicacion:</option>';
+    var documento='<option  disabled selected>Seleccione el Tipo de publicacion</option>';
 
     for(var i=0; i<data.length; i++){
         documento+='<option value='+data[i].doc_id+'>'+data[i].descripcion+'</option>';
@@ -1376,7 +1192,7 @@ var respEmpresa = function(data) {
     if (!data && data == null)
         return;  
      
-    var documento='<option  disabled selected>Empresa:</option>';
+    var documento='<option  disabled selected>Seleccione la Empresa</option>';
 
     for(var i=0; i<data.length; i++){
         documento+='<option value='+data[i].empresa_id+'>'+data[i].nombre+'</option>';
@@ -1610,7 +1426,6 @@ function BorrarEmp(emp_id)
     //Carga la empresa por su id para despues borrarla
     onRequest({ opcion : 8 ,empresa_id:emp_id}, respEliEmp);
 }
-
 //Funciones del catalogo de roles
 function editarRol(rol_id)
 {
@@ -1658,14 +1473,6 @@ function editarUsu(usuarioid)
      document.body.appendChild(a);
      a.click();
 }
-
-function BorrarCorreo(id_usu)
-{
-    console.log(id_usu);
-    onRequest({ opcion : 65 ,usuario_id:id_usu}, respBorrarCorreo);  
-
-}
-
 
 function cargarAccesos(rol_id){ 
 
@@ -1738,10 +1545,10 @@ var respCargaPublicacionesB = function(data) {
 
                 if(i==0){
                     primerMenu = data[i].id;
-                    documento+="<li class='tab'><a class='white-text  waves-effect waves-dark' id='tab"+data[i].id+"' onClick='cargarPublicacion("+data[i].id+")' ><strong>"+data[i].docuemento+"</strong></a></li>";
+                    documento+="<li class='tab'><a class='white-text' id='tab"+data[i].id+"' onClick='cargarPublicacion("+data[i].id+")' >"+data[i].docuemento+"</a></li>";
                 } 
                 else{
-                    documento+="<li class='tab'><a class='white-text  waves-effect waves-dark' id='tab"+data[i].id+"' onClick='cargarPublicacion("+data[i].id+")' ><strong>"+data[i].docuemento+"</strong></a></li>";
+                    documento+="<li class='tab'><a class='white-text' id='tab"+data[i].id+"' onClick='cargarPublicacion("+data[i].id+")' >"+data[i].docuemento+"</a></li>";
                 }
                   
              }
@@ -1766,23 +1573,12 @@ function cargarPublicacion(primerMenu){
     Cookies.set("b_tipodoc",primerMenu);
     
     var usuario=Cookies.get('b_capturista_id');
-    console.log("VERIFICAR SI HAY PUBLICACIONES "+usuario+" "+primerMenu);
-    onRequest({ opcion : 60 ,usuario_id:usuario, tipodoc:primerMenu}, respVerificarPublicaciones);  
+    console.log("-----------------"+usuario);
+    onRequest({ opcion : 37 ,usuario_id:usuario}, respCargarEmpParaPublicacionesNuevas);  
+
+    
 
 }
-
-function editarCorreo(id_usu)
-{
-    onRequest({ opcion : 65 ,usuario_id:id_usu}, respEditarCorreo);  
-
-}
-
-
-
-
-
-
-
 var respCargaPublicacionesVistas = function(data) { 
     if (!data && data == null)
              return;  
@@ -1795,10 +1591,10 @@ var respCargaPublicacionesVistas = function(data) {
 
                 if(i==0){
                     primerMenu = data[i].id;
-                    documento+="<li class='tab'><a class='white-text  waves-effect waves-dark' id='tab"+data[i].id+"' onClick='cargarPublicacionVistas("+data[i].id+")' ><strong>"+data[i].docuemento+"</strong></a></li>";
+                    documento+="<li class='tab'><a class='white-text' id='tab"+data[i].id+"' onClick='cargarPublicacionVistas("+data[i].id+")' >"+data[i].docuemento+"</a></li>";
                 } 
                 else{
-                    documento+="<li class='tab'><a class='white-text waves-effect waves-dark' id='tab"+data[i].id+"' onClick='cargarPublicacionVistas("+data[i].id+")' ><strong>"+data[i].docuemento+"</strong></a></li>";
+                    documento+="<li class='tab'><a class='white-text' id='tab"+data[i].id+"' onClick='cargarPublicacionVistas("+data[i].id+")' >"+data[i].docuemento+"</a></li>";
                 }
                   
              }
@@ -1823,9 +1619,11 @@ function cargarPublicacionVistas(primerMenu){
     Cookies.set("b_tipodoc",primerMenu);
     
     var usuario=Cookies.get('b_capturista_id');
-    console.log("VERIFICAR SI HAY PUBLICACIONES "+usuario+" "+primerMenu);
-    onRequest({ opcion : 61 ,usuario_id:usuario, tipodoc:primerMenu}, respVerificarPublicacionesVistas);  
+    console.log("-----------------"+usuario);
+    onRequest({ opcion : 37 ,usuario_id:usuario}, respCargarEmpParaPublicaciones);  
+
     
+
 }
 
 var respUsuarios_rol = function(data) { 
@@ -2367,7 +2165,7 @@ var auxiliar=0;
 var respCargaPublicacionesFinal = function(data) { 
     if (!data && data == null) 
     return;  
-   
+    variable=variable++;
     var nombre=Cookies.get('b_capturista');
      for (var i = 0; i < data.length; i++) {
         var titulo=String(data[i].titulo);
@@ -2376,50 +2174,74 @@ var respCargaPublicacionesFinal = function(data) {
         
         if(titulo=="undefined"){
             
+            console.log("ENTRAAAAAAA"+variable);
+            if(variable==0)
+            {
+                console.log("ENTRO.. es la primera vuelta");
+                vacio='<div class="sinPub">'+
+                '<h4>Sin publicaciones vistas</h4>'+
+                '<h5>Bienvenido '+nombre+'!</h5>'+
+                '</div>';
+                $("#CargarPublicacionesVaciasVistas").html(vacio);
+                auxiliar=1;
+                
+                
+            }
+            else
+            {
+                if(auxiliar==0)
+                {
+                    $("#CargarPublicacionesVaciasVistas").empty();
+                }
+                else
+                {
+                    
+                }
+            }
+             
+
         }
         else{
             $("#CargarPublicacionesVaciasVistas").empty();
                 if(data[i].formato=="PDF"){    
-                        pubdd+=  '<div class="col s8 offset-s2" > '+
+                        pubdd+= '<div class="col s8 offset-s2" > '+
                         '<div class="card"> '+
                         '       <div class="card-image waves-effect waves-block waves-light">'+
-                        '          <iframe src="imagenes/publicaciones/'+data[i].ruta+'"  class="col s12" style="border: none;height:500px"></iframe>'+
+                        '          <iframe src="imagenes/publicaciones/'+data[i].ruta+'"  class="col s12" style="border: none;height:600px"></iframe>'+
                         '     </div>'+
                         '    <div class="card-content">'+
                         '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+
-                        '        <p>  &nbsp;&nbsp'+data[i].fecha+'&nbsp; '+data[i].hora+'</p>'+
-                        '         <p><a onclick="btnVista('+data[i].id_publicacion+')" class="btn-floating waves-effect waves-light btn indigo darken-4 disabled" ><i class="material-icons left">remove_red_eye</i></a></p>'+
+                        '         <p><a onclick="btnVista('+data[i].id_publicacion+')" class="btn-floating waves-effect waves-light btn indigo darken-4" disabled><i class="material-icons left">remove_red_eye</i></a></p>'+
                         '      </div>'+
-                        '      <div class="card-reveal">'+
+                        '      <dic class="col s12" ><div class="card-reveal">'+
                         '           <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>'+data[i].titulo+'</span>'+
                         '            <p>'+data[i].descripcion+'.</p>'+
-                        '         </div>'+
-                        '  </div>'+
-                        '</div> ';        
-                }
-                else{
-                        pubdd+=  '<div class="col s8 offset-s2" > '+
-                        '<div class="card"> '+
-                        '       <div class="card-image waves-effect waves-block waves-light">'+
-                        '          <iframe src="imagenes/publicaciones/'+data[i].ruta+'"  class="col s12" style="border: none;height:500px"></iframe>'+
-                        '     </div>'+
-                        '    <div class="card-content">'+
-                        '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+
-                        '        <p>  &nbsp;&nbsp'+data[i].fecha+'&nbsp; '+data[i].hora+'</p>'+
-                        '         <p><a onclick="btnVista('+data[i].id_publicacion+')" class="btn-floating waves-effect waves-light btn indigo darken-4 disabled" ><i class="material-icons left">remove_red_eye</i></a></p>'+
-                        '      </div>'+
-                        '      <div class="card-reveal">'+
-                        '           <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>'+data[i].titulo+'</span>'+
-                        '            <p>'+data[i].descripcion+'.</p>'+
-                        '         </div>'+
+                        '         </div></div>'+
                         '  </div>'+
                         '</div> ';     
+                }
+                else{
+                        pubdd+= '<div class="col s8 offset-s2" > '+
+                        '<div class="card"> '+
+                        '       <div class="card-image waves-effect waves-block waves-light">'+
+                        '          <img class="activator" src="imagenes/publicaciones/'+data[i].ruta+'">'+
+                        '     </div>'+
+                        '    <div class="card-content">'+
+                        '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+
+                        '         <p><a onclick="btnVista('+data[i].id_publicacion+')" class="btn-floating waves-effect waves-light btn indigo darken-4" disabled><i class="material-icons left">remove_red_eye</i></a></p>'+
+                        '      </div>'+
+                        '      <dic class="col s12" ><div class="card-reveal">'+
+                        '           <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>'+data[i].titulo+'</span>'+
+                        '            <p>'+data[i].descripcion+'.</p>'+
+                        '         </div></div>'+
+                        '  </div>'+
+                        '</div> ';
                 }
         }
     }
     $("#CargarPublicacionesFinal").html(pubdd);
 }
-
+var variable=0;
 var respCargarEmpParaPublicaciones = function(data) { 
     //se insertan los datos en la tabla confirmaciones!
     if (!data && data == null)
@@ -2435,7 +2257,8 @@ var respCargarEmpParaPublicaciones = function(data) {
         console.log("_______________EMPRESA Y PUESTO DESDE COOKIES"+ empresa+" "+puesto);
         
         var usuario = Cookies.get('b_capturista_id');
-       
+        console.log("VARIABLEEE"+variable);
+        console.log("auxiliar="+auxiliar)
         onRequest({ opcion : 57, empresa_id:empresa, usuario_id:usuario,tipo_doc:tipodoc}, respCargaPublicacionesFinal);
         console.log("---Reiniciar variable");
         pubdd=' ';
@@ -2505,7 +2328,6 @@ var respCargaPublicacionesFinalNuevas = function(data) {
                         '     </div>'+
                         '    <div class="card-content">'+
                         '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+
-                        '        <p>  &nbsp;&nbsp'+data[i].fecha+'&nbsp; '+data[i].hora+'</p>'+
                         '         <p><a onclick="btnVista('+data[i].id_publicacion+')" class="btn-floating waves-effect waves-light btn indigo darken-4" ><i class="material-icons left">remove_red_eye</i></a></p>'+
                         '      </div>'+
                         '      <div class="card-reveal">'+
@@ -2523,7 +2345,6 @@ var respCargaPublicacionesFinalNuevas = function(data) {
                         '     </div>'+
                         '    <div class="card-content">'+
                         '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+
-                        '        <p>  &nbsp;&nbsp'+data[i].fecha+'&nbsp; '+data[i].hora+'</p>'+
                         '         <p><a onclick="btnVista('+data[i].id_publicacion+')" class="btn-floating waves-effect waves-light btn indigo darken-4" ><i class="material-icons left">remove_red_eye</i></a></p>'+
                         '      </div>'+
                         '      <div class="card-reveal">'+
@@ -2537,231 +2358,3 @@ var respCargaPublicacionesFinalNuevas = function(data) {
     }
     $("#CargarPublicacionesN").html(pubdd2);
 }
-
-
-var respVerificarPublicaciones = function(data) { 
-    //se insertan los datos en la tabla confirmaciones!
-    if (!data && data == null)
-    {
-        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
-        return;
-    }
-    var conteo= data[0].conteo;
-    console.log("conteo:"+conteo);
-    var nombre=Cookies.get('b_capturista');
-    var usuario=Cookies.get('b_capturista_id');
-    var vacio="";
-    if(conteo>0)
-    {
-        onRequest({ opcion : 37 ,usuario_id:usuario}, respCargarEmpParaPublicacionesNuevas); 
-    }
-    else
-    {
-        vacio+='<div class="sinPub">'+
-            '<h4>Sin publicaciones nuevas</h4>'+
-            '<h5>Bienvenido '+nombre+'!</h5>'+
-            '</div>';
-            $("#CargarPublicacionesN").html(vacio);
-    }
-}
-
-
-var respVerificarPublicacionesVistas = function(data) { 
-    //se insertan los datos en la tabla confirmaciones!
-    if (!data && data == null)
-    {
-        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
-        return;
-    }
-    var conteo= data[0].conteo;
-    console.log("conteo:"+conteo);
-    var nombre=Cookies.get('b_capturista');
-    var usuario=Cookies.get('b_capturista_id');
-    var vacio="";
-    if(conteo>0)
-    {
-        onRequest({ opcion : 37 ,usuario_id:usuario}, respCargarEmpParaPublicaciones);   
-    }
-    else
-    {
-        vacio+='<div class="sinPub">'+
-            '<h4>Sin publicaciones vistas</h4>'+
-            '<h5>Bienvenido '+nombre+'!</h5>'+
-            '</div>';
-            $("#CargarPublicacionesFinal").html(vacio);
-    }
-}
-
-
-var respNotificaciones = function(data) { 
-    //se insertan los datos en la tabla confirmaciones!
-    if (!data && data == null)
-    {
-        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
-        return;
-    }
-    var conteo= data[0].conteo;
-    texto=' <li class="divider"></li>'+
-    '<li><a href="#!"><i class="material-icons right">notifications_active</i>Usted tiene '+conteo+' publicaciones sin leer</a></li>';
-
-    
-    if(conteo>0)
-    {
-        txt='+'+conteo+'';
-        $("#btnNoti").addClass('red-text');
-        $("#iconNotiF").addClass('red-text');
-    }
-    else
-    {
-        txt='';
-        $("#btnNoti").removeClass('red-text');
-        $("#iconNotiF").removeClass('red-text');
-    }
-    
-    $("#btnNotiF").html(txt);    
-}
-
-
-var respCargarEmpleadoCorreo = function(data) { 
-    //se insertan los datos en la tabla confirmaciones!
-    if (!data && data == null)
-    {
-        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
-        return;
-    }
-
-
-    var verif=String(data[0].nombrecompleto);
-    if(verif=="undefined")
-    {
-        $("#correoEmpleado").attr("disabled","disabled");
-        $("#passEmpleado").attr("disabled", "disabled");
-        $("#selectDominio").attr("disabled", "disabled");
-        M.toast({html: 'Id no registrado, verifique si es correcto', classes: 'rounded red'}); 
-    }
-    else
-    {
-        console.log(data[0].nombrecompleto);
-        console.log(data[0].correo);
-        $("#nombreEmpleadoCorreo").val(data[0].nombrecompleto);
-        if(data[0].correo=="vacio")
-        {
-            $("#correoEmpleado").removeAttr("disabled");
-            $("#passEmpleado").removeAttr("disabled");
-            $("#selectDominio").removeAttr("disabled");
-            
-        }
-        else
-        {
-            $("#correoEmpleado").attr("disabled","disabled");
-            $("#passEmpleado").attr("disabled", "disabled");
-            $("#selectDominio").attr("disabled", "disabled");
-            M.toast({html: 'Usuario ya tiene correo!', classes: 'rounded red'});    
-        }
-    }
-
-    
-}
-
-
-
-var respAgregaCorreo = function(data) { 
-    //se insertan los datos en la tabla confirmaciones!
-    if (!data && data == null)
-    {
-        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
-        return;
-    }
-    
-
-    M.toast({html: 'Correo agregado correctamente! ', classes: 'rounded green'}); 
-    $("#idEmpleadoCorreo").val("");
-    $("#nombreEmpleadoCorreo").val("");
-    $("#correoEmpleado").val("");
-    $("#passEmpleado").val("");
-    $("#dominioDD").val("");
-    $("#modalAgregarCorreos").modal("close");
-    cargarCorreos();
-}
-
-
-var respEditarCorreo = function(data) { 
-    //se insertan los datos en la tabla confirmaciones!
-    if (!data && data == null)
-    {
-        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
-        return;
-    }
-    
-    $("#idCorreoEdit").val(data[0].id_empleado);
-    $("#editNomCorreo").val(data[0].nombrecompleto);
-    $("#editCorreo").val(data[0].correo);
-    $("#editPass").val(data[0].pass);
-
-    if(data[0].entregado=="Si")
-    {
-        $('#cbEntregado').prop('checked', true);
-    }
-    else
-    {
-        $('#cbEntregado').prop('checked', false); 
-    }
-
-    if(data[0].estatus=="Activo")
-    {
-        $('#cbEstatus').prop('checked', true);
-    }
-    else
-    {
-        $('#cbEstatus').prop('checked', false); 
-    }
-    
-
-}
-
-
-var respEditarCorreoF = function(data) { 
-    //se insertan los datos en la tabla confirmaciones!
-    if (!data && data == null)
-    {
-        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
-        return;
-    }
-    
-
-    M.toast({html: 'Correo editado correctamente! ', classes: 'rounded green'}); 
-    $("#modalEditarCorreo").modal("close");
-    cargarCorreos();
-}
-
-
-var respBorrarCorreo = function(data) { 
-    //se insertan los datos en la tabla confirmaciones!
-    if (!data && data == null)
-    {
-        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
-        return;
-    }
-    
-    $("#idBorrarCorreo").val(data[0].id_empleado);
-    $("#nomBorrarcorreo").val(data[0].nombrecompleto);
-    $("#correoBorrar").val(data[0].correo);
-    
-
-}
-
-
-var respBorrarCorreoFinal = function(data) { 
-    //se insertan los datos en la tabla confirmaciones!
-    if (!data && data == null)
-    {
-        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
-        return;
-    }
-    
-
-    M.toast({html: 'Correo Eliminado correctamente! ', classes: 'rounded red'}); 
-    $("#modalEliminarCorreo").modal("close");
-    cargarCorreos();
-}
-

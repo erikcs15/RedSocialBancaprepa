@@ -157,25 +157,30 @@
 
 				if($nombre != "")
 				{	
-					$q = "WHERE nombre LIKE '%$nombre%' OR apellido_paterno LIKE '%$nombre%' OR apellido_materno LIKE '%$nombre%'";
+					$q = "WHERE c.descripcion LIKE '%$nombre%'";
 				}
 
-				$sql="SELECT dominio, sucursal, nombre, apellido_paterno, apellido_materno, correo
-						FROM b_correos ".$q; 
+				$sql="SELECT c.id, cor.dominio, s.nomComercial, c.descripcion, cor.correo, cor.pass, cor.entregado, cor.estatus
+						FROM capturistas c
+						INNER JOIN b_correos cor ON cor.capturista_id=c.id
+						INNER JOIN sucursales s ON s.id = c.sucursal_id ".$q." ORDER BY cor.id DESC"; 
 				$resultado = mysqli_query($this->con(), $sql); 
 
 				while ($res = mysqli_fetch_row($resultado)) {
-
-				   $datos[$i]['dominio'] = $res[0];
-				   $datos[$i]['sucursal']  = $res[1]; 
-				   $datos[$i]['nombrecompleto'] = $res[2]." ".$res[3]." ".$res[4];
-				   $datos[$i]['correo']=$res[5]; 
+				   $datos[$i]['id_empleado'] = $res[0];
+				   $datos[$i]['dominio'] = $res[1];
+				   $datos[$i]['sucursal']  = $res[2]; 
+				   $datos[$i]['nombrecompleto'] = $res[3];
+				   $datos[$i]['correo']=$res[4];
+				   $datos[$i]['pass']=$res[5];
+				   $datos[$i]['entregado']=$res[6]; 
+				   $datos[$i]['estatus']=$res[7]; 
 				   $i++;
 
 				} 
 				
 				if ( count($datos )==0) { 
-					$datos[0]['dominio']  =0;
+					$datos[0]['id_empleado']  =0;
 					return  $datos; 
 				  }
 
@@ -899,7 +904,7 @@
 				$sql="SELECT c.id, c.`descripcion` AS Nombre, u.`nombre` AS Usuario, e.descripcion AS estatus
 					FROM usuarios u
 					INNER JOIN capturistas c ON c.id=u.`empleado`
-					INNER JOIN estatus e ON u.`activo`=e.id ".$q;
+					INNER JOIN estatus e ON c.estatus_id=e.id ".$q." ORDER BY c.id DESC";
 				
 				$resultado = mysqli_query($this->con(), $sql); 
 
@@ -1042,7 +1047,7 @@
 				$sql="SELECT c.id, c.`descripcion` AS Nombre, u.`nombre` AS Usuario, e.descripcion AS estatus
 					FROM usuarios u
 					INNER JOIN capturistas c ON c.id=u.`empleado`
-					INNER JOIN estatus e ON u.`activo`=e.id ".$q;
+					INNER JOIN estatus e ON c.estatus_id=e.id  ".$q." ORDER BY c.id DESC";
 				
 				$resultado = mysqli_query($this->con(), $sql); 
 
@@ -1438,7 +1443,7 @@
 				return  $datos;	
 			}
 
-			public function cargaPublicacionesBancaprepa($empresa, $puesto, $tipodoc)
+			public function cargaPublicacionesBancaprepa($empresa, $usuario, $tipodoc)
 			{
 				$res=array();
 				$datos=array();
@@ -1446,11 +1451,12 @@
 				$i=0;
 				$var="S";
 				
-				$sql="SELECT p.id, p.titulo, p.descripcion,p.imagen,p.formato, conf.empresa_id,conf.puesto_id, conf.visto 
+				$sql="SELECT p.id, p.titulo, p.descripcion,p.imagen,p.formato, conf.empresa_id,conf.puesto_id, conf.visto, p.documento_id, 
+				DATE_FORMAT( p.fecha, '%d/%b/%Y') AS fecha, DATE_FORMAT( p.hora, '%l:%i%p') AS hora
 				FROM b_publicaciones_bancaprepa p
 				INNER JOIN b_confirmaciones conf ON conf.publicacion_id=p.id
-				INNER JOIN capturistas c ON c.id=conf.puesto_id
-				WHERE conf.empresa_id=$empresa AND conf.puesto_id=$puesto AND conf.visto='$var' AND p.documento_id=$tipodoc
+				INNER JOIN capturistas c ON c.id=conf.empleado_id
+				WHERE conf.empresa_id=$empresa AND c.id=$usuario AND conf.visto='$var' AND p.documento_id=$tipodoc
 				ORDER BY p.id DESC";
 				
 				$resultado = mysqli_query($this->con(), $sql); 
@@ -1464,7 +1470,10 @@
 				   $datos[$i]['formato'] = $res[4];	
 				   $datos[$i]['empresa_id'] = $res[5];
 				   $datos[$i]['puesto_id'] = $res[6];	
-				   $datos[$i]['visto'] = $res[7];					   
+				   $datos[$i]['visto'] = $res[7];
+				   $datos[$i]['tipodoc'] = $res[8];
+				   $datos[$i]['fecha'] = $res[9];
+				   $datos[$i]['hora'] = $res[10];						   
 				   $i++;
 				} 
 				
@@ -1491,7 +1500,7 @@
 				return  $datos;	
 			}
 
-			public function cargaPubNuevas($empresa, $puesto, $tipodoc)
+			public function cargaPubNuevas($empresa, $usuario, $tipodoc)
 			{
 				$res=array();
 				$datos=array();
@@ -1499,11 +1508,12 @@
 				$i=0;
 				$var="N";
 				
-				$sql="SELECT p.id, p.titulo, p.descripcion,p.imagen,p.formato, conf.empresa_id,conf.puesto_id, conf.visto 
+				$sql="SELECT p.id, p.titulo, p.descripcion,p.imagen,p.formato, conf.empresa_id,conf.puesto_id, conf.visto, p.documento_id, 
+				DATE_FORMAT( p.fecha, '%d/%b/%Y') AS fecha, DATE_FORMAT( p.hora, '%l:%i%p') AS hora 
 				FROM b_publicaciones_bancaprepa p
 				INNER JOIN b_confirmaciones conf ON conf.publicacion_id=p.id
-				INNER JOIN capturistas c ON c.id=conf.puesto_id
-				WHERE conf.empresa_id=$empresa AND conf.puesto_id=$puesto AND conf.visto='$var' AND p.documento_id=$tipodoc
+				INNER JOIN capturistas c ON c.id=conf.empleado_id
+				WHERE conf.empresa_id=$empresa AND c.id=$usuario AND conf.visto='$var' AND p.documento_id=$tipodoc
 				ORDER BY p.id DESC";
 				
 				$resultado = mysqli_query($this->con(), $sql); 
@@ -1517,7 +1527,10 @@
 				   $datos[$i]['formato'] = $res[4];	
 				   $datos[$i]['empresa_id'] = $res[5];
 				   $datos[$i]['puesto_id'] = $res[6];	
-				   $datos[$i]['visto'] = $res[7];					   
+				   $datos[$i]['visto'] = $res[7];	
+				   $datos[$i]['tipodoc'] = $res[8];
+				   $datos[$i]['fecha'] = $res[9];
+				   $datos[$i]['hora'] = $res[10];					   
 				   $i++;
 				} 
 				
@@ -1530,12 +1543,234 @@
 				return $datos;  
 			}
 
+			public function verificaPubNuevas($usuario, $tipodoc)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+				$var="N";
+				
+				$sql="SELECT COUNT(p.id)
+				FROM b_publicaciones_bancaprepa p
+				INNER JOIN b_confirmaciones conf ON conf.publicacion_id=p.id
+				INNER JOIN capturistas c ON c.id=conf.empleado_id
+				WHERE c.id=$usuario AND conf.visto='$var' AND p.documento_id=$tipodoc";
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['conteo'] = $res[0];					   
+				   $i++;
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['conteo']  =0;
+					return  $datos; 
+				  }
 
 
+				return $datos;  
+			}
 
+			public function verificaPubVistas($usuario, $tipodoc)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+				$var="S";
+				
+				$sql="SELECT COUNT(p.id)
+				FROM b_publicaciones_bancaprepa p
+				INNER JOIN b_confirmaciones conf ON conf.publicacion_id=p.id
+				INNER JOIN capturistas c ON c.id=conf.empleado_id
+				WHERE c.id=$usuario AND conf.visto='$var' AND p.documento_id=$tipodoc";
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['conteo'] = $res[0];					   
+				   $i++;
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['conteo']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+			}
+
+			public function verificaPubNuevasPorUsuario($usuario)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+				$var="N";
+				
+				$sql="SELECT COUNT(p.id)
+				FROM b_publicaciones_bancaprepa p
+				INNER JOIN b_confirmaciones conf ON conf.publicacion_id=p.id
+				INNER JOIN capturistas c ON c.id=conf.empleado_id
+				WHERE c.id=$usuario AND conf.visto='$var'";
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['conteo'] = $res[0];					   
+				   $i++;
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['conteo']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+			}
 
 			
+
+			public function cargarSitieneCorreoOno($id_empleado)
+			{
+                
+				$res=array();
+				$datos=array();
+				$i=0; 
+
 				
+
+				$sql="SELECT c.id, c.descripcion, IFNULL(cor.correo,'vacio'), cor.pass
+					FROM capturistas c
+					LEFT OUTER JOIN b_correos cor ON cor.capturista_id=c.id
+					WHERE c.id=$id_empleado "; 
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['id_empleado'] = $res[0];
+				   $datos[$i]['nombrecompleto'] = $res[1];
+				   $datos[$i]['correo']  = $res[2]; 
+				   $datos[$i]['pass'] = $res[3];
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id_empleado']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+
+			public function insertarCorreos($usuarioid,$dominio,$correo,$pass)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+			
+				$sql="INSERT INTO b_correos(capturista_id,dominio,correo,pass) 
+									VALUES($usuarioid,'$dominio','$correo','$pass')";
+			
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['b_correos'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
+
+			public function catalogoCorreosxID($usuarioid)
+			{
+  
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				
+				$sql="SELECT c.id, cor.dominio, s.nomComercial, c.descripcion, cor.correo, cor.pass, cor.entregado, cor.estatus
+						FROM capturistas c
+						INNER JOIN b_correos cor ON cor.capturista_id=c.id
+						INNER JOIN sucursales s ON s.id = c.sucursal_id 
+						WHERE c.id=$usuarioid"; 
+
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['id_empleado'] = $res[0];
+				   $datos[$i]['dominio'] = $res[1];
+				   $datos[$i]['sucursal']  = $res[2]; 
+				   $datos[$i]['nombrecompleto'] = $res[3];
+				   $datos[$i]['correo']=$res[4];
+				   $datos[$i]['pass']=$res[5];
+				   $datos[$i]['entregado']=$res[6]; 
+				   $datos[$i]['estatus']=$res[7]; 
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id_empleado']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+			
+			public function actualizarCorreos($usuarioid,$correo,$pass,$entregado, $estatus)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+				
+	
+				$sql="UPDATE b_correos SET correo='$correo', pass='$pass', entregado='$entregado', estatus='$estatus'
+						WHERE capturista_id=$usuarioid";
+			    
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['b_correos'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
+
+			public function eliminarCorreos($usuarioid)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+
+				$sql="DELETE FROM b_correos WHERE capturista_id=$usuarioid";
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+
+				$datos['b_correos'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
+			
+			
+			
+
 
 
 

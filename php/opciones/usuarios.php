@@ -196,13 +196,37 @@
 			echo (json_encode($usuario->insertarTablaConfirmaciones($_REQUEST['publicacion_id'],$_REQUEST['empleado_id'],$_REQUEST['puesto_id'],$_REQUEST['empresa_id'])));
 		break;
 		case 57:
-			echo (json_encode($usuario->cargaPublicacionesBancaprepa($_REQUEST['empresa_id'],$_REQUEST['puesto_id'],$_REQUEST['tipo_doc'])));
+			echo (json_encode($usuario->cargaPublicacionesBancaprepa($_REQUEST['empresa_id'],$_REQUEST['usuario_id'],$_REQUEST['tipo_doc'])));
 		break;
 		case 58:
 			echo (json_encode($usuario->ActualizarVisto($_REQUEST['publicacion_id'],$_REQUEST['empleado_id'])));
 		break;
 		case 59:
-			echo (json_encode($usuario->cargaPubNuevas($_REQUEST['empresa_id'],$_REQUEST['puesto_id'],$_REQUEST['tipo_doc'])));
+			echo (json_encode($usuario->cargaPubNuevas($_REQUEST['empresa_id'],$_REQUEST['usuario_id'],$_REQUEST['tipo_doc'])));
+		break;
+		case 60:
+			echo (json_encode($usuario->verificaPubNuevas($_REQUEST['usuario_id'],$_REQUEST['tipodoc'])));
+		break;
+		case 61:
+			echo (json_encode($usuario->verificaPubVistas($_REQUEST['usuario_id'],$_REQUEST['tipodoc'])));
+		break;
+		case 62:
+			echo (json_encode($usuario->verificaPubNuevasPorUsuario($_REQUEST['usuario_id'])));
+		break;
+		case 63:
+			echo (json_encode($usuario->cargarSitieneCorreoOno($_REQUEST['usuario_id'])));
+		break;
+		case 64:
+			echo (json_encode($usuario->insertarCorreos($_REQUEST['usuario_id'],$_REQUEST['dominio'],$_REQUEST['correo'],$_REQUEST['pass'])));
+		break;
+		case 65:
+			echo (json_encode($usuario->catalogoCorreosxID($_REQUEST['usuario_id'])));
+		break;
+		case 66:
+			echo (json_encode($usuario->actualizarCorreos($_REQUEST['usuario_id'],$_REQUEST['correo'],$_REQUEST['pass'],$_REQUEST['entregado'],$_REQUEST['estatus'])));
+		break;	
+		case 67:
+			echo (json_encode($usuario->eliminarCorreos($_REQUEST['usuario_id'])));
 		break;
 
 

@@ -9,7 +9,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
         <link rel="stylesheet" type="text/css" href="../css/materialize.min.css">
         <link rel="stylesheet" type="text/css" href="../css/bancaprepa.css">
+        <link rel="icon" type="image/png" href="../img/favicon.ico" /> 
 </head>
+
     <body onLoad="cargarUsuariosT()">
     
      <div id="container" ><!-- CONTENEDOR 1 -->
