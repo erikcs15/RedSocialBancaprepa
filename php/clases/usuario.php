@@ -1767,6 +1767,56 @@
 				return  $datos;	
 				
 			}
+
+			public function cargarInventarios()
+			{
+  
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				
+				$sql="SELECT equipo.id,equipo.`descripcion`,estatus.descripcion
+				FROM i_tipo_equipo equipo
+				INNER JOIN  estatus estatus ON estatus.id = equipo.`estatus_id`"; 
+
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['descripcion'] = $res[1];
+				   $datos[$i]['estatus']  = $res[2]; 
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+			public function insertarEquipos($descripcion)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+			
+				$sql="INSERT INTO i_tipo_equipo(descripcion,estatus_id) 
+									VALUES('$descripcion',5)";
+			
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['i_tipo_equipo'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
 			
 			
 			

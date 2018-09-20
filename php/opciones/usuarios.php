@@ -228,7 +228,13 @@
 		case 67:
 			echo (json_encode($usuario->eliminarCorreos($_REQUEST['usuario_id'])));
 		break;
-
+		case 68:
+			echo (json_encode($usuario->cargarInventarios()));
+		break;
+		case 69:
+			echo (json_encode($usuario->insertarEquipos($_REQUEST['descripcion'])));
+		break;
+		
 
 
 
