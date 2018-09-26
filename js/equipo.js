@@ -30,6 +30,14 @@ $(document).ready(function(){
 
     }
 
+    function capturainv(){
+        console.log("Cargando Sucursales");
+        onRequest({ opcion : 70 }, respcargasucursales);
+
+        onRequest({ opcion : 71 }, respcargatiposequipo);
+
+    }
+
     var respInventario = function(data) { 
     
         if (!data && data == null) 
@@ -77,6 +85,139 @@ $(document).ready(function(){
     
         onRequest({ opcion : 68 }, respInventario);
     }
+
+    var respcargasucursales = function(data) { 
+        if (!data && data == null)
+            return;  
+     
+        var documento='<option value="0" disabled selected>Seleccione Sucursal</option>';
+    
+        for(var i=0; i<data.length; i++){
+            documento+='<option value='+data[i].id+'>'+data[i].nomComercial+'</option>';
+        }
+        console.log("checarc");
+        
+        $('#sucursalesdd').html(documento);
+        $('#sucursalesdd').formSelect(); 
+    
+    }
+
+    var respcargatiposequipo = function(data) { 
+        if (!data && data == null)
+            return;  
+     
+        var documento='<option value="0" disabled selected>Seleccione Tipo Equipo</option>';
+    
+        for(var i=0; i<data.length; i++){
+            documento+='<option value='+data[i].id+'>'+data[i].descripcion+'</option>';
+        }
+        console.log("checarc");
+        
+        $('#tiposequipos').html(documento);
+        $('#tiposequipos').formSelect(); 
+    
+    }
+
+    $( "#btnCrearinvequipo" ).click(function() { 
+        var sucursal_id=$("#sucursalesdd").val();
+        var tipo_equipo=$("#tiposequipos").val();
+        var num_equipo=$("#num_equipo").val();
+        var descripcion=$("#descripcion").val();
+        var marca=$("#marca").val();
+        var modelo=$("#modelo").val();
+        var serie=$("#serie").val();
+        var fecha_compra=$("#fecha_compra").val();
+        var estatus=0;
+        console.log(sucursal_id+" "+tipo_equipo+" "+num_equipo+" "+descripcion+" "+marca+" "+modelo+" "+serie+" "+fecha_compra+""+estatus);
+    
+    if(sucursal_id<=0)
+    {
+        M.toast({html: 'Favor de seleccionar sucursal', classes: 'rounded red'}); 
+        return;
+    }
+
+    if(tipo_equipo<= 0)
+    {
+        M.toast({html: 'Favor de seleccionar tipo de equipo', classes: 'rounded red'}); 
+        return;
+    }
+
+    if(num_equipo=="")
+    {
+        M.toast({html: 'Favor de ingresar numero de equipo', classes: 'rounded red'}); 
+        return;
+    }
+
+    if(descripcion=="")
+    {
+        M.toast({html: 'Favor de ingresar descripcion de equipo', classes: 'rounded red'}); 
+        return;
+    }
+
+    if(marca=="")
+    {
+        M.toast({html: 'Favor de ingresar marca del equipo', classes: 'rounded red'}); 
+        return;
+    }
+
+    if(modelo=="")
+    {
+        M.toast({html: 'Favor de ingresar modelo del equipo', classes: 'rounded red'}); 
+        return;
+    }
+
+    if(serie== "")
+    {
+        M.toast({html: 'Favor de ingresar serie del equipo', classes: 'rounded red'}); 
+        return;
+    }
+
+    if(fecha_compra=="")
+    {
+        M.toast({html: 'Favor de ingresar fecha de compra', classes: 'rounded red'}); 
+        return;
+    }
+
+    if($("#estatus").prop('checked'))
+    {
+        estatus=5;
+    }
+
+    else
+    {
+        M.toast({html: 'Favor de seleccionar estatus', classes: 'rounded red'}); 
+        return;
+    }
+
+    onRequest({ opcion : 72, sucursal_id:sucursal_id, tipo_equipo:tipo_equipo,num_equipo:num_equipo, descripcion:descripcion,marca:marca, modelo:modelo,serie:serie, fecha_compra:fecha_compra, estatus_id:estatus},respCrearinvequipo);
+    });
+
+    var respCrearinvequipo = function(data) { 
+        //se insertan los datos en la tabla confirmaciones!
+        if (!data && data == null)
+        {
+            M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
+            return;
+        }
+        
+    
+        M.toast({html: 'ENHORABUENA...!!! Equipo agregado correctamente ', classes: 'rounded green'}); 
+        $("#sucursalesdd").val("");
+        $("#tiposequipos").val("");
+        $("#num_equipo").val("");
+        $("#descripcion").val("");
+        $("#marca").val("");
+        $("#modelo").val("");
+        $("#serie").val("");
+        $("#fecha_compra").val("");
+        $("#estatus_id").val("");
+        cargarInventario();
+    }
+
+
+    
+
+
 
 
     
