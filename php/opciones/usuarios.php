@@ -234,7 +234,16 @@
 		case 69:
 			echo (json_encode($usuario->insertarEquipos($_REQUEST['descripcion'])));
 		break;
-		
+		case 70:
+			echo (json_encode($usuario->capturainv()));
+		break;
+		case 71:
+			echo (json_encode($usuario->cargartipoequipos()));
+		break;
+		case 72:
+		echo (json_encode($usuario->insertarcatequipos($_REQUEST['sucursal_id'],$_REQUEST['tipo_equipo'],$_REQUEST['num_equipo'],$_REQUEST['descripcion'],$_REQUEST['marca'],$_REQUEST['modelo'],$_REQUEST['serie'],$_REQUEST['fecha_compra'],$_REQUEST['estatus_id'])));
+		break;
+
 
 
 

@@ -1807,7 +1807,7 @@
 	
 			
 				$sql="INSERT INTO i_tipo_equipo(descripcion) 
-									VALUES('$descripcion',5)";
+									VALUES('$descripcion')";
 			
 				$resultado = mysqli_query($this->con(), $sql);   
 	
@@ -1834,7 +1834,86 @@
 				
 			}
 			
+			public function capturainv()
+			{
+  
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				
+				$sql="SELECT id,nomComercial
+				FROM sucursales suc"; 
+
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['nomComercial'] = $res[1];
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
 			
+			public function cargartipoequipos()
+			{
+  
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				
+				$sql="SELECT id,descripcion
+				FROM i_tipo_equipo"; 
+
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['descripcion'] = $res[1];
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+			public function insertarcatequipos($sucursal_id,$tipo_equipo,$num_equipo,$descripcion,
+			$marca,$modelo,$serie,$fecha_compra,$estatus_id)
+			{
+				$res=array();
+				$datos=array();
+				$resultado=array();
+				$i=0;
+	
+			
+				$sql="INSERT INTO i_equipo(sucursal_id,tipo_equipo,num_equipo,descripcion,
+									marca,modelo,serie,fecha_compra,estatus_id) 
+								VALUES($sucursal_id,'$tipo_equipo',$num_equipo,'$descripcion',
+										'$marca','$modelo','$serie','$fecha_compra',$estatus_id)";
+			
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['i_equipo'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
 			
 
 

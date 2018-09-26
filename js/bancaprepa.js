@@ -556,7 +556,7 @@ $("#BtnAgregarPub").click(function() {
 
 });
 //----------------------------------------CORREOS------------------------------------
-$( "#BtnAgregarCorreo" ).click(function() { 
+$( "#Crearinvequipo" ).click(function() { 
     var idusuario=$("#idEmpleadoCorreo").val();
     var correo=$("#correoEmpleado").val();
     var pass=$("#passEmpleado").val();
