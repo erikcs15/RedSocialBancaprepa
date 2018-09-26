@@ -50,7 +50,6 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Descripcion</th>
-                                            <th>Estatus</th>
                                         </tr>
                                         </thead>
 

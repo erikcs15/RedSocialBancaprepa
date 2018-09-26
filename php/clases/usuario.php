@@ -1776,16 +1776,14 @@
 				$i=0; 
 
 				
-				$sql="SELECT equipo.id,equipo.`descripcion`,estatus.descripcion
-				FROM i_tipo_equipo equipo
-				INNER JOIN  estatus estatus ON estatus.id = equipo.`estatus_id`"; 
+				$sql="SELECT equipo.id,equipo.`descripcion`
+				FROM i_tipo_equipo equipo"; 
 
 				$resultado = mysqli_query($this->con(), $sql); 
 
 				while ($res = mysqli_fetch_row($resultado)) {
 				   $datos[$i]['id'] = $res[0];
 				   $datos[$i]['descripcion'] = $res[1];
-				   $datos[$i]['estatus']  = $res[2]; 
 				   $i++;
 
 				} 
@@ -1808,7 +1806,7 @@
 				$i=0;
 	
 			
-				$sql="INSERT INTO i_tipo_equipo(descripcion,estatus_id) 
+				$sql="INSERT INTO i_tipo_equipo(descripcion) 
 									VALUES('$descripcion',5)";
 			
 				$resultado = mysqli_query($this->con(), $sql);   
