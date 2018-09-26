@@ -22,7 +22,20 @@ $(document).ready(function(){
         $('#modalAceptarDoc').modal();
         
     //Autocomplete
-    
+    $('input.autocomplete').autocomplete({
+        data: {
+          "Apple": null,
+          "Microsoft": null,
+          "Google": 'https://placehold.it/250x250',
+          "Prueba": null
+        },
+        limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
+        onAutocomplete: function(val) {
+          // Callback function when value is autcompleted.
+        },
+        minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
+      });
+            
     
 
 
@@ -84,6 +97,8 @@ $(document).ready(function(){
 
       $( "#aceptarPublicacion" ).click(function() {
 
+            $('#aceptarPublicacion').addClass("disabled"); 
+            $('#cancelarPub').addClass("disabled"); 
             var titulo = $("#pTitulo").val();
             var descripcion = $("#pDescripcion").val();
             var tipopublic = $("#tipoPubAddFile").val();
@@ -636,9 +651,24 @@ $("#passEmpleado").keypress(function(e) {
         }
     });
 
+
+    $("#CrearTicketbtn").click(function() {
+        var usuario = Cookies.get('b_capturista_id');
+        console.log("ID empleado="+usuario);
+      
+    
+    });
+    
+
+
+
+
+
+
+
 });
 
-
+//----------------------------------------Termina document.READY()----------------------------------
 //------------------------------------------------------------------------------------------------------------------------////
 //-----------------------------------------------------NOTIFICACIONES
 
@@ -1558,48 +1588,46 @@ var respCargarMenu  = function(data) {
           console.log('vale');
           window.location = "login.html";
         }
-           
- 
+    console.log(data);       
+    console.log("lenght del arreglo="+data.length);
     for(var i=0; i<data.length; i++){
+        console.log("menu:"+data[i].id_menu+ "    i="+i);
         switch(data[i].id_menu)
         {
             case '1': 
-                $('#m_agregarPub').removeClass("subheader"); 
+                document.getElementById('m_mandarT').style.display = 'block';
                 break;
             case '2':
-                $('#m_mandarT').removeClass("subheader"); 
+                document.getElementById('m_mandarT').style.display = 'block';
                 break;
             case '3':
-                $('#catemp').removeClass("subheader"); 
+                document.getElementById('catemp').style.display = 'block'; 
                 break;
             case '4':
-                $('#catroles').removeClass("subheader"); 
+                document.getElementById('catroles').style.display = 'block'; 
                 break;
             case '5':
-                $('#catdoc').removeClass("subheader"); 
+                document.getElementById('catdoc').style.display = 'block';
                 break;
             case '6':
-                $('#M_cargaA').removeClass("subheader"); 
+                document.getElementById('M_cargaA').style.display = 'block';
                 break;
             case '7':
-                $('#m_usuarios').removeClass("subheader"); 
+                document.getElementById('m_usuarios').style.display = 'block';
                 break;
             case '8':
-                $('#m_accesos').removeClass("subheader"); 
+                document.getElementById('m_accesos').style.display = 'block';
                 break;
             case '9':
-                 $('#correos').removeClass("subheader"); 
+                document.getElementById('correos').style.display = 'block';
                 break;
-            case '10':
-                $('#m_rol_usu').removeClass("subheader"); 
-               break;
+            
             case '11':
-               $('#m_bancaprepa').removeClass("subheader"); 
+              document.getElementById('m_bancaprepa').style.display = 'block';
               break;
             case '12':
-               $('#catEquipo').removeClass("subheader"); 
+              document.getElementById('catEquipo').style.display = 'block';
               break;
-
         }    
     }
   //  $('#accesosRol').html(documento);

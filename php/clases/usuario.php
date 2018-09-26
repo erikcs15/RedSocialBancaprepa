@@ -556,10 +556,10 @@
 				
 
 				$sql="SELECT mr.id_rol, mr.id_menu
-				FROM b_menu_roles mr
-				INNER JOIN b_menu m
-				ON mr.id_menu=m.id
-				WHERE mr.id_rol=$id_rol";
+						FROM b_menu_roles mr
+						INNER JOIN b_menu m
+						ON mr.id_menu=m.id
+						WHERE mr.id_rol=$id_rol ORDER BY mr.id_menu ASC";
 			
 				$resultado = mysqli_query($this->con(), $sql);   
 				

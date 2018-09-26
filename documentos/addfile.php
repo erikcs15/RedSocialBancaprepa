@@ -158,7 +158,7 @@
             <div class="row" style="width: 330px; margin: 0 auto">
                 <div><br></br></div>
                 <div class="col s6 offset-s3">
-                    <button id="btnEnviarForm" class="btn waves-effect waves-light right">Realizar Carga
+                    <button id="btnEnviarForm" class="btn waves-effect waves-light btn light-blue darken-4 right">Realizar Carga
                         <i class="material-icons right">send</i>
                     </button>
                 </div>
@@ -191,7 +191,7 @@
                                 
                             </div>
                             <div class="col s6 "   >
-                            <a id="" class="waves-effect modal-close waves-light btn right accent-4 red"><i class="material-icons left">close</i>Cancelar</a>
+                            <a id="cancelarPub" class="waves-effect modal-close waves-light btn right accent-4 red"><i class="material-icons left">close</i>Cancelar</a>
                             </div>
                 </div>
                 
