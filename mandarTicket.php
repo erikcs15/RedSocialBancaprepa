@@ -13,7 +13,7 @@
         
 </head>
 <link rel="icon" type="image/png" href="/img/favicon.ico" /> 
-    <body onLoad="cargarPublicacionesB()">
+    <body onLoad="cargarMenuPorRol()">
     <div id="container" ><!-- CONTENEDOR 1 -->
         <div class="nav-wrapper">
            <?php
@@ -27,11 +27,12 @@
                     <div class="row">
                         <div class="input-field col s6">
                             <i class="material-icons prefix">business</i>
-                            <select>
+                            <select id="areaApoyo">
                             <option value="" disabled selected>Area</option>
                             <option value="1">Sistemas</option>
                             <option value="2">Credito</option>
                             <option value="3">Cartera</option>
+                            <option value="4">Call Center</option>
                             </select>
                             <label>Seleccione el area del cual necesita apoyo:</label>
                         </div>
@@ -39,13 +40,14 @@
                     <div class="row">
                         <div class="input-field col s6">
                         <i class="material-icons prefix">mode_edit</i>
-                            <select>
+                            <select id="tituloDD">
                                 <option value="" disabled selected>Titulo</option>
                                 <option value="1">Creacion de usuarios y/o correos</option>
                                 <option value="2">Cancelacion de pagos</option>
-                                <option value="3">Soporte</option>
-                                <option value="4">Instalacion de impresoras, miniprinters</option>
-                                <option value="5">Configuracion de correos</option>
+                                <option value="3">Cancelacion de desembolsos</option>
+                                <option value="4">Soporte</option>
+                                <option value="5">Instalacion de impresoras, miniprinters</option>
+                                <option value="6">Configuracion de correos</option>
                             </select>
                             <label>Seleccione una opcion</label>
                         </div>
@@ -54,7 +56,7 @@
                         <form class="col s12">  
                                 <div class="input-field col s12">
                                     <i class="material-icons prefix">description</i>
-                                    <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
+                                    <textarea id="descripcionTicket" class="materialize-textarea"></textarea>
                                     <label for="icon_prefix2">Descripcion</label>
                                 </div>
                         </form>

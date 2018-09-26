@@ -1815,6 +1815,24 @@
 				return  $datos;	
 				
 			}
+
+			public function insertarTickets($usuario_id, $area_id, $titulo, $descripcion, $correo, $telefono)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+			
+				$sql="INSERT INTO b_tickets (capturista_id, area_id, titulo, descripcion, email, telefono, fecha_creacion, hora_creacion, estatus )
+					VALUES ($usuario_id,$area_id,'$titulo', '$descripcion','$correo','$telefono', CURDATE(), CURTIME(),'en espera')";
+			
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['b_tickets'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
 			
 			
 			

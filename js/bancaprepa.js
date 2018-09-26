@@ -654,7 +654,15 @@ $("#passEmpleado").keypress(function(e) {
 
     $("#CrearTicketbtn").click(function() {
         var usuario = Cookies.get('b_capturista_id');
-        console.log("ID empleado="+usuario);
+        var area=$("#areaApoyo").val();
+        var titulo=$("#tituloDD option:selected").text();
+        var desc=$("#descripcionTicket").val();
+        var correo=$("#email").val();
+        var telefono=$("#tel").val();
+        console.log("ID empleado="+usuario+" Area de apoyo:"+area+" titulo:"+titulo);
+        console.log("desc:"+desc+" email:"+correo+" telefono:"+telefono);
+        
+
       
     
     });
@@ -1588,10 +1596,9 @@ var respCargarMenu  = function(data) {
           console.log('vale');
           window.location = "login.html";
         }
-    console.log(data);       
-    console.log("lenght del arreglo="+data.length);
+
     for(var i=0; i<data.length; i++){
-        console.log("menu:"+data[i].id_menu+ "    i="+i);
+        
         switch(data[i].id_menu)
         {
             case '1': 
