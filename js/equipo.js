@@ -51,7 +51,6 @@ $(document).ready(function(){
             d+= '<tr>'+
             '<td>'+data[i].id+'</td>'+ 
             '<td>'+data[i].descripcion+'</td>'+ 
-            '<td>'+data[i].estatus+'</td>'+
             '<td class="'+x+' left">'+
             // '<a onclick="EditarEstatus('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarEstatus"><i class="material-icons">edit</i></a>' + 
             //'<a onclick="BajaEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalBajaEquipo"><i class="material-icons">delete</i></a>' +
