@@ -53,13 +53,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <form class="col s12">  
-                                <div class="input-field col s12">
-                                    <i class="material-icons prefix">description</i>
-                                    <textarea id="descripcionTicket" class="materialize-textarea"></textarea>
-                                    <label for="icon_prefix2">Descripcion</label>
-                                </div>
-                        </form>
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">description</i>
+                            <textarea id="descripcionTicket" class="materialize-textarea"></textarea>
+                            <label for="descripcionTicket">Descripcion</label>
+                        </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix">email</i>
                             <input id="email" type="email" class="validate">

@@ -1443,7 +1443,7 @@
 				return  $datos;	
 			}
 
-			public function cargaPublicacionesBancaprepa($empresa, $usuario, $tipodoc)
+			public function cargaPublicacionesBancaprepa($usuario, $tipodoc)
 			{
 				$res=array();
 				$datos=array();
@@ -1456,7 +1456,7 @@
 				FROM b_publicaciones_bancaprepa p
 				INNER JOIN b_confirmaciones conf ON conf.publicacion_id=p.id
 				INNER JOIN capturistas c ON c.id=conf.empleado_id
-				WHERE conf.empresa_id=$empresa AND c.id=$usuario AND conf.visto='$var' AND p.documento_id=$tipodoc
+				WHERE c.id=$usuario AND conf.visto='$var' AND p.documento_id=$tipodoc
 				ORDER BY p.id DESC";
 				
 				$resultado = mysqli_query($this->con(), $sql); 
@@ -1500,7 +1500,7 @@
 				return  $datos;	
 			}
 
-			public function cargaPubNuevas($empresa, $usuario, $tipodoc)
+			public function cargaPubNuevas( $usuario, $tipodoc)
 			{
 				$res=array();
 				$datos=array();
@@ -1513,7 +1513,7 @@
 				FROM b_publicaciones_bancaprepa p
 				INNER JOIN b_confirmaciones conf ON conf.publicacion_id=p.id
 				INNER JOIN capturistas c ON c.id=conf.empleado_id
-				WHERE conf.empresa_id=$empresa AND c.id=$usuario AND conf.visto='$var' AND p.documento_id=$tipodoc
+				WHERE  c.id=$usuario AND conf.visto='$var' AND p.documento_id=$tipodoc
 				ORDER BY p.id DESC";
 				
 				$resultado = mysqli_query($this->con(), $sql); 
@@ -1913,6 +1913,40 @@
 				$datos['i_equipo'] =  array('0' => '0' );
 				return  $datos;	
 				
+			}
+
+			public function cargarTickets()
+			{
+  
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				
+				$sql="SELECT t.id, t.`titulo`, t.`descripcion`, c.`descripcion`, t.`estatus`
+						FROM b_tickets t
+						INNER JOIN capturistas c ON c.`id`=t.`capturista_id`"; 
+
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['titulo'] = $res[1];
+				   $datos[$i]['descripcion'] = $res[2];
+				   $datos[$i]['solicitado'] = $res[3];
+				   $datos[$i]['estatus'] = $res[4];
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
 			}
 			
 

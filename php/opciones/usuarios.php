@@ -196,13 +196,13 @@
 			echo (json_encode($usuario->insertarTablaConfirmaciones($_REQUEST['publicacion_id'],$_REQUEST['empleado_id'],$_REQUEST['puesto_id'],$_REQUEST['empresa_id'])));
 		break;
 		case 57:
-			echo (json_encode($usuario->cargaPublicacionesBancaprepa($_REQUEST['empresa_id'],$_REQUEST['usuario_id'],$_REQUEST['tipo_doc'])));
+			echo (json_encode($usuario->cargaPublicacionesBancaprepa($_REQUEST['usuario_id'],$_REQUEST['tipo_doc'])));
 		break;
 		case 58:
 			echo (json_encode($usuario->ActualizarVisto($_REQUEST['publicacion_id'],$_REQUEST['empleado_id'])));
 		break;
 		case 59:
-			echo (json_encode($usuario->cargaPubNuevas($_REQUEST['empresa_id'],$_REQUEST['usuario_id'],$_REQUEST['tipo_doc'])));
+			echo (json_encode($usuario->cargaPubNuevas($_REQUEST['usuario_id'],$_REQUEST['tipo_doc'])));
 		break;
 		case 60:
 			echo (json_encode($usuario->verificaPubNuevas($_REQUEST['usuario_id'],$_REQUEST['tipodoc'])));
@@ -241,7 +241,13 @@
 			echo (json_encode($usuario->cargartipoequipos()));
 		break;
 		case 72:
-		echo (json_encode($usuario->insertarcatequipos($_REQUEST['sucursal_id'],$_REQUEST['tipo_equipo'],$_REQUEST['num_equipo'],$_REQUEST['descripcion'],$_REQUEST['marca'],$_REQUEST['modelo'],$_REQUEST['serie'],$_REQUEST['fecha_compra'],$_REQUEST['estatus_id'])));
+			echo (json_encode($usuario->insertarcatequipos($_REQUEST['sucursal_id'],$_REQUEST['tipo_equipo'],$_REQUEST['num_equipo'],$_REQUEST['descripcion'],$_REQUEST['marca'],$_REQUEST['modelo'],$_REQUEST['serie'],$_REQUEST['fecha_compra'],$_REQUEST['estatus_id'])));
+		break;
+		case 73:
+			echo (json_encode($usuario->insertarTickets($_REQUEST['usuario_id'],$_REQUEST['area_id'],$_REQUEST['titulo'],$_REQUEST['descripcion'],$_REQUEST['correo'],$_REQUEST['telefono'])));
+		break;
+		case 74:
+			echo (json_encode($usuario->cargarTickets()));
 		break;
 
 

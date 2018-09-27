@@ -661,7 +661,7 @@ $("#passEmpleado").keypress(function(e) {
         var telefono=$("#tel").val();
         console.log("ID empleado="+usuario+" Area de apoyo:"+area+" titulo:"+titulo);
         console.log("desc:"+desc+" email:"+correo+" telefono:"+telefono);
-        
+        onRequest({ opcion : 73, usuario_id:usuario, area_id:area,titulo:titulo, descripcion:desc, correo:correo, telefono:telefono },respAgregaTicket);
 
       
     
@@ -709,6 +709,11 @@ function cargarPublicaciones(){
 
 function cargarCorreos(){
     onRequest({ opcion : 26 ,nombre:""}, respCorreos);
+    
+}
+
+function cargarTickets(){
+    onRequest({ opcion : 74 }, respCargarTickets);
     
 }
 
@@ -2599,11 +2604,15 @@ var respVerificarPublicaciones = function(data) {
     var conteo= data[0].conteo;
     console.log("conteo:"+conteo);
     var nombre=Cookies.get('b_capturista');
-    var usuario=Cookies.get('b_capturista_id');
     var vacio="";
     if(conteo>0)
     {
-        onRequest({ opcion : 37 ,usuario_id:usuario}, respCargarEmpParaPublicacionesNuevas); 
+        var tipodoc=Cookies.get('b_tipodoc');
+        var usuario = Cookies.get('b_capturista_id');  
+        onRequest({ opcion : 59, usuario_id:usuario,tipo_doc:tipodoc}, respCargaPublicacionesFinalNuevas);
+        console.log("---Reiniciar variable");
+        pubdd2=' ';
+        console.log("---variable reiniciada"+pubdd+"sda");
     }
     else
     {
@@ -2626,11 +2635,17 @@ var respVerificarPublicacionesVistas = function(data) {
     var conteo= data[0].conteo;
     console.log("conteo:"+conteo);
     var nombre=Cookies.get('b_capturista');
-    var usuario=Cookies.get('b_capturista_id');
+   
     var vacio="";
     if(conteo>0)
     {
-        onRequest({ opcion : 37 ,usuario_id:usuario}, respCargarEmpParaPublicaciones);   
+        var tipodoc=Cookies.get('b_tipodoc');     
+        var usuario = Cookies.get('b_capturista_id');
+       
+        onRequest({ opcion : 57, usuario_id:usuario,tipo_doc:tipodoc}, respCargaPublicacionesFinal);
+        console.log("---Reiniciar variable");
+        pubdd=' ';
+        console.log("---variable reiniciada"+pubdd+"sda");  
     }
     else
     {
@@ -2815,3 +2830,56 @@ var respBorrarCorreoFinal = function(data) {
     cargarCorreos();
 }
 
+
+
+
+var respAgregaTicket = function(data) { 
+    //se insertan los datos en la tabla confirmaciones!
+    if (!data && data == null)
+    {
+        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
+        return;
+    }
+    
+
+    M.toast({html: 'Ticket insertado correctamente ', classes: 'rounded green'}); 
+    location.href="/RedSocialBancaprepa/mandarTicket.php";
+    
+}
+
+var respCargarTickets = function(data) { 
+    
+    if (!data && data == null) 
+    return; 
+
+    var d = '';
+    var x = '';
+
+
+
+     for (var i = 0; i < data.length; i++) {
+     if(i%2==0)
+     {
+         x='even';
+     }
+     else
+     {
+         x='odd';
+     }
+     d+= '<tr>'+
+     '<td>'+data[i].id+'</td>'+
+     '<td>'+data[i].titulo+'</td>'+
+     '<td>'+data[i].descripcion+'</td>'+
+     '<td>'+data[i].solicitado+'</td>'+
+     '<td>'+data[i].estatus+'</td>'+ 
+     '<td class="'+x+' left">'+
+     //'<a onclick="editarDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarDoc"><i class="material-icons">edit</i></a>' + 
+     //'<a onclick="deshabDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabDoc"><i class="material-icons">do_not_disturb_alt</i></a>' + 
+     //'<a onclick="BorrarDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarDoc"><i class="material-icons">delete</i></a>' +
+     '</td>'  +'</tr> ';
+     }
+     
+     $("#tablaTicketsGeneral").html(d);
+
+     cargarMenuPorRol();
+}
