@@ -241,7 +241,7 @@
 			echo (json_encode($usuario->cargartipoequipos()));
 		break;
 		case 72:
-		echo (json_encode($usuario->insertarcatequipos($_REQUEST['sucursal_id'],$_REQUEST['tipo_equipo'],$_REQUEST['num_equipo'],$_REQUEST['descripcion'],$_REQUEST['marca'],$_REQUEST['modelo'],$_REQUEST['serie'],$_REQUEST['fecha_compra'],$_REQUEST['estatus_id'])));
+			echo (json_encode($usuario->insertarcatequipos($_REQUEST['sucursal_id'],$_REQUEST['tipo_equipo'],$_REQUEST['num_equipo'],$_REQUEST['descripcion'],$_REQUEST['marca'],$_REQUEST['modelo'],$_REQUEST['serie'],$_REQUEST['fecha_compra'],$_REQUEST['estatus_id'])));
 		break;
 		case 73:
 			echo (json_encode($usuario->noserierepetida($_REQUEST['serie'])));
