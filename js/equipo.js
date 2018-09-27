@@ -188,9 +188,30 @@ $(document).ready(function(){
         M.toast({html: 'Favor de seleccionar estatus', classes: 'rounded red'}); 
         return;
     }
-
-    onRequest({ opcion : 72, sucursal_id:sucursal_id, tipo_equipo:tipo_equipo,num_equipo:num_equipo, descripcion:descripcion,marca:marca, modelo:modelo,serie:serie, fecha_compra:fecha_compra, estatus_id:estatus},respCrearinvequipo);
+    
+    onRequest({ opcion : 73, serie:serie},respverificar);
+    
     });
+
+    var respverificar = function(data) { 
+  
+        if (!data && data == null)
+        {
+            M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
+            return;
+        }
+        if(data[0].contador>0)
+        {
+            M.toast({html: 'Numero de Serie repetida', classes: 'rounded red'});  
+            return;
+        }
+        else 
+        {
+            var tipo_equipo=$("#tiposequipos").val();
+            var num_equipo=$("#num_equipo").val();
+            onRequest({ opcion : 74, tipo_equipo:tipo_equipo, num_equipo:num_equipo},respverificar2);
+        }
+    }
 
     var respCrearinvequipo = function(data) { 
         //se insertan los datos en la tabla confirmaciones!
@@ -212,6 +233,36 @@ $(document).ready(function(){
         $("#fecha_compra").val("");
         $("#estatus_id").val("");
         cargarInventario();
+    }
+
+    var respverificar2 = function(data) { 
+  
+        if (!data && data == null)
+        {
+            M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
+            return;
+        }
+        if(data[0].contador>0)
+        {
+            M.toast({html: 'Tipo de equipo ya asignado a un numero de equipo', classes: 'rounded red'});  
+            return;
+        }
+        else 
+        {
+            var sucursal_id=$("#sucursalesdd").val();
+            var tipo_equipo=$("#tiposequipos").val();
+            var num_equipo=$("#num_equipo").val();
+            var descripcion=$("#descripcion").val();
+            var marca=$("#marca").val();
+            var modelo=$("#modelo").val();
+            var serie=$("#serie").val();
+            var fecha_compra=$("#fecha_compra").val();
+            var estatus=0;
+        
+            onRequest({ opcion : 72, sucursal_id:sucursal_id, tipo_equipo:tipo_equipo,num_equipo:num_equipo, 
+                descripcion:descripcion,marca:marca, modelo:modelo,serie:serie, fecha_compra:fecha_compra, 
+                estatus_id:estatus},respCrearinvequipo);
+        }
     }
 
 

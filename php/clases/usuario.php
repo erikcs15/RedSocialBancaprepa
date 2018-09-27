@@ -1905,7 +1905,7 @@
 			
 				$sql="INSERT INTO i_equipo(sucursal_id,tipo_equipo,num_equipo,descripcion,
 									marca,modelo,serie,fecha_compra,estatus_id) 
-								VALUES($sucursal_id,'$tipo_equipo',$num_equipo,'$descripcion',
+								VALUES($sucursal_id,$tipo_equipo,$num_equipo,'$descripcion',
 										'$marca','$modelo','$serie','$fecha_compra',$estatus_id)";
 			
 				$resultado = mysqli_query($this->con(), $sql);   
@@ -1949,8 +1949,67 @@
 
 			}
 			
+			public function noserierepetida($serie)
+			{
+  
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				
+				$sql="SELECT COUNT(id)
+					FROM i_equipo 
+					WHERE serie = '$serie'"; 
+
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['contador'] = $res[0];
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['contador']  =0;
+					return  $datos; 
+				  }
 
 
+				return $datos;  
+
+			}
+
+			public function noequiporepetido($tipo_equipo,$num_equipo)
+			{
+  
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				
+				$sql="SELECT COUNT(id)
+				FROM i_equipo 
+				WHERE tipo_equipo = $tipo_equipo AND num_equipo = $num_equipo"; 
+
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['contador'] = $res[0];
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['contador']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+			
 
 
 }

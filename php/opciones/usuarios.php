@@ -241,17 +241,15 @@
 			echo (json_encode($usuario->cargartipoequipos()));
 		break;
 		case 72:
-			echo (json_encode($usuario->insertarcatequipos($_REQUEST['sucursal_id'],$_REQUEST['tipo_equipo'],$_REQUEST['num_equipo'],$_REQUEST['descripcion'],$_REQUEST['marca'],$_REQUEST['modelo'],$_REQUEST['serie'],$_REQUEST['fecha_compra'],$_REQUEST['estatus_id'])));
+		echo (json_encode($usuario->insertarcatequipos($_REQUEST['sucursal_id'],$_REQUEST['tipo_equipo'],$_REQUEST['num_equipo'],$_REQUEST['descripcion'],$_REQUEST['marca'],$_REQUEST['modelo'],$_REQUEST['serie'],$_REQUEST['fecha_compra'],$_REQUEST['estatus_id'])));
 		break;
 		case 73:
-			echo (json_encode($usuario->insertarTickets($_REQUEST['usuario_id'],$_REQUEST['area_id'],$_REQUEST['titulo'],$_REQUEST['descripcion'],$_REQUEST['correo'],$_REQUEST['telefono'])));
+			echo (json_encode($usuario->noserierepetida($_REQUEST['serie'])));
 		break;
 		case 74:
-			echo (json_encode($usuario->cargarTickets()));
+			echo (json_encode($usuario->noequiporepetido($_REQUEST['tipo_equipo'],$_REQUEST['num_equipo'])));
 		break;
-
-
-
+		
 
  	}
  
