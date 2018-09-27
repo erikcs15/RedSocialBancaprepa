@@ -69,7 +69,7 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s5 offset-s2">
-                            <i class="material-icons prefix">description</i>
+                            <i class="material-icons prefix">date_range</i>
                             <input id="fecha_compra" type="date" class="validate">
                     </div>
                     <div class=' col s1 offset-s1'>
