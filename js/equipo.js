@@ -99,6 +99,7 @@ $(document).ready(function(){
         
         $('#sucursalesdd').html(documento);
         $('#sucursalesdd').formSelect(); 
+        cargarMenuPorRol();
     
     }
 

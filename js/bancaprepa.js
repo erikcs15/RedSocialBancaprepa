@@ -1552,6 +1552,15 @@ var respAccesosPorRol  = function(data) {
             case '12':
                 $('#tipoEquipo').prop('checked', true); 
                 break;
+            case '13':
+                $('#misTickets').prop('checked', true); 
+            break;
+            case '14':
+                $('#mantTickets').prop('checked', true); 
+            break;
+            case '15':
+                $('#capInven').prop('checked', true); 
+            break;
         }    
     }
 } 
@@ -1607,39 +1616,56 @@ var respCargarMenu  = function(data) {
         switch(data[i].id_menu)
         {
             case '1': 
-                document.getElementById('m_mandarT').style.display = 'block';
+                //document.getElementById('M_cargaA').style.display = 'block';
                 break;
             case '2':
                 document.getElementById('m_mandarT').style.display = 'block';
+                document.getElementById('m_tickets').style.display = 'block'; 
                 break;
             case '3':
-                document.getElementById('catemp').style.display = 'block'; 
+                document.getElementById('catemp').style.display = 'block';
+                document.getElementById('m_catalogos').style.display = 'block'; 
                 break;
             case '4':
-                document.getElementById('catroles').style.display = 'block'; 
+                document.getElementById('catroles').style.display = 'block';
+                document.getElementById('m_catalogos').style.display = 'block';  
                 break;
             case '5':
                 document.getElementById('catdoc').style.display = 'block';
+                document.getElementById('m_catalogos').style.display = 'block'; 
                 break;
             case '6':
                 document.getElementById('M_cargaA').style.display = 'block';
                 break;
             case '7':
                 document.getElementById('m_usuarios').style.display = 'block';
+                document.getElementById('m_mantenimiento').style.display = 'block';
                 break;
             case '8':
                 document.getElementById('m_accesos').style.display = 'block';
+                document.getElementById('m_mantenimiento').style.display = 'block';
                 break;
             case '9':
                 document.getElementById('correos').style.display = 'block';
                 break;
-            
             case '11':
               document.getElementById('m_bancaprepa').style.display = 'block';
               break;
             case '12':
               document.getElementById('catEquipo').style.display = 'block';
+              document.getElementById('m_catalogos').style.display = 'block';  
+            break;
+            case '13':
+              document.getElementById('m_misTickets').style.display = 'block';
+              document.getElementById('m_tickets').style.display = 'block'; 
               break;
+            case '14':
+              document.getElementById('m_mantenimientoTickets').style.display = 'block';
+              document.getElementById('m_tickets').style.display = 'block'; 
+            break;
+            case '15':
+              document.getElementById('capInv').style.display = 'block';
+            break;
         }    
     }
   //  $('#accesosRol').html(documento);
@@ -1735,6 +1761,9 @@ function cargarAccesos(rol_id){
     $('#rolesUsuCh').prop('checked', false);
     $('#bancaprepaCh').prop('checked', false);
     $('#tipoEquipo').prop('checked', false);
+    $('#misTickets').prop('checked', false);
+    $('#mantTickets').prop('checked', false);
+    $('#capInven').prop('checked', false);
 
 
     onRequest({ opcion : 22 ,id_rol:rol_id}, respAccesosPorRol);

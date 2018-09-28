@@ -49,12 +49,19 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
               <li><a id="m_inicio" name ="inicio" class="waves-effect" ><i class="material-icons">home</i>Inicio</a></li>
               <li><a href="/RedSocialBancaprepa/bancaprepa.php" name ="bancaprepa" id="m_bancaprepa" class="waves-effect"><i class="material-icons">assignment</i>Publicaciones Vistas</a></li>
               <!--<li><a id="m_agregarPub" class="subheader waves-effect modal-trigger" href="#modalAgregarPub"><i class="material-icons">add_circle</i>Agregar publicación</a></li>  -->
-              <li><a id="m_mandarT" style='display:none;' href="/RedSocialBancaprepa\mandarTicket.php"><i class="material-icons">drafts</i>Mandar ticket</a></li>
-
-
+              <li><a id="M_cargaA" style='display:none;' href="/RedSocialBancaprepa\documentos\addfile.php" class=" waves-effect"><i class="material-icons">file_upload</i>Carga de Archivos</a></li>
+              <li><a  id="m_tickets" style='display:none;' name ="ticketsdd" class="dropdown-trigger" data-target='ticketsdd'><i class="material-icons">insert_comment</i><i class="material-icons right">arrow_drop_down</i>Tickets</a></li>
+                <ul id='ticketsdd' class='dropdown-content'>
+                <li><a id="m_mandarT" style='display:none;' href="/RedSocialBancaprepa\tickets\mandarTicket.php"><i class="material-icons">drafts</i>Mandar ticket</a></li>
+                <li><a id="m_misTickets" style='display:none;' name ="misTickets" ><i class="material-icons">person_pin</i>Mis Tickets</a></li> 
+                <li><a id="m_mantenimientoTickets" style='display:none;' name ="mantenimientoTickets" ><i class="material-icons">build</i>Mantenimiento de tickets</a></li>
+                </ul>
+              <li><a id="correos"  name ="correos"><i class="material-icons">local_post_office</i>Correos</a></li> 
+              <li><a id="capInv" style='display:none;' name ="capInv" href="/RedSocialBancaprepa\capturainv.php"><i class="material-icons">laptop_chromebook</i>Capturar Inventario</a></li> 
+              
  
               <li><div class="divider"></div></li>
-              <li><a id="m_catalogos" class="dropdown-trigger" data-target='dropdown1' ><i class="material-icons">format_list_bulleted</i><i class="material-icons right">arrow_drop_down</i>Catalogos</a></li>
+              <li><a id="m_catalogos" style='display:none;' class="dropdown-trigger" data-target='dropdown1' ><i class="material-icons">format_list_bulleted</i><i class="material-icons right">arrow_drop_down</i>Catalogos</a></li>
                 <!-- Dropdown Structure -->
               <ul id='dropdown1' class='dropdown-content'>
                 <li><a id="catemp" style='display:none;' name ="catemp" ><i class="material-icons">location_city</i>Catalogo de Empresas</a></li>
@@ -63,13 +70,12 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
                 <li><a id="catEquipo" style='display:none;' name ="catEquipo"><i class="material-icons">important_devices</i>Catalogo de equipo</a></li>
                 
              </ul>
-             <li><a id="M_cargaA" style='display:none;' href="/RedSocialBancaprepa\documentos\addfile.php" class=" waves-effect"><i class="material-icons">file_upload</i>Carga de Archivos</a></li>
-             <li><div class="divider"></div></li>
-             <li><a id="correos"  name ="correos"><i class="material-icons">local_post_office</i>Correos</a></li> 
-             
+             <li><div class="divider"></div></li>             
                <!-- Dropdown Structure -->
-               <li><a  id="m_mantenimiento" name ="mantenimiento" class="dropdown-trigger" data-target='mantenimiento'><i class="material-icons">settings</i><i class="material-icons right">arrow_drop_down</i>Mantenimiento</a></li>
-            <ul id='mantenimiento' class='dropdown-content'>
+              
+                <!------------------------------------------------------->
+               <li><a  id="m_mantenimiento" style='display:none;' name ="mantenimiento" class="dropdown-trigger" data-target='mantenimiento'><i class="material-icons">settings</i><i class="material-icons right">arrow_drop_down</i>Mantenimiento</a></li>
+                <ul id='mantenimiento' class='dropdown-content'>
                 <li><a id="m_usuarios" style='display:none;' name ="usuarios" ><i class="material-icons">person_pin</i>Usuarios</a></li> 
                 <li><a id="m_accesos" style='display:none;' name ="accesos" ><i class="material-icons">build</i>Accesos</a></li>
                 

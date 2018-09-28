@@ -8,16 +8,16 @@
         <meta charset="UTF-8">  
         <title>Mandar Ticket</title>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="css/materialize.min.css">
-        <link rel="stylesheet" type="text/css" href="css/bancaprepa.css"> 
+        <link rel="stylesheet" type="text/css" href="../css/materialize.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/bancaprepa.css"> 
         
 </head>
-<link rel="icon" type="image/png" href="/img/favicon.ico" /> 
+<link rel="icon" type="image/png" href="../img/favicon.ico" /> 
     <body onLoad="cargarMenuPorRol()">
     <div id="container" ><!-- CONTENEDOR 1 -->
         <div class="nav-wrapper">
            <?php
-                include('menu/menu.php');
+                include('../menu/menu.php');
             ?>
         </div>
     
@@ -84,11 +84,11 @@
     
     </div>
 
-    <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
-    <script type="text/javascript" src="js/materialize.min.js"></script>
-    <script type="text/javascript" src="js/ajax.js"></script>
-    <script type="text/javascript" src="js/bancaprepa.js"></script>
-    <script type="text/javascript" src="js/js.cookie.js"></script>
+    <script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="../js/materialize.min.js"></script>
+    <script type="text/javascript" src="../js/ajax.js"></script>
+    <script type="text/javascript" src="../js/bancaprepa.js"></script>
+    <script type="text/javascript" src="../js/js.cookie.js"></script>
 
     <script>
         $(document).ready(function(){
