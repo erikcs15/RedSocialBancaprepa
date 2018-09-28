@@ -41,30 +41,30 @@
                                 <div class="input-field col s2 offset-s2">
                                     <i class="material-icons prefix">description</i>
                                     <textarea id="num_equipo" class="materialize-textarea"></textarea>
-                                    <label for="icon_prefix2"># de Equipo</label>
+                                    <label for="num_equipo"># de Equipo</label>
                                 </div>
                                 <div class="input-field col s6">
                             <i class="material-icons prefix">description</i>
                             <textarea id="descripcion" class="materialize-textarea"></textarea>
-                            <label for="icon_prefix2">Descripcion</label>
+                            <label for="descripcion">Descripcion</label>
                         </div>
                 </div>
                 <div class="row">
                         <div class="input-field col s2 offset-s2">
                             <i class="material-icons prefix">description</i>
                             <textarea id="marca" class="materialize-textarea"></textarea>
-                            <label for="icon_prefix2">Marca</label>
+                            <label for="marca">Marca</label>
                         </div>
                         
                         <div class="input-field col s3">
                             <i class="material-icons prefix">description</i>
                             <textarea id="modelo" class="materialize-textarea"></textarea>
-                            <label for="icon_prefix2">Modelo</label>
+                            <label for="modelo">Modelo</label>
                         </div>
                         <div class="input-field col s3">
                             <i class="material-icons prefix">description</i>
                             <textarea id="serie" class="materialize-textarea"></textarea>
-                            <label for="icon_prefix2">Serie</label>
+                            <label for="serie">Serie</label>
                         </div>
                 </div>
                 <div class="row">
