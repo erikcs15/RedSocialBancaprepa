@@ -7,9 +7,9 @@
         <title>Tickets</title>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
-        <link rel="stylesheet" type="text/css" href="css/materialize.min.css">
-        <link rel="stylesheet" type="text/css" href="css/bancaprepa.css">
-        <link rel="icon" type="image/png" href="img/favicon.ico" /> 
+        <link rel="stylesheet" type="text/css" href="../css/materialize.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/bancaprepa.css">
+        <link rel="icon" type="image/png" href="../img/favicon.ico" /> 
 </head>
 
     <body onLoad="cargarTickets()">
@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="nav-wrapper">
                     <?php
-                        include('menu/menu.php');
+                        include('../menu/menu.php');
                     ?> 
                     <h4 class="header " style="color:#1a237e;">Tickets</h4>
                     <hr>
@@ -58,11 +58,11 @@
 
                   
 
-    <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
-    <script type="text/javascript" src="js/materialize.min.js"></script>
-    <script type="text/javascript" src="js/ajax.js"></script>
-    <script type="text/javascript" src="js/bancaprepa.js"></script>
-    <script type="text/javascript" src="js/js.cookie.js"></script>
+    <script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="../js/materialize.min.js"></script>
+    <script type="text/javascript" src="../js/ajax.js"></script>
+    <script type="text/javascript" src="../js/bancaprepa.js"></script>
+    <script type="text/javascript" src="../js/js.cookie.js"></script>
 
     <script>
         $(document).ready(function(){

@@ -53,7 +53,7 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
               <li><a  id="m_tickets" style='display:none;' name ="ticketsdd" class="dropdown-trigger" data-target='ticketsdd'><i class="material-icons">insert_comment</i><i class="material-icons right">arrow_drop_down</i>Tickets</a></li>
                 <ul id='ticketsdd' class='dropdown-content'>
                 <li><a id="m_mandarT" style='display:none;' href="/RedSocialBancaprepa\tickets\mandarTicket.php"><i class="material-icons">drafts</i>Mandar ticket</a></li>
-                <li><a id="m_misTickets" style='display:none;' name ="misTickets" ><i class="material-icons">person_pin</i>Mis Tickets</a></li> 
+                <li><a id="m_misTickets" style='display:none;' href="/RedSocialBancaprepa\tickets\tickets.php" name ="misTickets" ><i class="material-icons">person_pin</i>Mis Tickets</a></li> 
                 <li><a id="m_mantenimientoTickets" style='display:none;' name ="mantenimientoTickets" ><i class="material-icons">build</i>Mantenimiento de tickets</a></li>
                 </ul>
               <li><a id="correos"  name ="correos"><i class="material-icons">local_post_office</i>Correos</a></li> 
