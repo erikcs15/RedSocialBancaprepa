@@ -713,7 +713,7 @@ function cargarCorreos(){
 }
 
 function cargarTickets(){
-    onRequest({ opcion : 74 }, respCargarTickets);
+    onRequest({ opcion : 75 }, respCargarTickets);
     
 }
 

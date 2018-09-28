@@ -249,7 +249,9 @@
 		case 74:
 			echo (json_encode($usuario->noequiporepetido($_REQUEST['tipo_equipo'],$_REQUEST['num_equipo'])));
 		break;
-		
+		case 75:
+			echo (json_encode($usuario->cargarTickets()));
+		break;
 
  	}
  
