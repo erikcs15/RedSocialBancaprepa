@@ -68,6 +68,23 @@
                             <input id="tel" type="tel" class="validate">
                             <label for="tel">Telefono para contacto</label>
                         </div> 
+                        <div class="col s6">
+                            <!-- selección única -->
+                            <select name="miselect" class="chosen" data-placeholder="Elige un color">
+                            <option value=""></option>
+                            <option value="azul">Azul</option>
+                            <option value="amarillo">Amarillo</option>
+                            <option value="blanco">Blanco</option>
+                            <option value="gris">Gris</option>
+                            <option value="marron">Marrón</option>
+                            <option value="naranja">Naranja</option>
+                            <option value="negro">Negro</option>
+                            <option value="rojo">Rojo</option>
+                            <option value="verde">Verde</option>
+                            <option value="violeta">Violeta</option>
+                            </select>
+
+                        </div>
                         <div class="col s12" align="center">
                             <a id="CrearTicketbtn" class="waves-effect btn blue darken-4"><i class="material-icons left">add</i>Crear Ticket</a>
                         </div>
@@ -89,6 +106,7 @@
     <script type="text/javascript" src="../js/ajax.js"></script>
     <script type="text/javascript" src="../js/bancaprepa.js"></script>
     <script type="text/javascript" src="../js/js.cookie.js"></script>
+    <script type="text/javascript" src="../js/chosen.jquery.js"></script>
 
     <script>
         $(document).ready(function(){

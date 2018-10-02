@@ -252,6 +252,9 @@
 		case 75:
 			echo (json_encode($usuario->cargarTickets()));
 		break;
+		case 76:
+			echo (json_encode($usuario->verifTablaTemporal($_REQUEST['usuario_id'])));
+		break;
 
  	}
  

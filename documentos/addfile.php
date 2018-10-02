@@ -128,8 +128,8 @@
                             </select>
                             <label><strong>Seleccione el puesto:</strong></label>
                             <div><br></br></div>
-                            <div align="center">
-                                <a id="btnAgEmp_PuestoTmp" class="waves-effect waves-light btn light-blue darken-4"><i class="material-icons left">add_circle_outline</i>Agregar puesto</a>
+                            <div align="center" >
+                                <a id="btnAgEmp_PuestoTmp" class="btn-small light-blue darken-4" disabled><i class="material-icons left">add_circle_outline</i>Agregar</a>
                             </div>  
                         </div>
                         

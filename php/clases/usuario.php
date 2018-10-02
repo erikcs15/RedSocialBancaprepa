@@ -2009,6 +2009,35 @@
 
 			}
 
+			public function verifTablaTemporal($usuario)
+			{
+  
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				
+				$sql="SELECT COUNT(id)
+					FROM b_tmp_pub WHERE id_usuario=$usuario"; 
+
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['contador'] = $res[0];
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['contador']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
 			
 
 
