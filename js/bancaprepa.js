@@ -1,7 +1,7 @@
 // Funcion principal de Jquery la cual escanea en tiempo real nuestro documento para verificar que los eventos se ejecuten correctamente
 $(document).ready(function(){
 
-   
+
 
     $('select').formSelect();
     
@@ -48,9 +48,9 @@ $(document).ready(function(){
         var documento = $("#docId").val();
         var descripcion = $("#pDescripcion").val();
         var tipopublic = $("#tipoPubAddFile").val();
-       /* var tipoempresa = $("#tipoEmpresaAddFile").val();
-        var tiporol = $("#tipoRolAddFile").val(); */
+        var empresa = $("#tipoEmpresaAddFile").val();
         var docname="SIN DOCUMENTO";
+        var usuario = Cookies.get('b_capturista_id');
 
         if($('#chkDoc').is(":checked")) { 
             if(documento.length<=0){
@@ -78,17 +78,18 @@ $(document).ready(function(){
             M.toast({html: 'Es necesario especificar el tipo de publicacion', classes: 'rounded red'});
             return;
         }
-        /*if(tipoempresa<=0){
+        if(empresa<=0){
             M.toast({html: 'Es necesario especificar la empresa ala que se dirige', classes: 'rounded red'});
             return;
         }
+        /*
         if(tiporol<=0){
             M.toast({html: 'Es necesario especificar el rol al que se dirige la publicacion', classes: 'rounded red'});
             return;
         } */
-        
+        onRequest({ opcion : 76, usuario_id:usuario},respPermitirPublicacion);
 
-        $('#modalAceptarDoc').modal('open');
+        
 
         //$( "#formFiles" ).submit();
       });
@@ -107,6 +108,7 @@ $(document).ready(function(){
             var docname="SIN DOCUMENTO";
             var cdocumento="";
             var esPDF="";
+            
 
             if($('#chkDoc').is(":checked")) {  
                  docname = $("#tittleDoc").val();
@@ -806,9 +808,15 @@ function eliminarEmp(empid) {
  function cargarRolesAf(empid) {    
      var empresa = empid;
      console.log("------------------------ "+empresa);
+     console.log("-BOTON HABILITADO-----------------------");
+    $("#btnAgEmp_PuestoTmp").removeAttr("disabled");
+     M.toast({html: 'No olvides agregar los puestos!', classes: 'rounded blue'}); 
      onRequest({ opcion : 43 ,idemp:empresa}, respCargarRolesXempChb);
 
  }
+
+
+
  function cargarAddfile()
  {
     var usuario="";
@@ -2280,13 +2288,28 @@ var respCargarTablaTmp = function(data) {
 
     var d = '';
 
+    
+
      for (var i = 0; i < data.length; i++) {    
+        var puesto=String(data[i].puesto);
+        console.log("-------"+puesto);
+        if(puesto=="undefined")
+        {
+           d+= '<tr>'+
+           '<td>Sin puestos agregados</td>'+
+           '<td class="left">'+ 
+           '</tr> ';  
+           $("#tablaPuestoEmpresa").html(d);
+        }
+        else{
+
             d+= '<tr>'+
             '<td>'+data[i].empresa+'</td>'+
             '<td>'+data[i].puesto+'</td>'+
             '<td class="left">'+
             '<a onclick="eliminarDeTablaTmp('+data[i].id_empresa+','+data[i].id_puesto+')"  class="waves-effect waves-light btn-floating btn-small red darken-4 btn modal-trigger tooltipped" data-tooltip="I am a tooltip" data-delay="50"  ><i class="material-icons">delete_forever</i></a>'+ 
             '</tr> '; 
+        }
     }
     $("#tablaPuestoEmpresa").html(d);
 }
@@ -2299,7 +2322,7 @@ var respEliminarDatoDeTmp = function(data) {
         return;
     }
     
-    M.toast({html: 'Datos Eliminados!', classes: 'rounded green'});  
+    M.toast({html: 'Datos Eliminados!', classes: 'rounded red'});  
     var usuario = Cookies.get('b_capturista_id');
     onRequest({ opcion : 47 ,idusuario:usuario}, respCargarTablaTmp);
     
@@ -2911,4 +2934,27 @@ var respCargarTickets = function(data) {
      $("#tablaTicketsGeneral").html(d);
 
      cargarMenuPorRol();
+}
+
+
+var respPermitirPublicacion = function(data) { 
+    //se insertan los datos en la tabla confirmaciones!
+    if (!data && data == null)
+    {
+        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
+        return;
+    }
+    
+    if(data[0].contador==0)
+    {
+        M.toast({html: 'Es necesario que seleccione los puestos a los que se dirige la publicacion.', classes: 'rounded red'}); 
+    }
+    else
+    {
+        $('#modalAceptarDoc').modal('open');
+    }
+
+   
+   
+    
 }
