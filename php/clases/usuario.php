@@ -1895,7 +1895,7 @@
 			}
 
 			public function insertarcatequipos($sucursal_id,$tipo_equipo,$num_equipo,$descripcion,
-			$marca,$modelo,$serie,$fecha_compra,$estatus_id)
+			$marca,$modelo,$serie,$fecha_compra,$valor_factura)
 			{
 				$res=array();
 				$datos=array();
@@ -1903,10 +1903,10 @@
 				$i=0;
 	
 			
-				$sql="INSERT INTO i_equipo(sucursal_id,tipo_equipo,num_equipo,descripcion,
-									marca,modelo,serie,fecha_compra,estatus_id) 
+				$sql="INSERT INTO i_equipo(sucursal_id,tipo_equipo_id,num_equipo,descripcion,
+									marca,modelo,serie,fecha_compra,valor_factura) 
 								VALUES($sucursal_id,$tipo_equipo,$num_equipo,'$descripcion',
-										'$marca','$modelo','$serie','$fecha_compra',$estatus_id)";
+										'$marca','$modelo','$serie','$fecha_compra','$valor_factura')";
 			
 				$resultado = mysqli_query($this->con(), $sql);   
 	
@@ -1989,7 +1989,7 @@
 				
 				$sql="SELECT COUNT(id)
 				FROM i_equipo 
-				WHERE tipo_equipo = $tipo_equipo AND num_equipo = $num_equipo"; 
+				WHERE tipo_equipo_id = $tipo_equipo AND num_equipo = $num_equipo"; 
 
 				$resultado = mysqli_query($this->con(), $sql); 
 

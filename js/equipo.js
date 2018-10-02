@@ -128,8 +128,8 @@ $(document).ready(function(){
         var modelo=$("#modelo").val();
         var serie=$("#serie").val();
         var fecha_compra=$("#fecha_compra").val();
-        var estatus=0;
-        console.log(sucursal_id+" "+tipo_equipo+" "+num_equipo+" "+descripcion+" "+marca+" "+modelo+" "+serie+" "+fecha_compra+""+estatus);
+        var valor_factura=$("#valor_factura").val();
+        console.log(sucursal_id+" "+tipo_equipo+" "+num_equipo+" "+descripcion+" "+marca+" "+modelo+" "+serie+" "+fecha_compra+""+valor_factura+"");
     
     if(sucursal_id<=0)
     {
@@ -179,16 +179,12 @@ $(document).ready(function(){
         return;
     }
 
-    if($("#estatus").prop('checked'))
+    if(valor_factura=="")
     {
-        estatus=5;
-    }
-
-    else
-    {
-        M.toast({html: 'Favor de seleccionar estatus', classes: 'rounded red'}); 
+        M.toast({html: 'Favor de ingresar valor factura', classes: 'rounded red'}); 
         return;
     }
+
     
     onRequest({ opcion : 73, serie:serie},respverificar);
     
@@ -232,7 +228,7 @@ $(document).ready(function(){
         $("#modelo").val("");
         $("#serie").val("");
         $("#fecha_compra").val("");
-        $("#estatus_id").val("");
+        $("#valor_factura").val("");
         cargarInventario();
     }
 
@@ -258,11 +254,11 @@ $(document).ready(function(){
             var modelo=$("#modelo").val();
             var serie=$("#serie").val();
             var fecha_compra=$("#fecha_compra").val();
-            var estatus=0;
+            var valor_factura=$("#valor_factura").val();
         
             onRequest({ opcion : 72, sucursal_id:sucursal_id, tipo_equipo:tipo_equipo,num_equipo:num_equipo, 
                 descripcion:descripcion,marca:marca, modelo:modelo,serie:serie, fecha_compra:fecha_compra, 
-                estatus_id:estatus},respCrearinvequipo);
+                valor_factura:valor_factura},respCrearinvequipo);
         }
     }
 

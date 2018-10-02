@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" >
 
-
    
 <head>
     
         <meta charset="UTF-8">  
-        <title>Mandar Ticket</title>
+        <title>Captura Inventario</title>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="css/materialize.min.css">
         <link rel="stylesheet" type="text/css" href="css/bancaprepa.css"> 
@@ -71,16 +70,18 @@
                     <div class="input-field col s5 offset-s2">
                             <i class="material-icons prefix">date_range</i>
                             <input id="fecha_compra" type="date" class="validate">
+                            <label for="fecha_compra">Fecha Compra</label>
                     </div>
-                    <div class=' col s1 offset-s1'>
-                        <p><label><input type="checkbox" checked="checked" id="estatus"/><span>Estatus</span></label></p>
+                    <div class="input-field col s3">
+                            <i class="material-icons prefix">description</i>
+                            <textarea id="valor_factura" class="materialize-textarea"></textarea>
+                            <label for="valor_factura">Valor Factura</label>
                     </div>
-                </div>
                     <div class="col s12" align="center">
                             <a id="btnCrearinvequipo" class="waves-effect btn blue darken-4"><i class="material-icons left">add</i>Añadir</a>
                     </div>  
+            </div>
         </div>
-    </div>
 
     <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
