@@ -2039,6 +2039,48 @@
 			}
 
 			
+			public function cargarEquipos($id, $suc, $numEquipo)
+			{
+  
+				$res=array();
+				$datos=array();
+				$i=0; 
+				$q="";
+				// return "aaaaaaaaaaaaaaaa";
+				
+				if($id >0 || $suc > 0 || $numEquipo >0)
+				{	
+					$q = "WHERE e.id='$id' OR e.sucursal_id='$suc' OR e.num_equipo='$numEquipo' ";
+				}
+				
+				
+				
+				$sql="SELECT e.id, e.sucursal_id,s.nomComercial, e.num_equipo
+					FROM i_equipo e 
+					INNER JOIN sucursales s ON e.sucursal_id=s.id ".$q; 
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['id_suc'] = $res[1];
+				   $datos[$i]['nomComercial'] = $res[2];
+				   $datos[$i]['numEquipo'] = $res[3];
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+			
+			
 
 
 }

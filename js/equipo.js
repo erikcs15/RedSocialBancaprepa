@@ -13,6 +13,25 @@ $(document).ready(function(){
 
     });
 
+    $("#BtnBusquedaEquipo").click(function() {
+        
+        console.log("Presionaste el boton para buscar");
+        var idEquipo = $("#id_equipo").val();
+        var sucursal_id = String($("#sucursalesdd").val());
+        var num_equipo = $("#numEquipo").val();
+        if(idEquipo=="" & sucursal_id=="null" & num_equipo=="")
+        {
+            M.toast({html: 'Favor de ingresar algun dato.', classes: 'rounded red'}); 
+            return;
+        }
+       
+        console.log("id:"+ idEquipo+" sucursal:"+sucursal_id+" tipo:"+ num_equipo);
+        
+        onRequest({ opcion : 77 ,id:idEquipo, sucursal:sucursal_id, numequipo:num_equipo }, respCargarEquipos);
+
+
+    });
+
 });
     function cargarMenuPorRol(){
     
@@ -36,6 +55,19 @@ $(document).ready(function(){
 
         onRequest({ opcion : 71 }, respcargatiposequipo);
 
+    }
+
+    function busquedaEquipo()
+    {
+        onRequest({ opcion : 70 }, respcargasucursales);
+
+        onRequest({ opcion : 71 }, respcargatiposequipo);
+
+        var idEquipo = $("#id_equipo").val();
+        var sucursal_id = String($("#sucursalesdd").val());
+        var num_equipo = $("#numEquipo").val();
+
+        onRequest({ opcion : 77 ,id:idEquipo, sucursal:sucursal_id, numequipo:num_equipo }, respCargarEquipos);
     }
 
     var respInventario = function(data) { 
@@ -260,6 +292,42 @@ $(document).ready(function(){
                 descripcion:descripcion,marca:marca, modelo:modelo,serie:serie, fecha_compra:fecha_compra, 
                 valor_factura:valor_factura},respCrearinvequipo);
         }
+    }
+
+    
+
+    var respCargarEquipos = function(data) { 
+    
+        if (!data && data == null) 
+        return; 
+    
+        var d = '';
+        var x = '';
+        console.log(data);
+        console.log("------------"+data);
+            for (var i = 0; i < data.length; i++) {
+            if(i%2==0)
+            {
+                x='even';
+            }
+            else
+            {
+                x='odd';
+            }
+            d+= '<tr>'+
+            '<td>'+data[i].id+'</td>'+ 
+            '<td>'+data[i].nomComercial+'</td>'+ 
+            '<td>'+data[i].numEquipo+'</td>'+ 
+            '<td class="'+x+' left">'+
+            // '<a onclick="EditarEstatus('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarEstatus"><i class="material-icons">edit</i></a>' + 
+            //'<a onclick="BajaEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalBajaEquipo"><i class="material-icons">delete</i></a>' +
+            //'<a onclick="DetallesEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDetallesEquipo"><i class="material-icons">remove_red_eye</i></a>' + 
+            '</td>'  +'</tr> ';
+            }
+                
+                $("#tablaEquipos").html(d);
+        
+        cargarMenuPorRol();
     }
 
 
