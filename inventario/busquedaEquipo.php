@@ -60,8 +60,9 @@
                                             <th>Id</th>
                                             <th>Sucursal</th>
                                             <th>Descripcion</th>
-                                            <th>Tipo</th>
+                                            
                                             <th>Estatus</th>
+                                            <th>Tipo</th>
                                         </tr>
                                         </thead>
 
