@@ -57,8 +57,10 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
                 <li><a id="m_mantenimientoTickets" style='display:none;' name ="mantenimientoTickets" ><i class="material-icons">build</i>Mantenimiento de tickets</a></li>
                 </ul>
               <li><a id="correos"  name ="correos"><i class="material-icons">local_post_office</i>Correos</a></li> 
-              <li><a id="capInv" style='display:none;' name ="capInv" href="/RedSocialBancaprepa\capturainv.php"><i class="material-icons">laptop_chromebook</i>Capturar Inventario</a></li> 
-              
+              <li><a  id="m_Inventario" style='display:none;' name ="ticketsdd" class="dropdown-trigger" data-target='inventariodd'><i class="material-icons">content_paste</i><i class="material-icons right">arrow_drop_down</i>Inventario</a></li>
+                <ul id='inventariodd' class='dropdown-content'>
+                <li><a id="capInv" style='display:none;' name ="capInv" href="/RedSocialBancaprepa\inventario\capturainv.php"><i class="material-icons">laptop_chromebook</i>Capturar Inventario</a></li> 
+                </ul>
  
               <li><div class="divider"></div></li>
               <li><a id="m_catalogos" style='display:none;' class="dropdown-trigger" data-target='dropdown1' ><i class="material-icons">format_list_bulleted</i><i class="material-icons right">arrow_drop_down</i>Catalogos</a></li>

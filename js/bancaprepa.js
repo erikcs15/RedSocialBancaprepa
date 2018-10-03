@@ -1673,6 +1673,7 @@ var respCargarMenu  = function(data) {
             break;
             case '15':
               document.getElementById('capInv').style.display = 'block';
+              document.getElementById('m_Inventario').style.display = 'block';
             break;
         }    
     }
@@ -2429,7 +2430,7 @@ var respCargarParaInsertarTablaConfirmaciones = function(data) {
         }
         else
         {
-            onRequest({ opcion : 55 ,puesto_id:puesto}, respInsertarTablaConfirmaciones);
+            onRequest({ opcion : 55 ,puesto_id:puesto, empresa_id:empresa}, respInsertarTablaConfirmaciones);
         }
      }
     
@@ -2478,7 +2479,11 @@ var respCargaPublicacionesFinal = function(data) {
     var nombre=Cookies.get('b_capturista');
      for (var i = 0; i < data.length; i++) {
         var titulo=String(data[i].titulo);
-        
+        var ruta = String(data[i].ruta);
+        if (ruta=="SIN DOCUMENTO")
+        {
+            ruta="bancaprepa.png";
+        }
         console.log("-------"+titulo);
         
         if(titulo=="undefined"){
@@ -2490,7 +2495,7 @@ var respCargaPublicacionesFinal = function(data) {
                         pubdd+=  '<div class="col s8 offset-s2" > '+
                         '<div class="card"> '+
                         '       <div class="card-image waves-effect waves-block waves-light">'+
-                        '          <iframe src="imagenes/publicaciones/'+data[i].ruta+'"  class="col s12" style="border: none;height:500px"></iframe>'+
+                        '          <iframe src="imagenes/publicaciones/'+ruta+'"  class="col s12" style="border: none;height:500px"></iframe>'+
                         '     </div>'+
                         '    <div class="card-content">'+
                         '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+
@@ -2508,7 +2513,7 @@ var respCargaPublicacionesFinal = function(data) {
                         pubdd+=  '<div class="col s8 offset-s2" > '+
                         '<div class="card"> '+
                         '       <div class="card-image waves-effect waves-block waves-light">'+
-                        '          <iframe src="imagenes/publicaciones/'+data[i].ruta+'"  class="col s12" style="border: none;height:500px"></iframe>'+
+                        '          <iframe src="imagenes/publicaciones/'+ruta+'"  class="col s12" style="border: none;height:500px"></iframe>'+
                         '     </div>'+
                         '    <div class="card-content">'+
                         '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+
@@ -2594,8 +2599,14 @@ var respCargaPublicacionesFinalNuevas = function(data) {
     var nombre=Cookies.get('b_capturista');
      for (var i = 0; i < data.length; i++) {
         var titulo=String(data[i].titulo);
-        console.log("-------"+titulo);
-
+        var ruta = String(data[i].ruta);
+        console.log("-------"+titulo+"------"+ruta);
+        
+        if (ruta=="SIN DOCUMENTO")
+        {
+            ruta="bancaprepa.png";
+        }
+        console.log("!1111111111"+ruta);
         if(titulo=="undefined"){
             /*pubdd2+='<div class="sinPub">'+
             '<h4>Sin publicaciones nuevas</h4>'+
@@ -2608,7 +2619,7 @@ var respCargaPublicacionesFinalNuevas = function(data) {
                         pubdd2+= '<div class="col s8 offset-s2" > '+
                         '<div class="card"> '+
                         '       <div class="card-image waves-effect waves-block waves-light">'+
-                        '          <iframe src="imagenes/publicaciones/'+data[i].ruta+'"  class="col s12" style="border: none;height:500px"></iframe>'+
+                        '          <iframe src="imagenes/publicaciones/'+ruta+'"  class="col s12" style="border: none;height:500px"></iframe>'+
                         '     </div>'+
                         '    <div class="card-content">'+
                         '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+
@@ -2626,7 +2637,7 @@ var respCargaPublicacionesFinalNuevas = function(data) {
                         pubdd2+= '<div class="col s8 offset-s2" > '+
                         '<div class="card"> '+
                         '       <div class="card-image waves-effect waves-block waves-light">'+
-                        '          <img class="activator" src="imagenes/publicaciones/'+data[i].ruta+'">'+
+                        '          <img class="activator" src="imagenes/publicaciones/'+ruta+'">'+
                         '     </div>'+
                         '    <div class="card-content">'+
                         '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+

@@ -1396,7 +1396,7 @@
 
 				return $datos;  
 			}
-			public function cargarEmpleadosXpuesto($puesto)
+			public function cargarEmpleadosXpuesto($puesto, $empresa)
 			{
 				$res=array();
 				$datos=array();
@@ -1407,7 +1407,7 @@
 				$sql="SELECT id, descripcion, ue.empresa_id,c.rol_id  
 				FROM capturistas c
 				INNER JOIN b_usuario_empresa ue ON ue.usuario_id=c.id
-				WHERE c.rol_id=$puesto";
+				WHERE c.rol_id=$puesto AND ue.empresa_id=$empresa";
 				
 				$resultado = mysqli_query($this->con(), $sql); 
 
