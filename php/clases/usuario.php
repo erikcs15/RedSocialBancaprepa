@@ -2045,35 +2045,55 @@
 				$res=array();
 				$datos=array();
 				$i=0; 
-				$q="";
-				// return "aaaaaaaaaaaaaaaa";
+				$q=""; 
 				
-				if($id >0 || $suc > 0 || $numEquipo >0)
+				if($suc>0 AND $id<=0 AND $numEquipo<=0)
 				{	
-					$q = "WHERE e.id='$id' OR e.sucursal_id='$suc' OR e.num_equipo='$numEquipo' ";
+					$q = "WHERE e.sucursal_id='$suc'";
+				}
+ 
+				//validamos que solo venga el tipo de equipo  y posteriormente veremos si tiene o no sucursal
+				if($numEquipo>0){
+
+					if($suc>0)
+						$q = "WHERE e.num_equipo='$numEquipo' AND e.sucursal_id='$suc'";
+
+					else
+						$q= "WHERE e.num_equipo='$numEquipo'";
+
+				} 
+				//validamos que solo venga el id  y posteriormente veremos si tiene o no sucursal
+				if($id>0){
+
+					if($suc>0)
+						$q = "WHERE e.id='$id' AND e.sucursal_id=$suc";
+					else
+						$q = "WHERE e.id='$id'";
+
+				}
+				//validamos que tenga todos los campos
+				if($suc>0 AND $id>0 AND $numEquipo>0){
+					$q = "WHERE e.num_equipo='$numEquipo' AND e.sucursal_id='$suc' AND e.id=$id";
 				}
 				
 				
-				
-				$sql="SELECT e.id, e.sucursal_id,s.nomComercial, e.num_equipo
+				$sql="SELECT e.id, e.sucursal_id,s.nomComercial, e.descripcion equipo,estatus.descripcion estatus,te.descripcion tipo
 					FROM i_equipo e 
-					INNER JOIN sucursales s ON e.sucursal_id=s.id ".$q; 
-				$resultado = mysqli_query($this->con(), $sql); 
-
+					JOIN i_tipo_equipo te ON te.id=e.num_equipo
+					JOIN estatus ON estatus.id=e.estatus_id
+					INNER JOIN sucursales s ON e.sucursal_id=s.id ".$q;  
+				$resultado = mysqli_query($this->con(), $sql);  
 				while ($res = mysqli_fetch_row($resultado)) {
 				   $datos[$i]['id'] = $res[0];
 				   $datos[$i]['id_suc'] = $res[1];
 				   $datos[$i]['nomComercial'] = $res[2];
-				   $datos[$i]['numEquipo'] = $res[3];
+				   $datos[$i]['equipo'] = $res[3];
+				   $datos[$i]['estatus'] = $res[4];
+				   $datos[$i]['tipo'] = $res[5];
 				   $i++;
 
 				} 
-				
-				if ( count($datos )==0) { 
-					$datos[0]['id']  =0;
-					return  $datos; 
-				  }
-
+			 
 
 				return $datos;  
 

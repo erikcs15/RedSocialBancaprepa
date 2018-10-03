@@ -36,8 +36,9 @@
                     </div>
                     <div class="input-field col s2">
                                     <i class="material-icons prefix">laptop_chromebook</i>
-                                    <textarea id="numEquipo" class="materialize-textarea"></textarea>
-                                    <label for="numEquipo"># de equipo</label>
+                                     <select id="tiposequipos">
+                                    </select>
+                                    <label>Sucursal</label>
                      </div>
                 </div>
                     <div class="col s12" align="center">
@@ -50,15 +51,17 @@
         
         <div class="card">
             <div class="card-content">
-                <div id="content">
+                <div id="container">
                     <div class="row"><!-- CONTENEDOR 1 -->
-                            <div class="col s12 offset-s4"><!-- CONTENEDOR 2 -->
+                            <div class="col s12 "><!-- CONTENEDOR 2 -->
                                     <table class="highlight">
                                         <thead >
                                         <tr>
                                             <th>Id</th>
                                             <th>Sucursal</th>
-                                            <th>Numero de equipo</th>
+                                            <th>Descripcion</th>
+                                            <th>Tipo</th>
+                                            <th>Estatus</th>
                                         </tr>
                                         </thead>
 
