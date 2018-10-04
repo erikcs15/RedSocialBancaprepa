@@ -60,7 +60,7 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
               <li><a id="correos"  name ="correos"><i class="material-icons">local_post_office</i>Correos</a></li> 
               <li><a  id="m_Inventario" style='display:none;' name ="ticketsdd" class="dropdown-trigger" data-target='inventariodd'><i class="material-icons">content_paste</i><i class="material-icons right">arrow_drop_down</i>Inventario</a></li>
                 <ul id='inventariodd' class='dropdown-content'>
-                <li><a id="capInv" style='display:none;' name ="capInv" href="/RedSocialBancaprepa\inventario\capturainv.php"><i class="material-icons">laptop_chromebook</i>Capturar Inventario</a></li> 
+                <li><a id="capInv" style='display:none;' name ="capInv" href="/RedSocialBancaprepa\inventario\capturainv.php"><i class="material-icons">laptop_chromebook</i>Capturar Equipo</a></li> 
                 <li><a id="busquedaEquipo" style='display:none;' name ="busquedaEquipo" href="/RedSocialBancaprepa\inventario\busquedaEquipo.php"><i class="material-icons">search</i>Busqueda equipo</a></li> 
                 </ul>
  
