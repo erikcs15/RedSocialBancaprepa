@@ -1513,7 +1513,7 @@
 				FROM b_publicaciones_bancaprepa p
 				INNER JOIN b_confirmaciones conf ON conf.publicacion_id=p.id
 				INNER JOIN capturistas c ON c.id=conf.empleado_id
-				WHERE  c.id=$usuario AND conf.visto='$var' AND p.documento_id=$tipodoc
+				WHERE  c.id=$usuario AND conf.visto='$var' AND p.documento_id=$tipodoc AND p.estatus=5
 				ORDER BY p.id DESC";
 				
 				$resultado = mysqli_query($this->con(), $sql); 
@@ -2099,6 +2099,46 @@
 
 			}
 
+
+			public function cargarMttoPublicaciones()
+			{
+  
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				
+				$sql="SELECT p.id, p.titulo, d.`descripcion` ,DATE_FORMAT( p.fecha, '%d/%b/%Y') AS fecha, 
+				DATE_FORMAT( p.hora, '%l:%i%p') AS hora , e.`descripcion`, c.`descripcion`
+				FROM b_publicaciones_bancaprepa p
+				INNER JOIN b_cat_doc d ON d.id=p.`documento_id`
+				INNER JOIN estatus e ON e.`id`=p.`estatus`
+				INNER JOIN capturistas c ON c.`id`=p.`capturista_id`
+				ORDER BY p.id DESC"; 
+
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['titulo'] = $res[1];
+				   $datos[$i]['tipoDoc'] = $res[2];
+				   $datos[$i]['fecha'] = $res[3];
+				   $datos[$i]['hora'] = $res[4];
+				   $datos[$i]['estatus'] = $res[5];
+				   $datos[$i]['capturista'] = $res[6];
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['contador']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
 			
 			
 

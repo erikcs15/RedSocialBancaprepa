@@ -34,11 +34,11 @@
                             </select>
                             <label>Sucursal</label>
                     </div>
-                    <div class="input-field col s2">
+                    <div class="input-field col s3">
                                     <i class="material-icons prefix">laptop_chromebook</i>
                                      <select id="tiposequipos">
                                     </select>
-                                    <label>Sucursal</label>
+                                    <label>Tipo de equipo</label>
                      </div>
                 </div>
                     <div class="col s12" align="center">

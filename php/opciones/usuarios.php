@@ -258,6 +258,9 @@
 		case 77:
 			echo (json_encode($usuario->cargarEquipos($_REQUEST['id'],$_REQUEST['sucursal'],$_REQUEST['numequipo'])));
 		break;
+		case 78:
+			echo (json_encode($usuario->cargarMttoPublicaciones()));
+		break;
 
  	}
  

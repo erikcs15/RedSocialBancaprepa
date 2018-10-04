@@ -709,6 +709,14 @@ function cargarPublicaciones(){
     
 }
 
+function cargarMantPub(){
+    console.log("Cargar publicaciones");
+    onRequest({ opcion : 78}, respCargarMttoPub);
+    
+   
+   
+    
+}
 function cargarCorreos(){
     onRequest({ opcion : 26 ,nombre:""}, respCorreos);
     
@@ -1522,6 +1530,7 @@ var respAccesosPorRol  = function(data) {
         return;  
  
     for(var i=0; i<data.length; i++){
+        console.log("-------"+data[i].id_menu); 
         switch(data[i].id_menu)
         {
             case '1': 
@@ -1568,6 +1577,9 @@ var respAccesosPorRol  = function(data) {
             break;
             case '15':
                 $('#capInven').prop('checked', true); 
+            break;
+            case '16':
+                $('#busquedaEquipoCh').prop('checked', true); 
             break;
         }    
     }
@@ -1675,6 +1687,10 @@ var respCargarMenu  = function(data) {
               document.getElementById('capInv').style.display = 'block';
               document.getElementById('m_Inventario').style.display = 'block';
             break;
+            case '16':
+              document.getElementById('busquedaEquipo').style.display = 'block';
+              document.getElementById('m_Inventario').style.display = 'block';
+            break;
         }    
     }
   //  $('#accesosRol').html(documento);
@@ -1773,6 +1789,7 @@ function cargarAccesos(rol_id){
     $('#misTickets').prop('checked', false);
     $('#mantTickets').prop('checked', false);
     $('#capInven').prop('checked', false);
+    $('#busquedaEquipoCh').prop('checked', false);
 
 
     onRequest({ opcion : 22 ,id_rol:rol_id}, respAccesosPorRol);
@@ -2968,4 +2985,45 @@ var respPermitirPublicacion = function(data) {
    
    
     
+}
+
+
+var respCargarMttoPub = function(data) { 
+    
+    if (!data && data == null) 
+    return; 
+
+    var d = '';
+    var x = '';
+
+
+
+     for (var i = 0; i < data.length; i++) {
+     if(i%2==0)
+     {
+         x='even';
+     }
+     else
+     {
+         x='odd';
+     }
+     d+= '<tr>'+
+     '<td>'+data[i].id+'</td>'+
+     '<td>'+data[i].titulo+'</td>'+
+     '<td>'+data[i].tipoDoc+'</td>'+
+     '<td>'+data[i].capturista+'</td>'+
+     '<td>'+data[i].fecha+'</td>'+
+     '<td>'+data[i].hora+'</td>'+ 
+     '<td>'+data[i].estatus+'</td>'+ 
+     '<td class="'+x+' left">'+
+     '<a onclick="BorrarDoc('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small indigo darken-4 btn modal-trigger" href="#!"><i class="material-icons">remove_red_eye</i></a>' +
+     '<a onclick="editarDoc('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#!"><i class="material-icons">edit</i></a>' + 
+     '<a onclick="deshabDoc('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#!"><i class="material-icons">do_not_disturb_alt</i></a>' + 
+     '<a onclick="BorrarDoc('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#!"><i class="material-icons">delete</i></a>' +
+     '</td>'  +'</tr> ';
+     }
+     
+     $("#tablaMttoPublicacion").html(d);
+
+     cargarMenuPorRol();
 }

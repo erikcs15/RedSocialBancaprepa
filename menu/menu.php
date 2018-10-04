@@ -50,6 +50,7 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
               <li><a href="/RedSocialBancaprepa/bancaprepa.php" name ="bancaprepa" id="m_bancaprepa" class="waves-effect"><i class="material-icons">assignment</i>Publicaciones Vistas</a></li>
               <!--<li><a id="m_agregarPub" class="subheader waves-effect modal-trigger" href="#modalAgregarPub"><i class="material-icons">add_circle</i>Agregar publicación</a></li>  -->
               <li><a id="M_cargaA" style='display:none;' href="/RedSocialBancaprepa\documentos\addfile.php" class=" waves-effect"><i class="material-icons">file_upload</i>Carga de Archivos</a></li>
+              <li><a id="m_mantenimientoPub"  href="/RedSocialBancaprepa\mantPub.php"  name ="m_mantenimientoPub"><i class="material-icons">featured_play_list</i>Mmto. Publicaciones</a></li> 
               <li><a  id="m_tickets" style='display:none;' name ="ticketsdd" class="dropdown-trigger" data-target='ticketsdd'><i class="material-icons">insert_comment</i><i class="material-icons right">arrow_drop_down</i>Tickets</a></li>
                 <ul id='ticketsdd' class='dropdown-content'>
                 <li><a id="m_mandarT" style='display:none;' href="/RedSocialBancaprepa\tickets\mandarTicket.php"><i class="material-icons">drafts</i>Mandar ticket</a></li>
@@ -60,6 +61,7 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
               <li><a  id="m_Inventario" style='display:none;' name ="ticketsdd" class="dropdown-trigger" data-target='inventariodd'><i class="material-icons">content_paste</i><i class="material-icons right">arrow_drop_down</i>Inventario</a></li>
                 <ul id='inventariodd' class='dropdown-content'>
                 <li><a id="capInv" style='display:none;' name ="capInv" href="/RedSocialBancaprepa\inventario\capturainv.php"><i class="material-icons">laptop_chromebook</i>Capturar Inventario</a></li> 
+                <li><a id="busquedaEquipo" style='display:none;' name ="busquedaEquipo" href="/RedSocialBancaprepa\inventario\busquedaEquipo.php"><i class="material-icons">search</i>Busqueda equipo</a></li> 
                 </ul>
  
               <li><div class="divider"></div></li>

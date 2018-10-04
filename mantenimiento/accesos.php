@@ -47,8 +47,9 @@
                         <p><label><input type="checkbox" id="rolesUsuCh" onChange="habDesAccesos(tipoRolAc.value,'rolesUsuCh',10)"/><span>Roles-Usuarios</span></label></p>
                         <p><label><input type="checkbox" id="tipoEquipo" onChange="habDesAccesos(tipoRolAc.value,'tipoEquipo',12)"/><span>Catalogo de equipos</span></label></p>
                         <p><label><input type="checkbox" id="misTickets" onChange="habDesAccesos(tipoRolAc.value,'misTickets',13)"/><span>Mis Tickets</span></label></p>
-                        <p><label><input type="checkbox" id="mantTickets" onChange="habDesAccesos(tipoRolAc.value,'mantTickets',14)"/><span>Mis Tickets</span></label></p>
+                        <p><label><input type="checkbox" id="mantTickets" onChange="habDesAccesos(tipoRolAc.value,'mantTickets',14)"/><span>Mtto. Tickets</span></label></p>
                         <p><label><input type="checkbox" id="capInven" onChange="habDesAccesos(tipoRolAc.value,'capInven',15)"/><span>Captura de inventario</span></label></p>
+                        <p><label><input type="checkbox" id="busquedaEquipoCh" onChange="habDesAccesos(tipoRolAc.value,'busquedaEquipoCh',16)"/><span>Busqueda de Equipo</span></label></p>
                         
                     </div>
             </div>             
