@@ -25,7 +25,7 @@
                 <div class="row">
                     <div class="input-field col s2 offset-s2 ">
                                     <i class="material-icons prefix">laptop_chromebook</i>
-                                    <textarea id="id_equipo" class="materialize-textarea"></textarea>
+                                    <input id="id_equipo" type="number" class="validate" placeholder="Id equipo"/>
                                     <label for="id_equipo">Id equipo</label>
                     </div>
                     <div class="input-field col s3 ">
@@ -36,9 +36,8 @@
                     </div>
                     <div class="input-field col s3">
                                     <i class="material-icons prefix">laptop_chromebook</i>
-                                     <select id="tiposequipos">
-                                    </select>
-                                    <label>Tipo de equipo</label>
+                                     <input id="num_equipo"  placeholder="Numero equipo" type="text" class="validate">
+                                    <label for="num_equipo"># Equipo</label>
                      </div>
                 </div>
                     <div class="col s12" align="center">
@@ -59,10 +58,9 @@
                                         <tr>
                                             <th>Id</th>
                                             <th>Sucursal</th>
-                                            <th>Descripcion</th>
-                                            
-                                            <th>Estatus</th>
+                                            <th>Descripcion</th> 
                                             <th>Tipo</th>
+                                            <th>Estatus</th>
                                         </tr>
                                         </thead>
 
