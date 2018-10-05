@@ -261,7 +261,15 @@
 		case 78:
 			echo (json_encode($usuario->cargarMttoPublicaciones()));
 		break;
-
+		case 79:
+			echo (json_encode($usuario->cargarVistoDePub($_REQUEST['pub_id'])));
+		break;
+		case 80:
+			echo (json_encode($usuario->cargarPubXid($_REQUEST['pub_id'])));
+		break;
+		case 81:
+			echo (json_encode($usuario->actualizarPublicaciones($_REQUEST['pub_id'],$_REQUEST['tit'],$_REQUEST['des'])));
+		break;
  	}
  
 ?>

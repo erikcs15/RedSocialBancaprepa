@@ -73,7 +73,79 @@
         });
     </script> 
 
+
+    <div id="modalVerDatosPub" class="modal">
+           <nav class="blue">
+               <div class="nav-wrapper">
+                   <a href="#!" class="brand-logo">
+                       <i class="large material-icons">remove_red_eye</i>Informacion sobre la publicación
+                   </a>
+               </div>
+           </nav>
+           <div class="modal-content">
+           
+           <div class="card">
+            <div class="card-content">
+                <div id="content">
+                    <div class="row"><!-- CONTENEDOR 1 -->
+                            <div class="col s12"><!-- CONTENEDOR 2 -->
+                                    <table class="highlight">
+                                        <thead >
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Visto</th>                                       
+                                        </tr>
+                                        </thead>
+
+                                        <tbody id="tablaVistoPub">
+                                           
+                                        </tbody>
+                                    </table>
+                                </div><!-- CONTENEDOR 2 -->
+                    </div><!-- CONTENEDOR 1 -->
+                </div>
+            </div>
+        </div>
+           </div>
+           <div class="modal-footer">
+               <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
+               <a id="#!" class=" modal-action modal-close waves-effect waves-light btn blue right"><i class="material-icons left">playlist_add_check</i>Aceptar</a>
+           </div>
+    </div>
+
     
+    <div id="modalEditarPub" class="modal">
+           <nav class="blue">
+               <div class="nav-wrapper">
+                   <a href="#!" class="brand-logo">
+                       <i class="large material-icons">edit</i>Editar publicación
+                   </a>
+               </div>
+           </nav>
+           <div class="modal-content">
+           <form class="col s12 no-padding">
+                   <div class="row">
+                        <div class="input field col s2">
+                            <input placeholder="Idpub" id="Idpub" type="text" class="validate" disabled>
+                            <label for="Idpub" class="activate" ></label>
+                        </div>
+                       <div class="input field col s8">
+                           <input placeholder="Titulo" id="tituloPub" type="text" class="validate">
+                           <label for="Titulo" class="activate"></label>
+                       </div>
+                       <div class="input field col s12">
+                           <input placeholder="Descripcion" id="desc" type="text" class="validate">
+                           <label for="Descripcion" class="activate"></label>
+                       </div>
+                   </div>
+               </form>         
+          
+           </div>
+           <div class="modal-footer">
+               <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
+               <a id="btnEditPub" class="waves-effect waves-light btn blue right"><i class="material-icons left">edit</i>Aceptar</a>
+           </div>
+    </div>
  
     </body>
 </html>

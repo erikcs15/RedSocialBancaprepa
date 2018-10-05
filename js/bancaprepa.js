@@ -668,7 +668,18 @@ $("#passEmpleado").keypress(function(e) {
       
     
     });
+
     
+    $("#btnEditPub").click(function() {
+      
+      var id = $("#Idpub").val();
+      var titulo = $("#tituloPub").val();
+      var descripcion= $("#desc").val();
+      console.log("------"+id+"--"+titulo+"--"+descripcion);
+
+      onRequest({ opcion : 81, pub_id:id, tit:titulo,des:descripcion },respActualizarPub)
+    
+    });
 
 
 
@@ -866,6 +877,22 @@ function eliminarEmp(empid) {
       
  }
 
+ function verInfoPub(pub_id)
+{
+    //Carga la empresa por su id para despues editarla
+    console.log("Id de la publicacion:"+pub_id);
+    onRequest({ opcion : 79 ,pub_id:pub_id}, respCargarVistosEmpleados);
+
+}
+
+function editarPublicacion(pub_id)
+{
+    //Carga la empresa por su id para despues editarla
+    console.log("Id de la publicacion:"+pub_id);
+    onRequest({ opcion : 80 ,pub_id:pub_id}, respCargarPubXid);
+    
+
+}
  function cargarEquipo()
  {
 
@@ -3016,8 +3043,8 @@ var respCargarMttoPub = function(data) {
      '<td>'+data[i].hora+'</td>'+ 
      '<td>'+data[i].estatus+'</td>'+ 
      '<td class="'+x+' left">'+
-     '<a onclick="BorrarDoc('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small indigo darken-4 btn modal-trigger" href="#!"><i class="material-icons">remove_red_eye</i></a>' +
-     '<a onclick="editarDoc('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#!"><i class="material-icons">edit</i></a>' + 
+     '<a onclick="verInfoPub('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small indigo darken-4 btn modal-trigger" href="#modalVerDatosPub"><i class="material-icons">remove_red_eye</i></a>' +
+     '<a onclick="editarPublicacion('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarPub"><i class="material-icons">edit</i></a>' + 
      '<a onclick="deshabDoc('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#!"><i class="material-icons">do_not_disturb_alt</i></a>' + 
      '<a onclick="BorrarDoc('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#!"><i class="material-icons">delete</i></a>' +
      '</td>'  +'</tr> ';
@@ -3026,4 +3053,84 @@ var respCargarMttoPub = function(data) {
      $("#tablaMttoPublicacion").html(d);
 
      cargarMenuPorRol();
+}
+
+
+
+
+var respCargarVistosEmpleados = function(data) { 
+    
+    if (!data && data == null) 
+    return; 
+
+    var d = '';
+    var vis = '';
+
+
+
+     for (var i = 0; i < data.length; i++) {
+        var nombre=String(data[i].nombre);
+        console.log("-------"+nombre);
+        if(nombre=="undefined")
+        {
+           d+= '<tr>'+
+           '<td>Sin personas para mostrar </td>'+
+           '<td class="left">'+ 
+           '</tr> ';  
+           
+        }
+        else
+        {
+            if(data[i].visto=="N")
+            {
+                vis="No";
+            }
+            else
+            {
+                vis="Si";
+            }
+            d+= '<tr>'+
+            '<td>'+data[i].nombre+'</td>'+
+            '<td>'+vis+'</td>'+
+            '</td>'  +'</tr> ';
+        }
+     }
+     
+     $("#tablaVistoPub").html(d);
+
+     
+}
+
+var respCargarPubXid = function(data) { 
+    
+    if (!data && data == null) 
+    return; 
+
+    if (data[0].id>0) { 
+        console.log(data[0].titulo);
+      $("#Idpub").val(data[0].id);
+      $("#tituloPub").val(data[0].titulo);
+      $("#desc").val(data[0].descripcion);
+
+       return;
+     
+    }
+}
+
+
+
+var respActualizarPub = function(data) { 
+    if (!data && data == null)
+    {
+        M.toast({html: 'Publicacion no Actualizada, contacte al area de sistemas.', classes: 'rounded red'}); 
+        return;
+    }
+    
+    M.toast({html: 'Publicación Actualizada!', classes: 'rounded green'}); 
+
+    $("#modalEditarPub").modal("close");
+
+    onRequest({ opcion : 78}, respCargarMttoPub);
+    
+    
 }

@@ -2139,6 +2139,93 @@
 				return $datos;  
 
 			}
+
+			public function cargarVistoDePub($idpub)
+			{
+  
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				
+				$sql="SELECT p.id, cap.descripcion, c.visto
+				FROM b_publicaciones_bancaprepa p
+				INNER JOIN b_confirmaciones c ON c.publicacion_id = p.`id`
+				INNER JOIN capturistas cap ON cap.id= c.empleado_id
+				WHERE p.id=$idpub"; 
+
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['nombre'] = $res[1];
+				   $datos[$i]['visto'] = $res[2];
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+			public function cargarPubXid($idpub)
+			{
+  
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				
+				$sql="SELECT id, titulo, descripcion
+						FROM b_publicaciones_bancaprepa b
+						WHERE id=$idpub"; 
+
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['titulo'] = $res[1];
+				   $datos[$i]['descripcion'] = $res[2];
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+
+			public function actualizarPublicaciones($pubid, $titulo, $desc)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+				
+	
+				$sql="UPDATE b_publicaciones_bancaprepa SET titulo='$titulo', descripcion='$desc', 
+				 fecha_modificacion=CURDATE(), hora_modificacion=CURTIME()WHERE id=$pubid";
+			    
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['b_publicaciones_bancaprepa'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
+
 			
 			
 
