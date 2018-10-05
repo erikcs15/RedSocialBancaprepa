@@ -20,7 +20,7 @@
             ?>
         </div>
     
-        <h4 class="header " align="center" style="color:#1a237e;">Captura de Inventario</h4>
+        <h4 class="header " align="center" style="color:#1a237e;">Captura de Equipos</h4>
         <div class="row">
                 <div class="row">
                     <div class="input-field col s4 offset-s2">

@@ -18,7 +18,7 @@ $(document).ready(function(){
         console.log("Presionaste el boton para buscar");
         var idEquipo = $("#id_equipo").val();
         var sucursal_id = String($("#sucursalesdd").val());
-        var num_equipo = $("#tiposequipos").val();
+        var num_equipo = $("#num_equipo").val();
         if(idEquipo=="" & sucursal_id=="null" & num_equipo=="")
         {
             M.toast({html: 'Favor de ingresar algun dato.', classes: 'rounded red'}); 
@@ -65,7 +65,7 @@ $(document).ready(function(){
 
         var idEquipo = $("#id_equipo").val();
         var sucursal_id = String($("#sucursalesdd").val());
-        var num_equipo = $("#tiposequipos").val();
+        var num_equipo = $("#num_equipo").val();
 
         onRequest({ opcion : 77 ,id:idEquipo, sucursal:sucursal_id, numequipo:num_equipo }, respCargarEquipos);
     }
@@ -90,12 +90,8 @@ $(document).ready(function(){
             }
             d+= '<tr>'+
             '<td>'+data[i].id+'</td>'+ 
-            '<td>'+data[i].descripcion+'</td>'+ 
-            '<td class="'+x+' left">'+
-            // '<a onclick="EditarEstatus('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarEstatus"><i class="material-icons">edit</i></a>' + 
-            //'<a onclick="BajaEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalBajaEquipo"><i class="material-icons">delete</i></a>' +
-            //'<a onclick="DetallesEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDetallesEquipo"><i class="material-icons">remove_red_eye</i></a>' + 
-            '</td>'  +'</tr> ';
+            '<td>'+data[i].descripcion+'</td>'+  
+            '</tr> ';
             }
                 
                 $("#tablaequipo").html(d);
@@ -249,6 +245,8 @@ $(document).ready(function(){
             M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
             return;
         }
+
+        console.log(data)
         
     
         M.toast({html: 'ENHORABUENA...!!! Equipo agregado correctamente ', classes: 'rounded green'}); 
@@ -281,10 +279,10 @@ $(document).ready(function(){
             var sucursal_id=$("#sucursalesdd").val();
             var tipo_equipo=$("#tiposequipos").val();
             var num_equipo=$("#num_equipo").val();
-            var descripcion=$("#descripcion").val();
-            var marca=$("#marca").val();
-            var modelo=$("#modelo").val();
-            var serie=$("#serie").val();
+            var descripcion=$("#descripcion").val().toUpperCase();
+            var marca=$("#marca").val().toUpperCase();
+            var modelo=$("#modelo").val().toUpperCase();
+            var serie=$("#serie").val().toUpperCase();
             var fecha_compra=$("#fecha_compra").val();
             var valor_factura=$("#valor_factura").val();
         

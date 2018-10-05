@@ -2077,11 +2077,12 @@
 				}
 				
 				
-				$sql="SELECT e.id, e.sucursal_id,s.nomComercial, e.descripcion equipo,estatus.descripcion estatus,te.descripcion tipo
+				$sql="SELECT e.id, e.sucursal_id,s.nomComercial, e.descripcion equipo,te.descripcion tipo,estatus.descripcion estatus
 					FROM i_equipo e 
-					JOIN i_tipo_equipo te ON te.id=e.num_equipo
+					JOIN i_tipo_equipo te ON te.id=e.tipo_equipo_id
 					JOIN estatus ON estatus.id=e.estatus_id
 					INNER JOIN sucursales s ON e.sucursal_id=s.id ".$q;  
+ 
 				$resultado = mysqli_query($this->con(), $sql);  
 				while ($res = mysqli_fetch_row($resultado)) {
 				   $datos[$i]['id'] = $res[0];
