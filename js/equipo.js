@@ -389,27 +389,6 @@ $(document).ready(function(){
         console.log(data);
         console.log("------------"+data);
             for (var i = 0; i < data.length; i++) {
-<<<<<<< HEAD
-            if(i%2==0)
-            {
-                x='even';
-            }
-            else
-            {
-                x='odd';
-            }
-            d+= '<tr>'+
-            '<td>'+data[i].id+'</td>'+ 
-            '<td>'+data[i].nomComercial+'</td>'+  
-            '<td>'+data[i].equipo+'</td>'+ 
-            '<td>'+data[i].num_equipo+'</td>'+ 
-            '<td>'+data[i].tipo+'</td>'+ 
-            '<td>'+data[i].estatus+'</td>'+ 
-            // '<a onclick="EditarEstatus('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarEstatus"><i class="material-icons">edit</i></a>' + 
-            //'<a onclick="BajaEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalBajaEquipo"><i class="material-icons">delete</i></a>' +
-            //'<a onclick="DetallesEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDetallesEquipo"><i class="material-icons">remove_red_eye</i></a>' + 
-             +'</tr> ';
-=======
                 if(data[i].estatus=="BAJA")
                 {
                     if(i%2==0)
@@ -456,7 +435,6 @@ $(document).ready(function(){
                     //'<a onclick="DetallesEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDetallesEquipo"><i class="material-icons">remove_red_eye</i></a>' + 
                     +'</tr> ';
                 }
->>>>>>> 671d1fb57e596b9333ab7d494e752aaffc90d972
             }
                 
                 $("#tablaEquipos").html(d);

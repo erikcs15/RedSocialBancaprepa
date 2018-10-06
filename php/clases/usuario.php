@@ -2077,11 +2077,7 @@
 				}
 				
 				
-<<<<<<< HEAD
-				$sql="SELECT e.id, e.sucursal_id,s.nomComercial, e.descripcion equipo,te.descripcion tipo,estatus.descripcion estatus,e.num_equipo
-=======
 				$sql="SELECT e.id, e.sucursal_id,s.nomComercial, e.descripcion equipo,te.descripcion tipo,estatus.descripcion estatus, e.`num_equipo`
->>>>>>> 671d1fb57e596b9333ab7d494e752aaffc90d972
 					FROM i_equipo e 
 					JOIN i_tipo_equipo te ON te.id=e.tipo_equipo_id
 					JOIN estatus ON estatus.id=e.estatus_id
@@ -2095,11 +2091,7 @@
 				   $datos[$i]['equipo'] = $res[3];
 				   $datos[$i]['tipo'] = $res[4];
 				   $datos[$i]['estatus'] = $res[5];
-<<<<<<< HEAD
-				   $datos[$i]['num_equipo'] = $res[6];
-=======
 				   $datos[$i]['numEquipo'] = $res[6];
->>>>>>> 671d1fb57e596b9333ab7d494e752aaffc90d972
 				   $i++;
 
 				} 
