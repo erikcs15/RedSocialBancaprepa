@@ -681,6 +681,16 @@ $("#passEmpleado").keypress(function(e) {
     
     });
 
+    $("#btnDarBaja").click(function() {
+      
+        var id = $("#IdpubBaja").val();
+        
+        
+        console.log("------"+id);
+  
+        onRequest({ opcion : 86, pub_id:id },respDardeBajaPub)
+      
+      });
 
 
 
@@ -890,10 +900,16 @@ function editarPublicacion(pub_id)
     //Carga la publicacion por su id para despues editarla
     console.log("Id de la publicacion:"+pub_id);
     onRequest({ opcion : 80 ,pub_id:pub_id}, respCargarPubXid);
+}
+
+function deshabPub(pub_id)
+{
+    console.log("Id de la publicacion:"+pub_id);
+    onRequest({ opcion : 80 ,pub_id:pub_id}, respBajaPub);
+
     
 
 }
-
 
 //----------------------------------------Funcion de respuesta de la consulta que aplicamos con ajax-----------------------------
 var respUser = function(data) { 
@@ -3043,8 +3059,7 @@ var respCargarMttoPub = function(data) {
      '<td class="'+x+' left">'+
      '<a onclick="verInfoPub('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small indigo darken-4 btn modal-trigger" href="#modalVerDatosPub"><i class="material-icons">remove_red_eye</i></a>' +
      '<a onclick="editarPublicacion('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarPub"><i class="material-icons">edit</i></a>' + 
-     '<a onclick="deshabDoc('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#!"><i class="material-icons">do_not_disturb_alt</i></a>' + 
-     '<a onclick="BorrarDoc('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#!"><i class="material-icons">delete</i></a>' +
+     '<a onclick="deshabPub('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalBajaPub"><i class="material-icons">do_not_disturb_alt</i></a>' + 
      '</td>'  +'</tr> ';
      }
      
@@ -3112,9 +3127,24 @@ var respCargarPubXid = function(data) {
         console.log(data[0].titulo+" descripcion:"+data[0].descripcion);
       $("#Idpub").val(data[0].id);
       $("#tituloPub").val(data[0].titulo);
-      //$("#descPubEdit").val(data[0].descripcion);
-      var descripcion = val(data[0].descripcion);
-      $("#descPubEdit").html(descripcion);
+      $("#descPubEdit").val(data[0].descripcion);
+      
+       return;
+     
+    }
+}
+
+var respBajaPub = function(data) { 
+    
+    if (!data && data == null) 
+    return; 
+
+    if (data[0].id>0) { 
+        console.log(data[0].titulo+" descripcion:"+data[0].descripcion);
+      $("#IdpubBaja").val(data[0].id);
+      $("#tituloPubBaja").val(data[0].titulo);
+      
+      
        return;
      
     }
@@ -3132,6 +3162,22 @@ var respActualizarPub = function(data) {
     M.toast({html: 'Publicación Actualizada!', classes: 'rounded green'}); 
 
     $("#modalEditarPub").modal("close");
+
+    onRequest({ opcion : 78}, respCargarMttoPub);
+    
+    
+}
+
+var respDardeBajaPub = function(data) { 
+    if (!data && data == null)
+    {
+        M.toast({html: 'Publicacion no Actualizada, contacte al area de sistemas.', classes: 'rounded red'}); 
+        return;
+    }
+    
+    M.toast({html: 'Publicación Actualizada!', classes: 'rounded green'}); 
+
+    $("#modalBajaPub").modal("close");
 
     onRequest({ opcion : 78}, respCargarMttoPub);
     

@@ -2330,7 +2330,23 @@
 			}
 
 
-			
+			public function darBajapublicaciones($pubid)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+				
+	
+				$sql="UPDATE b_publicaciones_bancaprepa SET estatus=6 WHERE id=$pubid";
+			    
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['b_publicaciones_bancaprepa'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
 			
 
 

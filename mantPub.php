@@ -137,8 +137,8 @@
                        </div>
                        <div class="input field col s12">
                           <!-- <input placeholder="Descripcion" id="descPubEdit" type="text" class="validate">  -->
-                           <textarea id="Descripcion" id="descPubEdit" class="materialize-textarea"></textarea>
-                           <label for="Descripcion">Descripcion</label>
+                           <textarea  id="descPubEdit" class="materialize-textarea"></textarea>
+                           <label for="descPubEdit">Descripcion</label>
                        </div>
                    </div>
                </form>         
@@ -149,6 +149,36 @@
                <a id="btnEditPub" class="waves-effect waves-light btn blue right"><i class="material-icons left">edit</i>Aceptar</a>
            </div>
     </div>
- 
+    
+
+    <div id="modalBajaPub" class="modal">
+            <nav class="orange darken-3">
+                <div class="nav-wrapper">
+                    <a href="#!" class="brand-logo">
+                        <i class="large material-icons">edit</i>Editar publicación
+                    </a>
+                </div>
+            </nav>
+            <div class="modal-content">
+            <form class="col s12 no-padding">
+                    <div class="row">
+                            <div class="input field col s2">
+                                <input placeholder="IdpubB" id="IdpubBaja" type="text" class="validate" disabled>
+                                <label for="IdpubB" class="activate" ></label>
+                            </div>
+                        <div class="input field col s8">
+                            <input placeholder="TituloB" id="tituloPubBaja" type="text" class="validate" disabled>
+                            <label for="TituloB" class="activate"></label>
+                        </div>
+                    </div>
+                </form>         
+            
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
+                <a id="btnDarBaja" class="waves-effect waves-light btn orange darken-3 right"><i class="material-icons left">do_not_disturb_alt</i>Aceptar</a>
+            </div>
+        </div>
+
     </body>
 </html>

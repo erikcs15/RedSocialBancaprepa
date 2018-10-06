@@ -282,6 +282,10 @@
 		case 85:
 			echo (json_encode($usuario->insertarResponsiva($_REQUEST['id_empleado'],$_REQUEST['idequipo'],$_REQUEST['fecha_ent'])));
 		break;
+		case 86:
+			echo (json_encode($usuario->darBajapublicaciones($_REQUEST['pub_id'])));
+		break;
+
  	}
  
 ?>
