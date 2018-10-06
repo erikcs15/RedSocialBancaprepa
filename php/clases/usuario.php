@@ -2077,7 +2077,11 @@
 				}
 				
 				
+<<<<<<< HEAD
 				$sql="SELECT e.id, e.sucursal_id,s.nomComercial, e.descripcion equipo,te.descripcion tipo,estatus.descripcion estatus,e.num_equipo
+=======
+				$sql="SELECT e.id, e.sucursal_id,s.nomComercial, e.descripcion equipo,te.descripcion tipo,estatus.descripcion estatus, e.`num_equipo`
+>>>>>>> 671d1fb57e596b9333ab7d494e752aaffc90d972
 					FROM i_equipo e 
 					JOIN i_tipo_equipo te ON te.id=e.tipo_equipo_id
 					JOIN estatus ON estatus.id=e.estatus_id
@@ -2091,7 +2095,11 @@
 				   $datos[$i]['equipo'] = $res[3];
 				   $datos[$i]['tipo'] = $res[4];
 				   $datos[$i]['estatus'] = $res[5];
+<<<<<<< HEAD
 				   $datos[$i]['num_equipo'] = $res[6];
+=======
+				   $datos[$i]['numEquipo'] = $res[6];
+>>>>>>> 671d1fb57e596b9333ab7d494e752aaffc90d972
 				   $i++;
 
 				} 
@@ -2141,6 +2149,195 @@
 				return $datos;  
 
 			}
+
+			public function cargarVistoDePub($idpub)
+			{
+  
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				
+				$sql="SELECT p.id, cap.descripcion, c.visto,DATE_FORMAT( c.fecha_visto, '%d/%b/%Y') AS fecha, 
+				DATE_FORMAT( c.hora_visto, '%l:%i%p') AS hora 
+				FROM b_publicaciones_bancaprepa p
+				INNER JOIN b_confirmaciones c ON c.publicacion_id = p.`id`
+				INNER JOIN capturistas cap ON cap.id= c.empleado_id
+				WHERE p.id=$idpub"; 
+
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['nombre'] = $res[1];
+				   $datos[$i]['visto'] = $res[2];
+				   $datos[$i]['Fvisto'] = $res[3];
+				   $datos[$i]['Hvisto'] = $res[4];
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+			public function cargarPubXid($idpub)
+			{
+  
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				
+				$sql="SELECT id, titulo, descripcion
+						FROM b_publicaciones_bancaprepa b
+						WHERE id=$idpub"; 
+
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['titulo'] = $res[1];
+				   $datos[$i]['descripcion'] = $res[2];
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+
+			public function actualizarPublicaciones($pubid, $titulo, $desc)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+				
+	
+				$sql="UPDATE b_publicaciones_bancaprepa SET titulo='$titulo', descripcion='$desc', 
+				 fecha_modificacion=CURDATE(), hora_modificacion=CURTIME()WHERE id=$pubid";
+			    
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['b_publicaciones_bancaprepa'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
+
+
+			public function cargarEquipoXid($idequipo)
+			{
+  
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				
+				$sql="SELECT id, descripcion, nota_cancelacion, fecha_baja
+					FROM i_equipo WHERE id=$idequipo"; 
+
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['descripcion'] = $res[1];
+				   $datos[$i]['nota'] = $res[2];
+				   $datos[$i]['fechaB'] = $res[3];
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+			public function darDeBajaEquipo($equipoid, $descDes)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+				
+	
+				$sql="UPDATE i_equipo SET estatus_id=6, nota_cancelacion='$descDes', fecha_baja=CURDATE() WHERE id=$equipoid";
+			    
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['i_equipo'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
+
+			public function busquedaEmpleadosXnombre($nom)
+			{
+  
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				
+				$sql="SELECT id, descripcion
+						FROM capturistas WHERE descripcion like '%$nom%'"; 
+
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['descripcion'] = $res[1];
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+			public function insertarResponsiva($empleado_id,$equipo_id,$fecha_ent)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+				$sql="INSERT i_responsivas (equipo_id, capturista_id, fecha, fecha_entrega, comentario) 
+					VALUES ($equipo_id,$empleado_id,CURDATE(),'$fecha_ent','')";
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+
+				$datos['equipo_id'] =  array('0' => '0' );
+				return  $datos;	
+			}
+
+
 			
 			
 

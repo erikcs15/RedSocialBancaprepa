@@ -32,6 +32,26 @@ $(document).ready(function(){
 
     });
 
+    
+    $("#btnDesEquipo").click(function() {
+        
+        console.log("Presionaste el boton para dar de baja");
+        var idEquipo = $("#idEquipoDes").val();
+        var notacancelacion = $("#descDes").val().toUpperCase();
+        
+        if(notacancelacion=="" )
+        {
+            M.toast({html: 'Favor de ingresar la nota de cancelacion, por favor.', classes: 'rounded red'}); 
+            return;
+        }
+       
+        console.log("id:"+ idEquipo+" nota de cancelacion:"+notacancelacion);
+        
+        onRequest({ opcion : 83 ,equipo_id:idEquipo, descripcion:notacancelacion}, respBajaEquipos);
+
+
+    });
+
 });
     function cargarMenuPorRol(){
     
@@ -68,6 +88,71 @@ $(document).ready(function(){
         var num_equipo = $("#num_equipo").val();
 
         onRequest({ opcion : 77 ,id:idEquipo, sucursal:sucursal_id, numequipo:num_equipo }, respCargarEquipos);
+    }
+
+    function desEquipo(idequipo)
+    {
+        //Carga el equipo por su id para despues deshabilitarla
+        console.log("Id del equipo:"+idequipo);
+        onRequest({ opcion : 82 ,equipo_id:idequipo}, respCargarEquipoPorId);
+        
+
+    }
+    function notaCancelacion(idequipo)
+    {
+        //Carga el equipo por su id para despues deshabilitarla
+        console.log("Id del equipo:"+idequipo);
+        onRequest({ opcion : 82 ,equipo_id:idequipo}, respCargarNota);
+        
+
+    }
+    
+    function buscaEmpleados()
+    {
+        var bus= $("#nomResponsable").val();
+        if (bus.length>2)
+        {
+            onRequest({ opcion : 84 ,nombre:bus}, respBuscarEmpleados);
+        }
+        console.log("Buscando texto:"+bus);
+    }
+
+    function asignarResponsable(equipo_id)
+    {  
+        console.log("id del equipo:"+equipo_id);
+        Cookies.set("i_idequipo", equipo_id );
+
+        var equip = Cookies.get('i_idequipo');
+
+        console.log("id del equipo desde cookies:"+equip);
+
+    }
+    
+    function asignarEquipo(empleado_id)
+    {  
+        var equip = Cookies.get('i_idequipo');
+        var fecha_ent = $("#respFecha_ent").val();
+        if(fecha_ent=="")
+        {
+            M.toast({html: 'Agrega la fecha de entrega', classes: 'rounded red'}); 
+            return;
+        }
+        console.log("id de empleado:"+empleado_id+" equipo id:"+equip+"fecha entrega:"+fecha_ent);
+
+        onRequest({ opcion : 85 ,id_empleado:empleado_id, idequipo:equip, fecha_ent:fecha_ent}, respAsignarResponsiva);
+
+    }
+
+    
+
+
+    function agregarAdiv(nombre)
+    {  
+        
+        document.getElementById('listaEmpleadosTabla').style.display = 'none';
+        $("#IdResponsable").val(empleado_id);
+        $("#nomResponsable").val(nombre);
+
     }
 
     var respInventario = function(data) { 
@@ -304,6 +389,7 @@ $(document).ready(function(){
         console.log(data);
         console.log("------------"+data);
             for (var i = 0; i < data.length; i++) {
+<<<<<<< HEAD
             if(i%2==0)
             {
                 x='even';
@@ -323,6 +409,54 @@ $(document).ready(function(){
             //'<a onclick="BajaEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalBajaEquipo"><i class="material-icons">delete</i></a>' +
             //'<a onclick="DetallesEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDetallesEquipo"><i class="material-icons">remove_red_eye</i></a>' + 
              +'</tr> ';
+=======
+                if(data[i].estatus=="BAJA")
+                {
+                    if(i%2==0)
+                    {
+                        x='even';
+                    }
+                    else
+                    {
+                        x='odd';
+                    }
+                    d+= '<tr>'+
+                    '<td>'+data[i].id+'</td>'+ 
+                    '<td>'+data[i].nomComercial+'</td>'+  
+                    '<td>'+data[i].numEquipo+'</td>'+
+                    '<td>'+data[i].tipo+'</td>'+ 
+                    '<td>'+data[i].equipo+'</td>'+             
+                    '<td>'+data[i].estatus+'</td>'+
+                    '<td class="'+x+' left">'+
+                    '<a onclick="asignarResponsable('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small  green darken-4 btn modal-trigger" href="#modalAsignarResp"><i class="material-icons">assignment_ind</i></a>' + 
+                    '<a onclick="desEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-2 btn modal-trigger disabled" href="#modalDeshEquipo"><i class="material-icons">do_not_disturb</i></a>' +
+                    '<a onclick="notaCancelacion('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small grey darken-1 btn modal-trigger" href="#modalNotaCancelacion"><i class="material-icons">library_books</i></a>' + 
+                    '</tr> ';
+                }
+                else
+                {
+                    if(i%2==0)
+                    {
+                        x='even';
+                    }
+                    else
+                    {
+                        x='odd';
+                    }
+                    d+= '<tr>'+
+                    '<td>'+data[i].id+'</td>'+ 
+                    '<td>'+data[i].nomComercial+'</td>'+  
+                    '<td>'+data[i].numEquipo+'</td>'+
+                    '<td>'+data[i].tipo+'</td>'+ 
+                    '<td>'+data[i].equipo+'</td>'+             
+                    '<td>'+data[i].estatus+'</td>'+
+                    '<td class="'+x+' left">'+
+                    '<a onclick="asignarResponsable('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small  green darken-4 btn modal-trigger" href="#modalAsignarResp"><i class="material-icons">assignment_ind</i></a>' + 
+                    '<a onclick="desEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-2 btn modal-trigger" href="#modalDeshEquipo"><i class="material-icons">do_not_disturb</i></a>' 
+                    //'<a onclick="DetallesEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDetallesEquipo"><i class="material-icons">remove_red_eye</i></a>' + 
+                    +'</tr> ';
+                }
+>>>>>>> 671d1fb57e596b9333ab7d494e752aaffc90d972
             }
                 
                 $("#tablaEquipos").html(d);
@@ -330,7 +464,89 @@ $(document).ready(function(){
         cargarMenuPorRol();
     }
 
+    
+    var respCargarEquipoPorId = function(data) { 
+    
+        if (!data && data == null) 
+        return; 
+    
+        if (data[0].id>0) { 
+            console.log(data[0].id);
+          $("#idEquipoDes").val(data[0].id);
+    
+           return;
+         
+        }
+    }
+    
+    var respCargarNota = function(data) { 
+    
+        if (!data && data == null) 
+        return; 
+    
+        if (data[0].id>0) { 
+            console.log(data[0].id);
+          $("#idEquipoNota").val(data[0].id);
+          $("#notaEquipo").val(data[0].nota);
+          $("#fechaBaja").val(data[0].fechaB);
+           return;
+         
+        }
+    }
 
+    
+    var respBajaEquipos = function(data) { 
+    
+        if (!data && data == null)
+        {
+            M.toast({html: 'Equipo no Actualizado, contacte al area de sistemas.', classes: 'rounded red'}); 
+            return;
+        }
+        
+        M.toast({html: 'El Equipo se dio de baja correctamente!', classes: 'rounded green'}); 
+    
+        $("#modalDeshEquipo").modal("close");
+    
+        busquedaEquipo();
+    }
+
+    
+    var respBuscarEmpleados = function(data) { 
+    
+        if (!data && data == null)
+        {
+            M.toast({html: 'No se encontraron coincidencias.', classes: 'rounded red'}); 
+            return;
+        }
+        
+        var d='';
+        for (var i = 0; i < data.length; i++) 
+        {
+            var nombre=String(data[i].descripcion);
+            console.log("Nombre:"+nombre);
+            d+="<tr> <td>"+data[i].descripcion+"</spam> </td>" 
+            +"<td> <a onclick='"+$("#IdResponsable").val(data[i].id); $("#nomResponsable").val(data[i].descripcion);+"' class='waves-effect waves-light btn-floating btn-small blue'><i class='material-icons'>add</i></a> " +
+            "</td> </tr> ";
+        }
+
+        $("#listaEmpleados").addClass("espacioClientes");
+        $("#listaEmpleadosTabla").html(d);
+    }
+    
+
+    var respAsignarResponsiva = function(data) { 
+    
+        if (!data && data == null)
+        {
+            M.toast({html: 'No se encontraron coincidencias.', classes: 'rounded red'}); 
+            return;
+        }
+        
+        M.toast({html: 'Responsable asignado.', classes: 'rounded green'})
+        
+        $("#modalAsignarResp").modal("close");
+    }
+    
     
 
 

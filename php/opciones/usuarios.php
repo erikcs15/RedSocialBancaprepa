@@ -261,7 +261,27 @@
 		case 78:
 			echo (json_encode($usuario->cargarMttoPublicaciones()));
 		break;
-
+		case 79:
+			echo (json_encode($usuario->cargarVistoDePub($_REQUEST['pub_id'])));
+		break;
+		case 80:
+			echo (json_encode($usuario->cargarPubXid($_REQUEST['pub_id'])));
+		break;
+		case 81:
+			echo (json_encode($usuario->actualizarPublicaciones($_REQUEST['pub_id'],$_REQUEST['tit'],$_REQUEST['des'])));
+		break;
+		case 82:
+			echo (json_encode($usuario->cargarEquipoXid($_REQUEST['equipo_id'])));
+		break;
+		case 83:
+			echo (json_encode($usuario->darDeBajaEquipo($_REQUEST['equipo_id'],$_REQUEST['descripcion'])));
+		break;
+		case 84:
+			echo (json_encode($usuario->busquedaEmpleadosXnombre($_REQUEST['nombre'])));
+		break;
+		case 85:
+			echo (json_encode($usuario->insertarResponsiva($_REQUEST['id_empleado'],$_REQUEST['idequipo'],$_REQUEST['fecha_ent'])));
+		break;
  	}
  
 ?>

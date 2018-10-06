@@ -58,10 +58,11 @@
                                         <tr>
                                             <th>Id</th>
                                             <th>Sucursal</th>
-                                            <th>Descripcion</th> 
                                             <th># Equipo</th> 
                                             <th>Tipo</th>
+                                            <th>Descripcion</th>
                                             <th>Estatus</th>
+                                            <th>Acciones</th>
                                         </tr>
                                         </thead>
 
@@ -93,7 +94,135 @@
         });
     </script> 
 
+    <div id="modalDeshEquipo" class="modal">
+           <nav class="orange darken-2">
+               <div class="nav-wrapper">
+                   <a href="#!" class="brand-logo">
+                       <i class="large material-icons">do_not_disturb</i>Deshabilitar equipo
+                   </a>
+               </div>
+           </nav>
+           <div class="modal-content">
+           <form class="col s12 no-padding">
+                   <div class="row">
+                        <div class="input field col s2">
+                            <input placeholder="Id Equipo" id="idEquipoDes" type="text" class="validate" disabled>
+                            <label for="Id Equipo" class="activate" ></label>
+                        </div>
+                       
+                       <div class="input field col s12">
+                           <label for="descDes">Motivo para dar de baja el equipo</label>
+                           <textarea id="descDes" class="materialize-textarea"></textarea>
+                           
+                       </div>
+                   </div>
+               </form>         
+          
+           </div>
+           <div class="modal-footer">
+               <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
+               <a id="btnDesEquipo" class="waves-effect waves-light btn orange darken-2 right"><i class="material-icons left"></i>Deshabilitar</a>
+           </div>
+    </div>
     
+    <div id="modalNotaCancelacion" class="modal">
+           <nav class="grey darken-1">
+               <div class="nav-wrapper">
+                   <a href="#!" class="brand-logo">
+                       <i class="large material-icons">library_books</i>Nota de cancelación
+                   </a>
+               </div>
+           </nav>
+           <div class="modal-content">
+           <form class="col s12 no-padding">
+                   <div class="row">
+                        <div class="input field col s2">
+                            <label for="Id Equipo" class="activate" >Id del equipo</label>
+                            <input placeholder="Id Equipo" id="idEquipoNota" type="text" class="validate" disabled>
+                        </div>
+                        <div class="input field col s4">
+                            <label for="Fecha de baja" class="activate" >Fecha de baja</label>
+                            <input placeholder="Fecha de baja" id="fechaBaja" type="text" class="validate" disabled>
+                            
+                        </div>
+                       <div class="input field col s12">
+                           <label for="notaEquipo">Motivo por el cual se dio de baja el equipo</label>
+                           <textarea id="notaEquipo" class="materialize-textarea" disabled></textarea>
+                           
+                       </div>
+                   </div>
+               </form>         
+          
+           </div>
+           <div class="modal-footer">
+               <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
+               <a id="#!" class="modal-action modal-close waves-effect waves-light btn grey darken-1 right"><i class="material-icons left">library_books</i>Aceptar</a>
+           </div>
+    </div>
+
+    
+
+     <div id="modalAsignarResp" class="modal">
+           <nav class="green darken-4">
+               <div class="nav-wrapper">
+                   <a href="#!" class="brand-logo">
+                       <i class="large material-icons">assignment_ind</i>Responsable
+                   </a>
+               </div>
+           </nav>
+           <div class="modal-content">
+           <form class="col s12 no-padding">
+                   <div class="row">
+                        <div class="input field col s1">
+                            <label for="Id" class="activate" style='display:none;'></label>
+                            <input placeholder="Id" id="IdResponsable" type="text" class="validate" style='display:none;' >
+                        </div>
+                        <div class="input field col s6">
+                            <label for="Nombre del responsable" class="activate" ></label>
+                            <input placeholder="Nombre del responsable" id="nomResponsable" type="text" class="validate" onkeyup="buscaEmpleados()" >
+                        </div>
+                        <div class="input-field col s4 ">
+                            <i class="material-icons prefix">date_range</i>
+                            
+                            <input id="respFecha_ent" type="date" class="validate">
+                            <label for="respFecha_ent">Fecha Entrega</label>
+                         </div>
+
+                        <div class="input field col s6 " id="listaEmpleados">
+                                    <table class="highlight">
+                                                    <tbody id="listaEmpleadosTabla">
+                                                    
+                                                    </tbody>
+                                    </table>
+                        </div>
+                        
+
+                        <div class="input field col s12 ">
+                                    <table class="highlight">
+                                        <thead >
+                                            <tr>
+                                                <th>Encargado</th>
+                                                <th>Fecha Entrega</th>
+                                                <th>Comentario</th> 
+                                                
+                                            </tr>
+                                        </thead>
+                                            <tbody id="datosEncargadoTabla">
+                                            
+                                            </tbody>
+                                    </table>
+                        </div>
+                       
+                       
+                   </div>
+               </form>         
+          
+           </div>
+           <div class="modal-footer">
+               <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
+               <a id="#!" class="modal-action modal-close waves-effect waves-light btn green darken-4 right"><i class="material-icons left"></i>Aceptar</a>
+           </div>
+    </div>
  
     </body>
 </html>

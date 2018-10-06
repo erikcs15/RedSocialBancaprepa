@@ -668,7 +668,18 @@ $("#passEmpleado").keypress(function(e) {
       
     
     });
+
     
+    $("#btnEditPub").click(function() {
+      
+      var id = $("#Idpub").val();
+      var titulo = $("#tituloPub").val();
+      var descripcion= $("#desc").val();
+      console.log("------"+id+"--"+titulo+"--"+descripcion);
+
+      onRequest({ opcion : 81, pub_id:id, tit:titulo,des:descripcion },respActualizarPub)
+    
+    });
 
 
 
@@ -866,10 +877,24 @@ function eliminarEmp(empid) {
       
  }
 
- function cargarEquipo()
- {
+ function verInfoPub(pub_id)
+{
+    //Carga la empresa por su id para despues editarla
+    console.log("Id de la publicacion:"+pub_id);
+    onRequest({ opcion : 79 ,pub_id:pub_id}, respCargarVistosEmpleados);
 
- }
+}
+
+function editarPublicacion(pub_id)
+{
+    //Carga la publicacion por su id para despues editarla
+    console.log("Id de la publicacion:"+pub_id);
+    onRequest({ opcion : 80 ,pub_id:pub_id}, respCargarPubXid);
+    
+
+}
+
+
 //----------------------------------------Funcion de respuesta de la consulta que aplicamos con ajax-----------------------------
 var respUser = function(data) { 
 
@@ -2530,19 +2555,19 @@ var respCargaPublicacionesFinal = function(data) {
                         pubdd+=  '<div class="col s8 offset-s2" > '+
                         '<div class="card"> '+
                         '       <div class="card-image waves-effect waves-block waves-light">'+
-                        '          <iframe src="imagenes/publicaciones/'+ruta+'"  class="col s12" style="border: none;height:500px"></iframe>'+
+                        '          <img class="activator" src="imagenes/publicaciones/'+ruta+'">'+
                         '     </div>'+
                         '    <div class="card-content">'+
                         '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+
                         '        <p>  &nbsp;&nbsp'+data[i].fecha+'&nbsp; '+data[i].hora+'</p>'+
-                        '         <p><a onclick="btnVista('+data[i].id_publicacion+')" class="btn-floating waves-effect waves-light btn indigo darken-4 disabled" ><i class="material-icons left">remove_red_eye</i></a></p>'+
+                        '         <p><a onclick="btnVista('+data[i].id_publicacion+')" class="btn-floating waves-effect waves-light btn indigo darken-4" disabled><i class="material-icons left">remove_red_eye</i></a></p>'+
                         '      </div>'+
                         '      <div class="card-reveal">'+
                         '           <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>'+data[i].titulo+'</span>'+
                         '            <p>'+data[i].descripcion+'.</p>'+
                         '         </div>'+
                         '  </div>'+
-                        '</div> ';     
+                        '</div> ';    
                 }
         }
     }
@@ -3016,8 +3041,8 @@ var respCargarMttoPub = function(data) {
      '<td>'+data[i].hora+'</td>'+ 
      '<td>'+data[i].estatus+'</td>'+ 
      '<td class="'+x+' left">'+
-     '<a onclick="BorrarDoc('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small indigo darken-4 btn modal-trigger" href="#!"><i class="material-icons">remove_red_eye</i></a>' +
-     '<a onclick="editarDoc('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#!"><i class="material-icons">edit</i></a>' + 
+     '<a onclick="verInfoPub('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small indigo darken-4 btn modal-trigger" href="#modalVerDatosPub"><i class="material-icons">remove_red_eye</i></a>' +
+     '<a onclick="editarPublicacion('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarPub"><i class="material-icons">edit</i></a>' + 
      '<a onclick="deshabDoc('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#!"><i class="material-icons">do_not_disturb_alt</i></a>' + 
      '<a onclick="BorrarDoc('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#!"><i class="material-icons">delete</i></a>' +
      '</td>'  +'</tr> ';
@@ -3026,4 +3051,88 @@ var respCargarMttoPub = function(data) {
      $("#tablaMttoPublicacion").html(d);
 
      cargarMenuPorRol();
+}
+
+
+
+
+var respCargarVistosEmpleados = function(data) { 
+    
+    if (!data && data == null) 
+    return; 
+
+    var d = '';
+    var vis = '';
+    var f = '';
+    var h = '';
+     for (var i = 0; i < data.length; i++) {
+        var nombre=String(data[i].nombre);
+        console.log("-------"+nombre);
+        if(nombre=="undefined")
+        {
+           d+= '<tr>'+
+           '<td>Sin personas para mostrar </td>'+
+           '<td class="left">'+ 
+           '</tr> ';  
+           
+        }
+        else
+        {
+            if(data[i].visto=="N")
+            {
+                vis="No";
+                f=" ";
+                h=" ";
+
+            }
+            else
+            {
+                vis="Si";
+                f=data[i].Fvisto;
+                h=data[i].Hvisto;
+            }
+            d+= '<tr>'+
+            '<td>'+data[i].nombre+'</td>'+
+            '<td>'+vis+'</td>'+
+            '<td>'+f+'</td>'+
+            '<td>'+h+'</td>'+
+            '</td>'  +'</tr> ';
+        }
+     }
+     
+     $("#tablaVistoPub").html(d); 
+}
+
+var respCargarPubXid = function(data) { 
+    
+    if (!data && data == null) 
+    return; 
+
+    if (data[0].id>0) { 
+        console.log(data[0].titulo);
+      $("#Idpub").val(data[0].id);
+      $("#tituloPub").val(data[0].titulo);
+      $("#desc").val(data[0].descripcion);
+
+       return;
+     
+    }
+}
+
+
+
+var respActualizarPub = function(data) { 
+    if (!data && data == null)
+    {
+        M.toast({html: 'Publicacion no Actualizada, contacte al area de sistemas.', classes: 'rounded red'}); 
+        return;
+    }
+    
+    M.toast({html: 'Publicación Actualizada!', classes: 'rounded green'}); 
+
+    $("#modalEditarPub").modal("close");
+
+    onRequest({ opcion : 78}, respCargarMttoPub);
+    
+    
 }
