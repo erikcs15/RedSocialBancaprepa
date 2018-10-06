@@ -3109,11 +3109,12 @@ var respCargarPubXid = function(data) {
     return; 
 
     if (data[0].id>0) { 
-        console.log(data[0].titulo);
+        console.log(data[0].titulo+" descripcion:"+data[0].descripcion);
       $("#Idpub").val(data[0].id);
       $("#tituloPub").val(data[0].titulo);
-      $("#desc").val(data[0].descripcion);
-
+      //$("#descPubEdit").val(data[0].descripcion);
+      var descripcion = val(data[0].descripcion);
+      $("#descPubEdit").html(descripcion);
        return;
      
     }

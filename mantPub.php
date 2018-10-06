@@ -136,7 +136,8 @@
                            <label for="Titulo" class="activate"></label>
                        </div>
                        <div class="input field col s12">
-                           <textarea id="Descripcion" id="desc" class="materialize-textarea"></textarea>
+                          <!-- <input placeholder="Descripcion" id="descPubEdit" type="text" class="validate">  -->
+                           <textarea id="Descripcion" id="descPubEdit" class="materialize-textarea"></textarea>
                            <label for="Descripcion">Descripcion</label>
                        </div>
                    </div>
