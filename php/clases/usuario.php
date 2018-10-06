@@ -2077,7 +2077,7 @@
 				}
 				
 				
-				$sql="SELECT e.id, e.sucursal_id,s.nomComercial, e.descripcion equipo,te.descripcion tipo,estatus.descripcion estatus
+				$sql="SELECT e.id, e.sucursal_id,s.nomComercial, e.descripcion equipo,te.descripcion tipo,estatus.descripcion estatus,e.num_equipo
 					FROM i_equipo e 
 					JOIN i_tipo_equipo te ON te.id=e.tipo_equipo_id
 					JOIN estatus ON estatus.id=e.estatus_id
@@ -2089,8 +2089,9 @@
 				   $datos[$i]['id_suc'] = $res[1];
 				   $datos[$i]['nomComercial'] = $res[2];
 				   $datos[$i]['equipo'] = $res[3];
-				   $datos[$i]['estatus'] = $res[4];
-				   $datos[$i]['tipo'] = $res[5];
+				   $datos[$i]['tipo'] = $res[4];
+				   $datos[$i]['estatus'] = $res[5];
+				   $datos[$i]['num_equipo'] = $res[6];
 				   $i++;
 
 				} 

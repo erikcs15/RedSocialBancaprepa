@@ -316,8 +316,9 @@ $(document).ready(function(){
             '<td>'+data[i].id+'</td>'+ 
             '<td>'+data[i].nomComercial+'</td>'+  
             '<td>'+data[i].equipo+'</td>'+ 
-            '<td>'+data[i].estatus+'</td>'+ 
+            '<td>'+data[i].num_equipo+'</td>'+ 
             '<td>'+data[i].tipo+'</td>'+ 
+            '<td>'+data[i].estatus+'</td>'+ 
             // '<a onclick="EditarEstatus('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarEstatus"><i class="material-icons">edit</i></a>' + 
             //'<a onclick="BajaEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalBajaEquipo"><i class="material-icons">delete</i></a>' +
             //'<a onclick="DetallesEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDetallesEquipo"><i class="material-icons">remove_red_eye</i></a>' + 
