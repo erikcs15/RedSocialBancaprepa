@@ -93,7 +93,9 @@
                                         <thead >
                                         <tr>
                                             <th>Nombre</th>
-                                            <th>Visto</th>                                       
+                                            <th>Visto</th>
+                                            <th>Fecha visto</th>
+                                            <th>Hora visto</th>                                       
                                         </tr>
                                         </thead>
 
@@ -134,8 +136,8 @@
                            <label for="Titulo" class="activate"></label>
                        </div>
                        <div class="input field col s12">
-                           <input placeholder="Descripcion" id="desc" type="text" class="validate">
-                           <label for="Descripcion" class="activate"></label>
+                           <textarea id="Descripcion" id="desc" class="materialize-textarea"></textarea>
+                           <label for="Descripcion">Descripcion</label>
                        </div>
                    </div>
                </form>         

@@ -887,16 +887,14 @@ function eliminarEmp(empid) {
 
 function editarPublicacion(pub_id)
 {
-    //Carga la empresa por su id para despues editarla
+    //Carga la publicacion por su id para despues editarla
     console.log("Id de la publicacion:"+pub_id);
     onRequest({ opcion : 80 ,pub_id:pub_id}, respCargarPubXid);
     
 
 }
- function cargarEquipo()
- {
 
- }
+
 //----------------------------------------Funcion de respuesta de la consulta que aplicamos con ajax-----------------------------
 var respUser = function(data) { 
 
@@ -2557,19 +2555,19 @@ var respCargaPublicacionesFinal = function(data) {
                         pubdd+=  '<div class="col s8 offset-s2" > '+
                         '<div class="card"> '+
                         '       <div class="card-image waves-effect waves-block waves-light">'+
-                        '          <iframe src="imagenes/publicaciones/'+ruta+'"  class="col s12" style="border: none;height:500px"></iframe>'+
+                        '          <img class="activator" src="imagenes/publicaciones/'+ruta+'">'+
                         '     </div>'+
                         '    <div class="card-content">'+
                         '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+
                         '        <p>  &nbsp;&nbsp'+data[i].fecha+'&nbsp; '+data[i].hora+'</p>'+
-                        '         <p><a onclick="btnVista('+data[i].id_publicacion+')" class="btn-floating waves-effect waves-light btn indigo darken-4 disabled" ><i class="material-icons left">remove_red_eye</i></a></p>'+
+                        '         <p><a onclick="btnVista('+data[i].id_publicacion+')" class="btn-floating waves-effect waves-light btn indigo darken-4" disabled><i class="material-icons left">remove_red_eye</i></a></p>'+
                         '      </div>'+
                         '      <div class="card-reveal">'+
                         '           <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>'+data[i].titulo+'</span>'+
                         '            <p>'+data[i].descripcion+'.</p>'+
                         '         </div>'+
                         '  </div>'+
-                        '</div> ';     
+                        '</div> ';    
                 }
         }
     }
@@ -3065,9 +3063,8 @@ var respCargarVistosEmpleados = function(data) {
 
     var d = '';
     var vis = '';
-
-
-
+    var f = '';
+    var h = '';
      for (var i = 0; i < data.length; i++) {
         var nombre=String(data[i].nombre);
         console.log("-------"+nombre);
@@ -3084,21 +3081,26 @@ var respCargarVistosEmpleados = function(data) {
             if(data[i].visto=="N")
             {
                 vis="No";
+                f=" ";
+                h=" ";
+
             }
             else
             {
                 vis="Si";
+                f=data[i].Fvisto;
+                h=data[i].Hvisto;
             }
             d+= '<tr>'+
             '<td>'+data[i].nombre+'</td>'+
             '<td>'+vis+'</td>'+
+            '<td>'+f+'</td>'+
+            '<td>'+h+'</td>'+
             '</td>'  +'</tr> ';
         }
      }
      
-     $("#tablaVistoPub").html(d);
-
-     
+     $("#tablaVistoPub").html(d); 
 }
 
 var respCargarPubXid = function(data) { 

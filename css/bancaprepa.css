@@ -35,3 +35,11 @@
 .sinPub{
 		text-align: center;
 }
+
+.espacioClientes{
+	padding-top: 0;
+	margin-top: 0;
+	height: 200px;
+	width: 250%; 
+	overflow-y: scroll;
+}
