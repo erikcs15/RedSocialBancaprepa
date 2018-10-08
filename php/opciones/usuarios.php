@@ -280,10 +280,16 @@
 			echo (json_encode($usuario->busquedaEmpleadosXnombre($_REQUEST['nombre'])));
 		break;
 		case 85:
-			echo (json_encode($usuario->insertarResponsiva($_REQUEST['id_empleado'],$_REQUEST['idequipo'],$_REQUEST['fecha_ent'])));
+			echo (json_encode($usuario->insertarResponsiva($_REQUEST['id_empleado'],$_REQUEST['idequipo'],$_REQUEST['fecha_ent'],$_REQUEST['comen'])));
 		break;
 		case 86:
 			echo (json_encode($usuario->darBajapublicaciones($_REQUEST['pub_id'])));
+		break;
+		case 87:
+			echo (json_encode($usuario->cargarEmpleadosXId($_REQUEST['empleado_id'])));
+		break;
+		case 88:
+			echo (json_encode($usuario->cargarResponsables($_REQUEST['equipo_id'])));
 		break;
 
  	}

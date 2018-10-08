@@ -174,10 +174,10 @@
            <form class="col s12 no-padding">
                    <div class="row">
                         <div class="input field col s1">
-                            <label for="Id" class="activate" style='display:none;'></label>
-                            <input placeholder="Id" id="IdResponsable" type="text" class="validate" style='display:none;' >
+                            <label for="Id" class="activate" '></label>
+                            <input placeholder="Id" id="IdResponsable" type="text" class="validate" disabled >
                         </div>
-                        <div class="input field col s6">
+                        <div class="input field col s5">
                             <label for="Nombre del responsable" class="activate" ></label>
                             <input placeholder="Nombre del responsable" id="nomResponsable" type="text" class="validate" onkeyup="buscaEmpleados()" >
                         </div>
@@ -187,6 +187,12 @@
                             <input id="respFecha_ent" type="date" class="validate">
                             <label for="respFecha_ent">Fecha Entrega</label>
                          </div>
+                         <div class="col s1 ">
+                            <a onclick="asignarEquipo()" class='waves-effect waves-light btn-floating btn-small blue'><i class='material-icons'>add</i></a>
+                         </div>
+
+                         
+
 
                         <div class="input field col s6 " id="listaEmpleados">
                                     <table class="highlight">
@@ -195,6 +201,11 @@
                                                     </tbody>
                                     </table>
                         </div>
+                        <div class="input field col s12">
+                          <!-- <input placeholder="Descripcion" id="descPubEdit" type="text" class="validate">  -->
+                           <textarea  id="comenEquipo" class="materialize-textarea"></textarea>
+                           <label for="comenEquipo">Comentarios</label>
+                       </div>
                         
 
                         <div class="input field col s12 ">

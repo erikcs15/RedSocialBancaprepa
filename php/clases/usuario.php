@@ -2312,7 +2312,7 @@
 
 			}
 
-			public function insertarResponsiva($empleado_id,$equipo_id,$fecha_ent)
+			public function insertarResponsiva($empleado_id,$equipo_id,$fecha_ent,$comentarios)
 			{
 				$res=array();
 				$datos=array();
@@ -2321,7 +2321,7 @@
 
 				
 				$sql="INSERT i_responsivas (equipo_id, capturista_id, fecha, fecha_entrega, comentario) 
-					VALUES ($equipo_id,$empleado_id,CURDATE(),'$fecha_ent','')";
+					VALUES ($equipo_id,$empleado_id,CURDATE(),'$fecha_ent','$comentarios')";
 				
 				$resultado = mysqli_query($this->con(), $sql);   
 
@@ -2346,6 +2346,71 @@
 				$datos['b_publicaciones_bancaprepa'] =  array('0' => '0' );
 				return  $datos;	
 				
+			}
+
+			public function cargarEmpleadosXId($idcap)
+			{
+  
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				
+				$sql="SELECT id, descripcion
+						FROM capturistas
+						WHERE id=$idcap"; 
+
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['nombre'] = $res[1];
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+			public function cargarResponsables($id_equipo)
+			{
+  
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				
+				$sql="SELECT c.`descripcion`, r.`fecha_entrega`, r.`comentario`
+					FROM i_equipo e
+					INNER JOIN i_responsivas r ON r.`equipo_id`=e.`id`
+					INNER JOIN capturistas c ON c.id=r.`capturista_id`
+					WHERE e.id=$id_equipo ORDER BY r.id DESC "; 
+
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['nombreEncargado'] = $res[0];
+				   $datos[$i]['fechaEntrega'] = $res[1];
+				   $datos[$i]['comentario'] = $res[2];
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
 			}
 			
 

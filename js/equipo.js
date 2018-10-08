@@ -112,46 +112,65 @@ $(document).ready(function(){
         var bus= $("#nomResponsable").val();
         if (bus.length>2)
         {
+            document.getElementById('listaEmpleados').style.display = 'block';
             onRequest({ opcion : 84 ,nombre:bus}, respBuscarEmpleados);
         }
         console.log("Buscando texto:"+bus);
+        
     }
 
     function asignarResponsable(equipo_id)
     {  
         console.log("id del equipo:"+equipo_id);
         Cookies.set("i_idequipo", equipo_id );
+        $("#IdResponsable").val("");
+        $("#nomResponsable").val("");
+        $("#comenEquipo").val("");
+        $("#respFecha_ent").val("");
 
         var equip = Cookies.get('i_idequipo');
 
         console.log("id del equipo desde cookies:"+equip);
+        onRequest({ opcion : 88 ,equipo_id:equip}, respCargarResponsables);
 
     }
     
-    function asignarEquipo(empleado_id)
+    function asignarEquipo()
     {  
         var equip = Cookies.get('i_idequipo');
+        var id_emp = $("#IdResponsable").val();
         var fecha_ent = $("#respFecha_ent").val();
         if(fecha_ent=="")
         {
             M.toast({html: 'Agrega la fecha de entrega', classes: 'rounded red'}); 
             return;
         }
-        console.log("id de empleado:"+empleado_id+" equipo id:"+equip+"fecha entrega:"+fecha_ent);
 
-        onRequest({ opcion : 85 ,id_empleado:empleado_id, idequipo:equip, fecha_ent:fecha_ent}, respAsignarResponsiva);
+        var comentarios = $("#comenEquipo").val();
+        if(comentarios=="")
+        {
+            M.toast({html: 'Agregue comentarios sobre el equipo.', classes: 'rounded red'}); 
+            return;
+        }
+        console.log("id de empleado:"+id_emp+" equipo id:"+equip+"fecha entrega:"+fecha_ent);
+
+        onRequest({ opcion : 85 ,id_empleado:id_emp, idequipo:equip, fecha_ent:fecha_ent, comen:comentarios}, respAsignarResponsiva);
 
     }
 
     
 
 
-    function agregarAdiv(nombre)
+    function agregarAdiv(id_empleado)
     {  
         
-        document.getElementById('listaEmpleadosTabla').style.display = 'none';
-        $("#IdResponsable").val(empleado_id);
-        $("#nomResponsable").val(nombre);
+        document.getElementById('listaEmpleados').style.display = 'none';
+        $("#IdResponsable").val(id_empleado);
+        var id=$("#IdResponsable").val();
+        onRequest({ opcion : 87 ,empleado_id:id}, respAgregarNombreAdiv);
+
+       
+       
 
     }
 
@@ -501,10 +520,11 @@ $(document).ready(function(){
         for (var i = 0; i < data.length; i++) 
         {
             var nombre=String(data[i].descripcion);
-            console.log("Nombre:"+nombre);
-            d+="<tr> <td>"+data[i].descripcion+"</spam> </td>" 
-            +"<td> <a onclick='"+$("#IdResponsable").val(data[i].id); $("#nomResponsable").val(data[i].descripcion);+"' class='waves-effect waves-light btn-floating btn-small blue'><i class='material-icons'>add</i></a> " +
+            
+            d+="<tr> <td>"+data[i].descripcion+" </td>" 
+            +"<td> <a onclick='agregarAdiv("+data[i].id+");' class='waves-effect waves-light btn-floating btn-small blue'><i class='material-icons'>add</i></a> " +
             "</td> </tr> ";
+            
         }
 
         $("#listaEmpleados").addClass("espacioClientes");
@@ -521,8 +541,69 @@ $(document).ready(function(){
         }
         
         M.toast({html: 'Responsable asignado.', classes: 'rounded green'})
+        $("#IdResponsable").val("");
+        $("#nomResponsable").val("");
+        $("#comenEquipo").val("");
+        $("#respFecha_ent").val("");
+
+        var equip = Cookies.get('i_idequipo');
+
+        console.log("id del equipo desde cookies:"+equip);
+        onRequest({ opcion : 88 ,equipo_id:equip}, respCargarResponsables);
+    }
+    
+    
+
+    var respAgregarNombreAdiv = function(data) { 
+    
+        if (!data && data == null)
+        {
+            M.toast({html: 'No se encontraron coincidencias.', classes: 'rounded red'}); 
+            return;
+        }
+
+        var nombre=data[0].nombre;
+        $("#nomResponsable").val(nombre);
         
-        $("#modalAsignarResp").modal("close");
+    }
+
+    
+
+    var respCargarResponsables = function(data) { 
+    
+        if (!data && data == null)
+        {
+            M.toast({html: 'Ocurrío un problema, contacte al equipo de sistemas.', classes: 'rounded red'}); 
+            return;
+        }
+
+
+        var d='';
+        for (var i = 0; i < data.length; i++) 
+        {
+            var nombre=String(data[i].nombreEncargado);
+            console.log("-------"+nombre);
+            if(nombre=="undefined")
+            {
+                d+= '<tr>'+
+                '<td>No tiene responsable asignado</td>'+
+                '<td class="left">'+ 
+                '</tr> ';  
+            }
+            else
+            {
+                d+="<tr> "+
+                '<td>'+data[i].nombreEncargado+'</td>'+ 
+                '<td>'+data[i].fechaEntrega+'</td>'+  
+                '<td>'+data[i].comentario+'</td>'+
+                '</tr> ';
+            }
+            
+            
+        }
+
+        $("#datosEncargadoTabla").html(d);
+       
     }
     
     
