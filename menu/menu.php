@@ -50,7 +50,7 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
               <li><a href="/RedSocialBancaprepa/bancaprepa.php" name ="bancaprepa" id="m_bancaprepa" class="waves-effect"><i class="material-icons">assignment</i>Publicaciones Vistas</a></li>
               <!--<li><a id="m_agregarPub" class="subheader waves-effect modal-trigger" href="#modalAgregarPub"><i class="material-icons">add_circle</i>Agregar publicación</a></li>  -->
               <li><a id="M_cargaA" style='display:none;' href="/RedSocialBancaprepa\documentos\addfile.php" class=" waves-effect"><i class="material-icons">file_upload</i>Carga de Archivos</a></li>
-              <li><a id="m_mantenimientoPub"  href="/RedSocialBancaprepa\mantPub.php"  name ="m_mantenimientoPub"><i class="material-icons">featured_play_list</i>Mmto. Publicaciones</a></li> 
+              <li><a id="m_mantenimientoPub" style='display:none;' href="/RedSocialBancaprepa\mantPub.php"  name ="m_mantenimientoPub"><i class="material-icons">featured_play_list</i>Mmto. Publicaciones</a></li> 
               <li><a  id="m_tickets" style='display:none;' name ="ticketsdd" class="dropdown-trigger" data-target='ticketsdd'><i class="material-icons">insert_comment</i><i class="material-icons right">arrow_drop_down</i>Tickets</a></li>
                 <ul id='ticketsdd' class='dropdown-content'>
                 <li><a id="m_mandarT" style='display:none;' href="/RedSocialBancaprepa\tickets\mandarTicket.php"><i class="material-icons">drafts</i>Mandar ticket</a></li>

@@ -389,10 +389,13 @@ $(document).ready(function(){
             var serie=$("#serie").val().toUpperCase();
             var fecha_compra=$("#fecha_compra").val();
             var valor_factura=$("#valor_factura").val();
+            var capturistaid=Cookies.get('b_capturista_id');
+            
+
         
             onRequest({ opcion : 72, sucursal_id:sucursal_id, tipo_equipo:tipo_equipo,num_equipo:num_equipo, 
                 descripcion:descripcion,marca:marca, modelo:modelo,serie:serie, fecha_compra:fecha_compra, 
-                valor_factura:valor_factura},respCrearinvequipo);
+                valor_factura:valor_factura, capturista:capturistaid},respCrearinvequipo);
         }
     }
 

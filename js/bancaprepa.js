@@ -558,7 +558,7 @@ $("#BtnAgregarPub").click(function() {
 
 });
 //----------------------------------------CORREOS------------------------------------
-$( "#Crearinvequipo" ).click(function() { 
+$( "#BtnAgregarCorreo" ).click(function() { 
     var idusuario=$("#idEmpleadoCorreo").val();
     var correo=$("#correoEmpleado").val();
     var pass=$("#passEmpleado").val();
@@ -740,6 +740,8 @@ function cargarMantPub(){
 }
 function cargarCorreos(){
     onRequest({ opcion : 26 ,nombre:""}, respCorreos);
+    onRequest({ opcion : 70 }, respcargasucursales);
+    onRequest({ opcion : 45 },respCargarPuestosParaCorreos);
     
 }
 
@@ -906,11 +908,30 @@ function deshabPub(pub_id)
 {
     console.log("Id de la publicacion:"+pub_id);
     onRequest({ opcion : 80 ,pub_id:pub_id}, respBajaPub);
-
-    
-
 }
 
+function buscaEmpleadosCor()
+{
+    var bus= $("#nombreAbuscarCor").val();
+    if (bus.length>2)
+    {
+        document.getElementById('listaEmpleadosBC').style.display = 'block';
+        onRequest({ opcion : 84 ,nombre:bus}, respBuscarEmpleadosCorreo);
+    }
+    console.log("Buscando texto:"+bus);
+    
+}
+
+
+function agregarAdiv(id_empleado)
+{  
+    
+    document.getElementById('listaEmpleadosBC').style.display = 'none';
+    $("#IdEmpleadoCor").val(id_empleado);
+    var id=$("#IdEmpleadoCor").val();
+    onRequest({ opcion : 87 ,empleado_id:id}, respAgregarNombreAdiv);
+
+}
 //----------------------------------------Funcion de respuesta de la consulta que aplicamos con ajax-----------------------------
 var respUser = function(data) { 
 
@@ -1622,6 +1643,9 @@ var respAccesosPorRol  = function(data) {
             case '16':
                 $('#busquedaEquipoCh').prop('checked', true); 
             break;
+            case '17':
+                $('#mantPubCh').prop('checked', true); 
+            break;
         }    
     }
 } 
@@ -1732,6 +1756,9 @@ var respCargarMenu  = function(data) {
               document.getElementById('busquedaEquipo').style.display = 'block';
               document.getElementById('m_Inventario').style.display = 'block';
             break;
+            case '17':
+              document.getElementById('m_mantenimientoPub').style.display = 'block';
+            break;
         }    
     }
   //  $('#accesosRol').html(documento);
@@ -1831,6 +1858,7 @@ function cargarAccesos(rol_id){
     $('#mantTickets').prop('checked', false);
     $('#capInven').prop('checked', false);
     $('#busquedaEquipoCh').prop('checked', false);
+    $('#mantPubCh').prop('checked', false);
 
 
     onRequest({ opcion : 22 ,id_rol:rol_id}, respAccesosPorRol);
@@ -2695,7 +2723,7 @@ var respCargaPublicacionesFinalNuevas = function(data) {
                         pubdd2+= '<div class="col s8 offset-s2" > '+
                         '<div class="card"> '+
                         '       <div class="card-image waves-effect waves-block waves-light">'+
-                        '          <img class="activator" src="imagenes/publicaciones/'+ruta+'">'+
+                        '          <img class="activator" src="imagenes/publicaciones/'+ruta+' ">'+
                         '     </div>'+
                         '    <div class="card-content">'+
                         '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+
@@ -3040,27 +3068,54 @@ var respCargarMttoPub = function(data) {
 
 
      for (var i = 0; i < data.length; i++) {
-     if(i%2==0)
-     {
-         x='even';
-     }
-     else
-     {
-         x='odd';
-     }
-     d+= '<tr>'+
-     '<td>'+data[i].id+'</td>'+
-     '<td>'+data[i].titulo+'</td>'+
-     '<td>'+data[i].tipoDoc+'</td>'+
-     '<td>'+data[i].capturista+'</td>'+
-     '<td>'+data[i].fecha+'</td>'+
-     '<td>'+data[i].hora+'</td>'+ 
-     '<td>'+data[i].estatus+'</td>'+ 
-     '<td class="'+x+' left">'+
-     '<a onclick="verInfoPub('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small indigo darken-4 btn modal-trigger" href="#modalVerDatosPub"><i class="material-icons">remove_red_eye</i></a>' +
-     '<a onclick="editarPublicacion('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarPub"><i class="material-icons">edit</i></a>' + 
-     '<a onclick="deshabPub('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalBajaPub"><i class="material-icons">do_not_disturb_alt</i></a>' + 
-     '</td>'  +'</tr> ';
+        if(data[i].estatus=="BAJA")
+        {
+            if(i%2==0)
+            {
+                x='even';
+            }
+            else
+            {
+                x='odd';
+            }
+            d+= '<tr>'+
+            '<td>'+data[i].id+'</td>'+
+            '<td>'+data[i].titulo+'</td>'+
+            '<td>'+data[i].tipoDoc+'</td>'+
+            '<td>'+data[i].capturista+'</td>'+
+            '<td>'+data[i].fecha+'</td>'+
+            '<td>'+data[i].hora+'</td>'+ 
+            '<td>'+data[i].estatus+'</td>'+ 
+            '<td class="'+x+' left">'+
+            '<a onclick="verInfoPub('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small indigo darken-4 btn modal-trigger" href="#modalVerDatosPub"><i class="material-icons">remove_red_eye</i></a>' +
+            '<a onclick="editarPublicacion('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger disabled" href="#modalEditarPub"><i class="material-icons">edit</i></a>' + 
+            '<a onclick="deshabPub('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger disabled" href="#modalBajaPub"><i class="material-icons">do_not_disturb_alt</i></a>' + 
+            '</td>'  +'</tr> ';
+        }
+        else
+        {
+            if(i%2==0)
+            {
+                x='even';
+            }
+            else
+            {
+                x='odd';
+            }
+            d+= '<tr>'+
+            '<td>'+data[i].id+'</td>'+
+            '<td>'+data[i].titulo+'</td>'+
+            '<td>'+data[i].tipoDoc+'</td>'+
+            '<td>'+data[i].capturista+'</td>'+
+            '<td>'+data[i].fecha+'</td>'+
+            '<td>'+data[i].hora+'</td>'+ 
+            '<td>'+data[i].estatus+'</td>'+ 
+            '<td class="'+x+' left">'+
+            '<a onclick="verInfoPub('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small indigo darken-4 btn modal-trigger" href="#modalVerDatosPub"><i class="material-icons">remove_red_eye</i></a>' +
+            '<a onclick="editarPublicacion('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger " href="#modalEditarPub"><i class="material-icons">edit</i></a>' + 
+            '<a onclick="deshabPub('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger " href="#modalBajaPub"><i class="material-icons">do_not_disturb_alt</i></a>' + 
+            '</td>'  +'</tr> ';
+        }
      }
      
      $("#tablaMttoPublicacion").html(d);
@@ -3140,14 +3195,13 @@ var respBajaPub = function(data) {
     return; 
 
     if (data[0].id>0) { 
-        console.log(data[0].titulo+" descripcion:"+data[0].descripcion);
+      console.log(data[0].titulo+" descripcion:"+data[0].descripcion);
       $("#IdpubBaja").val(data[0].id);
       $("#tituloPubBaja").val(data[0].titulo);
-      
-      
-       return;
-     
+      return;
     }
+
+
 }
 
 
@@ -3178,8 +3232,77 @@ var respDardeBajaPub = function(data) {
     M.toast({html: 'Publicación Actualizada!', classes: 'rounded green'}); 
 
     $("#modalBajaPub").modal("close");
-
     onRequest({ opcion : 78}, respCargarMttoPub);
     
     
+}
+var respBuscarEmpleadosCorreo = function(data) { 
+    
+    if (!data && data == null)
+    {
+        M.toast({html: 'No se encontraron coincidencias.', classes: 'rounded red'}); 
+        return;
+    }
+    
+    var d='';
+    for (var i = 0; i < data.length; i++) 
+    {
+        var nombre=String(data[i].descripcion);
+        
+        d+="<tr> <td>"+data[i].descripcion+" </td>" 
+        +"<td> <a onclick='agregarAdiv("+data[i].id+");' class='waves-effect waves-light btn-floating btn-small blue'><i class='material-icons'>add</i></a> " +
+        "</td> </tr> ";
+        
+    }
+
+    $("#listaEmpleadosBC").addClass("espacioClientes");
+    $("#listaEmpleadosTablaBC").html(d);
+}
+
+var respAgregarNombreAdiv = function(data) { 
+    
+    if (!data && data == null)
+    {
+        M.toast({html: 'No se encontraron coincidencias.', classes: 'rounded red'}); 
+        return;
+    }
+
+    var nombre=data[0].nombre;
+    $("#nombreAbuscarCor").val(nombre);
+    
+}
+
+var respcargasucursales = function(data) { 
+    if (!data && data == null)
+        return;  
+ 
+    var documento='<option value="0"  selected>Seleccione Sucursal</option>';
+
+    for(var i=0; i<data.length; i++){
+        documento+='<option value='+data[i].id+'>'+data[i].nomComercial+'</option>';
+    }
+    console.log("checarc");
+    
+    $('#sucursalesAbuscar').html(documento);
+    $('#sucursalesAbuscar').formSelect(); 
+    
+
+}
+
+
+var respCargarPuestosParaCorreos = function(data) { 
+    if (!data && data == null)
+        return;  
+        
+
+        console.log(data)
+    var documento='<option value="0" disabled selected>Seleccione el puesto</option>';
+
+    for(var i=0; i<data.length; i++){
+        documento+='<option value='+data[i].id+'>'+data[i].nombre+'</option>';
+    }
+   
+    $('#puestosCor').html(documento);
+    $('#puestosCor').formSelect(); 
+   
 }

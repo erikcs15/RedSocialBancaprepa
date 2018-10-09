@@ -50,6 +50,7 @@
                         <p><label><input type="checkbox" id="mantTickets" onChange="habDesAccesos(tipoRolAc.value,'mantTickets',14)"/><span>Mtto. Tickets</span></label></p>
                         <p><label><input type="checkbox" id="capInven" onChange="habDesAccesos(tipoRolAc.value,'capInven',15)"/><span>Captura de inventario</span></label></p>
                         <p><label><input type="checkbox" id="busquedaEquipoCh" onChange="habDesAccesos(tipoRolAc.value,'busquedaEquipoCh',16)"/><span>Busqueda de Equipo</span></label></p>
+                        <p><label><input type="checkbox" id="mantPubCh" onChange="habDesAccesos(tipoRolAc.value,'mantPubCh',17)"/><span>Mantenimiento de Publicaciones</span></label></p>
                         
                     </div>
             </div>             

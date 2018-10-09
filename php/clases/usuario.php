@@ -1456,7 +1456,7 @@
 				FROM b_publicaciones_bancaprepa p
 				INNER JOIN b_confirmaciones conf ON conf.publicacion_id=p.id
 				INNER JOIN capturistas c ON c.id=conf.empleado_id
-				WHERE c.id=$usuario AND conf.visto='$var' AND p.documento_id=$tipodoc
+				WHERE c.id=$usuario AND conf.visto='$var' AND p.documento_id=$tipodoc AND p.estatus=5
 				ORDER BY p.id DESC";
 				
 				$resultado = mysqli_query($this->con(), $sql); 
@@ -1895,7 +1895,7 @@
 			}
 
 			public function insertarcatequipos($sucursal_id,$tipo_equipo,$num_equipo,$descripcion,
-			$marca,$modelo,$serie,$fecha_compra,$valor_factura)
+			$marca,$modelo,$serie,$fecha_compra,$valor_factura, $cap)
 			{
 				$res=array();
 				$datos=array();
@@ -1904,9 +1904,9 @@
 	
 			
 				$sql="INSERT INTO i_equipo(sucursal_id,tipo_equipo_id,num_equipo,descripcion,
-									marca,modelo,serie,fecha_compra,valor_factura) 
+									marca,modelo,serie,fecha_compra,valor_factura, capturista_id) 
 								VALUES($sucursal_id,$tipo_equipo,$num_equipo,'$descripcion',
-										'$marca','$modelo','$serie','$fecha_compra','$valor_factura')";
+										'$marca','$modelo','$serie','$fecha_compra','$valor_factura', $cap)";
 			
 				$resultado = mysqli_query($this->con(), $sql);   
 	
@@ -2077,11 +2077,12 @@
 				}
 				
 				
-				$sql="SELECT e.id, e.sucursal_id,s.nomComercial, e.descripcion equipo,te.descripcion tipo,estatus.descripcion estatus, e.`num_equipo`
+				$sql="SELECT e.id, e.sucursal_id,s.nomComercial, e.descripcion equipo,te.descripcion tipo,
+					estatus.descripcion estatus, e.`num_equipo`
 					FROM i_equipo e 
 					JOIN i_tipo_equipo te ON te.id=e.tipo_equipo_id
 					JOIN estatus ON estatus.id=e.estatus_id
-					INNER JOIN sucursales s ON e.sucursal_id=s.id ".$q;  
+					INNER JOIN sucursales s ON e.sucursal_id=s.id ".$q." ORDER BY e.id DESC ";  
  
 				$resultado = mysqli_query($this->con(), $sql);  
 				while ($res = mysqli_fetch_row($resultado)) {
@@ -2387,7 +2388,7 @@
 				$i=0; 
 
 				
-				$sql="SELECT c.`descripcion`, r.`fecha_entrega`, r.`comentario`
+				$sql="SELECT c.`descripcion`,DATE_FORMAT( r.`fecha_entrega`, '%d/%b/%Y') AS fecha, r.`comentario`
 					FROM i_equipo e
 					INNER JOIN i_responsivas r ON r.`equipo_id`=e.`id`
 					INNER JOIN capturistas c ON c.id=r.`capturista_id`

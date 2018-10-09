@@ -39,10 +39,11 @@
                                      <input id="num_equipo"  placeholder="Numero equipo" type="text" class="validate">
                                     <label for="num_equipo"># Equipo</label>
                      </div>
-                </div>
+                
                     <div class="col s12" align="center">
                             <a id="BtnBusquedaEquipo" class="waves-effect btn blue darken-4"><i class="material-icons left">search</i>Buscar</a>
                     </div>  
+                </div>
             </div>
         </div>
 
@@ -230,8 +231,8 @@
           
            </div>
            <div class="modal-footer">
-               <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
-               <a id="#!" class="modal-action modal-close waves-effect waves-light btn green darken-4 right"><i class="material-icons left"></i>Aceptar</a>
+               
+               <a id="#!" class="modal-action modal-close waves-effect waves-light btn green darken-4 right"><i class="material-icons left"></i>Cerrar</a>
            </div>
     </div>
  
