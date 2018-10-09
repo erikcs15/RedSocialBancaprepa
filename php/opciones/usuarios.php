@@ -102,7 +102,7 @@
 			echo (json_encode($usuario->guardarPublicacion($_REQUEST['titulo'],$_REQUEST['descripcion'],$_REQUEST['imagen'],$_REQUEST['documento_id'],$_REQUEST['docuemento'],$_REQUEST['chbPDF'])));
 		break;
 		case 26: 
-			echo (json_encode($usuario->catalogoCorreos($_REQUEST['nombre'])));
+			echo (json_encode($usuario->catalogoCorreos($_REQUEST['cap_id'],$_REQUEST['sucursal'],$_REQUEST['puesto'])));
 		break;
 		case 27: 
 			echo (json_encode($usuario->catDocumentos()));

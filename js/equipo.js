@@ -17,9 +17,9 @@ $(document).ready(function(){
         
         console.log("Presionaste el boton para buscar");
         var idEquipo = $("#id_equipo").val();
-        var sucursal_id = String($("#sucursalesdd").val());
+        var sucursal_id = $("#sucursalesdd").val();
         var num_equipo = $("#num_equipo").val();
-        if(idEquipo=="" & sucursal_id=="null" & num_equipo=="")
+        if(idEquipo=="" & sucursal_id=="0" & num_equipo=="")
         {
             M.toast({html: 'Favor de ingresar algun dato.', classes: 'rounded red'}); 
             return;

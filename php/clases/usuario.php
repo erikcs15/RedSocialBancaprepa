@@ -148,23 +148,56 @@
 				return $datos;  
 
 			}
-			public function catalogoCorreos($nombre)
+			public function catalogoCorreos($capid, $suc, $puesto)
 			{
                 $q="";
 				$res=array();
 				$datos=array();
 				$i=0; 
 
-				if($nombre != "")
+
+				if($capid>0 AND $suc<=0 AND $puesto<=0)
 				{	
-					$q = "WHERE c.descripcion LIKE '%$nombre%'";
+					$q = "WHERE c.id=$capid";
+				}
+				if($capid>0 AND $suc>0 AND $puesto<=0)
+				{
+					$q = "WHERE c.id=$capid AND c.sucursal_id=$suc";
+				}
+				if($capid>0 AND $suc<=0 AND $puesto>0)
+				{
+					$q = "WHERE c.id=$capid AND c.rol_id=$puesto";
+				}
+				if($capid<=0 AND $suc<=0 AND $puesto>0)
+				{
+					$q = "WHERE c.rol_id=$puesto";
+				}
+				if($capid<=0 AND $suc>0 AND $puesto>0)
+				{
+					$q = "WHERE c.rol_id=$puesto AND c.sucursal_id=$suc";
+				}
+				if($capid<=0 AND $suc>0 AND $puesto<=0)
+				{
+					$q = "WHERE c.sucursal_id=$suc";
+				}
+				if($capid<=0 AND $suc<=0 AND $puesto<=0)
+				{
+					$q = "";
+				}
+				if($capid>0 AND $suc>0 AND $puesto>0)
+				{
+					$q = "WHERE c.id=$capid AND c.sucursal_id=$suc AND  c.rol_id=$puesto";
 				}
 
-				$sql="SELECT c.id, cor.dominio, s.nomComercial, c.descripcion, cor.correo, cor.pass, cor.entregado, cor.estatus
+				
+				$sql="SELECT c.id, cor.dominio, s.nomComercial, c.descripcion, cor.correo, cor.pass, cor.entregado, cor.estatus, r.`descripcion`
 						FROM capturistas c
 						INNER JOIN b_correos cor ON cor.capturista_id=c.id
-						INNER JOIN sucursales s ON s.id = c.sucursal_id ".$q." ORDER BY cor.id DESC"; 
+						INNER JOIN sucursales s ON s.id = c.sucursal_id 
+						INNER JOIN roles r ON c.`rol_id`=r.`id`".$q." ORDER BY c.id DESC"; 
 				$resultado = mysqli_query($this->con(), $sql); 
+
+				
 
 				while ($res = mysqli_fetch_row($resultado)) {
 				   $datos[$i]['id_empleado'] = $res[0];
@@ -175,6 +208,7 @@
 				   $datos[$i]['pass']=$res[5];
 				   $datos[$i]['entregado']=$res[6]; 
 				   $datos[$i]['estatus']=$res[7]; 
+				   $datos[$i]['puesto']=$res[8];
 				   $i++;
 
 				} 

@@ -298,16 +298,6 @@ $(document).ready(function(){
       onRequest({ opcion : 4,doc:busqueda},respDoc);
   }
 });
- //Busqueda de correos por nombre
- $("#busquedaCorreos").keypress(function(e) {
-    //inicializamos variables
-  if(e.which == 13) {
-      var busqueda='';
-      busqueda =  $("#busquedaCorreos").val();
-      console.log(busqueda);
-      onRequest({ opcion : 26,nombre:busqueda},respCorreos);
-  }
-});
 //Busqueda de usuarios
 $("#busquedaUsuarios").keypress(function(e) {
     //inicializamos variables
@@ -534,6 +524,20 @@ $("#btnAgEmp_PuestoTmp").click(function() {
 });
 
 
+$("#btnLimpiar").click(function() {
+    
+    $("#IdEmpleadoCor").val("");
+    $("#nombreAbuscarCor").val("");
+    //$("#sucursalesAbuscar").prop('selectedIndex',0);
+    $("#puestosCor").prop('selectedIndex',0);
+    $('#sucursalesAbuscar').find('option:first').attr('selected', 'selected').parent('select');
+    $('select').val('');
+    M.toast({html: 'Filtros reestablecidos!', classes: 'rounded green'});  
+    return;
+
+
+});
+
 ///------------------------------------------PUBLICACIONES--------------------------------------------------------
 //----------------------------------------------Agregar publicacion modal---------------------------------------- 
 $("#BtnAgregarPub").click(function() {
@@ -692,12 +696,34 @@ $("#passEmpleado").keypress(function(e) {
       
       });
 
-
-
-
-
-
+      //---------------------------BUSQUEDA DE CORREOS
+      //CLICK AL BOTON
+      $("#btnBusquedaCorreo").click(function() {
+      
+        var nombreB='';
+        nombreB =  $("#nombreAbuscarCor").val();
+        var sucursalB='';
+        sucursalB =  $("#sucursalesAbuscar").val();
+        var puestoB='';
+        puestoB =  $("#puestosCor").val();
+       
+        if(nombreB=="" )
+        {
+            $("#IdEmpleadoCor").val("0");
+        }
+        var id_empleado= $("#IdEmpleadoCor").val();
+        console.log("id empleado: "+id_empleado+" sucursal: "+sucursalB+" puesto: "+puestoB);
+       
+       
+        onRequest({ opcion : 26,cap_id:id_empleado,sucursal:sucursalB, puesto:puestoB},respCorreos);
+        
+      });
+      
+      
 });
+
+
+
 
 //----------------------------------------Termina document.READY()----------------------------------
 //------------------------------------------------------------------------------------------------------------------------////
@@ -739,7 +765,7 @@ function cargarMantPub(){
     
 }
 function cargarCorreos(){
-    onRequest({ opcion : 26 ,nombre:""}, respCorreos);
+    onRequest({ opcion : 26 ,cap_id:"0", sucursal:"0", puesto:"0"}, respCorreos);
     onRequest({ opcion : 70 }, respcargasucursales);
     onRequest({ opcion : 45 },respCargarPuestosParaCorreos);
     
@@ -918,6 +944,10 @@ function buscaEmpleadosCor()
         document.getElementById('listaEmpleadosBC').style.display = 'block';
         onRequest({ opcion : 84 ,nombre:bus}, respBuscarEmpleadosCorreo);
     }
+    else
+    {
+        document.getElementById('listaEmpleadosBC').style.display = 'none';
+    }
     console.log("Buscando texto:"+bus);
     
 }
@@ -1070,6 +1100,7 @@ var respCorreos = function(data) {
             d+= '<tr>'+
             '<td>'+data[i].id_empleado+'</td>'+ 
             '<td>'+data[i].nombrecompleto+'</td>'+ 
+            '<td>'+data[i].puesto+'</td>'+ 
             '<td>'+data[i].sucursal+'</td>'+   
             '<td>'+data[i].correo+'</td>'+
             '<td>'+data[i].pass+'</td>'+ 
@@ -3295,8 +3326,8 @@ var respCargarPuestosParaCorreos = function(data) {
         return;  
         
 
-        console.log(data)
-    var documento='<option value="0" disabled selected>Seleccione el puesto</option>';
+       
+    var documento='<option value="0" selected>Seleccione el puesto</option>';
 
     for(var i=0; i<data.length; i++){
         documento+='<option value='+data[i].id+'>'+data[i].nombre+'</option>';

@@ -64,7 +64,8 @@
                         </div>
                 
                     <div class="col s12" align="center">
-                            <a id="BtnBusquedaEquipo" class="waves-effect btn blue darken-4"><i class="material-icons left">search</i>Buscar</a>
+                            <a id="btnLimpiar" class="waves-effect btn blue darken-4"><i class="material-icons left">brush</i>Limpiar</a>
+                            <a id="btnBusquedaCorreo" class="waves-effect btn blue darken-4"><i class="material-icons left">search</i>Buscar</a>
                     </div>  
                 </div>
             </div>
@@ -82,11 +83,12 @@
                 <div id="content">
                     <div class="row"><!-- CONTENEDOR 1 -->
                             <div class="col s12"><!-- CONTENEDOR 2 -->
-                                    <table class="highlight">
+                                    <table class="highlight" width="100%"  border="0" cellspacing="0" cellpadding="0" style="font-size:13px">
                                         <thead >
                                         <tr>
                                             <th>Id</th>
                                             <th>Nombre</th>
+                                            <th>Puesto</th>
                                             <th>Sucursal</th>
                                             <th>Correo</th>
                                             <th id="password" style='display:none;'>Pass</th>
