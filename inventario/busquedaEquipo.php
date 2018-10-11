@@ -54,7 +54,7 @@
                 <div id="container">
                     <div class="row"><!-- CONTENEDOR 1 -->
                             <div class="col s12 "><!-- CONTENEDOR 2 -->
-                                    <table class="highlight">
+                                    <table class="highlight" width="100%"  border="0" cellspacing="0" cellpadding="0" style="font-size:13px">
                                         <thead >
                                         <tr>
                                             <th>Id</th>
@@ -224,6 +224,11 @@
                                             </tbody>
                                     </table>
                         </div>
+
+                        <div class="input field col s2" >
+                           
+                            <input placeholder="Num Equipo" id="numEquipoOculto" type="text" class="validate"  style='display:none;' >
+                        </div>
                        
                        
                    </div>
@@ -233,6 +238,41 @@
            <div class="modal-footer">
                
                <a id="#!" class="modal-action modal-close waves-effect waves-light btn green darken-4 right"><i class="material-icons left"></i>Cerrar</a>
+           </div>
+    </div>
+
+    <div id="modalEditarEquipo" class="modal">
+           <nav class="blue darken-3">
+               <div class="nav-wrapper">
+                   <a href="#!" class="brand-logo">
+                       <i class="large material-icons">edit</i>Editar equipo
+                   </a>
+               </div>
+           </nav>
+           <div class="modal-content">
+           <form class="col s12 no-padding">
+                   <div class="row">
+                        <div class="input field col s2">
+                            <input placeholder="Id Equipo" id="idEquipoEdit" type="text" class="validate" disabled>
+                            <label for="Id Equipo" class="activate" ></label>
+                        </div>
+                        <div class="input field col s2">
+                            <input placeholder="Num Equipo" id="numEquipo" type="text" class="validate" >
+                            <label for="Num Equipo" class="activate" ></label>
+                        </div>
+                       
+                       <div class="input field col s12">
+                           <label for="descEdit">Descripcion del equipo</label>
+                           <textarea id="descEdit" class="materialize-textarea"></textarea>
+                           
+                       </div>
+                   </div>
+               </form>         
+          
+           </div>
+           <div class="modal-footer">
+               <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
+               <a id="btnEditarEquipo" class="waves-effect btn blue darken-3"><i class="material-icons left">edit</i>Editar</a>
            </div>
     </div>
  

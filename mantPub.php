@@ -31,7 +31,7 @@
                 <div id="content">
                     <div class="row"><!-- CONTENEDOR 1 -->
                             <div class="col s12"><!-- CONTENEDOR 2 -->
-                                    <table class="highlight">
+                                    <table class="highlight" width="100%"  border="0" cellspacing="0" cellpadding="0" style="font-size:13px">
                                         <thead >
                                         <tr>
                                             <th>Id</th>

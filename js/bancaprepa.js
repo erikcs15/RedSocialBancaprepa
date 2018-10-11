@@ -528,10 +528,10 @@ $("#btnLimpiar").click(function() {
     
     $("#IdEmpleadoCor").val("");
     $("#nombreAbuscarCor").val("");
-    //$("#sucursalesAbuscar").prop('selectedIndex',0);
-    $("#puestosCor").prop('selectedIndex',0);
-    $('#sucursalesAbuscar').find('option:first').attr('selected', 'selected').parent('select');
-    $('select').val('');
+    onRequest({ opcion : 70 }, respcargasucursales);
+    onRequest({ opcion : 45 },respCargarPuestosParaCorreos);
+    
+    
     M.toast({html: 'Filtros reestablecidos!', classes: 'rounded green'});  
     return;
 
@@ -952,6 +952,22 @@ function buscaEmpleadosCor()
     
 }
 
+function buscaEmpleadosAdd()
+{
+    var bus= $("#nombreEmpleadoCorreo").val();
+    if (bus.length>2)
+    {
+        document.getElementById('listaEmpleadosADD').style.display = 'block';
+        onRequest({ opcion : 84 ,nombre:bus}, respAddEmpleadosCorreo);
+    }
+    else
+    {
+        document.getElementById('listaEmpleadosADD').style.display = 'none';
+    }
+    console.log("Buscando texto:"+bus);
+    
+}
+
 
 function agregarAdiv(id_empleado)
 {  
@@ -960,6 +976,19 @@ function agregarAdiv(id_empleado)
     $("#IdEmpleadoCor").val(id_empleado);
     var id=$("#IdEmpleadoCor").val();
     onRequest({ opcion : 87 ,empleado_id:id}, respAgregarNombreAdiv);
+
+}
+
+
+
+function agregarAdivADD(id_empleado)
+{  
+    
+    document.getElementById('listaEmpleadosADD').style.display = 'none';
+    $("#idEmpleadoCorreo").val(id_empleado);
+    var id=$("#idEmpleadoCorreo").val();
+    onRequest({ opcion : 63,usuario_id:id},respCargarEmpleadoCorreo);
+    onRequest({ opcion : 87 ,empleado_id:id}, respAgregarNombreAdivADD);
 
 }
 //----------------------------------------Funcion de respuesta de la consulta que aplicamos con ajax-----------------------------
@@ -3301,6 +3330,40 @@ var respAgregarNombreAdiv = function(data) {
     var nombre=data[0].nombre;
     $("#nombreAbuscarCor").val(nombre);
     
+}
+var respAgregarNombreAdivADD = function(data) { 
+    
+    if (!data && data == null)
+    {
+        M.toast({html: 'No se encontraron coincidencias.', classes: 'rounded red'}); 
+        return;
+    }
+
+    var nombre=data[0].nombre;
+    $("#nombreEmpleadoCorreo").val(nombre);
+    
+}
+var respAddEmpleadosCorreo = function(data) { 
+    
+    if (!data && data == null)
+    {
+        M.toast({html: 'No se encontraron coincidencias.', classes: 'rounded red'}); 
+        return;
+    }
+    
+    var d='';
+    for (var i = 0; i < data.length; i++) 
+    {
+        var nombre=String(data[i].descripcion);
+        
+        d+="<tr> <td>"+data[i].descripcion+" </td>" 
+        +"<td> <a onclick='agregarAdivADD("+data[i].id+");' class='waves-effect waves-light btn-floating btn-small blue'><i class='material-icons'>add</i></a> " +
+        "</td> </tr> ";
+        
+    }
+
+    $("#listaEmpleadosADD").addClass("espacioClientes");
+    $("#listaEmpleadosTablaADD").html(d);
 }
 
 var respcargasucursales = function(data) { 

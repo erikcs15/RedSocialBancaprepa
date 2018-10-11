@@ -141,9 +141,24 @@
                            <label for="Id:" class="activate"></label>
                        </div>
                        <div class="input field col s6">
-                           <input placeholder="Nombre" id="nombreEmpleadoCorreo" type="text" class="validate">
+                           <input placeholder="Nombre" id="nombreEmpleadoCorreo" type="text" class="validate" onkeyup="buscaEmpleadosAdd()">
                            <label for="Nombre" class="activate"></label>
                        </div>
+                    </div>
+                    <div class="row">
+                       <div class="input field col s2">
+                            <label for="Id" class="activate" '></label>
+                            <input placeholder="Id" id="idficticio2" type="text" class="validate" style='display:none;' >
+                        </div>
+                        <div class="input field col s6 " id="listaEmpleadosADD">
+                                    <table class="highlight">
+                                                    <tbody id="listaEmpleadosTablaADD">
+                                                    
+                                                    </tbody>
+                                    </table>
+                        </div>
+                    </div>
+                    <div class="row">
                        <div class="input field col s6">
                            <input placeholder="Correo" id="correoEmpleado" type="text" class="validate" >
                            <label for="Correo" class="activate"></label>

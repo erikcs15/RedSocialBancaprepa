@@ -19,11 +19,7 @@ $(document).ready(function(){
         var idEquipo = $("#id_equipo").val();
         var sucursal_id = $("#sucursalesdd").val();
         var num_equipo = $("#num_equipo").val();
-        if(idEquipo=="" & sucursal_id=="0" & num_equipo=="")
-        {
-            M.toast({html: 'Favor de ingresar algun dato.', classes: 'rounded red'}); 
-            return;
-        }
+      
        
         console.log("id:"+ idEquipo+" sucursal:"+sucursal_id+" tipo:"+ num_equipo);
         
@@ -48,6 +44,29 @@ $(document).ready(function(){
         console.log("id:"+ idEquipo+" nota de cancelacion:"+notacancelacion);
         
         onRequest({ opcion : 83 ,equipo_id:idEquipo, descripcion:notacancelacion}, respBajaEquipos);
+
+
+    });
+
+    $("#btnEditarEquipo").click(function() {
+        
+        console.log("Presionaste el boton para editar");
+        var idEquipo = $("#idEquipoEdit").val();
+        var desc = $("#descEdit").val().toUpperCase();
+        var numeroE = $("#numEquipo").val();
+        
+        if(numeroE=="" )
+        {
+            M.toast({html: 'Favor de ingresar el numero de equipo', classes: 'rounded red'}); 
+            return;
+        }
+        if(desc=="" )
+        {
+            M.toast({html: 'Favor de ingresar la descripcion', classes: 'rounded red'}); 
+            return;
+        }
+        
+        onRequest({ opcion : 89 ,equipo_id:idEquipo, desc:desc, num_equipo:numeroE}, respEditarEquipos);
 
 
     });
@@ -98,6 +117,15 @@ $(document).ready(function(){
         
 
     }
+
+    function editarEquipo(idequipo)
+    {
+        //Carga el equipo por su id para despues deshabilitarla
+        console.log("Id del equipo:"+idequipo);
+        onRequest({ opcion : 82 ,equipo_id:idequipo}, respCargarEquipoPorIdParaEditar);
+        
+
+    }
     function notaCancelacion(idequipo)
     {
         //Carga el equipo por su id para despues deshabilitarla
@@ -115,22 +143,29 @@ $(document).ready(function(){
             document.getElementById('listaEmpleados').style.display = 'block';
             onRequest({ opcion : 84 ,nombre:bus}, respBuscarEmpleados);
         }
+        else
+        {
+            document.getElementById('listaEmpleados').style.display = 'none';
+        }
         console.log("Buscando texto:"+bus);
         
     }
 
-    function asignarResponsable(equipo_id)
+    function asignarResponsable(equipo_id, numequipo)
     {  
         console.log("id del equipo:"+equipo_id);
         Cookies.set("i_idequipo", equipo_id );
+        console.log("Numero del equipo:"+numequipo);
+        Cookies.set("i_numequipo", numequipo );
         $("#IdResponsable").val("");
         $("#nomResponsable").val("");
         $("#comenEquipo").val("");
         $("#respFecha_ent").val("");
 
         var equip = Cookies.get('i_idequipo');
-
-        console.log("id del equipo desde cookies:"+equip);
+        var numEquip = Cookies.get('i_numequipo');
+       
+        console.log("id del equipo desde cookies:"+equip+" Numero de equipo desde cookies"+numEquip);
         onRequest({ opcion : 88 ,equipo_id:equip}, respCargarResponsables);
 
     }
@@ -140,21 +175,28 @@ $(document).ready(function(){
         var equip = Cookies.get('i_idequipo');
         var id_emp = $("#IdResponsable").val();
         var fecha_ent = $("#respFecha_ent").val();
-        if(fecha_ent=="")
+        var numEquipo = Cookies.get('i_numequipo');
+        if(id_emp=="")
         {
-            M.toast({html: 'Agrega la fecha de entrega', classes: 'rounded red'}); 
+            M.toast({html: 'Agregue al responsable porfavor!', classes: 'rounded red'}); 
             return;
         }
-
+        if(fecha_ent=="")
+        {
+            M.toast({html: 'Agrega la fecha de entrega!', classes: 'rounded red'}); 
+            return;
+        }
+        
         var comentarios = $("#comenEquipo").val();
         if(comentarios=="")
         {
-            M.toast({html: 'Agregue comentarios sobre el equipo.', classes: 'rounded red'}); 
+            M.toast({html: 'Agregue comentarios sobre el equipo porfavor!.', classes: 'rounded red'}); 
             return;
         }
         console.log("id de empleado:"+id_emp+" equipo id:"+equip+"fecha entrega:"+fecha_ent);
 
-        onRequest({ opcion : 85 ,id_empleado:id_emp, idequipo:equip, fecha_ent:fecha_ent, comen:comentarios}, respAsignarResponsiva);
+        //cargamos todos los equipos con ese numero de equipo
+        onRequest({ opcion : 90 ,num_equipo:numEquipo}, respSacarIddeLosnumeroDeEquipo);
 
     }
 
@@ -329,16 +371,17 @@ $(document).ready(function(){
             M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
             return;
         }
-        if(data[0].contador>0)
-        {
-            M.toast({html: 'Numero de Serie repetida', classes: 'rounded red'});  
-            return;
-        }
-        else 
+        if(data[0].contador>0 && data[0].serie=="n/a")
         {
             var tipo_equipo=$("#tiposequipos").val();
             var num_equipo=$("#num_equipo").val();
             onRequest({ opcion : 74, tipo_equipo:tipo_equipo, num_equipo:num_equipo},respverificar2);
+        }
+        else 
+        {
+            M.toast({html: 'Numero de Serie repetida', classes: 'rounded red'});  
+            return;
+           
         }
     }
 
@@ -363,6 +406,9 @@ $(document).ready(function(){
         $("#serie").val("");
         $("#fecha_compra").val("");
         $("#valor_factura").val("");
+        onRequest({ opcion : 70 }, respcargasucursales);
+
+        onRequest({ opcion : 71 }, respcargatiposequipo);
         cargarInventario();
     }
 
@@ -429,9 +475,10 @@ $(document).ready(function(){
                     '<td>'+data[i].equipo+'</td>'+             
                     '<td>'+data[i].estatus+'</td>'+
                     '<td class="'+x+' left">'+
-                    '<a onclick="asignarResponsable('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small  green darken-4 btn modal-trigger" href="#modalAsignarResp"><i class="material-icons">assignment_ind</i></a>' + 
+                    '<a onclick="asignarResponsable('+data[i].id+','+data[i].numEquipo+')" class="waves-effect waves-light btn-floating btn-small  green darken-4 btn modal-trigger" href="#modalAsignarResp"><i class="material-icons">assignment_ind</i></a>' + 
                     '<a onclick="desEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-2 btn modal-trigger disabled" href="#modalDeshEquipo"><i class="material-icons">do_not_disturb</i></a>' +
                     '<a onclick="notaCancelacion('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small grey darken-1 btn modal-trigger" href="#modalNotaCancelacion"><i class="material-icons">library_books</i></a>' + 
+                    '<a onclick="editarEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue darken-3 btn modal-trigger" href="#modalEditarEquipo"><i class="material-icons">edit</i></a>' + 
                     '</tr> ';
                 }
                 else
@@ -452,10 +499,10 @@ $(document).ready(function(){
                     '<td>'+data[i].equipo+'</td>'+             
                     '<td>'+data[i].estatus+'</td>'+
                     '<td class="'+x+' left">'+
-                    '<a onclick="asignarResponsable('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small  green darken-4 btn modal-trigger" href="#modalAsignarResp"><i class="material-icons">assignment_ind</i></a>' + 
-                    '<a onclick="desEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-2 btn modal-trigger" href="#modalDeshEquipo"><i class="material-icons">do_not_disturb</i></a>' 
-                    //'<a onclick="DetallesEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDetallesEquipo"><i class="material-icons">remove_red_eye</i></a>' + 
-                    +'</tr> ';
+                    '<a onclick="asignarResponsable('+data[i].id+','+data[i].numEquipo+')" class="waves-effect waves-light btn-floating btn-small  green darken-4 btn modal-trigger" href="#modalAsignarResp"><i class="material-icons">assignment_ind</i></a>' + 
+                    '<a onclick="desEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-2 btn modal-trigger" href="#modalDeshEquipo"><i class="material-icons">do_not_disturb</i></a>' +
+                    '<a onclick="editarEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue darken-3 btn modal-trigger" href="#modalEditarEquipo"><i class="material-icons">edit</i></a>' + 
+                    '</tr> ';
                 }
             }
                 
@@ -473,6 +520,22 @@ $(document).ready(function(){
         if (data[0].id>0) { 
             console.log(data[0].id);
           $("#idEquipoDes").val(data[0].id);
+    
+           return;
+         
+        }
+    }
+
+    var respCargarEquipoPorIdParaEditar = function(data) { 
+    
+        if (!data && data == null) 
+        return; 
+    
+        if (data[0].id>0) { 
+            console.log(data[0].id);
+          $("#idEquipoEdit").val(data[0].id);
+          $("#numEquipo").val(data[0].numEquipo);
+          $("#descEdit").val(data[0].descripcion);
     
            return;
          
@@ -506,6 +569,20 @@ $(document).ready(function(){
         M.toast({html: 'El Equipo se dio de baja correctamente!', classes: 'rounded green'}); 
     
         $("#modalDeshEquipo").modal("close");
+    
+        busquedaEquipo();
+    }
+    var respEditarEquipos = function(data) { 
+    
+        if (!data && data == null)
+        {
+            M.toast({html: 'Equipo no Actualizado, contacte al area de sistemas.', classes: 'rounded red'}); 
+            return;
+        }
+        
+        M.toast({html: 'El Equipo se actualizo correctamente!', classes: 'rounded green'}); 
+    
+        $("#modalEditarEquipo").modal("close");
     
         busquedaEquipo();
     }
@@ -543,16 +620,7 @@ $(document).ready(function(){
             return;
         }
         
-        M.toast({html: 'Responsable asignado.', classes: 'rounded green'})
-        $("#IdResponsable").val("");
-        $("#nomResponsable").val("");
-        $("#comenEquipo").val("");
-        $("#respFecha_ent").val("");
-
-        var equip = Cookies.get('i_idequipo');
-
-        console.log("id del equipo desde cookies:"+equip);
-        onRequest({ opcion : 88 ,equipo_id:equip}, respCargarResponsables);
+       
     }
     
     
@@ -608,6 +676,44 @@ $(document).ready(function(){
         $("#datosEncargadoTabla").html(d);
        
     }
+
+    
+
+    var respSacarIddeLosnumeroDeEquipo = function(data) { 
+    
+        if (!data && data == null)
+        {
+            M.toast({html: 'Ocurrío un problema, contacte al equipo de sistemas.', classes: 'rounded red'}); 
+            return;
+        }
+
+        
+        var id_emp = $("#IdResponsable").val();
+        var fecha_ent = $("#respFecha_ent").val();
+        var comentarios = $("#comenEquipo").val();
+
+        
+        for (var i = 0; i < data.length; i++) 
+        {
+            console.log("Insertando a todos los numero de equipo");
+            var equipoID=data[i].id_equipo;
+            onRequest({ opcion : 85 ,id_empleado:id_emp, idequipo:equipoID, fecha_ent:fecha_ent, comen:comentarios}, respAsignarResponsiva);
+        }
+
+        M.toast({html: 'Responsable asignado a todos los numero de equipo correspondiente.', classes: 'rounded green'})
+        $("#IdResponsable").val("");
+        $("#nomResponsable").val("");
+        $("#comenEquipo").val("");
+        $("#respFecha_ent").val("");
+
+        var equip = Cookies.get('i_idequipo');
+
+        console.log("id del equipo desde cookies:"+equip);
+        onRequest({ opcion : 88 ,equipo_id:equip}, respCargarResponsables);
+
+       
+    }
+
     
     
 

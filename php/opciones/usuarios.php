@@ -291,6 +291,12 @@
 		case 88:
 			echo (json_encode($usuario->cargarResponsables($_REQUEST['equipo_id'])));
 		break;
+		case 89:
+			echo (json_encode($usuario->actualizarEquipo($_REQUEST['equipo_id'],$_REQUEST['desc'],$_REQUEST['num_equipo'])));
+		break;
+		case 90:
+			echo (json_encode($usuario->cargarIdEquipoXnumEquipo($_REQUEST['num_equipo'])));
+		break;
 
  	}
  

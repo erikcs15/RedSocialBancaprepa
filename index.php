@@ -8,10 +8,11 @@
         <meta charset="UTF-8">  
         <title>Intranet Bancaprepa</title>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
         <link rel="stylesheet" type="text/css" href="css/materialize.min.css">
-        <link rel="stylesheet" type="text/css" href="css/bancaprepa.css"> 
+        <link rel="stylesheet" type="text/css" href="css/bancaprepa.css">
+        <link rel="icon" type="image/png" href="img/favicon.ico" /> 
 </head>
-<link rel="icon" type="image/png" href="/img/favicon.ico" />
     <body onLoad="cargarPublicacionesNuevas()">
     <div id="container" ><!-- CONTENEDOR 1 -->
         <div class="nav-wrapper">
