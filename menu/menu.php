@@ -38,13 +38,14 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
         </nav>
 
 
-    <ul id="slide-out" class="sidenav sidenav-fixed blue darken-4"  style="transform: translateX(-100%);">
+    <ul id="slide-out" class="sidenav sidenav-fixed blue darken-3"  style="transform: translateX(-100%);">
                   <li>
                     <div class="user-view">
-                      <div class="background" >
+                      <div class="background" id="sidenav2">
                         <img src="/RedSocialBancaprepa/img/logo_bancaprepa.png"  style="width: 300px">
                       </div>
-                      <br>
+                      <br><br>
+                      
                     </div>  
                   </li>
                 
