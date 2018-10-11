@@ -14,7 +14,7 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
                         <a href="#" class="brand-logo"><i class="material-icons">grain</i>Intranet Bancaprepa</a>
                 
                         <ul class="right hide-on-med-and-down">
-                            <li><span id="btnNotiF" class="counts white-text"></span> <a class='dropdown-button waves-effect waves-dark' href='#' data-activates='dropdown_message'><i id="iconNotiF" class="material-icons">notifications_active</i> </a>
+                            <li><span id="btnNotiF" class="counts white-text"></span> <a class='dropdown-button waves-effect waves-dark' href='/RedSocialBancaprepa/index.php' data-activates='dropdown_message'><i id="iconNotiF" class="material-icons">notifications_active</i> </a>
                             <ul id="dropdownNotificacion" class="dropdown-content">     
                         </ul>
                         

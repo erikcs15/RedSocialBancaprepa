@@ -180,6 +180,12 @@ $(document).ready(function(){
           }
      });
 
+     $( "#btnNotiF" ).click(function() {  
+
+        location.href="/RedSocialBancaprepa/index.php";
+        
+     });
+
     //Inicia el evento click en el boton del login
     $( "#btn_login" ).click(function() { 
         //inicializamos variables
