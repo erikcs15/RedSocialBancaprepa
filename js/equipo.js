@@ -54,19 +54,43 @@ $(document).ready(function(){
         var idEquipo = $("#idEquipoEdit").val();
         var desc = $("#descEdit").val().toUpperCase();
         var numeroE = $("#numEquipo").val();
+        var marca =  $("#marcaEdit").val();
+        var modelo =  $("#modelEdit").val();
+        var serie =  $("#serieEdit").val();
+        var sucursal =  $("#sucursalesddEdit").val();
+
         
         if(numeroE=="" )
         {
-            M.toast({html: 'Favor de ingresar el numero de equipo', classes: 'rounded red'}); 
+            M.toast({html: 'Favor de ingresar el numero de equipo!', classes: 'rounded red'}); 
             return;
         }
         if(desc=="" )
         {
-            M.toast({html: 'Favor de ingresar la descripcion', classes: 'rounded red'}); 
+            M.toast({html: 'Favor de ingresar la descripcion!', classes: 'rounded red'}); 
             return;
         }
-        
-        onRequest({ opcion : 89 ,equipo_id:idEquipo, desc:desc, num_equipo:numeroE}, respEditarEquipos);
+        if(marca=="" )
+        {
+            M.toast({html: 'Favor de ingresar marca!', classes: 'rounded red'}); 
+            return;
+        }
+        if(modelo=="" )
+        {
+            M.toast({html: 'Favor de ingresar el modelo!', classes: 'rounded red'}); 
+            return;
+        }
+        if(serie=="" )
+        {
+            M.toast({html: 'Favor de ingresar la serie!', classes: 'rounded red'}); 
+            return;
+        }
+        if(sucursal=="0" )
+        {
+            M.toast({html: 'Favor de ingresar la sucursal!', classes: 'rounded red'}); 
+            return;
+        }
+        onRequest({ opcion : 89 ,equipo_id:idEquipo, desc:desc, num_equipo:numeroE, marca:marca, modelo:modelo, serie:serie, sucursal:sucursal}, respEditarEquipos);
 
 
     });
@@ -276,6 +300,22 @@ $(document).ready(function(){
         cargarMenuPorRol();
     
     }
+    var respcargasucursalesEdit = function(data) { 
+        if (!data && data == null)
+            return;  
+     
+        var documento='<option value="0"  selected>Seleccione Sucursal</option>';
+    
+        for(var i=0; i<data.length; i++){
+            documento+='<option value='+data[i].id+'>'+data[i].nomComercial+'</option>';
+        }
+        console.log("checarc");
+        
+        $('#sucursalesddEdit').html(documento);
+        $('#sucursalesddEdit').formSelect(); 
+       
+    
+    }
 
     var respcargatiposequipo = function(data) { 
         if (!data && data == null)
@@ -371,16 +411,27 @@ $(document).ready(function(){
             M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
             return;
         }
-        if(data[0].contador>0 && data[0].serie=="n/a")
+        if(data[0].contador>0 )
+        {
+            if(data[0].serie=="n/a")
+            {
+                var tipo_equipo=$("#tiposequipos").val();
+                var num_equipo=$("#num_equipo").val();
+                onRequest({ opcion : 74, tipo_equipo:tipo_equipo, num_equipo:num_equipo},respverificar2);
+            }
+            else
+            {
+                M.toast({html: 'Numero de Serie repetida', classes: 'rounded red'});  
+                return;
+            }
+            
+        }
+        else 
         {
             var tipo_equipo=$("#tiposequipos").val();
             var num_equipo=$("#num_equipo").val();
             onRequest({ opcion : 74, tipo_equipo:tipo_equipo, num_equipo:num_equipo},respverificar2);
-        }
-        else 
-        {
-            M.toast({html: 'Numero de Serie repetida', classes: 'rounded red'});  
-            return;
+           
            
         }
     }
@@ -530,12 +581,17 @@ $(document).ready(function(){
     
         if (!data && data == null) 
         return; 
-    
+
+        onRequest({ opcion : 70 }, respcargasucursalesEdit);
         if (data[0].id>0) { 
             console.log(data[0].id);
           $("#idEquipoEdit").val(data[0].id);
           $("#numEquipo").val(data[0].numEquipo);
           $("#descEdit").val(data[0].descripcion);
+          $("#marcaEdit").val(data[0].marca);
+          $("#modelEdit").val(data[0].modelo);
+          $("#serieEdit").val(data[0].serie);
+          $("#sucursalesddEdit").val(data[0].sucursal);
     
            return;
          
@@ -622,6 +678,18 @@ $(document).ready(function(){
         
        
     }
+
+    var respAsignarResponsivaAEquipo = function(data) { 
+    
+        if (!data && data == null)
+        {
+            M.toast({html: 'No se encontraron coincidencias.', classes: 'rounded red'}); 
+            return;
+        }
+        
+       
+    }
+    
     
     
 
@@ -698,6 +766,8 @@ $(document).ready(function(){
             console.log("Insertando a todos los numero de equipo");
             var equipoID=data[i].id_equipo;
             onRequest({ opcion : 85 ,id_empleado:id_emp, idequipo:equipoID, fecha_ent:fecha_ent, comen:comentarios}, respAsignarResponsiva);
+            onRequest({ opcion : 91 ,equipo_id:equipoID, encargado:id_emp}, respAsignarResponsivaAEquipo);
+            
         }
 
         M.toast({html: 'Responsable asignado a todos los numero de equipo correspondiente.', classes: 'rounded green'})

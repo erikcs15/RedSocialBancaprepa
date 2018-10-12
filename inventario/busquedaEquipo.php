@@ -252,19 +252,35 @@
            <div class="modal-content">
            <form class="col s12 no-padding">
                    <div class="row">
-                        <div class="input field col s2">
+                        <div class="input field col s1">
+                            <label for="Id Equipo" class="activate" >Id</label>
                             <input placeholder="Id Equipo" id="idEquipoEdit" type="text" class="validate" disabled>
-                            <label for="Id Equipo" class="activate" ></label>
                         </div>
                         <div class="input field col s2">
+                            <label for="Num Equipo" class="activate" >Numero de equipo</label>
                             <input placeholder="Num Equipo" id="numEquipo" type="text" class="validate" >
-                            <label for="Num Equipo" class="activate" ></label>
+                        </div>           
+                        <div class="input field col s3">
+                            <label for="Marca" class="activate" >Marca </label>
+                            <input placeholder="Marca" id="marcaEdit" type="text" class="validate" >
+                        </div>           
+                        <div class="input field col s3">
+                            <label for="Modelo" class="activate" >Modelo</label>
+                            <input placeholder="Modelo" id="modelEdit" type="text" class="validate" >
+                        </div>                     
+                        <div class="input field col s3">
+                            <label for="Serie" class="activate" >Serie</label>
+                            <input placeholder="Serie" id="serieEdit" type="text" class="validate" >
                         </div>
-                       
+                        <div class="input-field col s4">
+                            
+                            <select id="sucursalesddEdit">
+                            </select>
+                            <label>Sucursal</label>
+                        </div>               
                        <div class="input field col s12">
                            <label for="descEdit">Descripcion del equipo</label>
                            <textarea id="descEdit" class="materialize-textarea"></textarea>
-                           
                        </div>
                    </div>
                </form>         

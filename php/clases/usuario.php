@@ -2276,7 +2276,7 @@
 				$i=0; 
 
 				
-				$sql="SELECT id, descripcion, nota_cancelacion, fecha_baja, num_equipo
+				$sql="SELECT id, descripcion, nota_cancelacion, fecha_baja, num_equipo, marca, modelo, serie, sucursal_id
 					FROM i_equipo WHERE id=$idequipo"; 
 
 				$resultado = mysqli_query($this->con(), $sql); 
@@ -2287,6 +2287,10 @@
 				   $datos[$i]['nota'] = $res[2];
 				   $datos[$i]['fechaB'] = $res[3];
 				   $datos[$i]['numEquipo'] = $res[4];
+				   $datos[$i]['marca'] = $res[5];
+				   $datos[$i]['modelo'] = $res[6];
+				   $datos[$i]['serie'] = $res[7];
+				   $datos[$i]['sucursal'] = $res[8];
 				   $i++;
 
 				} 
@@ -2449,14 +2453,16 @@
 				return $datos;  
 
 			}
-			public function actualizarEquipo($idequipo,$desc, $numequipo)
+			public function actualizarEquipo($idequipo,$desc, $numequipo, $marca, $modelo, $serie, $suc)
 			{
 				$res=array();
 				$datos=array();
 				$resultado  =array();
 				$i=0;
 				
-				$sql="UPDATE i_equipo SET descripcion='$desc', num_equipo=$numequipo WHERE id=$idequipo";
+				$sql="UPDATE i_equipo SET descripcion='$desc', num_equipo=$numequipo, marca = '$marca', modelo='$modelo', serie='$serie', 
+					sucursal_id=$suc 
+					WHERE id=$idequipo";
 				
 				$resultado = mysqli_query($this->con(), $sql);   
 				$datos['i_equipo'] =  array('0' => '0' );
@@ -2492,6 +2498,19 @@
 
 				return $datos;  
 
+			}
+			public function actualizarEncargadoActual($idequipo,$encargadoActual)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+				
+				$sql="UPDATE i_equipo SET encargado_id=$encargadoActual	WHERE id=$idequipo";
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+				$datos['i_equipo'] =  array('0' => '0' );
+				return  $datos;	
 			}
 
 

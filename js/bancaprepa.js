@@ -1163,7 +1163,8 @@ var respCorreos = function(data) {
         }
         d+= '<tr>'+
         '<td>'+data[i].id_empleado+'</td>'+
-        '<td>'+data[i].nombrecompleto+'</td>'+  
+        '<td>'+data[i].nombrecompleto+'</td>'+
+        '<td>'+data[i].puesto+'</td>'+   
         '<td>'+data[i].sucursal+'</td>'+
         '<td>'+data[i].correo+'</td>'+
         '<td>'+data[i].entregado+'</td>'+ 
