@@ -497,6 +497,15 @@ $("#btnAgregarEmp_Rol").click(function() {
     
 });
 
+$("#agregaAtodos").click(function() {
+    console.log("Boton presionado");
+    console.log("Cargando todas las insercciones");
+    onRequest({ opcion : 93 }, respUsuariosParaInseccion);
+    
+    
+});
+
+
 
 $("#btnAgregarUsu_Empresa").click(function() {
     usuario = $("#UsuariosDD2").val();
@@ -3407,3 +3416,30 @@ var respCargarPuestosParaCorreos = function(data) {
     $('#puestosCor').formSelect(); 
    
 }
+
+var respUsuariosParaInseccion = function(data) { 
+    if (!data && data == null)
+        return;  
+    
+    for(var i=0; i<data.length; i++){
+        
+        var capturista=data[i].id;
+        var usuario=data[i].usuario;
+        var pass=data[i].pass;
+        onRequest({ opcion : 94 ,empleado_id:capturista, usuario:usuario, contra:pass}, respInsertarUsuarios);
+        
+    }
+
+    M.toast({html: 'Todas las insercciones realizadas correctamente.', classes: 'rounded green'}); 
+   
+}
+
+var respInsertarUsuarios = function(data) { 
+    if (!data && data == null)
+        return;  
+    
+        for(var i=0; i<data.length; i++){
+             console.log("Insertado correctamente "+i);
+        }
+}
+

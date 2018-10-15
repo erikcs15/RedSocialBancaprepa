@@ -2113,11 +2113,12 @@
 				
 				
 				$sql="SELECT e.id, e.sucursal_id,s.nomComercial, e.descripcion equipo,te.descripcion tipo,
-					estatus.descripcion estatus, e.`num_equipo`
+					estatus.descripcion estatus, e.`num_equipo`,IFNULL(c.`descripcion`,'Sin responsable asignado') AS responsable
 					FROM i_equipo e 
 					JOIN i_tipo_equipo te ON te.id=e.tipo_equipo_id
 					JOIN estatus ON estatus.id=e.estatus_id
-					INNER JOIN sucursales s ON e.sucursal_id=s.id ".$q." ORDER BY e.id DESC ";  
+					INNER JOIN sucursales s ON e.sucursal_id=s.id 
+					LEFT OUTER JOIN capturistas c ON c.id=e.`encargado_id` ".$q." ORDER BY e.id DESC ";  
  
 				$resultado = mysqli_query($this->con(), $sql);  
 				while ($res = mysqli_fetch_row($resultado)) {
@@ -2128,6 +2129,7 @@
 				   $datos[$i]['tipo'] = $res[4];
 				   $datos[$i]['estatus'] = $res[5];
 				   $datos[$i]['numEquipo'] = $res[6];
+				   $datos[$i]['responsable'] = $res[7];
 				   $i++;
 
 				} 
@@ -2513,6 +2515,137 @@
 				return  $datos;	
 			}
 
+			public function cargarSucursalPorEquipo($id_suc)
+			{
+  
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				
+				$sql="SELECT id,nomComercial
+				FROM sucursales WHERE id=$id_suc"; 
+
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['nomComercial'] = $res[1];
+				   $i++;
+
+				} 
+
+
+				$sql="SELECT id,nomComercial
+				FROM sucursales WHERE id<>$id_suc"; 
+
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['nomComercial'] = $res[1];
+				   $i++;
+
+				} 
+
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+			public function cargarInsercciones()
+			{
+  
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				
+				$sql="SELECT capturista_id, nombre, usuario,pass
+				FROM b_insertar_usuarios"; 
+
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['nombre'] = $res[1];
+				   $datos[$i]['usuario'] = $res[2];
+				   $datos[$i]['pass'] = $res[3];
+				   $i++;
+
+				} 
+
+				if ( count($datos )==0) { 
+					$datos[0]['capturista_id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+			public function insertarNuevosUsuarios($empleado_id,$usuario,$pass)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+				$sql="INSERT INTO usuarios SET nombre='$usuario', clave= MD5('$pass'), empleado=$empleado_id, pwdtmp='$pass'";
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+
+				$datos['usuarios'] =  array('0' => '0' );
+				return  $datos;	
+			}
+
+			public function cargarResponsiva($idEquipo)
+			{
+  
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				
+				$sql="SELECT e.id, e.descripcion,  e.num_equipo, r.`fecha_entrega`, c.descripcion
+				FROM i_equipo e 
+				INNER JOIN i_responsivas r ON e.encargado_id=r.`capturista_id`
+				INNER JOIN capturistas c ON c.`id`= e.`encargado_id`
+				WHERE e.id=$idEquipo
+				ORDER BY r.`id` DESC
+				LIMIT 1"; 
+
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['descripcion'] = $res[1];
+				   $datos[$i]['num_equipo'] = $res[2];
+				   $datos[$i]['fecha_entrega'] = $res[3];
+				   $datos[$i]['encargado'] = $res[4];
+				   $i++;
+
+				} 
+
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+
+			
 
 }
 

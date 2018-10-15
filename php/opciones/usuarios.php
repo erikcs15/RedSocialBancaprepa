@@ -300,6 +300,18 @@
 		case 91:
 			echo (json_encode($usuario->actualizarEncargadoActual($_REQUEST['equipo_id'],$_REQUEST['encargado'])));
 		break;
+		case 92:
+			echo (json_encode($usuario->cargarSucursalPorEquipo($_REQUEST['id_sucursal'])));
+		break;
+		case 93:
+			echo (json_encode($usuario->cargarInsercciones()));
+		break;
+		case 94:
+			echo (json_encode($usuario->insertarNuevosUsuarios($_REQUEST['empleado_id'],$_REQUEST['usuario'],$_REQUEST['contra'])));
+		break;
+		case 95:
+			echo (json_encode($usuario->cargarResponsiva($_REQUEST['equipo_id'])));
+		break;
 
  	}
  

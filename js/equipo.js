@@ -150,6 +150,15 @@ $(document).ready(function(){
         
 
     }
+    function imprimirResponsiva(idequipo)
+    {
+        //Carga el equipo por su id para despues deshabilitarla
+        console.log("Id del equipo:"+idequipo);
+        onRequest({ opcion : 95 ,equipo_id:idequipo}, respImprimirResponsiva);
+        
+
+    }
+    
     function notaCancelacion(idequipo)
     {
         //Carga el equipo por su id para despues deshabilitarla
@@ -300,20 +309,20 @@ $(document).ready(function(){
         cargarMenuPorRol();
     
     }
-    var respcargasucursalesEdit = function(data) { 
+    
+    var respCargarSucursalParaEditar = function(data) { 
         if (!data && data == null)
             return;  
      
-        var documento='<option value="0"  selected>Seleccione Sucursal</option>';
+        var documento='<option value="'+data[0].id+'" selected>'+data[0].nomComercial+'</option>';
     
-        for(var i=0; i<data.length; i++){
+        for(var i=1; i<data.length; i++){
             documento+='<option value='+data[i].id+'>'+data[i].nomComercial+'</option>';
         }
         console.log("checarc");
         
         $('#sucursalesddEdit').html(documento);
         $('#sucursalesddEdit').formSelect(); 
-       
     
     }
 
@@ -413,7 +422,7 @@ $(document).ready(function(){
         }
         if(data[0].contador>0 )
         {
-            if(data[0].serie=="n/a")
+            if(data[0].serie=="n/a" || data[0].serie=="N/A" || data[0].serie=="N/a" || data[0].serie=="n/A")
             {
                 var tipo_equipo=$("#tiposequipos").val();
                 var num_equipo=$("#num_equipo").val();
@@ -523,13 +532,15 @@ $(document).ready(function(){
                     '<td>'+data[i].nomComercial+'</td>'+  
                     '<td>'+data[i].numEquipo+'</td>'+
                     '<td>'+data[i].tipo+'</td>'+ 
-                    '<td>'+data[i].equipo+'</td>'+             
+                    '<td>'+data[i].equipo+'</td>'+ 
+                    '<td>'+data[i].responsable+'</td>'+            
                     '<td>'+data[i].estatus+'</td>'+
                     '<td class="'+x+' left">'+
                     '<a onclick="asignarResponsable('+data[i].id+','+data[i].numEquipo+')" class="waves-effect waves-light btn-floating btn-small  green darken-4 btn modal-trigger" href="#modalAsignarResp"><i class="material-icons">assignment_ind</i></a>' + 
                     '<a onclick="desEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-2 btn modal-trigger disabled" href="#modalDeshEquipo"><i class="material-icons">do_not_disturb</i></a>' +
                     '<a onclick="notaCancelacion('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small grey darken-1 btn modal-trigger" href="#modalNotaCancelacion"><i class="material-icons">library_books</i></a>' + 
                     '<a onclick="editarEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue darken-3 btn modal-trigger" href="#modalEditarEquipo"><i class="material-icons">edit</i></a>' + 
+                    '<a onclick="imprimirResponsiva('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small teal darken-1 btn modal-trigger" href="#!"><i class="material-icons">print</i></a>' + 
                     '</tr> ';
                 }
                 else
@@ -547,12 +558,14 @@ $(document).ready(function(){
                     '<td>'+data[i].nomComercial+'</td>'+  
                     '<td>'+data[i].numEquipo+'</td>'+
                     '<td>'+data[i].tipo+'</td>'+ 
-                    '<td>'+data[i].equipo+'</td>'+             
+                    '<td>'+data[i].equipo+'</td>'+  
+                    '<td>'+data[i].responsable+'</td>'+                   
                     '<td>'+data[i].estatus+'</td>'+
                     '<td class="'+x+' left">'+
                     '<a onclick="asignarResponsable('+data[i].id+','+data[i].numEquipo+')" class="waves-effect waves-light btn-floating btn-small  green darken-4 btn modal-trigger" href="#modalAsignarResp"><i class="material-icons">assignment_ind</i></a>' + 
                     '<a onclick="desEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-2 btn modal-trigger" href="#modalDeshEquipo"><i class="material-icons">do_not_disturb</i></a>' +
                     '<a onclick="editarEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue darken-3 btn modal-trigger" href="#modalEditarEquipo"><i class="material-icons">edit</i></a>' + 
+                    '<a onclick="imprimirResponsiva('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small teal darken-1 btn modal-trigger" href="#!"><i class="material-icons">print</i></a>' + 
                     '</tr> ';
                 }
             }
@@ -582,7 +595,8 @@ $(document).ready(function(){
         if (!data && data == null) 
         return; 
 
-        onRequest({ opcion : 70 }, respcargasucursalesEdit);
+        var suc= data[0].sucursal;
+        onRequest({ opcion : 92, id_sucursal:suc }, respCargarSucursalParaEditar);
         if (data[0].id>0) { 
             console.log(data[0].id);
           $("#idEquipoEdit").val(data[0].id);
@@ -591,10 +605,32 @@ $(document).ready(function(){
           $("#marcaEdit").val(data[0].marca);
           $("#modelEdit").val(data[0].modelo);
           $("#serieEdit").val(data[0].serie);
-          $("#sucursalesddEdit").val(data[0].sucursal);
+          
     
            return;
          
+        }
+    }
+    
+    var respImprimirResponsiva = function(data) { 
+    
+        if (!data && data == null) 
+        return; 
+
+        
+        if (data[0].id>0) { 
+            console.log(data[0].id);
+         var id_equipo= data[0].id;
+         var numEquipo=data[0].num_equipo;
+         var descripcion=data[0].descripcion;
+         var fecha=data[0].fecha_entrega;
+         var encargado=data[0].encargado;
+         
+         var a = document.createElement('a');
+         a.href="/RedSocialBancaprepa/reportes/rep_test.php?numEquipo="+numEquipo+"&fecha_entrega="+fecha+"&capturista="+encargado+"&comentarios="+descripcion;
+         document.body.appendChild(a);
+         a.click();
+
         }
     }
     

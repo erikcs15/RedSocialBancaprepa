@@ -62,6 +62,7 @@
                                             <th># Equipo</th> 
                                             <th>Tipo</th>
                                             <th>Descripcion</th>
+                                            <th>Responsable</th>
                                             <th>Estatus</th>
                                             <th>Acciones</th>
                                         </tr>
