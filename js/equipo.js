@@ -541,6 +541,7 @@ $(document).ready(function(){
                     '<a onclick="notaCancelacion('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small grey darken-1 btn modal-trigger" href="#modalNotaCancelacion"><i class="material-icons">library_books</i></a>' + 
                     '<a onclick="editarEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue darken-3 btn modal-trigger" href="#modalEditarEquipo"><i class="material-icons">edit</i></a>' + 
                     '<a onclick="imprimirResponsiva('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small teal darken-1" href="#!"><i class="material-icons">print</i></a>' + 
+                    '<a onclick="imprimirQr('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue accent-3 href="#!"><i class="material-icons">center_focus_strong</i></a>' + 
                     '</tr> ';
                 }
                 else
@@ -566,6 +567,7 @@ $(document).ready(function(){
                     '<a onclick="desEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-2 btn modal-trigger" href="#modalDeshEquipo"><i class="material-icons">do_not_disturb</i></a>' +
                     '<a onclick="editarEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue darken-3 btn modal-trigger" href="#modalEditarEquipo"><i class="material-icons">edit</i></a>' + 
                     '<a onclick="imprimirResponsiva('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small teal darken-1" href="#!"><i class="material-icons">print</i></a>' + 
+                    '<a onclick="imprimirQr('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue accent-3" href="#!"><i class="material-icons">center_focus_strong</i></a>' + 
                     '</tr> ';
                 }
             }
@@ -628,6 +630,7 @@ $(document).ready(function(){
          
          var a = document.createElement('a');
          a.href="../reportes/responsiva.php?numEquipo="+numEquipo+"&fecha_entrega="+fecha+"&capturista="+encargado+"&comentarios="+descripcion+"&id_equipo="+id_equipo;
+         a.target="_blanck";
          document.body.appendChild(a);
          a.click();
 
@@ -638,6 +641,8 @@ $(document).ready(function(){
             return;
         }
     }
+
+
     
     var respCargarNota = function(data) { 
     
@@ -828,7 +833,13 @@ $(document).ready(function(){
     
     
 
-
+    function imprimirQr(id){
+        var a = document.createElement('a');
+         a.href="../reportes/rep_qr.php?equipo_id="+id;
+         a.target="_blanck";
+         document.body.appendChild(a);
+         a.click();
+    }
 
 
     
