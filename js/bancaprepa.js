@@ -3,8 +3,10 @@ $(document).ready(function(){
 
 
 
+    //Inicialización de los select Materialize
     $('select').formSelect();
     
+    //Inicializacion de los tooltip
     $('.tooltipped').tooltip({delay: 50});
       
     //CERRAR SESION
@@ -21,25 +23,6 @@ $(document).ready(function(){
     //inicializamos modals
         $('#modalAceptarDoc').modal();
         
-    //Autocomplete
-    $('input.autocomplete').autocomplete({
-        data: {
-          "Apple": null,
-          "Microsoft": null,
-          "Google": 'https://placehold.it/250x250',
-          "Prueba": null
-        },
-        limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
-        onAutocomplete: function(val) {
-          // Callback function when value is autcompleted.
-        },
-        minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
-      });
-            
-    
-
-
-
     //-----------------------------------
     //validacion del submit de publicaciones
     $( "#btnEnviarForm" ).click(function() {
@@ -65,6 +48,7 @@ $(document).ready(function(){
          }
  
 
+         //valida que los campos no queden vacios para evitar errores
         if(titulo.length<=0){
             M.toast({html: 'El Titulo de la publicacion no puede estar vacio', classes: 'rounded red'});
             return;
@@ -83,6 +67,7 @@ $(document).ready(function(){
             return;
         }
         /*
+        ---Se comento porque ya no fue necesario---
         if(tiporol<=0){
             M.toast({html: 'Es necesario especificar el rol al que se dirige la publicacion', classes: 'rounded red'});
             return;
@@ -180,6 +165,8 @@ $(document).ready(function(){
           }
      });
 
+
+     //el boton de notificacion nos enviara al inicio para ver las publicaciones faltantess
      $( "#btnNotiF" ).click(function() {  
 
         location.href="/RedSocialBancaprepa/index.php";
@@ -222,7 +209,7 @@ $(document).ready(function(){
 
      
 
-//--------------------------------------------------------------------------------------------------------------------------
+//---------------------------------Botones para redirigir en el Menu sidenav--------------------------------------------------
 
      //Redirige al login 
      $( "#salirsesion" ).click(function() { 
@@ -967,6 +954,12 @@ function buscaEmpleadosCor()
     
 }
 
+function CerrarYborrarDiv()
+{
+    $("#nombreAbuscarCor").val("");
+    document.getElementById('listaEmpleadosBC').style.display = 'none';
+}
+
 function buscaEmpleadosAdd()
 {
     var bus= $("#nombreEmpleadoCorreo").val();
@@ -1132,54 +1125,84 @@ var respCorreos = function(data) {
         document.getElementById('password').style.display = 'block';
         document.getElementById('accionesC').style.display = 'block';
         document.getElementById('AgregaCorreosBtnFlotante').style.display = 'block';
+       
+        
         for (var i = 0; i < data.length; i++) {
-            if(i%2==0)
+            var nombre=String(data[i].nombrecompleto);
+            console.log("-------"+nombre);
+            if(nombre=="undefined")
             {
-                x='even';
+               d+= '<tr>'+
+               '<td>Sin correo asignado</td>'+
+               '<td class="left">'+ 
+               '</tr> ';  
+               $("#tablaCorreos").html(d);
             }
             else
             {
-                x='odd';
+                if(i%2==0)
+                {
+                    x='even';
+                }
+                else
+                {
+                    x='odd';
+                }
+                d+= '<tr>'+
+                '<td>'+data[i].id_empleado+'</td>'+ 
+                '<td>'+data[i].nombrecompleto+'</td>'+ 
+                '<td>'+data[i].puesto+'</td>'+ 
+                '<td>'+data[i].sucursal+'</td>'+   
+                '<td>'+data[i].correo+'</td>'+
+                '<td>'+data[i].pass+'</td>'+ 
+                '<td>'+data[i].entregado+'</td>'+ 
+                '<td>'+data[i].estatus+'</td>'+ 
+                '<td class="'+x+' left">'+
+                '<a onclick="editarCorreo('+data[i].id_empleado+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarCorreo"><i class="material-icons">edit</i></a>' + 
+                //'<a onclick="deshabDoc('+data[i].id_empleado+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabDoc"><i class="material-icons">do_not_disturb_alt</i></a>' + 
+                '<a onclick="BorrarCorreo('+data[i].id_empleado+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarCorreo"><i class="material-icons">delete</i></a>' +
+                '</td>'  +'</tr> ';
             }
-            d+= '<tr>'+
-            '<td>'+data[i].id_empleado+'</td>'+ 
-            '<td>'+data[i].nombrecompleto+'</td>'+ 
-            '<td>'+data[i].puesto+'</td>'+ 
-            '<td>'+data[i].sucursal+'</td>'+   
-            '<td>'+data[i].correo+'</td>'+
-            '<td>'+data[i].pass+'</td>'+ 
-            '<td>'+data[i].entregado+'</td>'+ 
-            '<td>'+data[i].estatus+'</td>'+ 
-            '<td class="'+x+' left">'+
-            '<a onclick="editarCorreo('+data[i].id_empleado+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarCorreo"><i class="material-icons">edit</i></a>' + 
-            //'<a onclick="deshabDoc('+data[i].id_empleado+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabDoc"><i class="material-icons">do_not_disturb_alt</i></a>' + 
-            '<a onclick="BorrarCorreo('+data[i].id_empleado+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarCorreo"><i class="material-icons">delete</i></a>' +
-            '</td>'  +'</tr> ';
-            }
+        }
             
             $("#tablaCorreos").html(d);
     }
     else
     {
         for (var i = 0; i < data.length; i++) {
-        if(i%2==0)
-        {
-            x='even';
-        }
-        else
-        {
-            x='odd';
-        }
-        d+= '<tr>'+
-        '<td>'+data[i].id_empleado+'</td>'+
-        '<td>'+data[i].nombrecompleto+'</td>'+
-        '<td>'+data[i].puesto+'</td>'+   
-        '<td>'+data[i].sucursal+'</td>'+
-        '<td>'+data[i].correo+'</td>'+
-        '<td>'+data[i].entregado+'</td>'+ 
-        '<td>'+data[i].estatus+'</td>'+  
-        '<td class="'+x+' left">'+
-        '</td>'  +'</tr> ';
+            var nombre=String(data[i].nombrecompleto);
+            console.log("-------"+nombre);
+            var nombre=String(data[i].nombrecompleto);
+            console.log("-------"+nombre);
+            if(nombre=="undefined")
+            {
+               d+= '<tr>'+
+               '<td>Sin correo asignado</td>'+
+               '<td class="left">'+ 
+               '</tr> ';  
+               $("#tablaCorreos").html(d);
+            }
+            else
+            {
+                if(i%2==0)
+                {
+                    x='even';
+                }
+                else
+                {
+                    x='odd';
+                }
+                d+= '<tr>'+
+                '<td>'+data[i].id_empleado+'</td>'+
+                '<td>'+data[i].nombrecompleto+'</td>'+
+                '<td>'+data[i].puesto+'</td>'+   
+                '<td>'+data[i].sucursal+'</td>'+
+                '<td>'+data[i].correo+'</td>'+
+                '<td>'+data[i].entregado+'</td>'+ 
+                '<td>'+data[i].estatus+'</td>'+  
+                '<td class="'+x+' left">'+
+                '</td>'  +'</tr> ';
+            }
         }
         
         $("#tablaCorreos").html(d);
@@ -3324,10 +3347,22 @@ var respBuscarEmpleadosCorreo = function(data) {
     for (var i = 0; i < data.length; i++) 
     {
         var nombre=String(data[i].descripcion);
+        if(nombre=="undefined")
+         {
+            d+= '<tr>'+
+            '<td>Sin coincidencias.</td>'+
+            "<td> <a onclick='CerrarYborrarDiv();' class='waves-effect waves-light btn-floating btn-small black'><i class='large material-icons'>mood_bad</i></a> " +
+            '<td class="left">'+ 
+            '</tr> ';  
+            
+         }
+         else
+         {
+            d+="<tr> <td>"+data[i].id+" - "+data[i].descripcion+" </td>" 
+            +"<td> <a onclick='agregarAdiv("+data[i].id+");' class='waves-effect waves-light btn-floating btn-small blue'><i class='material-icons'>add</i></a> " +
+            "</td> </tr> ";
+         }
         
-        d+="<tr> <td>"+data[i].descripcion+" </td>" 
-        +"<td> <a onclick='agregarAdiv("+data[i].id+");' class='waves-effect waves-light btn-floating btn-small blue'><i class='material-icons'>add</i></a> " +
-        "</td> </tr> ";
         
     }
 

@@ -211,13 +211,13 @@ class PDF extends FPDF
         global $fecha_final;
         global $fecha_inicial;
 
-        $this->SetFillColor(260);//define el color de la pagina
+        /*$this->SetFillColor(260);//define el color de la pagina
         $this->RoundedRect(5, 4, 206, 25, 2.5, 'DF');
         $this->RoundedRect(5, 29, 206, 10, 2.5, 'DF');
         $this->RoundedRect(5, 39, 206, 225, 2.5, 'DF');
-
-        $this->Image("../archivos/jpg/bancaprepa.jpg",20,4.5,35,20);
-
+*/
+        $this->Image("../archivos/jpg/bancaprepa.jpg",50,4.5,110,50);
+        /*
         $this->SetFont('Arial','',8);
         $this->Ln(13);
         $this->Cell(150);
@@ -232,14 +232,17 @@ class PDF extends FPDF
         $this->Cell(125);
         $this->Cell(5,1,"CON FECHA DE "."$fecha_inicial"." AL ". $fecha_final,0,0,'L');
         $this->Ln(6);
+        */
     }
 
     public function Footer()
     {
+        /*
         $iNumPagina = $this->PageNo();
         $this->SetY(-10);
         $this->Cell(170);
         $this->Cell(10,1,'Page '.$this->PageNo(),0,0,'C');
+        */
     }
 
     public function connect($host,$username,$password,$db)

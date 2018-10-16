@@ -540,7 +540,7 @@ $(document).ready(function(){
                     '<a onclick="desEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-2 btn modal-trigger disabled" href="#modalDeshEquipo"><i class="material-icons">do_not_disturb</i></a>' +
                     '<a onclick="notaCancelacion('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small grey darken-1 btn modal-trigger" href="#modalNotaCancelacion"><i class="material-icons">library_books</i></a>' + 
                     '<a onclick="editarEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue darken-3 btn modal-trigger" href="#modalEditarEquipo"><i class="material-icons">edit</i></a>' + 
-                    '<a onclick="imprimirResponsiva('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small teal darken-1 btn modal-trigger" href="#!"><i class="material-icons">print</i></a>' + 
+                    '<a onclick="imprimirResponsiva('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small teal darken-1" href="#!"><i class="material-icons">print</i></a>' + 
                     '</tr> ';
                 }
                 else
@@ -565,7 +565,7 @@ $(document).ready(function(){
                     '<a onclick="asignarResponsable('+data[i].id+','+data[i].numEquipo+')" class="waves-effect waves-light btn-floating btn-small  green darken-4 btn modal-trigger" href="#modalAsignarResp"><i class="material-icons">assignment_ind</i></a>' + 
                     '<a onclick="desEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-2 btn modal-trigger" href="#modalDeshEquipo"><i class="material-icons">do_not_disturb</i></a>' +
                     '<a onclick="editarEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue darken-3 btn modal-trigger" href="#modalEditarEquipo"><i class="material-icons">edit</i></a>' + 
-                    '<a onclick="imprimirResponsiva('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small teal darken-1 btn modal-trigger" href="#!"><i class="material-icons">print</i></a>' + 
+                    '<a onclick="imprimirResponsiva('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small teal darken-1" href="#!"><i class="material-icons">print</i></a>' + 
                     '</tr> ';
                 }
             }
@@ -627,10 +627,15 @@ $(document).ready(function(){
          var encargado=data[0].encargado;
          
          var a = document.createElement('a');
-         a.href="/RedSocialBancaprepa/reportes/rep_test.php?numEquipo="+numEquipo+"&fecha_entrega="+fecha+"&capturista="+encargado+"&comentarios="+descripcion;
+         a.href="../reportes/responsiva.php?numEquipo="+numEquipo+"&fecha_entrega="+fecha+"&capturista="+encargado+"&comentarios="+descripcion+"&id_equipo="+id_equipo;
          document.body.appendChild(a);
          a.click();
 
+        }
+        else
+        {
+            M.toast({html: 'Sin responsable asignado, no hay responsiva para imprimir.', classes: 'rounded red'}); 
+            return;
         }
     }
     

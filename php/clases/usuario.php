@@ -2614,7 +2614,7 @@
 				$i=0; 
 
 				
-				$sql="SELECT e.id, e.descripcion,  e.num_equipo, r.`fecha_entrega`, c.descripcion
+				$sql="SELECT e.id, e.descripcion,  e.num_equipo,DATE_FORMAT( r.`fecha_entrega`, '%d/%b/%Y') AS fecha , c.descripcion
 				FROM i_equipo e 
 				INNER JOIN i_responsivas r ON e.encargado_id=r.`capturista_id`
 				INNER JOIN capturistas c ON c.`id`= e.`encargado_id`

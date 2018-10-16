@@ -1,7 +1,7 @@
 <?php
 require_once( '../pdf/pdf.php' );
 require_once( '../php/conexion/conexion.php' );
-//$c = new Conectar();
+$c = new Conectar();
 
 class DF extends PDF
 {
@@ -23,18 +23,11 @@ $num_equipo 	= $_REQUEST[ 'numEquipo'];
 $fecha_entrega 	= $_REQUEST[ 'fecha_entrega' ];
 $nombre 	= $_REQUEST[ 'capturista' ];
 $comentarios 	= $_REQUEST[ 'comentarios' ];
-
+//$id_equipo = $_REQUEST[ 'id_equipo' ];
 
 /*
-$sucursal_id 	= $_REQUEST[ 'sucursal_id'];
-$fecha_inicial 	= $_REQUEST[ 'fecha_inicial' ];
-$fecha_final 	= $_REQUEST[ 'fecha_final' ];
-$capturista_id 	= $_REQUEST[ 'capturista_id' ];
 
-$sql = "SELECT autorizacion_admin FROM usuarios WHERE empleado = $capturista_id";
-$arreglo = $funcion->consulta( $sql );
-while ( $fila = mysqli_fetch_array( $arreglo ) )
-    $autorizacion_admin = $fila[ 0 ];
+
 
 $sql = "SELECT nomComercial FROM sucursales WHERE id = $sucursal_id";
 $arreglo = $funcion->consulta( $sql );
@@ -62,21 +55,56 @@ $totalFondo 	= 0;
 //											 BUSCAR LOS PAGO DE RELACION DE VALES 														//
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 $df->SetFont('Arial','B',17);
-$df->Ln(10);
+$df->Ln(50);
 $df->Cell(50);
 $df->Cell(195,5,"COMPROBANTE DE ENTREGA",0,0,'J',false);
 
-$df->SetFont('Arial','',10);
+$df->SetFont('Arial','',12);
 
-$df->Ln(8);
+$df->Ln(18);
 
 
-$df->Multicell(180,5,utf8_decode("Comprobante de entrega del equipo con número de folio $num_equipo, el cual pertenece a PRESTAMOS RESPONSABLES SA DE CV y se hace entrega el día $fecha_entrega a $nombre quien se compromete a hacer uso del equipo exclusivamente dentro del ámbito laboral. Especificaciones del equipo entregado: $comentarios."),0,'J',0);
-$df->Ln(8);
+$df->Multicell(180,5,utf8_decode("Comprobante de entrega del equipo con número de folio $num_equipo, el cual pertenece a PRESTAMOS RESPONSABLES SA DE CV y se hace entrega el día $fecha_entrega a $nombre quien se compromete a hacer uso del equipo exclusivamente dentro del ámbito laboral. Especificaciones del equipo entregado:"),0,'J',0);
+$df->Ln(10);
+if($num_equipo > 0)
+{
+	$df->Ln(5);
+	$df->Cell(10);
+	$df->SetFont('Arial','B',11);
+	$df->Cell(1,5,'ID  # EQUIPO   TIPO                                             DESCRIPCION',0,0,'N',false);
+	$df->SetFont('Arial','',10);
+	$df->Ln(5);
+	$sql = "SELECT e.id, e.`num_equipo`, t.`descripcion`, e.`descripcion`
+	FROM i_equipo e 
+	INNER JOIN i_tipo_equipo t ON e.`tipo_equipo_id`=t.`id`
+	WHERE e.num_equipo=$num_equipo";
+	$resultado = mysqli_query($c->con(), $sql); 
+	while ($res = mysqli_fetch_row($resultado)) 
+	{
+		$id = $res[ 0 ];
+		$numEquipo = $res[ 1 ];
+		$tipo = $res[ 2 ];
+		$descripcionE = $res[ 3 ];
+
+		$df->Ln(3);
+		$df->Cell(10);
+		$df->Cell(1,5,"    ".$id,0,0,'C',false);
+		$df->Cell(10);
+		$df->Cell(1,5,"         ".$numEquipo,0,0,'C',false);
+		$df->Cell(10);
+		$df->Cell(1,5,"     ".$tipo."  ",0,0,'N',false);
+		$df->Cell(30);
+		$df->Multicell(120,5,utf8_decode($descripcionE),0,'J',0);
+	}
+}
+$df->Ln(12);
 $df->Multicell(180,5,utf8_decode("                                                Recibe:                                                                             Entrega:"),0,'',0);
-$df->Ln(8);
-$df->Multicell(180,5,utf8_decode("                               ______________________                                                ______________________  "),0,'',0);
-
+$df->Ln(10);
+$df->Multicell(180,5,utf8_decode("                             ___________________________                                    ___________________________  "),0,'',0);
+$df->Ln(10);
+$df->Multicell(180,5,utf8_decode("                                                                                        Lugar y fecha  "),0,'',0);
+$df->Ln(10);
+$df->Multicell(180,5,utf8_decode("                                                                  ___________________________________ "),0,'',0);
 
 //Fondo del texto Gris Claro Claro
 /*
