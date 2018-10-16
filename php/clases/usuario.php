@@ -194,7 +194,7 @@
 						FROM capturistas c
 						INNER JOIN b_correos cor ON cor.capturista_id=c.id
 						INNER JOIN sucursales s ON s.id = c.sucursal_id 
-						INNER JOIN roles r ON c.`rol_id`=r.`id`".$q." ORDER BY c.id DESC"; 
+						INNER JOIN roles r ON c.`rol_id`=r.`id`".$q." ORDER BY cor.id DESC"; 
 				$resultado = mysqli_query($this->con(), $sql); 
 
 				
