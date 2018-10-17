@@ -77,7 +77,7 @@ if($num_equipo > 0)
 	$sql = "SELECT e.id, e.`num_equipo`, t.`descripcion`, e.`descripcion`
 	FROM i_equipo e 
 	INNER JOIN i_tipo_equipo t ON e.`tipo_equipo_id`=t.`id`
-	WHERE e.num_equipo=$num_equipo";
+	WHERE e.num_equipo=$num_equipo AND e.estatus_id=5";
 	$resultado = mysqli_query($c->con(), $sql); 
 	while ($res = mysqli_fetch_row($resultado)) 
 	{
