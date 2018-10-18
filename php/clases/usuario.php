@@ -1589,7 +1589,7 @@
 				FROM b_publicaciones_bancaprepa p
 				INNER JOIN b_confirmaciones conf ON conf.publicacion_id=p.id
 				INNER JOIN capturistas c ON c.id=conf.empleado_id
-				WHERE c.id=$usuario AND conf.visto='$var' AND p.documento_id=$tipodoc";
+				WHERE c.id=$usuario AND conf.visto='$var' AND p.documento_id=$tipodoc and p.estatus=5";
 				
 				$resultado = mysqli_query($this->con(), $sql); 
 
@@ -1651,7 +1651,7 @@
 				FROM b_publicaciones_bancaprepa p
 				INNER JOIN b_confirmaciones conf ON conf.publicacion_id=p.id
 				INNER JOIN capturistas c ON c.id=conf.empleado_id
-				WHERE c.id=$usuario AND conf.visto='$var'";
+				WHERE c.id=$usuario AND conf.visto='$var' AND p.estatus=5";
 				
 				$resultado = mysqli_query($this->con(), $sql); 
 
@@ -2022,14 +2022,18 @@
 				$i=0; 
 
 				
-				$sql="SELECT COUNT(id)
-				FROM i_equipo 
-				WHERE tipo_equipo_id = $tipo_equipo AND num_equipo = $num_equipo"; 
+				$sql="SELECT COUNT(e.id), t.`descripcion`, e.`num_equipo`
+					FROM i_equipo e
+					INNER JOIN i_tipo_equipo t ON t.`id`=e.`tipo_equipo_id`
+					WHERE tipo_equipo_id = $tipo_equipo AND num_equipo = $num_equipo
+				"; 
 
 				$resultado = mysqli_query($this->con(), $sql); 
 
 				while ($res = mysqli_fetch_row($resultado)) {
 				   $datos[$i]['contador'] = $res[0];
+				   $datos[$i]['tipo'] = $res[1];
+				   $datos[$i]['numero'] = $res[2];
 				   $i++;
 
 				} 

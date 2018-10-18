@@ -482,7 +482,12 @@ $(document).ready(function(){
         if(data[0].contador>0)
         {
             M.toast({html: 'Tipo de equipo ya asignado a un numero de equipo', classes: 'rounded red'});  
-            return;
+            $('#modalAceptarDosEquipos').modal('open');
+
+            var d='';
+            d="<center> <h5><strong>El numero de equipo "+data[0].numero+" ya cuenta con un "+data[0].tipo+" ¿Seguro que desea agregar un "+data[0].tipo+" mas?</strong></h5></center>";
+
+            $("#textoModal").html(d);
         }
         else 
         {

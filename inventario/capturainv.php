@@ -83,6 +83,39 @@
             </div>
         </div>
 
+
+
+
+
+     <div id="modalAceptarDosEquipos" class="modal">
+                <nav class="grey">
+                    <div class="nav-wrapper">
+                        <a href="#!" class="brand-logo">
+                            <i class="large material-icons left">add</i>Aceptar dos equipos
+                        </a>
+                    </div>
+                </nav>
+                <div class="modal-content" id="textoModal"> 
+                   
+                </div>
+                <div class="row" >
+                            <div class="col s6 right"    >
+                            <a id="aceptarDobleTipo" class="waves-effect waves-light btn  accent-4 blue"><i class="material-icons left">done</i>Aceptar</a>
+                                
+                            </div>
+                            <div class="col s6 "   >
+                            <a id="cancelarDobleTipo" class="waves-effect modal-close waves-light btn right accent-4 red"><i class="material-icons left">close</i>Cancelar</a>
+                            </div>
+                </div>
+                
+                
+                <div class="modal-footer"> 
+                    
+                </div>
+            </div>
+
+
+
     <script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
     <script type="text/javascript" src="../js/materialize.min.js"></script>
     <script type="text/javascript" src="../js/ajax.js"></script>

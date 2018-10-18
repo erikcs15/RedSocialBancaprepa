@@ -2556,8 +2556,10 @@ var respInsertarTablaTemp = function(data) {
        //se le asigna a un input que esta oculto para guardarlo y que no se borro
 
     }
+
     //se toma el id del usuario para cargar los datos de la tabla temporal
     var usuario = Cookies.get('b_capturista_id');
+    console.log("Sacar id de la publicacion= "+id_publicacion);
     onRequest({ opcion : 47 ,idusuario:usuario}, respInsertarDetallePub);
     
 }
@@ -2569,6 +2571,7 @@ var respInsertarDetallePub = function(data) {
         M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
         return;
     }
+    console.log("------------------------------Probando una cosa mas aqui--------------------");
     //Se insertan los datos en la tabla b_detalle_pub uno por uno dependiendo de los datos cargados de la tabla temporal
     var publicacion=$("#idpublicacion1").val()
     for (var i = 0; i < data.length; i++) {    
@@ -2578,9 +2581,14 @@ var respInsertarDetallePub = function(data) {
        onRequest({ opcion : 52 ,publicacion_id:publicacion,empresa_id:empresa,puesto_id:puesto}, respInsertarDetallePubF);
 
     }
+    //por cada dato insertado en b_detalle_publicacion va a checar el rol de cada inserción para encontrar los usuarios 
+    //que tengan dicho rol para insertalos en la tabla de confirmaciones para saber que usuario vio y quien no vio la publicacion.
     
-     
-   
+    var publicacion=$("#idpublicacion1").val() // se toma la ultima publicacion insertada para buscar los datos en b_detalle para 
+    // luego insertarlos en la tabla de confirmaciones
+    console.log("Probando algo aqui------"+publicacion);
+    onRequest({ opcion : 53 ,publicacion_id:publicacion}, respCargarParaInsertarTablaConfirmaciones);
+
 }
 
 var respInsertarDetallePubF = function(data) { 
@@ -2590,11 +2598,7 @@ var respInsertarDetallePubF = function(data) {
         M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
         return;
     }
-    //por cada dato insertado en b_detalle_publicacion va a checar el rol de cada inserción para encontrar los usuarios 
-    //que tengan dicho rol para insertalos en la tabla de confirmaciones para saber que usuario vio y quien no vio la publicacion.
-    var publicacion=$("#idpublicacion1").val() // se toma la ultima publicacion insertada para buscar los datos en b_detalle para 
-    // luego insertarlos en la tabla de confirmaciones
-    onRequest({ opcion : 53 ,publicacion_id:publicacion}, respCargarParaInsertarTablaConfirmaciones);
+    
 }
 
 var respCargarParaInsertarTablaConfirmaciones = function(data) { 
@@ -2611,10 +2615,13 @@ var respCargarParaInsertarTablaConfirmaciones = function(data) {
         console.log("publicacion:"+publicacion+" puesto"+puesto+" empresa:"+empresa);
         if(puesto==0)
         {
+            console.log("Puesto es igual a 0");
             onRequest({ opcion : 54 ,empresa_id:empresa}, respInsertarTablaConfirmaciones);
         }
         else
         {
+            
+            console.log("Puesto no es igual a 0");
             onRequest({ opcion : 55 ,puesto_id:puesto, empresa_id:empresa}, respInsertarTablaConfirmaciones);
         }
      }
@@ -2634,7 +2641,7 @@ var respInsertarTablaConfirmaciones = function(data) {
         var empleado=data[i].empleado_id;
         var puesto=data[i].puesto_id;
         var empresa=data[i].empresa_id;
-        console.log("publicacion:"+publicacion+" puesto"+puesto+" empresa:"+empresa);
+        console.log(i+".- publicacion:"+publicacion+" puesto"+puesto+" empresa:"+empresa+" empleado:"+empleado);
 
         onRequest({ opcion : 56 ,publicacion_id:publicacion,empleado_id:empleado,puesto_id:puesto,empresa_id:empresa}, respTablaConfirmaciones);
 
