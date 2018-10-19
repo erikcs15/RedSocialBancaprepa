@@ -2586,7 +2586,7 @@ var respInsertarDetallePub = function(data) {
     
     var publicacion=$("#idpublicacion1").val() // se toma la ultima publicacion insertada para buscar los datos en b_detalle para 
     // luego insertarlos en la tabla de confirmaciones
-    console.log("Probando algo aqui------"+publicacion);
+    console.log("Probando algo aqui------"+publicacion);  
     onRequest({ opcion : 53 ,publicacion_id:publicacion}, respCargarParaInsertarTablaConfirmaciones);
 
 }
