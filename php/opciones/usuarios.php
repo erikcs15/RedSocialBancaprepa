@@ -312,6 +312,15 @@
 		case 95:
 			echo (json_encode($usuario->cargarResponsiva($_REQUEST['equipo_id'])));
 		break;
+		case 96:
+			echo (json_encode($usuario->cargarSitieneUsuarioOno($_REQUEST['usuario_id'])));
+		break;
+		case 97:
+			echo (json_encode($usuario->cargarUsuariosXID($_REQUEST['empleado_id'])));
+		break;
+		case 98:
+			echo (json_encode($usuario->cargarNumDepub($_REQUEST['usuario'],$_REQUEST['doc'])));
+		break;
 
  	}
  

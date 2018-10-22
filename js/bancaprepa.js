@@ -292,14 +292,23 @@ $(document).ready(function(){
   }
 });
 //Busqueda de usuarios
-$("#busquedaUsuarios").keypress(function(e) {
-    //inicializamos variables
-  if(e.which == 13) {
-      var busqueda='';
-      busqueda =  $("#busquedaUsuarios").val();
-      console.log(busqueda);
-      onRequest({ opcion : 40,nom_usuario:busqueda},respCargaUsuarios);
-  }
+
+
+$("#btnBusquedaUsuario").click(function() {
+    var busqueda='';
+    busqueda =  $("#IdEmpleadoCor").val();
+    if(busqueda=="")
+    {
+        console.log("Busqueda viene vacia");
+        onRequest({ opcion : 35, usuario_id:""}, respCargaUsuarios);
+    }
+    else
+    {
+        console.log(busqueda);
+        onRequest({ opcion : 97,empleado_id:busqueda},respCargaUsuarios);
+    }
+    
+
 });
 
 $("#idEmpleadoCorreo").keypress(function(e) {
@@ -637,7 +646,27 @@ $( "#BtnEditarCorreo" ).click(function() {
 });
 
 
+$( "#BtnAgregarUsuario" ).click(function() { 
+    var idusuario=$("#idEmpleadoCorreo").val();
+    var usuario=$("#UsuarioEmpleado").val();
+    var pass=$("#passEmpleado").val();
+   
+    console.log(idusuario+" "+usuario+" "+pass);
 
+    if(usuario=="" || pass=="")
+    {
+        M.toast({html: 'Usuario y/o contraseña vacios, favor de ingresar correo y contraseña', classes: 'rounded red'}); 
+        console.log(usuario+" "+pass);
+    }
+    else
+    {
+        onRequest({ opcion : 94 ,empleado_id:idusuario, usuario:usuario, contra:pass}, respInsertarUsuarios);;
+    }
+
+
+    
+    
+});
 //-----------------------------------------------------------------------------
 $("#passEmpleado").keypress(function(e) {
     //inicializamos variables
@@ -720,6 +749,8 @@ $("#passEmpleado").keypress(function(e) {
         onRequest({ opcion : 26,cap_id:id_empleado,sucursal:sucursalB, puesto:puestoB},respCorreos);
         
       });
+
+     
       
       
 });
@@ -786,6 +817,8 @@ function cargarMenuPorRol(){
     
     onRequest({ opcion : 62 ,usuario_id:empleadoid}, respNotificaciones);
 
+    onRequest({ opcion : 27}, respCargarTipoDedoc);
+
 }
 
 //cargamos el menu de publicaciones
@@ -803,6 +836,7 @@ function cargarPublicacionesNuevas(){
 }
 function cargarUsuariosT(){
     onRequest({ opcion : 35, usuario_id:""}, respCargaUsuarios);
+    
 }
 
 
@@ -960,7 +994,7 @@ function CerrarYborrarDiv()
     document.getElementById('listaEmpleadosBC').style.display = 'none';
 }
 
-function buscaEmpleadosAdd()
+function buscaEmpleados()
 {
     var bus= $("#nombreEmpleadoCorreo").val();
     if (bus.length>2)
@@ -975,7 +1009,21 @@ function buscaEmpleadosAdd()
     console.log("Buscando texto:"+bus);
     
 }
-
+function buscaEmpleadosUsuarios()
+{
+    var bus= $("#nombreEmpleadoCorreo").val();
+    if (bus.length>2)
+    {
+        document.getElementById('listaEmpleadosADD').style.display = 'block';
+        onRequest({ opcion : 84 ,nombre:bus}, respAddEmpleadosUsuario);
+    }
+    else
+    {
+        document.getElementById('listaEmpleadosADD').style.display = 'none';
+    }
+    console.log("Buscando texto:"+bus);
+    
+}
 
 function agregarAdiv(id_empleado)
 {  
@@ -996,6 +1044,17 @@ function agregarAdivADD(id_empleado)
     $("#idEmpleadoCorreo").val(id_empleado);
     var id=$("#idEmpleadoCorreo").val();
     onRequest({ opcion : 63,usuario_id:id},respCargarEmpleadoCorreo);
+    onRequest({ opcion : 87 ,empleado_id:id}, respAgregarNombreAdivADD);
+
+}
+
+function agregarAdivUsuario(id_empleado)
+{  
+    
+    document.getElementById('listaEmpleadosADD').style.display = 'none';
+    $("#idEmpleadoCorreo").val(id_empleado);
+    var id=$("#idEmpleadoCorreo").val();
+    onRequest({ opcion : 96,usuario_id:id},respCargarEmpleadoUsuario);
     onRequest({ opcion : 87 ,empleado_id:id}, respAgregarNombreAdivADD);
 
 }
@@ -2011,7 +2070,8 @@ var respCargaPublicacionesB = function(data) {
                 //console.log(data)
              var documento='';
              var primerMenu=0;
-
+             
+             
              for(var i=0; i<data.length; i++){
 
                 if(i==0){
@@ -2200,17 +2260,32 @@ var respCargaUsuarios  = function(data) {
 
     var d = '';
 
-     for (var i = 0; i < data.length; i++) {
-     d+= '<tr>'+
-     '<td>'+data[i].id+'</td>'+
-     '<td>'+data[i].nombre+'</td>'+
-     '<td>'+data[i].usuario+'</td>'+ 
-     '<td>'+data[i].estatus+'</td>' +
-     '<td class="left">'+
-     '<a onclick="editarUsu('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger"><i class="material-icons">edit</i></a>'+
-     //'<a onclick="deshabEmp('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabEmp"><i class="material-icons">do_not_disturb_alt</i></a>' + 
-     //'<a onclick="BorrarEmp('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarEmp"><i class="material-icons">delete</i></a>' +
-     '</td>'  +'</tr> ';
+     for (var i = 0; i < data.length; i++) 
+     {
+        var nombre=String(data[i].nombre);
+        console.log("-------"+nombre);
+        if(nombre=="undefined")
+        {
+            d+= '<tr>'+
+            '<td>Sin usuario asignado</td>'+
+            '<td class="left">'+ 
+            '</tr> ';  
+        }
+        else
+        {
+            d+= '<tr>'+
+            '<td>'+data[i].id+'</td>'+
+            '<td>'+data[i].nombre+'</td>'+
+            '<td>'+data[i].usuario+'</td>'+ 
+            '<td>'+data[i].estatus+'</td>' +
+            '<td class="left">'+
+            '<a onclick="editarUsu('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger"><i class="material-icons">edit</i></a>'+
+            //'<a onclick="deshabEmp('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabEmp"><i class="material-icons">do_not_disturb_alt</i></a>' + 
+            //'<a onclick="BorrarEmp('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarEmp"><i class="material-icons">delete</i></a>' +
+            '</td>'  +'</tr> ';
+        }
+        
+    
      }
      
      $("#tablaUsuarios").html(d);
@@ -2983,6 +3058,44 @@ var respCargarEmpleadoCorreo = function(data) {
     
 }
 
+var respCargarEmpleadoUsuario = function(data) {
+    //se insertan los datos en la tabla confirmaciones!
+    if (!data && data == null)
+    {
+        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
+        return;
+    }
+
+
+    var verif=String(data[0].nombrecompleto);
+    if(verif=="undefined")
+    {
+        $("#UsuarioEmpleado").attr("disabled","disabled");
+        $("#passEmpleado").attr("disabled", "disabled");
+        
+        M.toast({html: 'Id no registrado, verifique si es correcto', classes: 'rounded red'}); 
+    }
+    else
+    {
+        console.log(data[0].nombrecompleto);
+        console.log(data[0].usuario);
+        $("#nombreEmpleadoCorreo").val(data[0].nombrecompleto);
+        if(data[0].usuario=="vacio")
+        {
+            $("#UsuarioEmpleado").removeAttr("disabled");
+            $("#passEmpleado").removeAttr("disabled");
+        }
+        else
+        {
+            $("#UsuarioEmpleado").attr("disabled","disabled");
+            $("#passEmpleado").attr("disabled", "disabled");
+            M.toast({html: 'Empleado ya tiene Usuario!', classes: 'rounded red'});    
+        }
+    }
+
+    
+}
+
 
 
 var respAgregaCorreo = function(data) { 
@@ -3423,6 +3536,28 @@ var respAddEmpleadosCorreo = function(data) {
     $("#listaEmpleadosADD").addClass("espacioClientes");
     $("#listaEmpleadosTablaADD").html(d);
 }
+var respAddEmpleadosUsuario = function(data) { 
+    
+    if (!data && data == null)
+    {
+        M.toast({html: 'No se encontraron coincidencias.', classes: 'rounded red'}); 
+        return;
+    }
+    
+    var d='';
+    for (var i = 0; i < data.length; i++) 
+    {
+        var nombre=String(data[i].descripcion);
+        
+        d+="<tr> <td>"+data[i].descripcion+" </td>" 
+        +"<td> <a onclick='agregarAdivUsuario("+data[i].id+");' class='waves-effect waves-light btn-floating btn-small blue'><i class='material-icons'>add</i></a> " +
+        "</td> </tr> ";
+        
+    }
+
+    $("#listaEmpleadosADD").addClass("espacioClientes");
+    $("#listaEmpleadosTablaADD").html(d);
+}
 
 var respcargasucursales = function(data) { 
     if (!data && data == null)
@@ -3480,8 +3615,39 @@ var respInsertarUsuarios = function(data) {
     if (!data && data == null)
         return;  
     
-        for(var i=0; i<data.length; i++){
-             console.log("Insertado correctamente "+i);
+        M.toast({html: 'Usuario agregado correctamente.', classes: 'rounded green'});
+        $("#modalAgregarUsuarios").modal("close");
+        onRequest({ opcion : 35, usuario_id:""}, respCargaUsuarios);
+}
+
+
+
+
+var respCargarTipoDedoc = function(data) { 
+    if (!data && data == null)
+        return;  
+    
+        var capturista_id=Cookies.get('b_capturista_id');
+             
+        for(var i=0; i<data.length; i++)
+        {
+            onRequest({ opcion : 98 ,usuario:capturista_id, doc:data[i].id}, respCargarPubPendientesXtipoDoc); 
         }
 }
 
+
+
+var respCargarPubPendientesXtipoDoc = function(data) { 
+    if (!data && data == null)
+        return;  
+    
+        var conteo=data[0].conteo;
+        var menu="";
+        if(conteo>0)
+        {
+            menu="tab"+data[0].id_doc;
+            console.log("-----------menu------------"+menu);
+            $("#"+menu+"").removeClass('white-text');
+            $("#"+menu+"").addClass('red-text');
+        }
+}

@@ -2648,6 +2648,115 @@
 
 			}
 
+			public function cargarSitieneUsuarioOno($id_empleado)
+			{
+                
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				
+
+				$sql="SELECT c.id, c.descripcion, IFNULL(u.nombre,'vacio')
+				FROM capturistas c
+				LEFT OUTER JOIN usuarios u ON u.empleado=c.id
+				WHERE c.id=$id_empleado "; 
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['id_empleado'] = $res[0];
+				   $datos[$i]['nombrecompleto'] = $res[1];
+				   $datos[$i]['usuario']  = $res[2]; 
+				   
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id_empleado']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+			public function cargarUsuariosXID($id_usuario)
+			{
+				$q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+
+				$sql="SELECT c.id, c.`descripcion` AS Nombre, u.`nombre` AS Usuario, e.descripcion AS estatus
+					FROM usuarios u
+					INNER JOIN capturistas c ON c.id=u.`empleado`
+					INNER JOIN estatus e ON c.estatus_id=e.id 
+					WHERE c.id=$id_usuario
+					ORDER BY c.id DESC";
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['nombre'] = $res[1]; 
+				   $datos[$i]['usuario'] = $res[2]; 
+				   $datos[$i]['estatus'] = $res[3]; 
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+			public function cargarNumDepub($id_usuario, $doc_id)
+			{
+				$q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
+				$v="N";
+
+				$sql="SELECT COUNT(p.id), d.id, d.descripcion
+					FROM b_publicaciones_bancaprepa p
+					INNER JOIN b_confirmaciones conf ON conf.publicacion_id=p.id
+					INNER JOIN capturistas c ON c.id=conf.empleado_id
+					INNER JOIN b_cat_doc d ON d.id=p.documento_id
+					WHERE c.id=$id_usuario AND conf.visto='N' AND p.documento_id=$doc_id AND p.estatus=5";
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['conteo'] = $res[0];
+				   $datos[$i]['id_doc'] = $res[1]; 
+				   $datos[$i]['descripcion'] = $res[2]; 
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['conteo']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+			
+
 
 			
 
