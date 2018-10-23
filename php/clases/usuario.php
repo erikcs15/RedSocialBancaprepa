@@ -935,10 +935,12 @@
 					$q = "Where c.id='$usuario'";
 				}
 
-				$sql="SELECT c.id, c.`descripcion` AS Nombre, u.`nombre` AS Usuario, e.descripcion AS estatus
+				$sql="SELECT c.id, c.`descripcion` AS Nombre, u.`nombre` AS Usuario, 
+					IFNULL(u.pwdtmp,'Sin contraseña disponible') AS pass, u.entregado, e.descripcion AS estatus, s.`nomComercial`
 					FROM usuarios u
 					INNER JOIN capturistas c ON c.id=u.`empleado`
-					INNER JOIN estatus e ON c.estatus_id=e.id ".$q." ORDER BY c.id DESC";
+					INNER JOIN estatus e ON c.estatus_id=e.id
+					INNER JOIN sucursales s ON s.`id`=c.`sucursal_id` ".$q." ORDER BY c.id DESC";
 				
 				$resultado = mysqli_query($this->con(), $sql); 
 
@@ -947,7 +949,10 @@
 				   $datos[$i]['id'] = $res[0];
 				   $datos[$i]['nombre'] = $res[1]; 
 				   $datos[$i]['usuario'] = $res[2]; 
-				   $datos[$i]['estatus'] = $res[3]; 
+				   $datos[$i]['pass'] = $res[3]; 
+				   $datos[$i]['entregado'] = $res[4]; 
+				   $datos[$i]['estatus'] = $res[5]; 
+				   $datos[$i]['sucursal'] = $res[6]; 
 				   $i++;
 
 				} 
@@ -2690,10 +2695,12 @@
 				$i=0; 
 
 
-				$sql="SELECT c.id, c.`descripcion` AS Nombre, u.`nombre` AS Usuario, e.descripcion AS estatus
+				$sql="SELECT c.id, c.`descripcion` AS Nombre, u.`nombre` AS Usuario,
+					IFNULL(u.pwdtmp,'Sin contraseña disponible') AS pass, u.entregado, e.descripcion AS estatus, s.`nomComercial`
 					FROM usuarios u
 					INNER JOIN capturistas c ON c.id=u.`empleado`
 					INNER JOIN estatus e ON c.estatus_id=e.id 
+					INNER JOIN sucursales s ON s.`id`=c.`sucursal_id`
 					WHERE c.id=$id_usuario
 					ORDER BY c.id DESC";
 				
@@ -2704,7 +2711,10 @@
 				   $datos[$i]['id'] = $res[0];
 				   $datos[$i]['nombre'] = $res[1]; 
 				   $datos[$i]['usuario'] = $res[2]; 
-				   $datos[$i]['estatus'] = $res[3]; 
+				   $datos[$i]['pass'] = $res[3]; 
+				   $datos[$i]['entregado'] = $res[4]; 
+				   $datos[$i]['estatus'] = $res[5]; 
+				   $datos[$i]['sucursal'] = $res[6]; 
 				   $i++;
 
 				} 

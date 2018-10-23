@@ -1214,7 +1214,6 @@ var respCorreos = function(data) {
                 '<td>'+data[i].sucursal+'</td>'+   
                 '<td>'+data[i].correo+'</td>'+
                 '<td>'+data[i].pass+'</td>'+ 
-                '<td>'+data[i].entregado+'</td>'+ 
                 '<td>'+data[i].estatus+'</td>'+ 
                 '<td class="'+x+' left">'+
                 '<a onclick="editarCorreo('+data[i].id_empleado+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarCorreo"><i class="material-icons">edit</i></a>' + 
@@ -1257,7 +1256,6 @@ var respCorreos = function(data) {
                 '<td>'+data[i].puesto+'</td>'+   
                 '<td>'+data[i].sucursal+'</td>'+
                 '<td>'+data[i].correo+'</td>'+
-                '<td>'+data[i].entregado+'</td>'+ 
                 '<td>'+data[i].estatus+'</td>'+  
                 '<td class="'+x+' left">'+
                 '</td>'  +'</tr> ';
@@ -2276,7 +2274,10 @@ var respCargaUsuarios  = function(data) {
             d+= '<tr>'+
             '<td>'+data[i].id+'</td>'+
             '<td>'+data[i].nombre+'</td>'+
+            '<td>'+data[i].sucursal+'</td>'+
             '<td>'+data[i].usuario+'</td>'+ 
+            '<td>'+data[i].pass+'</td>'+ 
+            '<td>'+data[i].entregado+'</td>'+ 
             '<td>'+data[i].estatus+'</td>' +
             '<td class="left">'+
             '<a onclick="editarUsu('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger"><i class="material-icons">edit</i></a>'+

@@ -78,6 +78,9 @@
                     </div>
                    
             </div> 
+            <div class="col s2 center">
+                                <p><label><input type="checkbox" id="cbEntregadoUsuario"/><span>Entregado</span></label></p>
+                            </div>
             <div align="center">
                  <a id="btnAgregarUsu_Rol" class="waves-effect waves-light btn light-blue darken-4"><i class="material-icons left">add_circle_outline</i>Agregar Rol</a>
             </div>
