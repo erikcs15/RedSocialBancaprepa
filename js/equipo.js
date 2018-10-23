@@ -352,7 +352,8 @@ $(document).ready(function(){
         var serie=$("#serie").val();
         var fecha_compra=$("#fecha_compra").val();
         var valor_factura=$("#valor_factura").val();
-        console.log(sucursal_id+" "+tipo_equipo+" "+num_equipo+" "+descripcion+" "+marca+" "+modelo+" "+serie+" "+fecha_compra+""+valor_factura+"");
+        var area_id=$("#sltArea").val();
+        
     
     if(sucursal_id<=0)
     {
@@ -407,6 +408,13 @@ $(document).ready(function(){
         M.toast({html: 'Favor de ingresar valor factura', classes: 'rounded red'}); 
         return;
     }
+
+    if(area_id=="")
+    {
+        M.toast({html: 'Favor de seleccionar un area.', classes: 'rounded red'}); 
+        return;
+    }
+
 
     
     onRequest({ opcion : 73, serie:serie},respverificar);
@@ -501,12 +509,13 @@ $(document).ready(function(){
             var fecha_compra=$("#fecha_compra").val();
             var valor_factura=$("#valor_factura").val();
             var capturistaid=Cookies.get('b_capturista_id');
+            var area_id=$("#sltArea").val();
             
 
         
             onRequest({ opcion : 72, sucursal_id:sucursal_id, tipo_equipo:tipo_equipo,num_equipo:num_equipo, 
                 descripcion:descripcion,marca:marca, modelo:modelo,serie:serie, fecha_compra:fecha_compra, 
-                valor_factura:valor_factura, capturista:capturistaid},respCrearinvequipo);
+                valor_factura:valor_factura, capturista:capturistaid,area_id:area_id},respCrearinvequipo);
         }
     }
 
@@ -837,14 +846,6 @@ $(document).ready(function(){
 
     
     
-
-    function imprimirQr(id){
-        var a = document.createElement('a');
-         a.href="../reportes/rep_qr.php?equipo_id="+id;
-         a.target="_blanck";
-         document.body.appendChild(a);
-         a.click();
-    }
 
 
     

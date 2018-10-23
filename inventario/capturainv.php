@@ -12,7 +12,7 @@
         
 </head>
 <link rel="icon" type="image/png" href="/img/favicon.ico" /> 
-    <body onLoad="capturainv()">
+    <body onLoad="capturainv(),cargaAreas()">
     <div id="container" ><!-- CONTENEDOR 1 -->
         <div class="nav-wrapper">
            <?php
@@ -23,18 +23,25 @@
         <h4 class="header " align="center" style="color:#1a237e;">Captura de Equipos</h4>
         <div class="row">
                 <div class="row">
-                    <div class="input-field col s4 offset-s2">
+                    <div class="input-field col s2 offset-s3">
                             <i class="material-icons prefix">business</i>
                             <select id="sucursalesdd">
                             </select>
                             <label>Sucursal</label>
                     </div>
-                        <div class="input-field col s4">
-                        <i class="material-icons prefix">laptop_chromebook</i>
-                            <select id="tiposequipos">
-                            </select>
-                            <label>Tipo de Equipo</label>
-                        </div>
+                    <div class="input-field col s2">
+                    <i class="material-icons prefix">laptop_chromebook</i>
+                        <select id="sltArea">
+                        </select>
+                        <label>Área</label>
+                    </div>
+                    <div class="input-field col s2">
+                    <i class="material-icons prefix">laptop_chromebook</i>
+                        <select id="tiposequipos">
+                        </select>
+                        <label>Tipo de Equipo</label>
+                    </div>
+
                 </div>
                 <div class="row">
                                 <div class="input-field col s2 offset-s2">
@@ -122,6 +129,7 @@
     <script type="text/javascript" src="../js/bancaprepa.js"></script>
     <script type="text/javascript" src="../js/js.cookie.js"></script>
     <script type="text/javascript" src="../js/equipo.js"></script>
+    <script type="text/javascript" src="../js/inventarios.js"></script>
 
     <script>
         $(document).ready(function(){
