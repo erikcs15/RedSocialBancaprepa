@@ -1929,7 +1929,7 @@
 			}
 
 			public function insertarcatequipos($sucursal_id,$tipo_equipo,$num_equipo,$descripcion,
-			$marca,$modelo,$serie,$fecha_compra,$valor_factura, $cap)
+			$marca,$modelo,$serie,$fecha_compra,$valor_factura, $cap ,$area_id)
 			{
 				$res=array();
 				$datos=array();
@@ -1938,9 +1938,9 @@
 	
 			
 				$sql="INSERT INTO i_equipo(sucursal_id,tipo_equipo_id,num_equipo,descripcion,
-									marca,modelo,serie,fecha_compra,valor_factura, capturista_id) 
+									marca,modelo,serie,fecha_compra,valor_factura, capturista_id,area_id) 
 								VALUES($sucursal_id,$tipo_equipo,$num_equipo,'$descripcion',
-										'$marca','$modelo','$serie','$fecha_compra','$valor_factura', $cap)";
+										'$marca','$modelo','$serie','$fecha_compra','$valor_factura', $cap ,$area_id)";
 			
 				$resultado = mysqli_query($this->con(), $sql);   
 	

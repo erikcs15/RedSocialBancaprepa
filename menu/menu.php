@@ -76,6 +76,7 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
                     <li><a id="catroles"  class="waves-effect blue darken-4 white-text"  style='display:none;' name ="catroles" ><i class="material-icons white-text">group</i>Catalogo de Roles</a></li>
                     <li><a id="catdoc"  class="waves-effect blue darken-4 white-text"  style='display:none;' name ="catdoc"><i class="material-icons white-text">folder_open</i>Tipos de Documento</a></li>
                     <li><a id="catEquipo"  class="waves-effect blue darken-4 white-text"  style='display:none;' name ="catEquipo"><i class="material-icons white-text">important_devices</i>Catalogo de equipo</a></li>
+                     <li><a id="catAreas"  class="waves-effect blue darken-4 white-text"  style='display:none;' name ="catAreas" href="/RedSocialBancaprepa\catalogos\catareas.php"><i class="material-icons white-text">important_devices</i>Catalogo de Areas</a></li>
                     
                 </ul>
                 <li><div class="divider"></div></li>             

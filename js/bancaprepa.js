@@ -1804,6 +1804,9 @@ var respAccesosPorRol  = function(data) {
             case '17':
                 $('#mantPubCh').prop('checked', true); 
             break;
+            case '18':
+                $('#capAreas').prop('checked', true); 
+            break;
         }    
     }
 } 
@@ -1854,6 +1857,7 @@ var respCargarMenu  = function(data) {
           window.location = "login.html";
         }
 
+        console.log(data);
     for(var i=0; i<data.length; i++){
         
         switch(data[i].id_menu)
@@ -1916,6 +1920,9 @@ var respCargarMenu  = function(data) {
             break;
             case '17':
               document.getElementById('m_mantenimientoPub').style.display = 'block';
+            break;
+            case '18':
+             document.getElementById('catAreas').style.display = 'block';
             break;
         }    
     }
@@ -2017,6 +2024,8 @@ function cargarAccesos(rol_id){
     $('#capInven').prop('checked', false);
     $('#busquedaEquipoCh').prop('checked', false);
     $('#mantPubCh').prop('checked', false);
+    $('#capAreas').prop('checked', false);
+
 
 
     onRequest({ opcion : 22 ,id_rol:rol_id}, respAccesosPorRol);
