@@ -792,7 +792,7 @@
 					$q = "Where empleado = '$usuario'";
 				}
 
-				$sql="SELECT empleado,nombre FROM usuarios ".$q." Order by nombre asc";
+				$sql="SELECT empleado,nombre,entregado FROM usuarios ".$q." Order by nombre asc";
 				
 				$resultado = mysqli_query($this->con(), $sql); 
 
@@ -800,6 +800,7 @@
 
 				   $datos[$i]['id'] = $res[0];
 				   $datos[$i]['nombre'] = $res[1]; 
+				   $datos[$i]['entregado'] = $res[2]; 
 				   $i++;
 
 				} 
@@ -2764,6 +2765,43 @@
 				return $datos;  
 
 			}
+
+			public function actualizarUsuariosEntregaSi($id_usuario)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+				
+	
+				$sql="UPDATE usuarios SET entregado='SI' WHERE empleado=$id_usuario";
+			    
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['usuarios'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
+
+			public function actualizarUsuariosEntregaNo($id_usuario)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+				
+	
+				$sql="UPDATE usuarios SET entregado='NO' WHERE empleado=$id_usuario";
+			    
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['usuarios'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
+
 
 			
 

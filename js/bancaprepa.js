@@ -1732,6 +1732,15 @@ var respUsuariosDDConf = function(data) {
  
     var documento='';
 
+    if(data[0].entregado=="SI")
+    {
+        $('#cbEntregadoUsuario').prop('checked', true);
+    }
+    else
+    {
+        $('#cbEntregadoUsuario').prop('checked', false); 
+    }
+
     for(var i=0; i<data.length; i++){
         documento+='<option value='+data[i].id+' selected>'+data[i].nombre+'</option>';
         
@@ -2042,6 +2051,23 @@ function habDesAccesos(id_rol,id_cb,menu_id)
     else{
         console.log("No esta check");
         onRequest({ opcion : 24 ,id_rol:id_rol, id_menu:menu_id }, respUpdateAccesos);
+    }  
+}
+
+
+function EntregaUsuario()
+{
+    var a = getParameterByName("usuario_id");
+    console.log("usuario:"+a);
+    console.log("prueba check ");
+    if($('#cbEntregadoUsuario').is(':checked'))
+    {
+        console.log("Esta check");
+        onRequest({ opcion : 99 ,usuario:a}, respUpdateUsuario);
+    }
+    else{
+        console.log("No esta check");
+        onRequest({ opcion : 100 ,usuario:a}, respUpdateUsuario);
     }  
 }
 
@@ -3660,4 +3686,14 @@ var respCargarPubPendientesXtipoDoc = function(data) {
             $("#"+menu+"").removeClass('white-text');
             $("#"+menu+"").addClass('red-text');
         }
+}
+
+
+var respUpdateUsuario = function(data) { 
+    if (!data && data == null)
+        return;  
+    
+   
+    M.toast({html: 'Usuario Actualizado correctamente.', classes: 'rounded green'}); 
+   
 }
