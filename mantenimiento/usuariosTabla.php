@@ -77,7 +77,10 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Nombre</th>
+                                            <th>Sucursal</th>
                                             <th>Usuario</th>
+                                            <th>Pass</th>
+                                            <th>Entregado</th>
                                             <th>Estatus</th>
                                         </tr>
                                         </thead>

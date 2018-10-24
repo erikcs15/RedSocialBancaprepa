@@ -1224,7 +1224,6 @@ var respCorreos = function(data) {
                 '<td>'+data[i].sucursal+'</td>'+   
                 '<td>'+data[i].correo+'</td>'+
                 '<td>'+data[i].pass+'</td>'+ 
-                '<td>'+data[i].entregado+'</td>'+ 
                 '<td>'+data[i].estatus+'</td>'+ 
                 '<td class="'+x+' left">'+
                 '<a onclick="editarCorreo('+data[i].id_empleado+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarCorreo"><i class="material-icons">edit</i></a>' + 
@@ -1267,7 +1266,6 @@ var respCorreos = function(data) {
                 '<td>'+data[i].puesto+'</td>'+   
                 '<td>'+data[i].sucursal+'</td>'+
                 '<td>'+data[i].correo+'</td>'+
-                '<td>'+data[i].entregado+'</td>'+ 
                 '<td>'+data[i].estatus+'</td>'+  
                 '<td class="'+x+' left">'+
                 '</td>'  +'</tr> ';
@@ -1744,6 +1742,15 @@ var respUsuariosDDConf = function(data) {
  
     var documento='';
 
+    if(data[0].entregado=="SI")
+    {
+        $('#cbEntregadoUsuario').prop('checked', true);
+    }
+    else
+    {
+        $('#cbEntregadoUsuario').prop('checked', false); 
+    }
+
     for(var i=0; i<data.length; i++){
         documento+='<option value='+data[i].id+' selected>'+data[i].nombre+'</option>';
         
@@ -1932,6 +1939,7 @@ var respCargarMenu  = function(data) {
               document.getElementById('m_mantenimientoPub').style.display = 'block';
             break;
             case '18':
+             document.getElementById('m_catalogos').style.display = 'block'; 
              document.getElementById('catAreas').style.display = 'block';
             break;
         }    
@@ -2054,6 +2062,23 @@ function habDesAccesos(id_rol,id_cb,menu_id)
     else{
         console.log("No esta check");
         onRequest({ opcion : 24 ,id_rol:id_rol, id_menu:menu_id }, respUpdateAccesos);
+    }  
+}
+
+
+function EntregaUsuario()
+{
+    var a = getParameterByName("usuario_id");
+    console.log("usuario:"+a);
+    console.log("prueba check ");
+    if($('#cbEntregadoUsuario').is(':checked'))
+    {
+        console.log("Esta check");
+        onRequest({ opcion : 99 ,usuario:a}, respUpdateUsuario);
+    }
+    else{
+        console.log("No esta check");
+        onRequest({ opcion : 100 ,usuario:a}, respUpdateUsuario);
     }  
 }
 
@@ -2295,7 +2320,10 @@ var respCargaUsuarios  = function(data) {
             d+= '<tr>'+
             '<td>'+data[i].id+'</td>'+
             '<td>'+data[i].nombre+'</td>'+
+            '<td>'+data[i].sucursal+'</td>'+
             '<td>'+data[i].usuario+'</td>'+ 
+            '<td>'+data[i].pass+'</td>'+ 
+            '<td>'+data[i].entregado+'</td>'+ 
             '<td>'+data[i].estatus+'</td>' +
             '<td class="left">'+
             '<a onclick="editarUsu('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger"><i class="material-icons">edit</i></a>'+
@@ -3669,4 +3697,14 @@ var respCargarPubPendientesXtipoDoc = function(data) {
             $("#"+menu+"").removeClass('white-text');
             $("#"+menu+"").addClass('red-text');
         }
+}
+
+
+var respUpdateUsuario = function(data) { 
+    if (!data && data == null)
+        return;  
+    
+   
+    M.toast({html: 'Usuario Actualizado correctamente.', classes: 'rounded green'}); 
+   
 }

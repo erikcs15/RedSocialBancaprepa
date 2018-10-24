@@ -92,7 +92,6 @@
                                             <th>Sucursal</th>
                                             <th>Correo</th>
                                             <th id="password" style='display:none;'>Pass</th>
-                                            <th>Entregado</th>
                                             <th>Estatus</th>
                                             <th id="accionesC" style='display:none;'>Acciones</th>
                                             

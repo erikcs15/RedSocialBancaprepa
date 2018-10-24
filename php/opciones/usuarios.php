@@ -321,6 +321,12 @@
 		case 98:
 			echo (json_encode($usuario->cargarNumDepub($_REQUEST['usuario'],$_REQUEST['doc'])));
 		break;
+		case 99:
+			echo (json_encode($usuario->actualizarUsuariosEntregaSi($_REQUEST['usuario'])));
+		break;
+		case 100:
+			echo (json_encode($usuario->actualizarUsuariosEntregaNo($_REQUEST['usuario'])));
+		break;
 
  	}
  

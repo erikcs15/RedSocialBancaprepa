@@ -48,6 +48,39 @@ $(document).ready(function(){
 
     });
 
+    $("#aceptarDobleTipo").click(function() {
+
+        var sucursal_id=$("#sucursalesdd").val();
+        var tipo_equipo=$("#tiposequipos").val();
+        var num_equipo=$("#num_equipo").val();
+        var descripcion=$("#descripcion").val().toUpperCase();
+        var marca=$("#marca").val().toUpperCase();
+        var modelo=$("#modelo").val().toUpperCase();
+        var serie=$("#serie").val().toUpperCase();
+        var fecha_compra=$("#fecha_compra").val();
+        var valor_factura=$("#valor_factura").val();
+        var capturistaid=Cookies.get('b_capturista_id');
+        var area_id=$("#sltArea").val();
+        
+
+    
+        onRequest({ opcion : 72, sucursal_id:sucursal_id, tipo_equipo:tipo_equipo,num_equipo:num_equipo, 
+            descripcion:descripcion,marca:marca, modelo:modelo,serie:serie, fecha_compra:fecha_compra, 
+            valor_factura:valor_factura, capturista:capturistaid,area_id:area_id},respCrearinvequipo);
+    });
+
+    $("#cerrarYactualizarModalResp").click(function() {
+        onRequest({ opcion : 70 }, respcargasucursales);
+
+        onRequest({ opcion : 71 }, respcargatiposequipo);
+
+        var idEquipo = $("#id_equipo").val();
+        var sucursal_id = String($("#sucursalesdd").val());
+        var num_equipo = $("#num_equipo").val();
+
+        onRequest({ opcion : 77 ,id:idEquipo, sucursal:sucursal_id, numequipo:num_equipo }, respCargarEquipos);
+    });
+    
     $("#btnEditarEquipo").click(function() {
         
         console.log("Presionaste el boton para editar");
@@ -201,6 +234,14 @@ $(document).ready(function(){
         console.log("id del equipo desde cookies:"+equip+" Numero de equipo desde cookies"+numEquip);
         onRequest({ opcion : 88 ,equipo_id:equip}, respCargarResponsables);
 
+    }
+
+    function imprimirQr(id){
+        var a = document.createElement('a');
+         a.href="../reportes/rep_qr.php?equipo_id="+id;
+         a.target="_blanck";
+         document.body.appendChild(a);
+         a.click();
     }
     
     function asignarEquipo()
@@ -716,10 +757,21 @@ $(document).ready(function(){
         for (var i = 0; i < data.length; i++) 
         {
             var nombre=String(data[i].descripcion);
+            console.log("-------"+nombre);
+            if(nombre=="undefined")
+            {
+                d+= '<tr>'+
+                '<td>Sin coincidencias</td>'+
+                '<td class="left">'+ 
+                '</tr> ';  
+            }
+            else
+            {
+                d+="<tr> <td>"+data[i].descripcion+" </td>" 
+                +"<td> <a onclick='agregarAdiv("+data[i].id+");' class='waves-effect waves-light btn-floating btn-small blue'><i class='material-icons'>add</i></a> " +
+                "</td> </tr> ";
+            }
             
-            d+="<tr> <td>"+data[i].descripcion+" </td>" 
-            +"<td> <a onclick='agregarAdiv("+data[i].id+");' class='waves-effect waves-light btn-floating btn-small blue'><i class='material-icons'>add</i></a> " +
-            "</td> </tr> ";
             
         }
 

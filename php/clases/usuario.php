@@ -792,7 +792,7 @@
 					$q = "Where empleado = '$usuario'";
 				}
 
-				$sql="SELECT empleado,nombre FROM usuarios ".$q." Order by nombre asc";
+				$sql="SELECT empleado,nombre,entregado FROM usuarios ".$q." Order by nombre asc";
 				
 				$resultado = mysqli_query($this->con(), $sql); 
 
@@ -800,6 +800,7 @@
 
 				   $datos[$i]['id'] = $res[0];
 				   $datos[$i]['nombre'] = $res[1]; 
+				   $datos[$i]['entregado'] = $res[2]; 
 				   $i++;
 
 				} 
@@ -935,10 +936,12 @@
 					$q = "Where c.id='$usuario'";
 				}
 
-				$sql="SELECT c.id, c.`descripcion` AS Nombre, u.`nombre` AS Usuario, e.descripcion AS estatus
+				$sql="SELECT c.id, c.`descripcion` AS Nombre, u.`nombre` AS Usuario, 
+					IFNULL(u.pwdtmp,'Sin contraseña disponible') AS pass, u.entregado, e.descripcion AS estatus, s.`nomComercial`
 					FROM usuarios u
 					INNER JOIN capturistas c ON c.id=u.`empleado`
-					INNER JOIN estatus e ON c.estatus_id=e.id ".$q." ORDER BY c.id DESC";
+					INNER JOIN estatus e ON c.estatus_id=e.id
+					INNER JOIN sucursales s ON s.`id`=c.`sucursal_id` ".$q." ORDER BY c.id DESC";
 				
 				$resultado = mysqli_query($this->con(), $sql); 
 
@@ -947,7 +950,10 @@
 				   $datos[$i]['id'] = $res[0];
 				   $datos[$i]['nombre'] = $res[1]; 
 				   $datos[$i]['usuario'] = $res[2]; 
-				   $datos[$i]['estatus'] = $res[3]; 
+				   $datos[$i]['pass'] = $res[3]; 
+				   $datos[$i]['entregado'] = $res[4]; 
+				   $datos[$i]['estatus'] = $res[5]; 
+				   $datos[$i]['sucursal'] = $res[6]; 
 				   $i++;
 
 				} 
@@ -2570,16 +2576,14 @@
 				$i=0; 
 
 				
-				$sql="SELECT capturista_id, nombre, usuario,pass
-				FROM b_insertar_usuarios"; 
+				$sql="SELECT id
+				FROM aux"; 
 
 				$resultado = mysqli_query($this->con(), $sql); 
 
 				while ($res = mysqli_fetch_row($resultado)) {
 				   $datos[$i]['id'] = $res[0];
-				   $datos[$i]['nombre'] = $res[1];
-				   $datos[$i]['usuario'] = $res[2];
-				   $datos[$i]['pass'] = $res[3];
+				   
 				   $i++;
 
 				} 
@@ -2690,10 +2694,12 @@
 				$i=0; 
 
 
-				$sql="SELECT c.id, c.`descripcion` AS Nombre, u.`nombre` AS Usuario, e.descripcion AS estatus
+				$sql="SELECT c.id, c.`descripcion` AS Nombre, u.`nombre` AS Usuario,
+					IFNULL(u.pwdtmp,'Sin contraseña disponible') AS pass, u.entregado, e.descripcion AS estatus, s.`nomComercial`
 					FROM usuarios u
 					INNER JOIN capturistas c ON c.id=u.`empleado`
 					INNER JOIN estatus e ON c.estatus_id=e.id 
+					INNER JOIN sucursales s ON s.`id`=c.`sucursal_id`
 					WHERE c.id=$id_usuario
 					ORDER BY c.id DESC";
 				
@@ -2704,7 +2710,10 @@
 				   $datos[$i]['id'] = $res[0];
 				   $datos[$i]['nombre'] = $res[1]; 
 				   $datos[$i]['usuario'] = $res[2]; 
-				   $datos[$i]['estatus'] = $res[3]; 
+				   $datos[$i]['pass'] = $res[3]; 
+				   $datos[$i]['entregado'] = $res[4]; 
+				   $datos[$i]['estatus'] = $res[5]; 
+				   $datos[$i]['sucursal'] = $res[6]; 
 				   $i++;
 
 				} 
@@ -2754,6 +2763,43 @@
 				return $datos;  
 
 			}
+
+			public function actualizarUsuariosEntregaSi($id_usuario)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+				
+	
+				$sql="UPDATE usuarios SET entregado='SI' WHERE empleado=$id_usuario";
+			    
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['usuarios'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
+
+			public function actualizarUsuariosEntregaNo($id_usuario)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+				
+	
+				$sql="UPDATE usuarios SET entregado='NO' WHERE empleado=$id_usuario";
+			    
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['usuarios'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
+
 
 			
 
