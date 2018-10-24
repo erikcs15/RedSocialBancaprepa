@@ -238,7 +238,7 @@
            </div>
            <div class="modal-footer">
                
-               <a id="#!" class="modal-action modal-close waves-effect waves-light btn green darken-4 right"><i class="material-icons left"></i>Cerrar</a>
+               <a id="cerrarYactualizarModalResp" class="modal-action modal-close waves-effect waves-light btn green darken-4 right"><i class="material-icons left"></i>Cerrar</a>
            </div>
     </div>
 

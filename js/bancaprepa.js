@@ -1929,6 +1929,7 @@ var respCargarMenu  = function(data) {
               document.getElementById('m_mantenimientoPub').style.display = 'block';
             break;
             case '18':
+             document.getElementById('m_catalogos').style.display = 'block'; 
              document.getElementById('catAreas').style.display = 'block';
             break;
         }    

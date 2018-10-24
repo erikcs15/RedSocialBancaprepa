@@ -2576,16 +2576,14 @@
 				$i=0; 
 
 				
-				$sql="SELECT capturista_id, nombre, usuario,pass
-				FROM b_insertar_usuarios"; 
+				$sql="SELECT id
+				FROM aux"; 
 
 				$resultado = mysqli_query($this->con(), $sql); 
 
 				while ($res = mysqli_fetch_row($resultado)) {
 				   $datos[$i]['id'] = $res[0];
-				   $datos[$i]['nombre'] = $res[1];
-				   $datos[$i]['usuario'] = $res[2];
-				   $datos[$i]['pass'] = $res[3];
+				   
 				   $i++;
 
 				} 
