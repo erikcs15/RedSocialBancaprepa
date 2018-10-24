@@ -2930,7 +2930,7 @@ var respCargaPublicacionesFinalNuevas = function(data) {
         }
         else{
                 if(data[i].formato=="PDF"){    
-                        pubdd2+= '<div class="col s8 offset-s2" > '+
+                        pubdd2+= '<div class="col s12 l8 offset-l2" > '+
                         '<div class="card"> '+
                         '       <div class="card-image waves-effect waves-block waves-light">'+
                         '          <iframe src="imagenes/publicaciones/'+ruta+'"  class="col s12" style="border: none;height:500px"></iframe>'+
@@ -2948,7 +2948,7 @@ var respCargaPublicacionesFinalNuevas = function(data) {
                         '</div> ';     
                 }
                 else{
-                        pubdd2+= '<div class="col s8 offset-s2" > '+
+                        pubdd2+= '<div class="col s12 l8 offset-l2" > '+
                         '<div class="card"> '+
                         '       <div class="card-image waves-effect waves-block waves-light">'+
                         '          <img class="activator" src="imagenes/publicaciones/'+ruta+' ">'+

@@ -471,8 +471,8 @@ $(document).ready(function(){
         }
         if(data[0].contador>0 )
         {
-            if(data[0].serie=="n/a" || data[0].serie=="N/A" || data[0].serie=="N/a" || data[0].serie=="n/A")
-            {
+           if(data[0].serie=="n/a" || data[0].serie=="N/A" || data[0].serie=="N/a" || data[0].serie=="n/A" || data[0].serie=="na" || data[0].serie=="NA" || data[0].serie=="nA" || data[0].serie=="Na")
+           {
                 var tipo_equipo=$("#tiposequipos").val();
                 var num_equipo=$("#num_equipo").val();
                 onRequest({ opcion : 74, tipo_equipo:tipo_equipo, num_equipo:num_equipo},respverificar2);

@@ -16,7 +16,7 @@
 							JOIN capturistas c ON c.id=u.empleado
 							INNER JOIN b_usuario_empresa eu ON u.empleado=eu.usuario_id
 							INNER JOIN b_usuario_rol ur ON ur.usuario_id=u.empleado
-                            WHERE u.nombre='$user' AND u.clave=MD5('$pass')"; 
+                            WHERE u.nombre='$user' AND u.clave=MD5('$pass') AND c.estatus_id=5"; 
 					$resultado = mysqli_query($this->con(), $sql); 
 
 				    while ($res = mysqli_fetch_row($resultado)) {
