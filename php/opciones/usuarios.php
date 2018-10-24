@@ -1,3 +1,4 @@
+
 <?php 
 	
 	require_once("../clases/usuario.php");
@@ -327,6 +328,10 @@
 		case 100:
 			echo (json_encode($usuario->actualizarUsuariosEntregaNo($_REQUEST['usuario'])));
 		break;
+		case 101:
+			echo (json_encode($usuario->actualizarTelefonoCapturista($_REQUEST['capturista_id'],$_REQUEST['cel'])));
+		break;
+
 
  	}
  

@@ -8,6 +8,19 @@ $(document).ready(function(){
     
     //Inicializacion de los tooltip
     $('.tooltipped').tooltip({delay: 50});
+
+    //CERRAR SESION
+    $( "#btnGuardarCel" ).click(function() { 
+        var cel = $('#telefonoEmpleado').val();
+        var capturista_id = $('#capturista_id').val();
+
+        if(cel.length==0){
+          M.toast({html: 'Es necesario ingresar un numero', classes: 'rounded red'});
+        }
+
+        onRequest({ opcion : 101,capturista_id:capturista_id,cel:cel},respEmpresas);
+        
+  });
       
     //CERRAR SESION
     $( "#btnCerrarSession" ).click(function() { 
@@ -1083,7 +1096,10 @@ var respUser = function(data) {
             Cookies.set("b_capturista",data[0].capturista);
             Cookies.set("b_rol_id",data[0].rol_id); 
             Cookies.set("b_empresa_id",data[0].empresa_id); 
-            Cookies.set("b_puesto_id",data[0].puesto_id);             
+            Cookies.set("b_puesto_id",data[0].puesto_id);   
+            Cookies.set("b_sucursal",data[0].sucursal); 
+            Cookies.set("b_puesto",data[0].puesto);  
+            Cookies.set("b_telefono",data[0].telefono);            
 
             location.href="/RedSocialBancaprepa/index.php";
 
@@ -2519,6 +2535,7 @@ var respCargarRolesXemp = function(data) {
             '<a onclick="eliminarRoldeEmp('+data[i].id_rol+')"  class="waves-effect waves-light btn-floating btn-small red darken-4 btn modal-trigger tooltipped" data-tooltip="I am a tooltip" data-delay="50"  ><i class="material-icons">delete_forever</i></a>'+ 
             '</tr> ';  
             $("#tablaRolEmpresa").html(d);
+
          }
 
     }

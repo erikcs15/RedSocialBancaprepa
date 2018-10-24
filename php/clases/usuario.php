@@ -11,11 +11,13 @@
 					$datos=array();
 					$i=0; 
 
-					$sql="SELECT  u.empleado, u.nombre, c.descripcion, ur.rol_id, eu.empresa_id, c.rol_id
-							FROM usuarios u
-							JOIN capturistas c ON c.id=u.empleado
-							INNER JOIN b_usuario_empresa eu ON u.empleado=eu.usuario_id
-							INNER JOIN b_usuario_rol ur ON ur.usuario_id=u.empleado
+					$sql="SELECT  u.empleado, u.nombre, c.descripcion, ur.rol_id, eu.empresa_id, c.rol_id,s.nomComercial,r.descripcion,IF(c.telefono='' OR c.telefono=0,'SIN NUMERO',c.telefono) telefono
+										FROM usuarios u
+										JOIN capturistas c ON c.id=u.empleado
+									INNER JOIN b_usuario_empresa eu ON u.empleado=eu.usuario_id
+									INNER JOIN b_usuario_rol ur ON ur.usuario_id=u.empleado
+									INNER JOIN sucursales s ON s.id=c.sucursal_id
+									INNER JOIN roles r ON r.id=c.rol_id
                             WHERE u.nombre='$user' AND u.clave=MD5('$pass') AND c.estatus_id=5"; 
 					$resultado = mysqli_query($this->con(), $sql); 
 
@@ -26,7 +28,10 @@
 					   $datos[$i]['capturista'] = $res[2]; 
 					   $datos[$i]['rol_id'] = $res[3];
 					   $datos[$i]['empresa_id'] = $res[4];
-					   $datos[$i]['puesto_id'] = $res[5];  
+					   $datos[$i]['puesto_id'] = $res[5]; 
+					   $datos[$i]['sucursal'] = $res[6];
+					   $datos[$i]['puesto'] = $res[7];
+					   $datos[$i]['telefono'] = $res[8];  
 					   $i++;
  
 					} 
@@ -2799,6 +2804,24 @@
 				
 	
 				$sql="UPDATE usuarios SET entregado='NO' WHERE empleado=$id_usuario";
+			    
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['usuarios'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
+
+			public function actualizarTelefonoCapturista($capturista_id,$telefono)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+				
+	
+				$sql="UPDATE capturistas SET telefono='$telefono' WHERE id=$capturista_id";
 			    
 				$resultado = mysqli_query($this->con(), $sql);   
 	

@@ -100,12 +100,52 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
 <a href="#" data-target="slide-out" class="sidenav-trigger  hide-on-large-only"><i class="material-icons">menu</i></a>
 
   <!-- Modal Structure -->
-  <div id="modalPerfil" class="modal modal-small" >
+  <div id="modalPerfil" class="modal modal-small " >
     <div class="modal-content">
       <div class="row">
-        </div>
+          <div class="col s12 " >
+            <div class="card">
+              <div class="card-image" >
+               <center> 
+                <img src="http://www.fundacionamiga.com/php/archivos/empleados/<?php echo $_COOKIE['b_capturista_id']?>.jpg" class="circle responsive-img" onerror="this.src='../img/avatar.png'" style="width: 250px"> 
+              </center>
+              </div>
+              <div class="card-content">
+                <hr>
+                <div class="row">
+                  <div class="input-field col s5 l3">
+                    <input id="capturista_id" class="black-text" type="text" disabled value="<?php echo $_COOKIE['b_capturista_id']?>">
+                    <label for="" class="black-text"># Empleado</label>
+                  </div>
+                  <div class="input-field col s7 l9">
+                    <input id="" class="black-text" type="text" disabled value="<?php echo $_COOKIE['b_capturista']?>" >
+                    <label for="" class="black-text">Nombre Empleado</label>
+                  </div> 
+                  <div class="input-field col s6 ">
+                    <input id="" class="black-text" type="text" disabled value="<?php echo $_COOKIE['b_sucursal']?>">
+                    <label for="" class="black-text">Sucursal</label>
+                  </div>
+                  <div class="input-field col s6 ">
+                    <input id="" class="black-text" type="text" disabled value="<?php echo $_COOKIE['b_puesto']?>" >
+                    <label for="" class="black-text">Puesto</label>
+                  </div>
+                  <div class="input-field col s12 ">
+                    <input id="telefonoEmpleado" class="black-text col s10" type="text" value="<?php echo $_COOKIE['b_telefono']?>">
+                    <label for="telefonoEmpleado" class="black-text">Num. Celular</label>
+                    <a id="btnGuardarCel" class="btn-floating waves-effect waves-light green tooltipped" data-position="bottom" data-tooltip="Editar"><i class="material-icons">edit</i></a>
+        
+                  </div>
+                  <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-white btn-flat red white-text">Cerrar</a>
+                  </div>
+                  
+                </div>
+
+              </div> 
+
+            </div>
+          </div>
+      </div>
     </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-    </div>
+    
   </div>
