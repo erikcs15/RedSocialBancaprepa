@@ -23,19 +23,19 @@
         <h4 class="header " align="center" style="color:#1a237e;">Captura de Equipos</h4>
         <div class="row">
                 <div class="row">
-                    <div class="input-field col s2 offset-s3">
+                    <div class="input-field col s10 offset-s1 l2 offset-l3">
                             <i class="material-icons prefix">business</i>
                             <select id="sucursalesdd">
                             </select>
                             <label>Sucursal</label>
                     </div>
-                    <div class="input-field col s2">
+                    <div class="input-field col s10 offset-s1  l2">
                     <i class="material-icons prefix">laptop_chromebook</i>
                         <select id="sltArea">
                         </select>
                         <label>Área</label>
                     </div>
-                    <div class="input-field col s2">
+                    <div class="input-field col s10 offset-s1  l2">
                     <i class="material-icons prefix">laptop_chromebook</i>
                         <select id="tiposequipos">
                         </select>
@@ -44,42 +44,42 @@
 
                 </div>
                 <div class="row">
-                                <div class="input-field col s2 offset-s2">
+                                <div class="input-field col l2 offset-l2 s5">
                                     <i class="material-icons prefix">description</i>
                                     <textarea id="num_equipo" class="materialize-textarea"></textarea>
                                     <label for="num_equipo"># de Equipo</label>
                                 </div>
-                                <div class="input-field col s6">
-                            <i class="material-icons prefix">description</i>
-                            <textarea id="descripcion" class="materialize-textarea"></textarea>
-                            <label for="descripcion">Descripcion</label>
-                        </div>
+                                <div class="input-field col l6 s7">
+                                    <i class="material-icons prefix">description</i>
+                                    <textarea id="descripcion" class="materialize-textarea"></textarea>
+                                    <label for="descripcion">Descripcion</label>
+                                </div>
                 </div>
                 <div class="row">
-                        <div class="input-field col s2 offset-s2">
+                        <div class="input-field col s6 l2 offset-l2">
                             <i class="material-icons prefix">description</i>
                             <textarea id="marca" class="materialize-textarea"></textarea>
                             <label for="marca">Marca</label>
                         </div>
                         
-                        <div class="input-field col s3">
+                        <div class="input-field col s6 l3">
                             <i class="material-icons prefix">description</i>
                             <textarea id="modelo" class="materialize-textarea"></textarea>
                             <label for="modelo">Modelo</label>
                         </div>
-                        <div class="input-field col s3">
+                        <div class="input-field col l3 s12">
                             <i class="material-icons prefix">description</i>
                             <textarea id="serie" class="materialize-textarea"></textarea>
                             <label for="serie">Serie</label>
                         </div>
                 </div>
                 <div class="row">
-                    <div class="input-field col s5 offset-s2">
+                    <div class="input-field col s6 l5 offset-l2">
                             <i class="material-icons prefix">date_range</i>
                             <input id="fecha_compra" type="date" class="validate">
                             <label for="fecha_compra">Fecha Compra</label>
                     </div>
-                    <div class="input-field col s3">
+                    <div class="input-field col s6 l3">
                             <i class="material-icons prefix">description</i>
                             <textarea id="valor_factura" class="materialize-textarea"></textarea>
                             <label for="valor_factura">Valor Factura</label>
@@ -120,6 +120,7 @@
                     
                 </div>
             </div>
+
 
 
 

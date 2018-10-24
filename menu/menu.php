@@ -20,9 +20,10 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
                         
                         <ul id="dropdownCuenta" class="dropdown-content">
                             <li class="divider"></li>
-                            <li><a href="#!"><i class="material-icons right">account_circle</i><?php
+                            <li><a href="#!"><i class="material-icons right"></i><?php
                             echo $_COOKIE["b_capturista"];
                             ?></a></li>
+                            <li><a  name="salirsesion" class="waves-effect modal-trigger" href="#modalPerfil">Ver Perfil<i class="material-icons">account_box</i></a></li>
                             <li><a id="btnCerrarSession" name ="salirsesion" class="waves-effect">Cerrar sesión<i class="material-icons">settings_power</i></a></li>
                             
                         </ul>
@@ -98,3 +99,13 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
     
 <a href="#" data-target="slide-out" class="sidenav-trigger  hide-on-large-only"><i class="material-icons">menu</i></a>
 
+  <!-- Modal Structure -->
+  <div id="modalPerfil" class="modal modal-small" >
+    <div class="modal-content">
+      <div class="row">
+        </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div>
