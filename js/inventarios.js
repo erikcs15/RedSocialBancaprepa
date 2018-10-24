@@ -69,10 +69,8 @@ $(document).ready(function(){
             return;
         }
         
-        M.toast({html: 'Área agregada correctamente.', classes: 'rounded green'}); 
-        
-
-
+        M.toast({html: 'Área agregada correctamente.', classes: 'rounded green'});  
+        cargarAreas();
        
 }
 

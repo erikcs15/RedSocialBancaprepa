@@ -88,7 +88,9 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
                     <li><a id="m_usuarios" class=" waves-effect blue darken-4 white-text"   style='display:none;' name ="usuarios" ><i class="material-icons white-text">person_pin</i>Usuarios</a></li> 
                     <li><a id="m_accesos" class=" waves-effect blue darken-4 white-text"   style='display:none;' name ="accesos" ><i class="material-icons white-text">build</i>Accesos</a></li>
                     
-                </ul>
+                    </ul>
+                <li><div class="divider hide-on-large-only"></div></li>  
+                <li><a id="btnCerrarSessionSmall"  class="waves-effect white-text hide-on-large-only" ><i class="material-icons white-text">settings_power</i>Cerrar Session</a></li>
                             
     </ul>
 </div>
