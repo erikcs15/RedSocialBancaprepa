@@ -1883,7 +1883,14 @@
 
 				
 				$sql="SELECT id,nomComercial
-				FROM sucursales suc"; 
+				FROM sucursales suc
+				WHERE id NOT IN 
+				(
+					SELECT id
+					FROM sucursales suc
+					WHERE b_estatus='N'
+				)
+				ORDER BY nomComercial ASC"; 
 
 				$resultado = mysqli_query($this->con(), $sql); 
 
