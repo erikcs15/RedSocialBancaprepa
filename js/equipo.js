@@ -621,17 +621,18 @@ $(document).ready(function(){
                     '<td>'+data[i].responsable+'</td>'+                   
                     '<td>'+data[i].estatus+'</td>'+
                     '<td class="'+x+' left">'+
-                    '<a onclick="asignarResponsable('+data[i].id+','+data[i].numEquipo+')" class="waves-effect waves-light btn-floating btn-small  green darken-4 btn modal-trigger" href="#modalAsignarResp"><i class="material-icons">assignment_ind</i></a>' + 
-                    '<a onclick="desEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-2 btn modal-trigger" href="#modalDeshEquipo"><i class="material-icons">do_not_disturb</i></a>' +
-                    '<a onclick="editarEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue darken-3 btn modal-trigger" href="#modalEditarEquipo"><i class="material-icons">edit</i></a>' + 
-                    '<a onclick="imprimirResponsiva('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small teal darken-1" href="#!"><i class="material-icons">print</i></a>' + 
-                    '<a onclick="imprimirQr('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue accent-3" href="#!"><i class="material-icons">center_focus_strong</i></a>' + 
+                    '<a onclick="asignarResponsable('+data[i].id+','+data[i].numEquipo+')" class="waves-effect waves-light btn-floating btn-small  green darken-4 btn modal-trigger "  href="#modalAsignarResp"><i class="material-icons tooltipped" data-tooltip="Responsiva" data-position="top">assignment_ind</i></a>' + 
+                    '<a onclick="desEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-2 btn modal-trigger tooltipped" data-position="top" data-tooltip="Deshabilitar" href="#modalDeshEquipo"><i class="material-icons">do_not_disturb</i></a>' +
+                    '<a onclick="editarEquipo('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue darken-3 btn modal-trigger tooltipped" data-position="top" data-tooltip="Editar" href="#modalEditarEquipo"><i class="material-icons">edit</i></a>' + 
+                    '<a onclick="imprimirResponsiva('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small teal darken-1 tooltipped" data-position="top" data-tooltip="Imprimir Responsiva"  href="#!"><i class="material-icons">print</i></a>' + 
+                    '<a onclick="imprimirQr('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue accent-3 tooltipped" data-position="top" data-tooltip="Imprimir QR"  href="#!"><i class="material-icons">center_focus_strong</i></a>' + 
                     '</tr> ';
                 }
             }
-                
-                $("#tablaEquipos").html(d);
-        
+               
+                 $("#tablaEquipos").html(d);
+                 $('.tooltipped').tooltip();
+                 
         cargarMenuPorRol();
     }
 
