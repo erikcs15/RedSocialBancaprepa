@@ -67,6 +67,9 @@ $(document).ready(function(){
         onRequest({ opcion : 72, sucursal_id:sucursal_id, tipo_equipo:tipo_equipo,num_equipo:num_equipo, 
             descripcion:descripcion,marca:marca, modelo:modelo,serie:serie, fecha_compra:fecha_compra, 
             valor_factura:valor_factura, capturista:capturistaid,area_id:area_id},respCrearinvequipo);
+        
+        $("#modalAceptarDosEquipos").modal("close");
+
     });
 
     $("#cerrarYactualizarModalResp").click(function() {
@@ -503,7 +506,7 @@ $(document).ready(function(){
         }
 
         console.log(data)
-        
+        $("#modalAceptarDosEquipos").modal("close");
     
         M.toast({html: 'ENHORABUENA...!!! Equipo agregado correctamente ', classes: 'rounded green'}); 
         $("#sucursalesdd").val("");
@@ -516,7 +519,7 @@ $(document).ready(function(){
         $("#fecha_compra").val("");
         $("#valor_factura").val("");
         onRequest({ opcion : 70 }, respcargasucursales);
-
+        inventarios({ opcion : 2},respCargaAreas);
         onRequest({ opcion : 71 }, respcargatiposequipo);
         cargarInventario();
     }

@@ -40,7 +40,7 @@
 				$i=0;
 
 				$query="SELECT b_cat_areas.id,b_cat_areas.descripcion,estatus.descripcion FROM b_cat_areas
-							JOIN estatus ON estatus.id=b_cat_areas.estatus_id";  
+							JOIN estatus ON estatus.id=b_cat_areas.estatus_id ORDER BY b_cat_areas.`descripcion` ASC";  
 					$respuesta= mysqli_query($this->con(), $query);  
 					while ($res = mysqli_fetch_row($respuesta)) {
 
