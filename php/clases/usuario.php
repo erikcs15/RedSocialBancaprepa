@@ -1925,7 +1925,7 @@
 
 				
 				$sql="SELECT id,descripcion
-				FROM i_tipo_equipo"; 
+				FROM i_tipo_equipo ORDER BY descripcion ASC"; 
 
 				$resultado = mysqli_query($this->con(), $sql); 
 
