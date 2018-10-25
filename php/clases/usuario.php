@@ -2825,7 +2825,7 @@
 			    
 				$resultado = mysqli_query($this->con(), $sql);   
 	
-				$datos['usuarios'] =  array('0' => '0' );
+				$datos[$i]['telefono'] = $telefono; 
 				return  $datos;	
 				
 			}

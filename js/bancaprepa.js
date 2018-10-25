@@ -9,7 +9,7 @@ $(document).ready(function(){
     //Inicializacion de los tooltip
     $('.tooltipped').tooltip({delay: 50});
 
-    //CERRAR SESION
+    //GUARDAR CELULAR
     $( "#btnGuardarCel" ).click(function() { 
         var cel = $('#telefonoEmpleado').val();
         var capturista_id = $('#capturista_id').val();
@@ -18,7 +18,7 @@ $(document).ready(function(){
           M.toast({html: 'Es necesario ingresar un numero', classes: 'rounded red'});
         }
 
-        onRequest({ opcion : 101,capturista_id:capturista_id,cel:cel},respEmpresas);
+        onRequest({ opcion : 101,capturista_id:capturista_id,cel:cel},resGuardarCel);
         
   });
       
@@ -1577,6 +1577,7 @@ var respEliRol = function(data) {
    
 }
 
+
 var respEliRolFinal = function(data) { 
     console.log(data);
     if (!data && data == null)
@@ -1590,6 +1591,12 @@ var respEliRolFinal = function(data) {
     $("#modalEliminarRol").modal("close");
 
     onRequest({ opcion : 3 ,rol:""}, respRoles);
+}
+//------------------------------------guardar celular -------------------------
+var resGuardarCel = function(data) { 
+    if (!data && data == null) 
+     M.toast({html: 'Telefono registrado correctamente', classes: 'rounded green'}); 
+    var cel = $('#telefonoEmpleado').val(data[0].telefono);
 }
 //-----------------------------Eliminar tipo de documentos------------------------------
 var respEliDoc = function(data) { 
