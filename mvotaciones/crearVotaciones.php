@@ -1,6 +1,6 @@
 <?php 
      # definimos la carpeta destino
-     $carpetaDestino="../imagenes/publicaciones/";
+     $carpetaDestino="../imagenes/votaciones/";
                 
      # si hay algun archivo que subir
      if(isset($_FILES["archivo"]) && $_FILES["archivo"]["name"][0])
@@ -53,7 +53,7 @@
         <link rel="icon" type="image/png" href="../img/favicon.ico" /> 
         
 </head>
-    <body onLoad="cargarAddfile()">
+    <body >
     <div id="container" ><!-- CONTENEDOR 1 -->
         
     
@@ -70,8 +70,8 @@
             <form  id="formFiles" class="col s6 offset-s3 " action="<?php echo $_SERVER["PHP_SELF"]?>"  method="post"  enctype="multipart/form-data" name="inscripcion">
             <div class="row" >
                 <div class="input-field col s12">
-                <input placeholder="Escribe Aqui el Titulo de La publicacion" id="pTitulo" type="text" class="validate">
-                <label for="pTitulo">TItulo</label>
+                <input placeholder="Escribe Aqui el Titulo de La votacion" id="vTitulo" type="text" class="validate">
+                <label for="vTitulo">Titulo</label>
                 </div> 
             </div>
 
@@ -112,11 +112,7 @@
                     </div>
                 </div> 
                 <div class=" col s12" >
-                        <div class='input-field col s4'>
-                                <select id="tipoPubAddFile" > 
-                                </select>
-                                <label>Seleccion el tipo de publicacion</label>
-                        </div>
+                       
                         <div class='input-field col s4'>
                                 <select id="tipoEmpresaAddFile" onChange="cargarRolesAf(tipoEmpresaAddFile.value)"> 
                                 </select>
@@ -165,7 +161,7 @@
             <div class="row" style="width: 330px; margin: 0 auto">
                 <div><br></br></div>
                 <div class="col s6 offset-s3">
-                    <button id="btnEnviarForm" class="btn waves-effect waves-light btn light-blue darken-4 right">Realizar Carga
+                    <button id="btnEnviarFormVotaciones" class="btn waves-effect waves-light btn light-blue darken-4 right">Realizar Carga
                         <i class="material-icons right">send</i>
                     </button>
                 </div>
@@ -213,6 +209,7 @@
     <script type="text/javascript" src="../js/materialize.min.js"></script>
     <script type="text/javascript" src="../js/ajax.js"></script> 
     <script type="text/javascript" src="../js/bancaprepa.js"></script>
+    <script type="text/javascript" src="../js/votaciones.js"></script>
     <script type="text/javascript" src="../js/js.cookie.js"></script>
 
     <script>

@@ -116,7 +116,7 @@
            <nav class="blue darken-3">
                <div class="nav-wrapper">
                    <a href="#!" class="brand-logo">
-                       <i class="large material-icons">add_circle</i>Agregar Correo
+                       <i class="large material-icons">add_circle</i>Agregar Usuarios
                    </a>
                </div>
            </nav>
@@ -124,7 +124,7 @@
                <form class="col s12 no-padding">
                    <div class="row">
                         <div class="input field col s2">
-                           <input placeholder="Id" id="idEmpleadoCorreo" type="text" class="validate">
+                           <input placeholder="Id" id="idEmpleadoCorreo" type="text" class="validate" disabled>
                            <label for="Id:" class="activate"></label>
                        </div>
                        <div class="input field col s6">

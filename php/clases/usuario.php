@@ -1230,7 +1230,7 @@
 
 				return $datos;  
 			}
-			public function insertarTablaTmp( $empid,$puestoid,$usuario)
+			public function insertarTablaTmp( $empid,$puestoid,$usuario,$sucursal)
 			{
 				$res=array();
 				$datos=array();
@@ -1238,7 +1238,7 @@
 				$i=0;
 
 				
-				$sql="INSERT INTO b_tmp_pub (id_emp, id_puesto, id_usuario) VALUES ($empid,$puestoid,$usuario)";
+				$sql="INSERT INTO b_tmp_pub (id_emp, id_puesto, id_usuario, id_sucursal) VALUES ($empid,$puestoid,$usuario, $sucursal)";
 				
 				$resultado = mysqli_query($this->con(), $sql);   
 
@@ -1254,10 +1254,11 @@
 				$i=0;
 
 				
-				$sql="SELECT bt.id_emp, emp. nombre, bt.id_puesto, r.descripcion
+				$sql="SELECT bt.id_emp, emp. nombre, bt.id_puesto, r.descripcion, bt.`id_sucursal`,IF(bt.id_sucursal>0,s.nomComercial, 'Todas')
 				FROM b_tmp_pub bt
 				INNER JOIN roles r ON r.id=bt.id_puesto
 				INNER JOIN b_cat_empresas emp ON emp.id=bt.id_emp
+				LEFT JOIN sucursales s ON bt.`id_sucursal`=s.id
 				WHERE bt.id_usuario=$usuario";
 				
 				$resultado = mysqli_query($this->con(), $sql); 
@@ -1267,7 +1268,9 @@
 				   $datos[$i]['id_empresa'] = $res[0];	
 				   $datos[$i]['empresa'] = $res[1];
 				   $datos[$i]['id_puesto'] = $res[2];	
-				   $datos[$i]['puesto'] = $res[3];						   
+				   $datos[$i]['puesto'] = $res[3];
+				   $datos[$i]['id_sucursal'] = $res[4];	
+				   $datos[$i]['sucursal'] = $res[5];							   
 				   $i++;
 				} 
 				
@@ -1280,14 +1283,14 @@
 				return $datos;  
 			}
 			
-			public function EliminarDatoDeTmp($emp,$puesto)
+			public function EliminarDatoDeTmp($emp,$puesto,$sucursal)
 			{
 				$res=array();
 				$datos=array();
 				$resultado  =array();
 				$i=0;
 			
-				$sql="DELETE FROM b_tmp_pub WHERE id_emp=$emp AND id_puesto=$puesto";
+				$sql="DELETE FROM b_tmp_pub WHERE id_emp=$emp AND id_puesto=$puesto AND id_sucursal=$sucursal";
 				
 				$resultado = mysqli_query($this->con(), $sql);   
 				
@@ -1364,7 +1367,7 @@
 
 				return $datos;  
 			}
-			public function insertarTablaDetalle( $pub,$emp,$puesto)
+			public function insertarTablaDetalle( $pub,$emp,$puesto, $sucursal)
 			{
 				$res=array();
 				$datos=array();
@@ -1372,7 +1375,7 @@
 				$i=0;
 
 				
-				$sql="INSERT INTO b_detalle_publicacion (publicacion_id, empresa_id, puesto_id) VALUES ($pub,$emp,$puesto)";
+				$sql="INSERT INTO b_detalle_publicacion (publicacion_id, empresa_id, puesto_id, sucursal_id) VALUES ($pub,$emp,$puesto, $sucursal)";
 				
 				$resultado = mysqli_query($this->con(), $sql);   
 
@@ -1388,7 +1391,7 @@
 				$i=0;
 
 				
-				$sql="SELECT publicacion_id, puesto_id, empresa_id FROM b_detalle_publicacion WHERE publicacion_id=$publicacion";
+				$sql="SELECT publicacion_id, puesto_id, empresa_id, sucursal_id FROM b_detalle_publicacion WHERE publicacion_id=$publicacion";
 				
 				$resultado = mysqli_query($this->con(), $sql); 
 
@@ -1396,7 +1399,8 @@
 
 				   $datos[$i]['publicacion_id'] = $res[0];	
 				   $datos[$i]['puesto_id'] = $res[1];
-				   $datos[$i]['empresa_id'] = $res[2];				   
+				   $datos[$i]['empresa_id'] = $res[2];	
+				   $datos[$i]['sucursal_id'] = $res[3];				   
 				   $i++;
 				} 
 				
@@ -2096,50 +2100,101 @@
 			}
 
 			
-			public function cargarEquipos($id, $suc, $numEquipo)
+			public function cargarEquipos($id, $suc, $numEquipo, $area)
 			{
   
 				$res=array();
 				$datos=array();
 				$i=0; 
 				$q=""; 
+
+				if($suc>0 AND $id>0 AND $numEquipo>0 AND $area>0)
+				{
+					$q = "WHERE e.num_equipo='$numEquipo' AND e.sucursal_id='$suc' AND e.id=$id AND e.area_id=$area";
+				}
 				
-				if($suc>0 AND $id<=0 AND $numEquipo<=0)
+				if($suc>0 AND $id<=0 AND $numEquipo<=0 AND $area<=0)
 				{	
 					$q = "WHERE e.sucursal_id='$suc'";
 				}
- 
-				//validamos que solo venga el tipo de equipo  y posteriormente veremos si tiene o no sucursal
-				if($numEquipo>0){
 
-					if($suc>0)
-						$q = "WHERE e.num_equipo='$numEquipo' AND e.sucursal_id='$suc'";
-
-					else
-						$q= "WHERE e.num_equipo='$numEquipo'";
-
-				} 
-				//validamos que solo venga el id  y posteriormente veremos si tiene o no sucursal
-				if($id>0){
-
-					if($suc>0)
-						$q = "WHERE e.id='$id' AND e.sucursal_id=$suc";
-					else
-						$q = "WHERE e.id='$id'";
-
+				if($suc<=0 AND $id>0 AND $numEquipo<=0 AND $area<=0)
+				{	
+					$q = "WHERE e.id='$id'";
 				}
-				//validamos que tenga todos los campos
-				if($suc>0 AND $id>0 AND $numEquipo>0){
-					$q = "WHERE e.num_equipo='$numEquipo' AND e.sucursal_id='$suc' AND e.id=$id";
+
+				if($suc<=0 AND $id<=0 AND $numEquipo>0 AND $area<=0)
+				{	
+					$q= "WHERE e.num_equipo='$numEquipo'";
 				}
-				
+
+				if($suc<=0 AND $id<=0 AND $numEquipo<=0 AND $area>0)
+				{	
+					$q= "WHERE e.area_id='$area'";
+				}
+
+				if($suc>0 AND $id>0 AND $numEquipo<=0 AND $area<=0)
+				{	
+					$q= "WHERE e.sucursal_id='$suc' AND e.id='$id'";
+				}
+
+				if($suc>0 AND $id<=0 AND $numEquipo>0 AND $area<=0)
+				{	
+					$q= "WHERE e.sucursal_id='$suc' AND e.num_equipo='$numEquipo'";
+				}
+
+				if($suc>0 AND $id<=0 AND $numEquipo<=0 AND $area>0)
+				{	
+					$q= "WHERE e.sucursal_id='$suc' AND e.area_id='$area'";
+				}
+
+				if($suc<=0 AND $id>0 AND $numEquipo>0 AND $area<=0)
+				{	
+					$q= "WHERE e.id='$id' AND e.num_equipo='$numEquipo'";
+				}
+
+				if($suc<=0 AND $id>0 AND $numEquipo<=0 AND $area>0)
+				{	
+					$q= "WHERE e.id='$id' AND e.area_id='$area'";
+				}
+
+				if($suc<=0 AND $id<=0 AND $numEquipo>0 AND $area>0)
+				{	
+					$q= "WHERE e.num_equipo='$numEquipo' AND e.area_id='$area'";
+				}
+
+				if($suc>0 AND $id>0 AND $numEquipo>0 AND $area<=0)
+				{	
+					$q= "WHERE e.sucursal_id='$suc' AND e.id='$id' AND e.num_equipo='$numEquipo'";
+				}
+
+				if($suc>0 AND $id<=0 AND $numEquipo>0 AND $area>0)
+				{	
+					$q= "WHERE e.sucursal_id='$suc' AND e.area_id='$area' AND e.num_equipo='$numEquipo'";
+				}
+
+				if($suc<=0 AND $id>0 AND $numEquipo>0 AND $area>0)
+				{	
+					$q= "WHERE e.id='$id' AND e.area_id='$area' AND e.num_equipo='$numEquipo'";
+				}
+
+				if($suc>0 AND $id>0 AND $numEquipo<=0 AND $area>0)
+				{	
+					$q= "WHERE e.id='$id' AND e.area_id='$area' AND e.sucursal_id='$suc'";
+				}
+
+				if($suc<=0 AND $id<=0 AND $numEquipo<=0 AND $area<=0)
+				{	
+					$q= "";
+				}
 				
 				$sql="SELECT e.id, e.sucursal_id,s.nomComercial, e.descripcion equipo,te.descripcion tipo,
-					estatus.descripcion estatus, e.`num_equipo`,IFNULL(c.`descripcion`,'Sin responsable asignado') AS responsable
+					estatus.descripcion estatus, e.`num_equipo`,IFNULL(c.`descripcion`,'Sin responsable asignado') AS responsable, a.descripcion
 					FROM i_equipo e 
 					JOIN i_tipo_equipo te ON te.id=e.tipo_equipo_id
 					JOIN estatus ON estatus.id=e.estatus_id
-					INNER JOIN sucursales s ON e.sucursal_id=s.id 
+					INNER JOIN sucursales s ON e.sucursal_id=s.id
+					INNER JOIN b_cat_areas a ON a.id=e.`area_id` 
 					LEFT OUTER JOIN capturistas c ON c.id=e.`encargado_id` ".$q." ORDER BY e.id DESC ";  
  
 				$resultado = mysqli_query($this->con(), $sql);  
@@ -2152,6 +2207,7 @@
 				   $datos[$i]['estatus'] = $res[5];
 				   $datos[$i]['numEquipo'] = $res[6];
 				   $datos[$i]['responsable'] = $res[7];
+				   $datos[$i]['area'] = $res[8];
 				   $i++;
 
 				} 
@@ -2829,6 +2885,108 @@
 				return  $datos;	
 				
 			}
+
+			public function cargarSucursalesXEmpresa($empresa_id)
+			{
+				$q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
+				$v="N";
+
+				$sql="SELECT s.id, s.`nomComercial`
+					FROM b_empresa_sucursales es
+					INNER JOIN sucursales s ON s.id= es.sucursal_id
+					WHERE empresa_id=$empresa_id";
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['nombre'] = $res[1]; 
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+			public function cargarEmpleadosXempresaYSucursal($empresa, $sucursal)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+				$sql="SELECT c.id, c.descripcion, ue.empresa_id, c.rol_id 
+				FROM capturistas c
+				INNER JOIN b_usuario_empresa ue ON ue.usuario_id=c.id
+				INNER JOIN b_empresa_sucursales es ON es.empresa_id=ue.empresa_id
+				INNER JOIN sucursales s ON s.id=es.sucursal_id
+				WHERE c.sucursal_id=$sucursal AND ue.empresa_id=$empresa GROUP BY c.id";
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['empleado_id'] = $res[0];	
+				   $datos[$i]['nombre'] = $res[1];
+				   $datos[$i]['empresa_id'] = $res[2];
+				   $datos[$i]['puesto_id'] = $res[3];				   
+				   $i++;
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['empleado_id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+			}
+
+			public function verifNombreDeUsuarios($nombre_usuario)
+			{
+				$q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
+				$v="N";
+
+				$sql="SELECT count(id), nombre, empleado
+				FROM usuarios
+				WHERE nombre LIKE '$nombre_usuario'";
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['contador'] = $res[0];
+				   $datos[$i]['nombre'] = $res[1]; 
+				   $datos[$i]['empleado_id'] = $res[2]; 
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
 
 
 			

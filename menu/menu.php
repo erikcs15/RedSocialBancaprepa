@@ -55,8 +55,14 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
                   <li><a href="/RedSocialBancaprepa/bancaprepa.php" name ="bancaprepa" id="m_bancaprepa" class="waves-effect white-text"><i class="material-icons white-text">assignment</i>Publicaciones Vistas</a></li>
                   <!--<li><a id="m_agregarPub" class="subheader waves-effect modal-trigger" href="#modalAgregarPub"><i class="material-icons">add_circle</i>Agregar publicación</a></li>  -->
                   <li><a id="M_cargaA" style='display:none;' href="/RedSocialBancaprepa\documentos\addfile.php" class=" waves-effect white-text"><i class="material-icons white-text">file_upload</i>Carga de Archivos</a></li>
-                  <li><a id="m_mantenimientoPub" style='display:none;' href="/RedSocialBancaprepa\mantPub.php" class=" waves-effect white-text" name ="m_mantenimientoPub"><i class="material-icons white-text">featured_play_list</i>Mmto. Publicaciones</a></li> 
-                  <li><a  id="m_tickets" style='display:none;' name ="ticketsdd" class="dropdown-trigger white-text" data-target='ticketsdd'><i class="material-icons white-text">insert_comment</i><i class="material-icons right white-text">arrow_drop_down</i>Tickets</a></li>
+                  <li><a id="m_mantenimientoPub" style='display:none;' href="/RedSocialBancaprepa\mantPub.php" class=" waves-effect white-text" name ="m_mantenimientoPub"><i class="material-icons white-text">featured_play_list</i>Mmto. Publicaciones</a></li>
+                  <li><a id="m_votaciones"  href="/RedSocialBancaprepa\mvotaciones\votaciones.php" class=" waves-effect white-text"><i class="material-icons white-text">file_upload</i>Votaciones</a></li> 
+                  <!--<li><a  id="mmto_votaciones"  name ="mmto_votaciones" class="dropdown-trigger white-text" data-target='votacionesdd'><i class="material-icons white-text">insert_comment</i><i class="material-icons right white-text">arrow_drop_down</i>Mmto. Votaciones</a></li>
+                    <ul id='votacionesdd' class='dropdown-content blue darken-4'>
+                    <li><a id="m_crearVotaciones"  class=" waves-effect blue darken-4 white-text" href="/RedSocialBancaprepa\mvotaciones\crearVotaciones.php"><i class="material-icons white-text">create</i>Crear Votaciones</a></li>
+                    <li><a id="m_admVotaciones"  class=" waves-effect blue darken-4 white-text" href="/RedSocialBancaprepa\mvotaciones\mmtovotaciones.php" name ="misTickets" ><i class="material-icons white-text">build</i>Admin. Votaciones</a></li> 
+                    </ul>-->
+                 <li><a  id="m_tickets" style='display:none;' name ="ticketsdd" class="dropdown-trigger white-text" data-target='ticketsdd'><i class="material-icons white-text">insert_comment</i><i class="material-icons right white-text">arrow_drop_down</i>Tickets</a></li>
                     <ul id='ticketsdd' class='dropdown-content blue darken-4'>
                     <li><a id="m_mandarT" style='display:none;' class=" waves-effect blue darken-4 white-text" href="/RedSocialBancaprepa\tickets\mandarTicket.php"><i class="material-icons white-text">drafts</i>Mandar ticket</a></li>
                     <li><a id="m_misTickets" style='display:none;' class=" waves-effect blue darken-4 white-text" href="/RedSocialBancaprepa\tickets\tickets.php" name ="misTickets" ><i class="material-icons white-text">person_pin</i>Mis Tickets</a></li> 
@@ -107,7 +113,7 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
             <div class="card">
               <div class="card-image" >
                <center> 
-                <img src="http://www.fundacionamiga.com/php/archivos/empleados/<?php echo $_COOKIE['b_capturista_id']?>.jpg" class="circle responsive-img" onerror="this.src='../img/avatar.png'" style="width: 250px"> 
+               <!-- <img src="http://www.fundacionamiga.com/php/archivos/empleados/<?php echo $_COOKIE['b_capturista_id']?>.jpg" class="circle responsive-img" onerror="this.src='../img/avatar.png'" style="width: 250px">   -->
               </center>
               </div>
               <div class="card-content">

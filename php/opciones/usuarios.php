@@ -164,13 +164,13 @@
 			echo (json_encode($usuario->CargarPuestos()));
 		break;
 		case 46: 
-			echo (json_encode($usuario->insertarTablaTmp($_REQUEST['idemp'],$_REQUEST['idpuesto'],$_REQUEST['idusuario'])));
+			echo (json_encode($usuario->insertarTablaTmp($_REQUEST['idemp'],$_REQUEST['idpuesto'],$_REQUEST['idusuario'],$_REQUEST['idsucursal'])));
 		break;
 		case 47: 
 			echo (json_encode($usuario->CargarTablaTemp($_REQUEST['idusuario'])));
 		break;
 		case 48: 
-			echo (json_encode($usuario->EliminarDatoDeTmp($_REQUEST['empresa'],$_REQUEST['puesto'])));
+			echo (json_encode($usuario->EliminarDatoDeTmp($_REQUEST['empresa'],$_REQUEST['puesto'],$_REQUEST['sucursal'])));
 		break;
 		case 49: 
 			echo (json_encode($usuario->verificarTablaTmp($_REQUEST['id_usuario'])));
@@ -182,7 +182,7 @@
 			echo (json_encode($usuario->idParaTablaTmp($_REQUEST['id_usuario'])));
 		break;
 		case 52:
-			echo (json_encode($usuario->insertarTablaDetalle($_REQUEST['publicacion_id'],$_REQUEST['empresa_id'],$_REQUEST['puesto_id'])));
+			echo (json_encode($usuario->insertarTablaDetalle($_REQUEST['publicacion_id'],$_REQUEST['empresa_id'],$_REQUEST['puesto_id'],$_REQUEST['sucursal_id'])));
 		break;
 		case 53:
 			echo (json_encode($usuario->cargarRolesParaConfirmaciones($_REQUEST['publicacion_id'])));
@@ -257,7 +257,7 @@
 			echo (json_encode($usuario->verifTablaTemporal($_REQUEST['usuario_id'])));
 		break;
 		case 77:
-			echo (json_encode($usuario->cargarEquipos($_REQUEST['id'],$_REQUEST['sucursal'],$_REQUEST['numequipo'])));
+			echo (json_encode($usuario->cargarEquipos($_REQUEST['id'],$_REQUEST['sucursal'],$_REQUEST['numequipo'], $_REQUEST['area_id'])));
 		break;
 		case 78:
 			echo (json_encode($usuario->cargarMttoPublicaciones()));
@@ -331,7 +331,15 @@
 		case 101:
 			echo (json_encode($usuario->actualizarTelefonoCapturista($_REQUEST['capturista_id'],$_REQUEST['cel'])));
 		break;
-
+		case 102:
+			echo (json_encode($usuario->cargarSucursalesXEmpresa($_REQUEST['empresa'])));
+		break;
+		case 103:
+			echo (json_encode($usuario->verifNombreDeUsuarios($_REQUEST['usuario'])));
+		break;
+		case 104:
+			echo (json_encode($usuario->cargarEmpleadosXempresaYSucursal($_REQUEST['empresa_id'],$_REQUEST['sucursal_id'])));
+		break;
 
  	}
  

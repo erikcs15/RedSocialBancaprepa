@@ -101,6 +101,7 @@ $(document).ready(function(){
 
         //$( "#formFiles" ).submit();
       });
+      
 
       //gurdar datos  de la publicacion
 
@@ -549,10 +550,11 @@ $("#btn_regresar_rolemp").click(function() {
 });
 $("#btnAgEmp_PuestoTmp").click(function() {
     var usuario = Cookies.get('b_capturista_id');
-    var empresa = $("#tipoEmpresaAddFile").val();  
+    var empresa = $("#tipoEmpresaAddFile").val(); 
+    var sucursal = $("#sucursalesDD").val();  
     var puesto = $("#tipoPuestoXemp").val(); 
     console.log(usuario+" "+empresa+" "+puesto);
-    onRequest({ opcion : 46 ,idemp:empresa,idpuesto:puesto, idusuario:usuario}, respTablaTmp);
+    onRequest({ opcion : 46 ,idemp:empresa,idpuesto:puesto, idusuario:usuario, idsucursal:sucursal}, respTablaTmp);
 
 
 });
@@ -683,7 +685,7 @@ $( "#BtnAgregarUsuario" ).click(function() {
     }
     else
     {
-        onRequest({ opcion : 94 ,empleado_id:idusuario, usuario:usuario, contra:pass}, respInsertarUsuarios);;
+        onRequest({ opcion : 103 ,usuario:usuario}, respVerifNombreUsuario);
     }
 
 
@@ -928,7 +930,7 @@ function eliminarEmp(empid) {
     $("#btnAgEmp_PuestoTmp").removeAttr("disabled");
      M.toast({html: 'No olvides agregar los puestos!', classes: 'rounded blue'}); 
      onRequest({ opcion : 43 ,idemp:empresa}, respCargarRolesXempChb);
-
+     onRequest({ opcion : 102 ,empresa:empresa}, respCargaSucursalesXEmpresa);
  }
 
 
@@ -2114,10 +2116,10 @@ function editRolesdeEmp(id_emp)
 
 }
 
-function eliminarDeTablaTmp(id_emp,id_puesto)
+function eliminarDeTablaTmp(id_emp,id_puesto, id_suc)
 {
-    console.log("empresa y sueldo "+id_emp," ",id_puesto);
-    onRequest({ opcion : 48 ,empresa:id_emp, puesto:id_puesto }, respEliminarDatoDeTmp);
+    console.log("empresa y sueldo "+id_emp+" "+id_puesto+ " "+id_suc);
+    onRequest({ opcion : 48 ,empresa:id_emp, puesto:id_puesto, sucursal:id_suc }, respEliminarDatoDeTmp);
 
 }
 
@@ -2584,6 +2586,23 @@ var respCargarRolesXempChb = function(data) {
     
 }
 
+var respCargaSucursalesXEmpresa = function(data) { 
+    
+    if (!data && data == null) 
+    return; 
+
+    var d = '';
+
+    var documento='<option value="0"  selected>Todas</option>';
+
+    for(var i=0; i<data.length; i++){
+        documento+='<option value='+data[i].id+'>'+data[i].nombre+'</option>';
+    }
+    $('#sucursalesDD').html(documento);
+    $('#sucursalesDD').formSelect(); 
+    
+}
+
 var respCargarPuestos = function(data) { 
     if (!data && data == null)
         return;  
@@ -2637,13 +2656,15 @@ var respCargarTablaTmp = function(data) {
 
             d+= '<tr>'+
             '<td>'+data[i].empresa+'</td>'+
+            '<td>'+data[i].sucursal+'</td>'+
             '<td>'+data[i].puesto+'</td>'+
             '<td class="left">'+
-            '<a onclick="eliminarDeTablaTmp('+data[i].id_empresa+','+data[i].id_puesto+')"  class="waves-effect waves-light btn-floating btn-small red darken-4 btn modal-trigger tooltipped" data-tooltip="I am a tooltip" data-delay="50"  ><i class="material-icons">delete_forever</i></a>'+ 
+            '<a onclick="eliminarDeTablaTmp('+data[i].id_empresa+','+data[i].id_puesto+','+data[i].sucursal+')"  class="waves-effect waves-light btn-floating btn-small red darken-4 btn modal-trigger tooltipped" data-tooltip="Eliminar puesto" data-delay="50"  ><i class="material-icons">delete_forever</i></a>'+ 
             '</tr> '; 
         }
     }
     $("#tablaPuestoEmpresa").html(d);
+    $('.tooltipped').tooltip();
 }
 
 var respEliminarDatoDeTmp = function(data) { 
@@ -2723,8 +2744,9 @@ var respInsertarDetallePub = function(data) {
     for (var i = 0; i < data.length; i++) {    
        var empresa=data[i].id_empresa;
        var puesto=data[i].id_puesto;
-       console.log(publicacion+" "+empresa+" "+puesto);
-       onRequest({ opcion : 52 ,publicacion_id:publicacion,empresa_id:empresa,puesto_id:puesto}, respInsertarDetallePubF);
+       var sucursal=data[i].id_sucursal;
+       console.log(publicacion+" "+empresa+" "+puesto+ " "+ sucursal);
+       onRequest({ opcion : 52 ,publicacion_id:publicacion,empresa_id:empresa,puesto_id:puesto, sucursal_id:sucursal}, respInsertarDetallePubF);
 
     }
     //por cada dato insertado en b_detalle_publicacion va a checar el rol de cada inserción para encontrar los usuarios 
@@ -2758,11 +2780,22 @@ var respCargarParaInsertarTablaConfirmaciones = function(data) {
         var publicacion=data[i].publicacion_id;
         var puesto=data[i].puesto_id;
         var empresa=data[i].empresa_id;
+        var sucursal=data[i].sucursal_id;
         console.log("publicacion:"+publicacion+" puesto"+puesto+" empresa:"+empresa);
         if(puesto==0)
         {
             console.log("Puesto es igual a 0");
-            onRequest({ opcion : 54 ,empresa_id:empresa}, respInsertarTablaConfirmaciones);
+            if(sucursal==0)
+            {
+                console.log("Sucursal es igual a 0");
+                onRequest({ opcion : 54 ,empresa_id:empresa}, respInsertarTablaConfirmaciones);
+            }
+            else
+            {
+                console.log("Sucursal NO igual a 0");
+                onRequest({ opcion : 104 ,empresa_id:empresa, sucursal_id:sucursal}, respInsertarTablaConfirmaciones);
+            }
+            
         }
         else
         {
@@ -2784,17 +2817,30 @@ var respInsertarTablaConfirmaciones = function(data) {
     var publicacion=$("#idpublicacion1").val()
     for (var i = 0; i < data.length; i++) 
     {
-        var empleado=data[i].empleado_id;
-        var puesto=data[i].puesto_id;
-        var empresa=data[i].empresa_id;
-        console.log(i+".- publicacion:"+publicacion+" puesto"+puesto+" empresa:"+empresa+" empleado:"+empleado);
+        var verif=String(data[0].empleado_id);
+        console.log("------ VERIIIF--"+verif);
+        if(verif==0)
+        {
+            M.toast({html: 'No hay empleados que cumplan con dichos parametros, favor de verificarlo', classes: 'rounded red'});
+            $( "#formFiles" ).submit();
+            return;
+        }
+        else
+        {
+            var empleado=data[i].empleado_id;
+            var puesto=data[i].puesto_id;
+            var empresa=data[i].empresa_id;
+            console.log(i+".- publicacion:"+publicacion+" puesto"+puesto+" empresa:"+empresa+" empleado:"+empleado);
 
-        onRequest({ opcion : 56 ,publicacion_id:publicacion,empleado_id:empleado,puesto_id:puesto,empresa_id:empresa}, respTablaConfirmaciones);
-
+            onRequest({ opcion : 56 ,publicacion_id:publicacion,empleado_id:empleado,puesto_id:puesto,empresa_id:empresa}, respTablaConfirmaciones);
+            M.toast({html: 'Publicacion Realizada correctamente', classes: 'rounded green'});
+            $( "#formFiles" ).submit();
+        }
+        
+       
     }
 
-    M.toast({html: 'Publicacion Realizada correctamente', classes: 'rounded green'});
-    $( "#formFiles" ).submit();
+    
 }
 
 var respTablaConfirmaciones = function(data) { 
@@ -3730,5 +3776,24 @@ var respUpdateUsuario = function(data) {
     
    
     M.toast({html: 'Usuario Actualizado correctamente.', classes: 'rounded green'}); 
+   
+}
+var respVerifNombreUsuario = function(data) { 
+    if (!data && data == null)
+        return;  
+        var idusuario=$("#idEmpleadoCorreo").val();
+        var usuario=$("#UsuarioEmpleado").val();
+        var pass=$("#passEmpleado").val();
+    
+        if(data[0].contador>0)
+        {
+            M.toast({html: 'Usuario repetido, ingrese otro usuario', classes: 'rounded red'});
+        }
+        else
+        {
+            onRequest({ opcion : 94 ,empleado_id:idusuario, usuario:usuario, contra:pass}, respInsertarUsuarios);
+        }
+   
+    
    
 }

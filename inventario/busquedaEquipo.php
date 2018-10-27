@@ -23,7 +23,7 @@
         <h4 class="header " align="center" style="color:#1a237e;">Busqueda de equipos</h4>
         <div class="row">
                 <div class="row">
-                    <div class="input-field col s2 offset-s2 ">
+                    <div class="input-field col s2  offset-s1 ">
                                     <i class="material-icons prefix">laptop_chromebook</i>
                                     <input id="id_equipo" type="number" class="validate" placeholder="Id equipo"/>
                                     <label for="id_equipo">Id equipo</label>
@@ -34,13 +34,20 @@
                             </select>
                             <label>Sucursal</label>
                     </div>
-                    <div class="input-field col s3">
-                                    <i class="material-icons prefix">laptop_chromebook</i>
-                                     <input id="num_equipo"  placeholder="Numero equipo" type="text" class="validate">
-                                    <label for="num_equipo"># Equipo</label>
+                    <div class="input-field col s3 ">
+                     <i class="material-icons prefix">laptop_chromebook</i>
+                            <select id="sltArea">
+                            </select>
+                            <label>Área</label>
+                    </div>
+                    <div class="input-field col s2">
+                            <i class="material-icons prefix">laptop_chromebook</i>
+                                <input id="num_equipo"  placeholder="Numero equipo" type="text" class="validate">
+                            <label for="num_equipo"># Equipo</label>
                      </div>
-                
+                     
                     <div class="col s12" align="center">
+                            <a id="BtnLimpiaBusEquipo" class="waves-effect btn blue darken-4"><i class="material-icons left">brush</i>Limpiar</a>
                             <a id="BtnBusquedaEquipo" class="waves-effect btn blue darken-4"><i class="material-icons left">search</i>Buscar</a>
                     </div>  
                 </div>
@@ -59,6 +66,7 @@
                                         <tr>
                                             <th>Id</th>
                                             <th>Sucursal</th>
+                                            <th>Area</th>
                                             <th># Equipo</th> 
                                             <th>Tipo</th>
                                             <th>Descripcion</th>

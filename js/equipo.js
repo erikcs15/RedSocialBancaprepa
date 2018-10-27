@@ -19,11 +19,24 @@ $(document).ready(function(){
         var idEquipo = $("#id_equipo").val();
         var sucursal_id = $("#sucursalesdd").val();
         var num_equipo = $("#num_equipo").val();
-      
+        var area_id = $("#sltArea").val();
        
-        console.log("id:"+ idEquipo+" sucursal:"+sucursal_id+" tipo:"+ num_equipo);
+        console.log("id:"+ idEquipo+" sucursal:"+sucursal_id+" tipo:"+ num_equipo+" area: "+area_id);
         
-        onRequest({ opcion : 77 ,id:idEquipo, sucursal:sucursal_id, numequipo:num_equipo }, respCargarEquipos);
+        
+
+        onRequest({ opcion : 77 ,id:idEquipo, sucursal:sucursal_id, numequipo:num_equipo, area_id:area_id }, respCargarEquipos);
+
+
+    });
+    $("#BtnLimpiaBusEquipo").click(function() {
+        
+        onRequest({ opcion : 70 }, respcargasucursales);
+        $("#num_equipo").val("");
+        $("#id_equipo").val("");
+        inventarios({ opcion : 2},respCargaAreas);    
+
+        onRequest({ opcion : 77 ,id:"", sucursal:"", numequipo:"", area_id:"" }, respCargarEquipos);
 
 
     });
@@ -80,8 +93,9 @@ $(document).ready(function(){
         var idEquipo = $("#id_equipo").val();
         var sucursal_id = String($("#sucursalesdd").val());
         var num_equipo = $("#num_equipo").val();
+        var areaid = $("#sltArea").val();
 
-        onRequest({ opcion : 77 ,id:idEquipo, sucursal:sucursal_id, numequipo:num_equipo }, respCargarEquipos);
+        onRequest({ opcion : 77 ,id:idEquipo, sucursal:sucursal_id, numequipo:num_equipo, area_id:areaid }, respCargarEquipos);
     });
     
     $("#btnEditarEquipo").click(function() {
@@ -162,11 +176,14 @@ $(document).ready(function(){
 
         onRequest({ opcion : 71 }, respcargatiposequipo);
 
+        inventarios({ opcion : 2},respCargaAreas);
+
         var idEquipo = $("#id_equipo").val();
         var sucursal_id = String($("#sucursalesdd").val());
         var num_equipo = $("#num_equipo").val();
+        var areaid = $("#sltArea").val();
 
-        onRequest({ opcion : 77 ,id:idEquipo, sucursal:sucursal_id, numequipo:num_equipo }, respCargarEquipos);
+        onRequest({ opcion : 77 ,id:idEquipo, sucursal:sucursal_id, numequipo:num_equipo, area_id:areaid }, respCargarEquipos);
     }
 
     function desEquipo(idequipo)
@@ -575,6 +592,8 @@ $(document).ready(function(){
         console.log(data);
         console.log("------------"+data);
             for (var i = 0; i < data.length; i++) {
+                console.log("numero de equipo: "+data[i].numEquipo);
+               
                 if(data[i].estatus=="BAJA")
                 {
                     if(i%2==0)
@@ -587,7 +606,8 @@ $(document).ready(function(){
                     }
                     d+= '<tr>'+
                     '<td>'+data[i].id+'</td>'+ 
-                    '<td>'+data[i].nomComercial+'</td>'+  
+                    '<td>'+data[i].nomComercial+'</td>'+ 
+                    '<td>'+data[i].area+'</td>'+                      
                     '<td>'+data[i].numEquipo+'</td>'+
                     '<td>'+data[i].tipo+'</td>'+ 
                     '<td>'+data[i].equipo+'</td>'+ 
@@ -601,6 +621,7 @@ $(document).ready(function(){
                     '<a onclick="imprimirResponsiva('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small teal darken-1" href="#!"><i class="material-icons">print</i></a>' + 
                     '<a onclick="imprimirQr('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue accent-3 href="#!"><i class="material-icons">center_focus_strong</i></a>' + 
                     '</tr> ';
+                    
                 }
                 else
                 {
@@ -614,7 +635,8 @@ $(document).ready(function(){
                     }
                     d+= '<tr>'+
                     '<td>'+data[i].id+'</td>'+ 
-                    '<td>'+data[i].nomComercial+'</td>'+  
+                    '<td>'+data[i].nomComercial+'</td>'+
+                    '<td>'+data[i].area+'</td>'+  
                     '<td>'+data[i].numEquipo+'</td>'+
                     '<td>'+data[i].tipo+'</td>'+ 
                     '<td>'+data[i].equipo+'</td>'+  
@@ -748,7 +770,23 @@ $(document).ready(function(){
         busquedaEquipo();
     }
 
+    var respCargaAreas = function(data) {  
+        if (!data && data == null)
+        {
+            M.toast({html: 'Error al registrar Área', classes: 'rounded red'}); 
+            return;
+        }
+         
+        var documento='<option value="0" selected>Seleccione Área</option>';
+
+        for (var i = 0; i < data.length; i++) {
+              documento+= '<option value="'+data[i].area_id+'">'+data[i].descripcion+'</option>';
+             }
     
+       $("#sltArea").html(documento);
+        $('#sltArea').formSelect();
+}
+
     var respBuscarEmpleados = function(data) { 
     
         if (!data && data == null)
@@ -879,8 +917,8 @@ $(document).ready(function(){
         
         for (var i = 0; i < data.length; i++) 
         {
-            console.log("Insertando a todos los numero de equipo");
             var equipoID=data[i].id_equipo;
+            console.log("Insertando a todos los numero de equipo"+ equipoID);
             onRequest({ opcion : 85 ,id_empleado:id_emp, idequipo:equipoID, fecha_ent:fecha_ent, comen:comentarios}, respAsignarResponsiva);
             onRequest({ opcion : 91 ,equipo_id:equipoID, encargado:id_emp}, respAsignarResponsivaAEquipo);
             
