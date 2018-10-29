@@ -108,7 +108,10 @@ $(document).ready(function(){
         var modelo =  $("#modelEdit").val();
         var serie =  $("#serieEdit").val();
         var sucursal =  $("#sucursalesddEdit").val();
+        var area =  $("#areasddEdit").val();
+        var valor_fac =  String($("#valorF").val());
 
+        console.log("Id: "+idEquipo+" area: "+area);
         
         if(numeroE=="" )
         {
@@ -140,7 +143,17 @@ $(document).ready(function(){
             M.toast({html: 'Favor de ingresar la sucursal!', classes: 'rounded red'}); 
             return;
         }
-        onRequest({ opcion : 89 ,equipo_id:idEquipo, desc:desc, num_equipo:numeroE, marca:marca, modelo:modelo, serie:serie, sucursal:sucursal}, respEditarEquipos);
+        if(area=="0" )
+        {
+            M.toast({html: 'Favor de ingresar el area!', classes: 'rounded red'}); 
+            return;
+        }
+        if(valor_fac=="" )
+        {
+            M.toast({html: 'Favor de ingresar el valor factura!', classes: 'rounded red'}); 
+            return;
+        }
+        onRequest({ opcion : 89 ,equipo_id:idEquipo, desc:desc, num_equipo:numeroE, marca:marca, modelo:modelo, serie:serie, sucursal:sucursal, valor_factura:valor_fac, area_id:area}, respEditarEquipos);
 
 
     });
@@ -387,6 +400,21 @@ $(document).ready(function(){
     
     }
 
+    var respCargarAreaParaEditar = function(data) { 
+        if (!data && data == null)
+            return;  
+     
+        var documento='<option value="'+data[0].id+'" selected>'+data[0].descripcion+'</option>';
+    
+        for(var i=1; i<data.length; i++){
+            documento+='<option value='+data[i].id+'>'+data[i].descripcion+'</option>';
+        }
+        
+        $('#areasddEdit').html(documento);
+        $('#areasddEdit').formSelect(); 
+    
+    }
+
     var respcargatiposequipo = function(data) { 
         if (!data && data == null)
             return;  
@@ -526,7 +554,7 @@ $(document).ready(function(){
         $("#modalAceptarDosEquipos").modal("close");
     
         M.toast({html: 'ENHORABUENA...!!! Equipo agregado correctamente ', classes: 'rounded green'}); 
-        $("#sucursalesdd").val("");
+        
         $("#tiposequipos").val("");
         $("#num_equipo").val("");
         $("#descripcion").val("");
@@ -535,8 +563,7 @@ $(document).ready(function(){
         $("#serie").val("");
         $("#fecha_compra").val("");
         $("#valor_factura").val("");
-        onRequest({ opcion : 70 }, respcargasucursales);
-        inventarios({ opcion : 2},respCargaAreas);
+       
         onRequest({ opcion : 71 }, respcargatiposequipo);
         cargarInventario();
     }
@@ -680,14 +707,17 @@ $(document).ready(function(){
 
         var suc= data[0].sucursal;
         onRequest({ opcion : 92, id_sucursal:suc }, respCargarSucursalParaEditar);
+        var area= data[0].area_id;
+        onRequest({ opcion : 105, area_id:area }, respCargarAreaParaEditar);
         if (data[0].id>0) { 
-            console.log(data[0].id);
+            console.log("Valor factura: "+data[0].valor_factura);
           $("#idEquipoEdit").val(data[0].id);
           $("#numEquipo").val(data[0].numEquipo);
           $("#descEdit").val(data[0].descripcion);
           $("#marcaEdit").val(data[0].marca);
           $("#modelEdit").val(data[0].modelo);
           $("#serieEdit").val(data[0].serie);
+          $("#valorF").val(data[0].valor_factura);
           
     
            return;

@@ -42,7 +42,7 @@
                     </div>
                     <div class="input-field col s2">
                             <i class="material-icons prefix">laptop_chromebook</i>
-                                <input id="num_equipo"  placeholder="Numero equipo" type="text" class="validate">
+                                <input id="num_equipo"  placeholder="# equipo" type="text" class="validate">
                             <label for="num_equipo"># Equipo</label>
                      </div>
                      
@@ -266,7 +266,7 @@
                             <input placeholder="Id Equipo" id="idEquipoEdit" type="text" class="validate" disabled>
                         </div>
                         <div class="input field col s2">
-                            <label for="Num Equipo" class="activate" >Numero de equipo</label>
+                            <label for="Num Equipo" class="activate" ># de equipo</label>
                             <input placeholder="Num Equipo" id="numEquipo" type="text" class="validate" >
                         </div>           
                         <div class="input field col s3">
@@ -286,7 +286,17 @@
                             <select id="sucursalesddEdit">
                             </select>
                             <label>Sucursal</label>
-                        </div>               
+                        </div>    
+                        <div class="input-field col s4">
+                            
+                            <select id="areasddEdit">
+                            </select>
+                            <label>Area</label>
+                        </div>  
+                        <div class="input field col s3">
+                            <label for="Valor Factura" class="activate" >Valor Factura</label>
+                            <input placeholder="Valor Factura" id="valorF" type="text" class="validate" >
+                        </div>    
                        <div class="input field col s12">
                            <label for="descEdit">Descripcion del equipo</label>
                            <textarea id="descEdit" class="materialize-textarea"></textarea>
