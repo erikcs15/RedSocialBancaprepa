@@ -2189,7 +2189,8 @@
 				}
 				
 				$sql="SELECT e.id, e.sucursal_id,s.nomComercial, e.descripcion equipo,te.descripcion tipo,
-					estatus.descripcion estatus, e.`num_equipo`,IFNULL(c.`descripcion`,'Sin responsable asignado') AS responsable, a.descripcion
+					estatus.descripcion estatus, e.`num_equipo`,IFNULL(c.`descripcion`,'Sin responsable asignado') AS responsable, a.descripcion,
+					e.marca, e.`modelo`,e.`serie`, e.valor_factura
 					FROM i_equipo e 
 					JOIN i_tipo_equipo te ON te.id=e.tipo_equipo_id
 					JOIN estatus ON estatus.id=e.estatus_id
@@ -2208,6 +2209,10 @@
 				   $datos[$i]['numEquipo'] = $res[6];
 				   $datos[$i]['responsable'] = $res[7];
 				   $datos[$i]['area'] = $res[8];
+				   $datos[$i]['marca'] = $res[9];
+				   $datos[$i]['modelo'] = $res[10];
+				   $datos[$i]['serie'] = $res[11];
+				   $datos[$i]['valorf'] = $res[12];
 				   $i++;
 
 				} 

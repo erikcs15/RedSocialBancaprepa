@@ -45,6 +45,10 @@
                                 <input id="num_equipo"  placeholder="# equipo" type="text" class="validate">
                             <label for="num_equipo"># Equipo</label>
                      </div>
+                     <iframe id="txtArea1" style="display:none"></iframe>
+                     <div class="col s12" align="right">
+                          <a id="btnReporteExcel" class="btn-floating btn-large waves-effect waves-light blue darken-4"><i class="material-icons">developer_board</i></a>
+                     </div>
                      
                     <div class="col s12" align="center">
                             <a id="BtnLimpiaBusEquipo" class="waves-effect btn blue darken-4"><i class="material-icons left">brush</i>Limpiar</a>
@@ -77,6 +81,28 @@
                                         </thead>
 
                                         <tbody id="tablaEquipos">
+                                           
+                                        </tbody>
+                                    </table>
+                                    <table class="highlight" width="100%"  border="0" cellspacing="0" cellpadding="0" style="display:none">
+                                        <thead >
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Sucursal</th>
+                                            <th>Area</th>
+                                            <th># Equipo</th> 
+                                            <th>Tipo</th>
+                                            <th>Descripcion</th>
+                                            <th>Responsable</th>
+                                            <th>Estatus</th>
+                                            <th>Acciones</th>
+                                            <th>Marca</th>
+                                            <th>Modelo</th>
+                                            <th>Serie</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody id="tablaEquipos2">
                                            
                                         </tbody>
                                     </table>

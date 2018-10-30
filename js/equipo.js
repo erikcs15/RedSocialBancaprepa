@@ -85,6 +85,16 @@ $(document).ready(function(){
 
     });
 
+    
+
+    $("#btnReporteExcel").click(function() {
+
+        console.log("presionado excel");
+        //descargarExcel();
+        fnExcelReport();
+
+    });
+
     $("#cerrarYactualizarModalResp").click(function() {
         onRequest({ opcion : 70 }, respcargasucursales);
 
@@ -323,6 +333,54 @@ $(document).ready(function(){
 
     }
 
+   
+
+    function fnExcelReport()
+    {
+        var tab_text="<table border='2px' charset=UTF-8><tr> "+
+        "<th>Id</th>"+
+        "<th>Sucursal</th>"+
+        "<th>Area</th>"+
+        "<th># Equipo</th>"+ 
+        "<th>Tipo</th>"+
+        "<th>Marca</th>"+
+        "<th>Modelo</th>"+
+        "<th>Serie</th>"+
+        "<th>Descripcion</th>"+
+        "<th>Valor Factura</th>"+
+        "<th>Responsable</th>"+
+        "<th>Estatus</th>"+
+        "</tr>";
+        var textRange; var j=0;
+        tab = document.getElementById('tablaEquipos2'); // id of table
+
+        for(j = 0 ; j < tab.rows.length; j++) 
+        {     
+            tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+            //tab_text=tab_text+"</tr>";
+        }
+
+        tab_text=tab_text+"</table>";
+        tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+        tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+        tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+        tab_text= tab_text.replace(/<a[^>]*>/gi, "");
+        var ua = window.navigator.userAgent;
+        var msie = ua.indexOf("MSIE "); 
+
+        if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+        {
+            txtArea1.document.open("txt/html","replace");
+            txtArea1.document.write(tab_text);
+            txtArea1.document.close();
+            txtArea1.focus(); 
+            sa=txtArea1.document.execCommand("SaveAs",true,"Say Thanks to Sumit.xls");
+        }  
+        else                 //other browser not tested on IE 11
+            sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));  
+
+        return (sa);
+    }
     var respInventario = function(data) { 
     
         if (!data && data == null) 
@@ -615,6 +673,7 @@ $(document).ready(function(){
         return; 
     
         var d = '';
+        var d2 = '';
         var x = '';
         console.log(data);
         console.log("------------"+data);
@@ -648,6 +707,20 @@ $(document).ready(function(){
                     '<a onclick="imprimirResponsiva('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small teal darken-1" href="#!"><i class="material-icons">print</i></a>' + 
                     '<a onclick="imprimirQr('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue accent-3 href="#!"><i class="material-icons">center_focus_strong</i></a>' + 
                     '</tr> ';
+                    d2+='<tr>'+
+                    '<td>'+data[i].id+'</td>'+ 
+                    '<td>'+data[i].nomComercial+'</td>'+ 
+                    '<td>'+data[i].area+'</td>'+                      
+                    '<td>'+data[i].numEquipo+'</td>'+
+                    '<td>'+data[i].tipo+'</td>'+ 
+                    '<td>'+data[i].marca+'</td>'+
+                    '<td>'+data[i].modelo+'</td>'+
+                    '<td>'+data[i].serie+'</td>'+
+                    '<td>'+data[i].equipo+'</td>'+ 
+                    '<td>'+data[i].valorf+'</td>'+
+                    '<td>'+data[i].responsable+'</td>'+            
+                    '<td>'+data[i].estatus+'</td>'+
+                    '</tr> ';
                     
                 }
                 else
@@ -676,10 +749,26 @@ $(document).ready(function(){
                     '<a onclick="imprimirResponsiva('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small teal darken-1 tooltipped" data-position="top" data-tooltip="Imprimir Responsiva"  href="#!"><i class="material-icons">print</i></a>' + 
                     '<a onclick="imprimirQr('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue accent-3 tooltipped" data-position="top" data-tooltip="Imprimir QR"  href="#!"><i class="material-icons">center_focus_strong</i></a>' + 
                     '</tr> ';
+                    d2+='<tr>'+
+                    '<td>'+data[i].id+'</td>'+ 
+                    '<td>'+data[i].nomComercial+'</td>'+ 
+                    '<td>'+data[i].area+'</td>'+                      
+                    '<td>'+data[i].numEquipo+'</td>'+
+                    '<td>'+data[i].tipo+'</td>'+ 
+                    '<td>'+data[i].marca+'</td>'+
+                    '<td>'+data[i].modelo+'</td>'+
+                    '<td>'+data[i].serie+'</td>'+
+                    '<td>'+data[i].equipo+'</td>'+ 
+                    '<td>'+data[i].valorf+'</td>'+
+                    '<td>'+data[i].responsable+'</td>'+            
+                    '<td>'+data[i].estatus+'</td>'+
+                    '</tr> ';
                 }
             }
                
                  $("#tablaEquipos").html(d);
+                 
+                 $("#tablaEquipos2").html(d2);
                  $('.tooltipped').tooltip();
                  
         cargarMenuPorRol();
