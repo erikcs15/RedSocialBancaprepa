@@ -2361,7 +2361,8 @@
 				$i=0; 
 
 				
-				$sql="SELECT id, descripcion, nota_cancelacion, fecha_baja, num_equipo, marca, modelo, serie, sucursal_id, valor_factura, area_id
+				$sql="SELECT id, descripcion, nota_cancelacion, fecha_baja, num_equipo, marca, modelo, serie, sucursal_id, valor_factura, area_id,
+				tipo_equipo_id
 					FROM i_equipo WHERE id=$idequipo"; 
 
 				$resultado = mysqli_query($this->con(), $sql); 
@@ -2378,6 +2379,7 @@
 				   $datos[$i]['sucursal'] = $res[8];
 				   $datos[$i]['valor_factura'] = $res[9];
 				   $datos[$i]['area_id'] = $res[10];
+				   $datos[$i]['tipo'] = $res[11];
 				   $i++;
 
 				} 
@@ -2540,7 +2542,7 @@
 				return $datos;  
 
 			}
-			public function actualizarEquipo($idequipo,$desc, $numequipo, $marca, $modelo, $serie, $suc, $valorF, $area)
+			public function actualizarEquipo($idequipo,$desc, $numequipo, $marca, $modelo, $serie, $suc, $valorF, $area, $tipoequipo)
 			{
 				$res=array();
 				$datos=array();
@@ -2548,7 +2550,7 @@
 				$i=0;
 				
 				$sql="UPDATE i_equipo SET descripcion='$desc', num_equipo=$numequipo, marca = '$marca', modelo='$modelo', serie='$serie', 
-					sucursal_id=$suc, valor_factura='$valorF', area_id=$area 
+					sucursal_id=$suc, valor_factura='$valorF', area_id=$area, tipo_equipo_id=$tipoequipo 
 					WHERE id=$idequipo";
 				
 				$resultado = mysqli_query($this->con(), $sql);   
@@ -3019,6 +3021,52 @@
 				$sql="SELECT id, descripcion
 				FROM b_cat_areas
 				WHERE id<>$id_area"; 
+
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['descripcion'] = $res[1];
+				   $i++;
+
+				} 
+
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+			public function cargarTipoEquipoXId($id_tipoEquipo)
+			{
+				$q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				$sql="SELECT id, descripcion
+				FROM i_tipo_equipo
+				WHERE id=$id_tipoEquipo";
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['descripcion'] = $res[1]; 
+				   $i++;
+
+				} 
+
+
+				$sql="SELECT id, descripcion
+				FROM i_tipo_equipo
+				WHERE id<>$id_tipoEquipo"; 
 
 				$resultado = mysqli_query($this->con(), $sql); 
 

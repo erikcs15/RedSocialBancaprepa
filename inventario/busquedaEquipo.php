@@ -319,6 +319,12 @@
                             </select>
                             <label>Area</label>
                         </div>  
+                        <div class="input-field col s4">
+                            
+                            <select id="tipoEquipoDD">
+                            </select>
+                            <label>Tipo</label>
+                        </div>  
                         <div class="input field col s3">
                             <label for="Valor Factura" class="activate" >Valor Factura</label>
                             <input placeholder="Valor Factura" id="valorF" type="text" class="validate" >

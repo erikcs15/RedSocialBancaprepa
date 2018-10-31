@@ -119,6 +119,7 @@ $(document).ready(function(){
         var serie =  $("#serieEdit").val();
         var sucursal =  $("#sucursalesddEdit").val();
         var area =  $("#areasddEdit").val();
+        var tipo =  $("#tipoEquipoDD").val();
         var valor_fac =  String($("#valorF").val());
 
         console.log("Id: "+idEquipo+" area: "+area);
@@ -158,12 +159,17 @@ $(document).ready(function(){
             M.toast({html: 'Favor de ingresar el area!', classes: 'rounded red'}); 
             return;
         }
+        if(tipo=="0" )
+        {
+            M.toast({html: 'Favor de ingresar el tipo de equipo!', classes: 'rounded red'}); 
+            return;
+        }
         if(valor_fac=="" )
         {
             M.toast({html: 'Favor de ingresar el valor factura!', classes: 'rounded red'}); 
             return;
         }
-        onRequest({ opcion : 89 ,equipo_id:idEquipo, desc:desc, num_equipo:numeroE, marca:marca, modelo:modelo, serie:serie, sucursal:sucursal, valor_factura:valor_fac, area_id:area}, respEditarEquipos);
+        onRequest({ opcion : 89 ,equipo_id:idEquipo, desc:desc, num_equipo:numeroE, marca:marca, modelo:modelo, serie:serie, sucursal:sucursal, valor_factura:valor_fac, area_id:area, tipo_id:tipo}, respEditarEquipos);
 
 
     });
@@ -470,6 +476,21 @@ $(document).ready(function(){
         
         $('#areasddEdit').html(documento);
         $('#areasddEdit').formSelect(); 
+    
+    }
+
+    var respCargarTipoEquipoPEditar = function(data) { 
+        if (!data && data == null)
+            return;  
+     
+        var documento='<option value="'+data[0].id+'" selected>'+data[0].descripcion+'</option>';
+    
+        for(var i=1; i<data.length; i++){
+            documento+='<option value='+data[i].id+'>'+data[i].descripcion+'</option>';
+        }
+        
+        $('#tipoEquipoDD').html(documento);
+        $('#tipoEquipoDD').formSelect(); 
     
     }
 
@@ -795,9 +816,11 @@ $(document).ready(function(){
         return; 
 
         var suc= data[0].sucursal;
-        onRequest({ opcion : 92, id_sucursal:suc }, respCargarSucursalParaEditar);
         var area= data[0].area_id;
+        var tipo= data[0].tipo;
+        onRequest({ opcion : 92, id_sucursal:suc }, respCargarSucursalParaEditar);
         onRequest({ opcion : 105, area_id:area }, respCargarAreaParaEditar);
+        onRequest({ opcion : 106, tipo_id:tipo }, respCargarTipoEquipoPEditar);
         if (data[0].id>0) { 
             console.log("Valor factura: "+data[0].valor_factura);
           $("#idEquipoEdit").val(data[0].id);
