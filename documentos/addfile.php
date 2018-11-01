@@ -67,9 +67,9 @@
         <div class="row"></div>
 
         <div class="row ">
-            <form  id="formFiles" class="col s6 offset-s3 " action="<?php echo $_SERVER["PHP_SELF"]?>"  method="post"  enctype="multipart/form-data" name="inscripcion">
+            <form  id="formFiles" class="col s12 l6 offset-l3 " action="<?php echo $_SERVER["PHP_SELF"]?>"  method="post"  enctype="multipart/form-data" name="inscripcion">
             <div class="row" >
-                <div class="input-field col s12">
+                <div class="input-field col s12 l12">
                 <input placeholder="Escribe Aqui el Titulo de La publicacion" id="pTitulo" type="text" class="validate">
                 <label for="pTitulo">TItulo</label>
                 </div> 
@@ -94,7 +94,7 @@
                         <input id="tittleDoc" class="file-path validate" type="text">
                     </div>
                 </div>
-                <div class=" col s5" > 
+                <div class=" col l5 s12" > 
                         <div class="switch">¿Es pdf?
                             <label>
                                 No
@@ -105,45 +105,44 @@
                         </div>
                 </div>
                 <div class="row">
-                    <div class="input-field col s12"> 
+                    <div class="input-field col s12 l12"> 
                     <i class="material-icons prefix">mode_edit</i>
                     <textarea id="pDescripcion" class="materialize-textarea" data-length="500" ></textarea>
                     <label for="pDescripcion">Descripcion</label>
                     </div>
                 </div> 
-                <div class=" col s12" >
-                        <div class='input-field col s4'>
+                <div class=" col s12 l12" >
+                        <div class='input-field col s12 l4'>
                                 <select id="tipoPubAddFile" > 
                                 </select>
                                 <label>Seleccion el tipo de publicacion</label>
                         </div>
-                        <div class='input-field col s4'>
+                        <div class='input-field col  s12 l4'>
                                 <select id="tipoEmpresaAddFile" onChange="cargarRolesAf(tipoEmpresaAddFile.value)"> 
                                 </select>
                                 <label>Seleccion la Empresa</label>
                                 
                         </div>
-                        <div class='input-field col s4'>
+                        <div class='input-field col  s12 l4'>
                                 <select id="sucursalesDD" > 
                                 </select>
                                 <label>Seleccion la sucursal</label>
                                 
                         </div>
-                        <div class='input-field col s4'>
+                        <div class='input-field col  s12 l4'>
                             <select id="tipoPuestoXemp"> 
                             </select>
                             <label><strong>Seleccione el puesto:</strong></label>
-                            <div><br></br></div>
+                            
+                         </div>
                             <div align="center" >
                                 <a id="btnAgEmp_PuestoTmp" class="btn-small light-blue darken-4" disabled><i class="material-icons left">add_circle_outline</i>Agregar</a>
                             </div>  
-                        </div>
-                        
-                 </div> 
+                       
             </form>
             <div class="row" style="width: 560px; margin: 0 auto">
-                <div class="col s10 offset-s1 scroller2">
-                        <table class="highlight">
+                <div class="col s12 l10 offset-l1 scroller2">
+                        <table class="highlight responsive-table">
 
                                 <thead> 
                                     <tr>

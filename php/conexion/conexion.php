@@ -3,7 +3,7 @@
 	class Conectar
 	{
 		public static function  con(){
-			$mysqli = new mysqli('localhost', 'root', '', 'fundacionamiga');
+			$mysqli = new mysqli('192.168.2.51', 'axel', '12345678', 'fundacionamiga');
 
 
 		  $mysqli->character_set_name();
