@@ -112,24 +112,24 @@
                     </div>
                 </div> 
                 <div class=" col s12 l12" >
-                        <div class='input-field col s12 l4'>
+                        <div class='input-field col s12 l3'>
                                 <select id="tipoPubAddFile" > 
                                 </select>
                                 <label>Seleccion el tipo de publicacion</label>
                         </div>
-                        <div class='input-field col  s12 l4'>
+                        <div class='input-field col  s12 l3'>
                                 <select id="tipoEmpresaAddFile" onChange="cargarRolesAf(tipoEmpresaAddFile.value)"> 
                                 </select>
                                 <label>Seleccion la Empresa</label>
                                 
                         </div>
-                        <div class='input-field col  s12 l4'>
+                        <div class='input-field col  s12 l3'>
                                 <select id="sucursalesDD" > 
                                 </select>
                                 <label>Seleccion la sucursal</label>
                                 
                         </div>
-                        <div class='input-field col  s12 l4'>
+                        <div class='input-field col  s12 l3'>
                             <select id="tipoPuestoXemp"> 
                             </select>
                             <label><strong>Seleccione el puesto:</strong></label>
@@ -138,6 +138,7 @@
                             <div align="center" >
                                 <a id="btnAgEmp_PuestoTmp" class="btn-small light-blue darken-4" disabled><i class="material-icons left">add_circle_outline</i>Agregar</a>
                             </div>  
+                </div>
                        
             </form>
             <div class="row" style="width: 560px; margin: 0 auto">
