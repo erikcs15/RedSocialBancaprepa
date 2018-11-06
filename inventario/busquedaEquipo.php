@@ -23,36 +23,35 @@
         <h4 class="header " align="center" style="color:#1a237e;">Busqueda de equipos</h4>
         <div class="row">
                 <div class="row">
-                    <div class="input-field col s2  offset-s1 ">
+                    <div class="input-field col s12 l2  offset-l1 ">
                                     <i class="material-icons prefix">laptop_chromebook</i>
                                     <input id="id_equipo" type="number" class="validate" placeholder="Id equipo"/>
                                     <label for="id_equipo">Id equipo</label>
                     </div>
-                    <div class="input-field col s3 ">
+                    <div class="input-field col l3  s12">
                             <i class="material-icons prefix">business</i>
                             <select id="sucursalesdd">
                             </select>
                             <label>Sucursal</label>
                     </div>
-                    <div class="input-field col s3 ">
+                    <div class="input-field col l3 s12">
                      <i class="material-icons prefix">laptop_chromebook</i>
                             <select id="sltArea">
                             </select>
                             <label>Área</label>
                     </div>
-                    <div class="input-field col s2">
+                    <div class="input-field col l2 s12">
                             <i class="material-icons prefix">laptop_chromebook</i>
                                 <input id="num_equipo"  placeholder="# equipo" type="text" class="validate">
                             <label for="num_equipo"># Equipo</label>
                      </div>
                      <iframe id="txtArea1" style="display:none"></iframe>
-                     <div class="col s12" align="right">
-                          <a id="btnReporteExcel" class="btn-floating btn-large waves-effect waves-light blue darken-4"><i class="material-icons">developer_board</i></a>
-                     </div>
+                  
                      
-                    <div class="col s12" align="center">
+                    <div class="col s12 l12" align="center">
                             <a id="BtnLimpiaBusEquipo" class="waves-effect btn blue darken-4"><i class="material-icons left">brush</i>Limpiar</a>
                             <a id="BtnBusquedaEquipo" class="waves-effect btn blue darken-4"><i class="material-icons left">search</i>Buscar</a>
+                            <a id="btnReporteExcel" class="btn waves-effect waves-light blue darken-4 hide-on-small-only"><i class="material-icons left">developer_board</i>Exportar</a> 
                     </div>  
                 </div>
         </div>
@@ -65,7 +64,7 @@
                 <div id="container">
                     <div class="row"><!-- CONTENEDOR 1 -->
                             <div class="col s12 "><!-- CONTENEDOR 2 -->
-                                    <table class="highlight" width="100%"  border="0" cellspacing="0" cellpadding="0" style="font-size:13px">
+                                    <table class="highlight responsive-table" width="100%"  border="0" cellspacing="0" cellpadding="0" style="font-size:13px">
                                         <thead >
                                         <tr>
                                             <th>Id</th>

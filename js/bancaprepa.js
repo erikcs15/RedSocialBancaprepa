@@ -21,6 +21,7 @@ $(document).ready(function(){
         onRequest({ opcion : 101,capturista_id:capturista_id,cel:cel},resGuardarCel);
         
   });
+
       
     //CERRAR SESION
     $( "#btnCerrarSession" ).click(function() { 
@@ -2882,8 +2883,9 @@ var respCargaPublicacionesFinal = function(data) {
         }
         else{
             $("#CargarPublicacionesVaciasVistas").empty();
+
                 if(data[i].formato=="PDF"){    
-                        pubdd+=  '<div class="col s12 l8 offset-l2" > '+
+                     /*   pubdd+=  '<div class="col s12 l8 offset-l2" > '+
                         '<div class="card"> '+
                         '       <div class="card-image waves-effect waves-block waves-light">'+
                         '          <iframe src="imagenes/publicaciones/'+ruta+'"  class="col s12" style="border: none;height:500px"></iframe>'+
@@ -2898,10 +2900,16 @@ var respCargaPublicacionesFinal = function(data) {
                         '            <p>'+data[i].descripcion+'.</p>'+
                         '         </div>'+
                         '  </div>'+
-                        '</div> ';        
+                        '</div> ';   */
+
+                      pubdd+='<div class="col l2 mb-5 mt-5 mr-5" >'+
+                              '<a class="modal-trigge" onclick="abrirModalImg('+data[i].id_publicacion+')"  href="#">'+
+                              '<img class="mosaico" src="/RedSocialBancaprepa/img/pdf.png"></a>'+
+                              '<b> <p class="break-word" style="width: 100%;">'+data[i].titulo+'</p></b>'+
+                             '</div> ';    
                 }
                 else{
-                        pubdd+=  '<div class="col s12 l8 offset-l2" > '+
+                        /*pubdd+=  '<div class="col s12 l8 offset-l2" > '+
                         '<div class="card"> '+
                         '       <div class="card-image waves-effect waves-block waves-light">'+
                         '          <img class="activator" src="imagenes/publicaciones/'+ruta+'">'+
@@ -2916,7 +2924,13 @@ var respCargaPublicacionesFinal = function(data) {
                         '            <p>'+data[i].descripcion+'.</p>'+
                         '         </div>'+
                         '  </div>'+
-                        '</div> ';    
+                        '</div> ';  */
+
+                         pubdd+='<div class="col l2 mb-5 mt-5 mr-5" >'+
+                              '<a class="modal-trigge" onclick="abrirModalImg('+data[i].id_publicacion+')"  href="#">'+
+                              '<img class="mosaico" src="imagenes/publicaciones/'+ruta+'"></a>'+
+                              '<b> <p class="break-word" style="width: 100%;">'+data[i].titulo+'</p></b>'+
+                             '</div> ';      
                 }
         }
     }
@@ -3807,4 +3821,11 @@ var respVerifNombreUsuario = function(data) {
    
     
    
+}
+function abrirModalImg(id){
+
+    console.log(id);
+
+    $("#modalImg").modal("open");
+
 }

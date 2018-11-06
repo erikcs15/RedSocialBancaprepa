@@ -21,29 +21,29 @@
                         <?php
                             include('../menu/menu.php');
                         ?> 
-                        <h4 class="header " style="color:#1a237e;">Catalogo Correos Bancaprepa</h4>
+                        <center><h4 class="header " style="color:#1a237e;">Catalogo Correos Bancaprepa</h4></center>
                         <hr>
                     </div>
                 </div>
         </div>
         <div class="row">
                 <div class="row">
-                    <div class="input field col s1">
+                    <div class="input field col l1 s12">
                             <label for="Id" class="activate" '></label>
                             <input placeholder="Id" id="IdEmpleadoCor" type="text" class="validate" style='display:none;' >
                     </div>
-                    <div class="input-field col s4 ">
+                    <div class="input-field col l4 s12">
                                     <i class="material-icons prefix">account_circle</i>
                                     <input id="nombreAbuscarCor" type="text" class="validate" placeholder="Nombre" onkeyup="buscaEmpleadosCor()"/>
                                     <label for="nombreAbuscarCor">Nombre</label>
                     </div>
-                    <div class="input-field col s3 ">
+                    <div class="input-field col l3 s12">
                             <i class="material-icons prefix">business</i>
                             <select id="sucursalesAbuscar">
                             </select>
                             <label>Sucursal</label>
                     </div>
-                    <div class="input-field col s3">
+                    <div class="input-field col l3 s12">
                                     <i class="material-icons prefix">folder_open</i>
                                     <select id="puestosCor">
                                     </select>
@@ -51,11 +51,11 @@
                      </div>
                 </div>
                 <div class="row">
-                     <div class="input field col s1">
+                     <div class="input field col l1">
                             <label for="Id" class="activate" '></label>
                             <input placeholder="Id" id="idficticio" type="text" class="validate" style='display:none;' >
                     </div>
-                     <div class="input field col s4 " id="listaEmpleadosBC">
+                     <div class="input field col l4 " id="listaEmpleadosBC">
                                     <table class="highlight">
                                                     <tbody id="listaEmpleadosTablaBC">
                                                     
@@ -63,7 +63,7 @@
                                     </table>
                         </div>
                 
-                    <div class="col s12" align="center">
+                    <div class="col s12 l12" align="center">
                             <a id="btnLimpiar" class="waves-effect btn blue darken-4"><i class="material-icons left">brush</i>Limpiar</a>
                             <a id="btnBusquedaCorreo" class="waves-effect btn blue darken-4"><i class="material-icons left">search</i>Buscar</a>
                     </div>  
@@ -71,7 +71,7 @@
             </div>
             <div class="input-field indigo darken-4" >
                 
-                <a id="AgregaCorreosBtnFlotante" class="btn-floating btn-large halfway-fab waves-effect waves-light teal btn modal-trigger right" href="#modalAgregarCorreos" style='display:none;'>
+                <a id="AgregaCorreosBtnFlotante" class="btn-floating btn-large halfway-fab waves-effect waves-light teal btn modal-trigger right tooltipped" href="#modalAgregarCorreos" data-position="top" data-tooltip="Agregar Correo" style='display:none;'>
                     <i class="material-icons blue darken-3">add</i>
                 </a>
             </div>
@@ -83,7 +83,7 @@
                 <div id="content">
                     <div class="row"><!-- CONTENEDOR 1 -->
                             <div class="col s12"><!-- CONTENEDOR 2 -->
-                                    <table class="highlight" width="100%"  border="0" cellspacing="0" cellpadding="0" style="font-size:13px">
+                                    <table class="highlight responsive-table" width="100%"  border="0" cellspacing="0" cellpadding="0" style="font-size:13px">
                                         <thead >
                                         <tr>
                                             <th>Id</th>

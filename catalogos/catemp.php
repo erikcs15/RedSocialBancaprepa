@@ -47,7 +47,7 @@
                 <div id="content">
                     <div class="row"><!-- CONTENEDOR 1 -->
                             <div class="col s12"><!-- CONTENEDOR 2 -->
-                                    <table class="highlight">
+                                    <table class="highlight responsive-table">
                                         <thead>
                                         <tr>
                                             <th>ID</th>

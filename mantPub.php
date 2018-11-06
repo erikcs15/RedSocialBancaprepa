@@ -22,7 +22,7 @@
             <?php
                 include('menu/menu.php');
             ?>
-            <h4 class="header " style="color:#1a237e;">Mantenimiento de publicaciones</h4>
+            <center><h4 class="header " style="color:#1a237e;">Mantenimiento de publicaciones</h4></center>
                     <hr>
 
         <div class="col s12">
@@ -31,7 +31,7 @@
                 <div id="content">
                     <div class="row"><!-- CONTENEDOR 1 -->
                             <div class="col s12"><!-- CONTENEDOR 2 -->
-                                    <table class="highlight" width="100%"  border="0" cellspacing="0" cellpadding="0" style="font-size:13px">
+                                    <table class="highlight  responsive-table" width="100%"  border="0" cellspacing="0" cellpadding="0" style="font-size:13px">
                                         <thead >
                                         <tr>
                                             <th>Id</th>

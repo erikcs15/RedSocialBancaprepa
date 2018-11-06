@@ -8,10 +8,13 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 <div id="menu" style="margin:0;border:0px">
-        <nav class=" blue darken-4" style="margin:0;border:0px">
+
+        <nav class=" blue darken-4" style="margin:0;border:0px"> 
+          <a href="#" data-target="slide-out" class="sidenav-trigger hide-on-large-only  right"><i class="material-icons ">menu</i></a>
                 <div class="nav-wrapper">
                     
-                        <a href="#" class="brand-logo"><i class="material-icons">grain</i>Intranet Bancaprepa</a>
+                        <a href="#" class="brand-logo hide-on-small-only"><i class="material-icons ">grain</i>Intranet Bancaprepa</a>
+                        <a href="#" class="brand-logo hide-on-large-only"><i class="material-icons ">grain</i>Intranet</a>
                 
                         <ul class="right hide-on-med-and-down">
                             <li><span id="btnNotiF" class="counts white-text"></span> <a class='dropdown-button waves-effect waves-dark' href='/RedSocialBancaprepa/index.php' data-activates='dropdown_message'><i id="iconNotiF" class="material-icons">notifications_active</i> </a>
@@ -39,7 +42,7 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
         </nav>
 
 
-    <ul id="slide-out" class="sidenav sidenav-fixed blue darken-3"  style="transform: translateX(-100%);">
+    <ul id="slide-out" class="sidenav sidenav-fixed blue darken-3 "  style="transform: translateX(-100%);">
                   <li>
                     <div class="user-view">
                       <div class="background" id="sidenav2">
@@ -103,7 +106,7 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
 </div>
 
     
-<a href="#" data-target="slide-out" class="sidenav-trigger  hide-on-large-only"><i class="material-icons">menu</i></a>
+
 
   <!-- Modal Structure -->
   <div id="modalPerfil" class="modal modal-small " >
