@@ -2895,7 +2895,7 @@ var respCargaPublicacionesFinal = function(data) {
                         '  </div>'+
                         '</div> ';   */
 
-                      pubdd+='<div class="col l2 mb-5 mt-5 mr-5" >'+
+                      pubdd+='<div class="col l2 mb-5 mt-5 mr-5" style="border:1px black solid">'+
                               '<a class="modal-trigge" onclick="abrirModalImg('+data[i].id_publicacion+')"  href="#">'+
                               '<img class="mosaico" src="/RedSocialBancaprepa/img/pdf.png"></a>'+
                               '<b> <p class="break-word" style="width: 100%;">'+data[i].titulo+'</p></b>'+
@@ -2919,10 +2919,10 @@ var respCargaPublicacionesFinal = function(data) {
                         '  </div>'+
                         '</div> ';  */
 
-                         pubdd+='<div class="col l2 mb-5 mt-5 mr-5" >'+
+                         pubdd+='<div class="col l2 mb-5 mt-5 mr-5" style="border:1px black solid" >'+
                               '<a class="modal-trigge" onclick="abrirModalImg('+data[i].id_publicacion+')"  href="#">'+
                               '<img class="mosaico" src="imagenes/publicaciones/'+ruta+'"></a>'+
-                              '<b> <p class="break-word" style="width: 100%;">'+data[i].titulo+'</p></b>'+
+                              '<b> <p class="break-word" >'+data[i].titulo.substring(0,20)+'</p></b>'+
                              '</div> ';      
                 }
         }

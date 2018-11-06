@@ -54,25 +54,28 @@
     .modal-small{
       width: 25%;
     }
+    .modal-large{
+      width: 85%;
+    }
   } 
 
  .mosaico{
  	width: 100% !important;
- 	height: 120px;
+ 	height: 140px;
  }
 
 .mb-5 {
-  margin-bottom: 25px !important;
+  margin-bottom: 35px !important;
 }
 .mt-5 {
-  margin-top: 25px !important;
+  margin-top: 35px !important;
 }
 .ml-5 {
-  margin-left:  25px !important;
+  margin-left:  35px !important;
 }
 .mr-5 {
-  margin-right:   25px !important;
+  margin-right:   35px !important;
 }
 .break-word {
-   overflow-wrap: break-word;  
+   overflow-wrap: break-word !important; 
 }

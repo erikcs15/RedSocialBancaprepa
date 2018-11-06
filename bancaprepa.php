@@ -57,10 +57,10 @@
     </div>
 
       <!-- Modal Structure -->
-  <div id="modalImg" class="modal">
+  <div id="modalImg" class="modal modal-large">
     <div class="modal-content">
-      <h4>Modal Header</h4>
-      <p>A bunch of text</p>
+      <center><h4>Titulo publicacion</h4></center>
+        <img src="../img/Comunicado sobre el cancer de mama.jpg">
     </div>
     <div class="modal-footer">
       <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
