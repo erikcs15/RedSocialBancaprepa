@@ -55,8 +55,8 @@
                             <a id="BtnBusquedaEquipo" class="waves-effect btn blue darken-4"><i class="material-icons left">search</i>Buscar</a>
                     </div>  
                 </div>
-            </div>
         </div>
+    </div>
 
 
         

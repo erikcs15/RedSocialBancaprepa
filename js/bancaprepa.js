@@ -1102,7 +1102,8 @@ var respUser = function(data) {
             Cookies.set("b_sucursal",data[0].sucursal); 
             Cookies.set("b_puesto",data[0].puesto);  
             Cookies.set("b_telefono",data[0].telefono);            
-
+            Cookies.set("b_id_sucursal",data[0].id_sucursal);
+            Cookies.set("b_empresa",data[0].empresa);
             location.href="/RedSocialBancaprepa/index.php";
 
          return;
@@ -2757,6 +2758,9 @@ var respInsertarDetallePub = function(data) {
     console.log("Probando algo aqui------"+publicacion);  
     onRequest({ opcion : 53 ,publicacion_id:publicacion}, respCargarParaInsertarTablaConfirmaciones);
 
+
+    
+
 }
 
 var respInsertarDetallePubF = function(data) { 
@@ -2788,12 +2792,12 @@ var respCargarParaInsertarTablaConfirmaciones = function(data) {
             if(sucursal==0)
             {
                 console.log("Sucursal es igual a 0");
-                onRequest({ opcion : 54 ,empresa_id:empresa}, respInsertarTablaConfirmaciones);
+                onRequest({ opcion : 54 ,empresa_id:empresa, publicacion_id:publicacion}, respTablaConfirmaciones);
             }
             else
             {
                 console.log("Sucursal NO igual a 0");
-                onRequest({ opcion : 104 ,empresa_id:empresa, sucursal_id:sucursal}, respInsertarTablaConfirmaciones);
+                onRequest({ opcion : 104 ,empresa_id:empresa, sucursal_id:sucursal, publicacion_id:publicacion}, respTablaConfirmaciones);
             }
             
         }
@@ -2801,12 +2805,13 @@ var respCargarParaInsertarTablaConfirmaciones = function(data) {
         {
             
             console.log("Puesto no es igual a 0");
-            onRequest({ opcion : 55 ,puesto_id:puesto, empresa_id:empresa}, respInsertarTablaConfirmaciones);
+            onRequest({ opcion : 55 ,puesto_id:puesto, empresa_id:empresa, publicacion_id:publicacion}, respTablaConfirmaciones);
         }
      }
-    
+     $( "#formFiles" ).submit();
+     console.log("TERMINANDO!!!!!!!!!!");
 }
-
+/*
 var respInsertarTablaConfirmaciones = function(data) { 
     //se insertan los datos en la tabla confirmaciones!
     if (!data && data == null)
@@ -2818,7 +2823,7 @@ var respInsertarTablaConfirmaciones = function(data) {
     for (var i = 0; i < data.length; i++) 
     {
         var verif=String(data[0].empleado_id);
-        console.log("------ VERIIIF--"+verif);
+        console.log("------ VERIIIF--"+i);
         if(verif==0)
         {
             M.toast({html: 'No hay empleados que cumplan con dichos parametros, favor de verificarlo', classes: 'rounded red'});
@@ -2834,12 +2839,13 @@ var respInsertarTablaConfirmaciones = function(data) {
 
             onRequest({ opcion : 56 ,publicacion_id:publicacion,empleado_id:empleado,puesto_id:puesto,empresa_id:empresa}, respTablaConfirmaciones);
             M.toast({html: 'Publicacion Realizada correctamente', classes: 'rounded green'});
-            $( "#formFiles" ).submit();
+            //$( "#formFiles" ).submit();
         }
         
        
     }
 
+    console.log("______________________TERMINAAAAA____________");
     
 }
 
@@ -2854,6 +2860,7 @@ var respTablaConfirmaciones = function(data) {
 
     
 }
+*/
 var pubdd = '';
 var auxiliar=0;
 var respCargaPublicacionesFinal = function(data) { 
@@ -3471,7 +3478,9 @@ var respCargarVistosEmpleados = function(data) {
     var vis = '';
     var f = '';
     var h = '';
+    var n=1;
      for (var i = 0; i < data.length; i++) {
+         n++;
         var nombre=String(data[i].nombre);
         console.log("-------"+nombre);
         if(nombre=="undefined")
@@ -3498,7 +3507,9 @@ var respCargarVistosEmpleados = function(data) {
                 h=data[i].Hvisto;
             }
             d+= '<tr>'+
+            '<td>'+n+'</td>'+
             '<td>'+data[i].nombre+'</td>'+
+            '<td>'+data[i].sucursal+'</td>'+
             '<td>'+vis+'</td>'+
             '<td>'+f+'</td>'+
             '<td>'+h+'</td>'+

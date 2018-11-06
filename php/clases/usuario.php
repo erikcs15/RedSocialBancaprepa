@@ -11,13 +11,14 @@
 					$datos=array();
 					$i=0; 
 
-					$sql="SELECT  u.empleado, u.nombre, c.descripcion, ur.rol_id, eu.empresa_id, c.rol_id,s.nomComercial,r.descripcion,IF(c.telefono='' OR c.telefono=0,'SIN NUMERO',c.telefono) telefono
+					$sql="SELECT  u.empleado, u.nombre, c.descripcion, ur.rol_id, eu.empresa_id, c.rol_id,s.nomComercial,r.descripcion,IF(c.telefono='' OR c.telefono=0,'SIN NUMERO',c.telefono) telefono, c.sucursal_id, e.`nombre`
 										FROM usuarios u
 										JOIN capturistas c ON c.id=u.empleado
 									INNER JOIN b_usuario_empresa eu ON u.empleado=eu.usuario_id
 									INNER JOIN b_usuario_rol ur ON ur.usuario_id=u.empleado
 									INNER JOIN sucursales s ON s.id=c.sucursal_id
 									INNER JOIN roles r ON r.id=c.rol_id
+									INNER JOIN b_cat_empresas e ON e.`id`=eu.`empresa_id`
                             WHERE u.nombre='$user' AND u.clave=MD5('$pass') AND c.estatus_id=5"; 
 					$resultado = mysqli_query($this->con(), $sql); 
 
@@ -32,6 +33,8 @@
 					   $datos[$i]['sucursal'] = $res[6];
 					   $datos[$i]['puesto'] = $res[7];
 					   $datos[$i]['telefono'] = $res[8];  
+					   $datos[$i]['id_sucursal'] = $res[9];  
+					   $datos[$i]['empresa'] = $res[10];  
 					   $i++;
  
 					} 
@@ -1413,69 +1416,41 @@
 				return $datos;  
 			}
 
-			public function cargarEmpleadosXempresa($empresa)
+			public function cargarEmpleadosXempresa($empresa, $publicacion_id)
 			{
 				$res=array();
 				$datos=array();
 				$resultado  =array();
 				$i=0;
-
 				
-				$sql="SELECT c.id, c.descripcion, ue.empresa_id, c.rol_id 
-				FROM capturistas c
-				INNER JOIN b_usuario_empresa ue ON ue.usuario_id=c.id
-				WHERE ue.empresa_id=$empresa";
+				$sql="INSERT INTO b_confirmaciones (publicacion_id, empleado_id, puesto_id, empresa_id) 
+					SELECT $publicacion_id, c.id,c.rol_id, ue.empresa_id 
+					FROM capturistas c
+					INNER JOIN b_usuario_empresa ue ON ue.usuario_id=c.id
+					WHERE ue.empresa_id=$empresa";
 				
-				$resultado = mysqli_query($this->con(), $sql); 
+				$resultado = mysqli_query($this->con(), $sql);   
 
-				while ($res = mysqli_fetch_row($resultado)) {
-
-				   $datos[$i]['empleado_id'] = $res[0];	
-				   $datos[$i]['nombre'] = $res[1];
-				   $datos[$i]['empresa_id'] = $res[2];
-				   $datos[$i]['puesto_id'] = $res[3];				   
-				   $i++;
-				} 
-				
-				if ( count($datos )==0) { 
-					$datos[0]['empleado_id']  =0;
-					return  $datos; 
-				  }
-
-
-				return $datos;  
+				$datos['id_emp'] =  array('0' => '0' );
+				return  $datos;	
 			}
-			public function cargarEmpleadosXpuesto($puesto, $empresa)
+			public function cargarEmpleadosXpuesto($puesto, $empresa, $publicacion_id)
 			{
 				$res=array();
 				$datos=array();
 				$resultado  =array();
 				$i=0;
-
 				
-				$sql="SELECT id, descripcion, ue.empresa_id,c.rol_id  
-				FROM capturistas c
-				INNER JOIN b_usuario_empresa ue ON ue.usuario_id=c.id
-				WHERE c.rol_id=$puesto AND ue.empresa_id=$empresa";
+				$sql="INSERT INTO b_confirmaciones (publicacion_id, empleado_id, puesto_id, empresa_id) 
+					SELECT $publicacion_id, c.id,c.rol_id, ue.empresa_id 
+					FROM capturistas c
+					INNER JOIN b_usuario_empresa ue ON ue.usuario_id=c.id
+					WHERE c.rol_id=$puesto AND ue.empresa_id=$empresa";
 				
-				$resultado = mysqli_query($this->con(), $sql); 
+				$resultado = mysqli_query($this->con(), $sql);   
 
-				while ($res = mysqli_fetch_row($resultado)) {
-
-				   $datos[$i]['empleado_id'] = $res[0];	
-				   $datos[$i]['nombre'] = $res[1];
-				   $datos[$i]['empresa_id'] = $res[2];
-				   $datos[$i]['puesto_id'] = $res[3];				   
-				   $i++;
-				} 
-				
-				if ( count($datos )==0) { 
-					$datos[0]['empleado_id']  =0;
-					return  $datos; 
-				  }
-
-
-				return $datos;  
+				$datos['id_emp'] =  array('0' => '0' );
+				return  $datos;	
 			}
 
 			public function insertarTablaConfirmaciones($pub,$empleado,$puesto,$empresa)
@@ -2272,11 +2247,13 @@
 
 				
 				$sql="SELECT p.id, cap.descripcion, c.visto,DATE_FORMAT( c.fecha_visto, '%d/%b/%Y') AS fecha, 
-				DATE_FORMAT( c.hora_visto, '%l:%i%p') AS hora 
-				FROM b_publicaciones_bancaprepa p
-				INNER JOIN b_confirmaciones c ON c.publicacion_id = p.`id`
-				INNER JOIN capturistas cap ON cap.id= c.empleado_id
-				WHERE p.id=$idpub"; 
+					DATE_FORMAT( c.hora_visto, '%l:%i%p') AS hora,s.nomComercial
+					FROM b_publicaciones_bancaprepa p
+					INNER JOIN b_confirmaciones c ON c.publicacion_id = p.`id`
+					INNER JOIN capturistas cap ON cap.id= c.empleado_id
+					INNER JOIN sucursales s ON s.id = cap.sucursal_id
+					WHERE p.id=$idpub
+					ORDER BY descripcion ASC"; 
 
 				$resultado = mysqli_query($this->con(), $sql); 
 
@@ -2286,6 +2263,7 @@
 				   $datos[$i]['visto'] = $res[2];
 				   $datos[$i]['Fvisto'] = $res[3];
 				   $datos[$i]['Hvisto'] = $res[4];
+				   $datos[$i]['sucursal'] = $res[5];
 				   $i++;
 
 				} 
@@ -2928,7 +2906,7 @@
 
 			}
 
-			public function cargarEmpleadosXempresaYSucursal($empresa, $sucursal)
+			public function cargarEmpleadosXempresaYSucursal($empresa, $sucursal, $publicacion_id)
 			{
 				$res=array();
 				$datos=array();
@@ -2936,31 +2914,18 @@
 				$i=0;
 
 				
-				$sql="SELECT c.id, c.descripcion, ue.empresa_id, c.rol_id 
-				FROM capturistas c
-				INNER JOIN b_usuario_empresa ue ON ue.usuario_id=c.id
-				INNER JOIN b_empresa_sucursales es ON es.empresa_id=ue.empresa_id
-				INNER JOIN sucursales s ON s.id=es.sucursal_id
-				WHERE c.sucursal_id=$sucursal AND ue.empresa_id=$empresa GROUP BY c.id";
+				$sql="INSERT INTO b_confirmaciones (publicacion_id, empleado_id, puesto_id, empresa_id) 
+					SELECT $publicacion_id, c.id,c.rol_id, ue.empresa_id 
+					FROM capturistas c
+					INNER JOIN b_usuario_empresa ue ON ue.usuario_id=c.id
+					INNER JOIN b_empresa_sucursales es ON es.empresa_id=ue.empresa_id
+					INNER JOIN sucursales s ON s.id=es.sucursal_id
+					WHERE c.sucursal_id=$sucursal AND ue.empresa_id=$empresa GROUP BY c.id";
 				
-				$resultado = mysqli_query($this->con(), $sql); 
+				$resultado = mysqli_query($this->con(), $sql);   
 
-				while ($res = mysqli_fetch_row($resultado)) {
-
-				   $datos[$i]['empleado_id'] = $res[0];	
-				   $datos[$i]['nombre'] = $res[1];
-				   $datos[$i]['empresa_id'] = $res[2];
-				   $datos[$i]['puesto_id'] = $res[3];				   
-				   $i++;
-				} 
-				
-				if ( count($datos )==0) { 
-					$datos[0]['empleado_id']  =0;
-					return  $datos; 
-				  }
-
-
-				return $datos;  
+				$datos['id_emp'] =  array('0' => '0' );
+				return  $datos;	
 			}
 
 			public function verifNombreDeUsuarios($nombre_usuario)

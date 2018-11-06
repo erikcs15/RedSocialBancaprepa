@@ -92,7 +92,9 @@
                                     <table class="highlight">
                                         <thead >
                                         <tr>
+                                            <th>Id</th>
                                             <th>Nombre</th>
+                                            <th>Sucursal</th>
                                             <th>Visto</th>
                                             <th>Fecha visto</th>
                                             <th>Hora visto</th>                                       
