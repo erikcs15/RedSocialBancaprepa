@@ -1,61 +1,127 @@
 $(document).ready(function(){
+    ///////////////////////////////////////////////////////// INICIALIZAR VARIABLES ////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////// INICIALIZAR VARIABLES ////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////// INICIALIZAR VARIABLES ////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////// INICIALIZAR VARIABLES ////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////// INICIALIZAR VARIABLES ////////////////////////////////////////////////////////////////
+         $('.modal').modal();
+    ///////////////////////////////////////////////////////// EVENTOS ////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////// EVENTOS ////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////// EVENTOS ////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////// EVENTOS ////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////// EVENTOS ////////////////////////////////////////////////////////////////
+    $( "#btnVotar" ).click(function() {
+        console.log("Boton Votar");
+        var sucursal=$('input:radio[name=group1]:checked').val();
+        var usuario=Cookies.get('b_capturista_id');
+        console.log(sucursal+ "usuario:"+usuario);
+        votacion({ opcion : 2,sucursal_id:sucursal,empleado_id:usuario},respInsertarVoto);
+        document.getElementById('opcionesVoto').style.display = 'none';
+        $('#btnVotar').addClass("disabled");
+    });
+       
+    
+    
+    });
+    
+    ///////////////////////////////////////////////////////// RESPUESTAS ////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////// RESPUESTAS ////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////// RESPUESTAS ////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////// RESPUESTAS ////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////// RESPUESTAS ////////////////////////////////////////////////////////////////
+    
+    var respVerifVoto = function(data) 
+    { 
+        if (!data && data == null)
+        return;  
+        var contador=data[0].conteo;
+        console.log("contador:"+contador);
 
-    $( "#btnEnviarFormVotaciones" ).click(function() {
+        document.getElementById('opcionesVoto').style.display = 'block';
+        $("#btnVotar").removeAttr("disabled");
+           
+           
+       
+        
+    }
 
-        console.log("Presiono boton votaciones . js");
-       /*  
-        var titulo = $("#pTitulo").val();
-        var documento = $("#docId").val();
-        var descripcion = $("#pDescripcion").val();
-        var tipopublic = $("#tipoPubAddFile").val();
-        var empresa = $("#tipoEmpresaAddFile").val();
-        var docname="SIN DOCUMENTO";
-        var usuario = Cookies.get('b_capturista_id');
+    var respInsertarVoto = function(data) 
+    { 
+        if (!data && data == null)
+        return;  
+        
+        M.toast({html: 'Voto realizado, Gracias!', classes: 'rounded green'});
 
-        if($('#chkDoc').is(":checked")) { 
-            if(documento.length<=0){
-                M.toast({html: 'Es necesario incluir un documento', classes: 'rounded red'});
-                return;
-            }
-            docname = $("#tittleDoc").val();
-            var cdocumento ='S';
-         } 
-         else{
-            cdocumento ='N';
-         }
- 
+        
+    }
 
-         //valida que los campos no queden vacios para evitar errores
-        if(titulo.length<=0){
-            M.toast({html: 'El Titulo de la publicacion no puede estar vacio', classes: 'rounded red'});
-            return;
+    var respVerifSucursal = function(data) 
+    { 
+        if (!data && data == null)
+        return;  
+        var numero=data[0].numero;
+        console.log("Numero: "+numero);
+        document.getElementById('r'+numero+"").disabled=true;        
+    }
+    
+
+    var respResultados = function(data) 
+    { 
+        if (!data && data == null) 
+        return; 
+
+        var d = '';
+        var suma=0;
+        var x=0;
+        console.log("cargando votos resultados");
+
+        for (var i = 0; i < data.length; i++) {
+        x=parseInt(data[i].votos);
+        suma=suma+x;
+        d+= '<tr>'+
+        '<td>'+data[i].numero_altar+'</td>'+
+        '<td>'+data[i].id_suc+'</td>'+
+        '<td>'+data[i].sucursal+'</td>' +
+        '<td>'+data[i].votos+'</td>' +
+        '</tr> ';
         }
- 
-        if(descripcion.length<=0){
-            M.toast({html: 'Es necesario incluir una descripcion en la publicacion', classes: 'rounded red'});
-            return;
-        }
-        if(tipopublic <=0){
-            M.toast({html: 'Es necesario especificar el tipo de publicacion', classes: 'rounded red'});
-            return;
-        }
-        if(empresa<=0){
-            M.toast({html: 'Es necesario especificar la empresa ala que se dirige', classes: 'rounded red'});
-            return;
-        }
-        /*
-        ---Se comento porque ya no fue necesario---
-        if(tiporol<=0){
-            M.toast({html: 'Es necesario especificar el rol al que se dirige la publicacion', classes: 'rounded red'});
-            return;
-        } 
-        onRequest({ opcion : 76, usuario_id:usuario},respPermitirPublicacion);
+        $('#total_votos').val(suma);
+        
+        $("#tablaResultados").html(d);
 
-        */
+         
+    }
 
-        //$( "#formFiles" ).submit();
-      });
+
+    
+    ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
+    function checarVotaciones(){
+
+        console.log("Checar votaciones ");
+        cargarMenuPorRol();
+        var usuario=Cookies.get('b_capturista_id');
+        var sucursal=Cookies.get('b_id_sucursal');
+        votacion({ opcion : 3,sucursal_id:sucursal},respVerifSucursal);
+        votacion({ opcion : 1,empleado_id:usuario},respVerifVoto);
+       
+    }
+    
+
+    function cargarResultadosVotos(){
+
+        console.log("cargando votos!");
+        
+        votacion({ opcion : 4},respResultados);
       
+       
+    }
 
 
-});
+
+
+
+   

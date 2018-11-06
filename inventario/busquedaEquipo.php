@@ -54,8 +54,8 @@
                             <a id="btnReporteExcel" class="btn waves-effect waves-light blue darken-4 hide-on-small-only"><i class="material-icons left">developer_board</i>Exportar</a> 
                     </div>  
                 </div>
-            </div>
         </div>
+    </div>
 
 
         

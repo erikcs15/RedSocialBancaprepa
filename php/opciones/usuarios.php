@@ -188,10 +188,10 @@
 			echo (json_encode($usuario->cargarRolesParaConfirmaciones($_REQUEST['publicacion_id'])));
 		break; 
 		case 54:
-			echo (json_encode($usuario->cargarEmpleadosXempresa($_REQUEST['empresa_id'])));
+			echo (json_encode($usuario->cargarEmpleadosXempresa($_REQUEST['empresa_id'],$_REQUEST['publicacion_id'])));
 		break;
 		case 55:
-			echo (json_encode($usuario->cargarEmpleadosXpuesto($_REQUEST['puesto_id'],$_REQUEST['empresa_id'])));
+			echo (json_encode($usuario->cargarEmpleadosXpuesto($_REQUEST['puesto_id'],$_REQUEST['empresa_id'],$_REQUEST['publicacion_id'])));
 		break;
 		case 56:
 			echo (json_encode($usuario->insertarTablaConfirmaciones($_REQUEST['publicacion_id'],$_REQUEST['empleado_id'],$_REQUEST['puesto_id'],$_REQUEST['empresa_id'])));
@@ -338,7 +338,7 @@
 			echo (json_encode($usuario->verifNombreDeUsuarios($_REQUEST['usuario'])));
 		break;
 		case 104:
-			echo (json_encode($usuario->cargarEmpleadosXempresaYSucursal($_REQUEST['empresa_id'],$_REQUEST['sucursal_id'])));
+			echo (json_encode($usuario->cargarEmpleadosXempresaYSucursal($_REQUEST['empresa_id'],$_REQUEST['sucursal_id'],$_REQUEST['publicacion_id'])));
 		break;
 		case 105:
 			echo (json_encode($usuario->cargarAreaXId($_REQUEST['area_id'])));
