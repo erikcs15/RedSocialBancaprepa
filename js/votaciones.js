@@ -37,9 +37,9 @@ $(document).ready(function(){
         var contador=data[0].conteo;
         console.log("contador:"+contador);
 
-        
-            console.log("Es Mayor a 0");
-            alert("Las votaciones han finalizado! Gracias por participar!");
+        document.getElementById('opcionesVoto').style.display = 'block';
+        $("#btnVotar").removeAttr("disabled");
+           
            
        
         
