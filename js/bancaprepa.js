@@ -1020,7 +1020,7 @@ function CerrarYborrarDiv()
     document.getElementById('listaEmpleadosBC').style.display = 'none';
 }
 
-function buscaEmpleados()
+function buscaEmpleadosAdd()
 {
     var bus= $("#nombreEmpleadoCorreo").val();
     if (bus.length>2)
