@@ -1,6 +1,7 @@
 <?php
+
     
-    // AGREGAR UN DIA O UN MES O UN AÑO A UNA FECHA //
+// AGREGAR UN DIA O UN MES O UN AÑO A UNA FECHA //
     function DateAdd($givendate,$day=0,$mth=0,$yr=0) 
     {
         $cd = strtotime($givendate);
@@ -13,10 +14,10 @@
     // OBTENER LOS DIAS QUE TIENE UN MES //
     function diasMes($mes,$anio)
     {
-        $dias_mes = mktime( 0, 0, 0, $mes, 1, $anio );
+        /*$dias_mes = mktime( 0, 0, 0, $mes, 1, $anio );
         setlocale(LC_ALL,"es_ES");
-        $dias_mes = date("t",$dias_mes);
-        return $dias_mes;
+        $dias_mes = date("t",$dias_mes);*/
+        return "Hola!";
     }
 
     // FUNCION FECHA DEL PRIMER PAGO  //
@@ -30,7 +31,6 @@
         if (empty($anio) || empty($mes))
             list($anio, $mes, $dia) = explode('-', $fecha_corrida);
 
-        /*
         $sql = "SELECT dia_mes FROM p_dias_corte";
         $arreglo = $this->consulta( $sql );
         while ( $fila = mysqli_fetch_array( $arreglo ) )
@@ -42,11 +42,11 @@
 
             $x++;
         }
-        */
+        
         //Todos los vales que se cobren entre el primer dia de corte (8 de cada mes ) y 
         // un dia antes del ultimo dia de corte (23 de cada mes) empezaran a pagarce el ultimo dia 
         // de ese mes
-        if( $dia>$1 && $dia<=$15 )
+        if( $dia>$dia_corte1 && $dia<=$dia_corte2 )
         {
             // OBTENER LOS DIAS QUE TIENE UN MES //
             $dias_mes = $this->diasMes($mes,$anio);
@@ -80,3 +80,5 @@
 
         return $fecha;
     }
+
+?>
