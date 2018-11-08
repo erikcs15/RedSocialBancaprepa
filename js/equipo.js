@@ -319,7 +319,9 @@ $(document).ready(function(){
         console.log("id de empleado:"+id_emp+" equipo id:"+equip+"fecha entrega:"+fecha_ent);
 
         //cargamos todos los equipos con ese numero de equipo
-        onRequest({ opcion : 90 ,num_equipo:numEquipo}, respSacarIddeLosnumeroDeEquipo);
+        
+        onRequest({ opcion : 85 ,id_empleado:id_emp, idequipo:equip, fecha_ent:fecha_ent, comen:comentarios}, respAsignarResponsiva);
+        onRequest({ opcion : 91 ,equipo_id:equip, encargado:id_emp}, respAsignarResponsivaAEquipo);
 
     }
 
@@ -971,6 +973,17 @@ $(document).ready(function(){
             M.toast({html: 'No se encontraron coincidencias.', classes: 'rounded red'}); 
             return;
         }
+
+        M.toast({html: 'Responsable asignado a equipo!.', classes: 'rounded green'})
+        $("#IdResponsable").val("");
+        $("#nomResponsable").val("");
+        $("#comenEquipo").val("");
+        $("#respFecha_ent").val("");
+
+        var equip = Cookies.get('i_idequipo');
+
+        console.log("id del equipo desde cookies:"+equip);
+        onRequest({ opcion : 88 ,equipo_id:equip}, respCargarResponsables);
         
        
     }
@@ -1042,43 +1055,6 @@ $(document).ready(function(){
     }
 
     
-
-    var respSacarIddeLosnumeroDeEquipo = function(data) { 
-    
-        if (!data && data == null)
-        {
-            M.toast({html: 'Ocurrío un problema, contacte al equipo de sistemas.', classes: 'rounded red'}); 
-            return;
-        }
-
-        
-        var id_emp = $("#IdResponsable").val();
-        var fecha_ent = $("#respFecha_ent").val();
-        var comentarios = $("#comenEquipo").val();
-
-        
-        for (var i = 0; i < data.length; i++) 
-        {
-            var equipoID=data[i].id_equipo;
-            console.log("Insertando a todos los numero de equipo"+ equipoID);
-            onRequest({ opcion : 85 ,id_empleado:id_emp, idequipo:equipoID, fecha_ent:fecha_ent, comen:comentarios}, respAsignarResponsiva);
-            onRequest({ opcion : 91 ,equipo_id:equipoID, encargado:id_emp}, respAsignarResponsivaAEquipo);
-            
-        }
-
-        M.toast({html: 'Responsable asignado a todos los numero de equipo correspondiente.', classes: 'rounded green'})
-        $("#IdResponsable").val("");
-        $("#nomResponsable").val("");
-        $("#comenEquipo").val("");
-        $("#respFecha_ent").val("");
-
-        var equip = Cookies.get('i_idequipo');
-
-        console.log("id del equipo desde cookies:"+equip);
-        onRequest({ opcion : 88 ,equipo_id:equip}, respCargarResponsables);
-
-       
-    }
 
     
     

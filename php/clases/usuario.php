@@ -2171,7 +2171,7 @@
 					JOIN estatus ON estatus.id=e.estatus_id
 					INNER JOIN sucursales s ON e.sucursal_id=s.id
 					INNER JOIN b_cat_areas a ON a.id=e.`area_id` 
-					LEFT OUTER JOIN capturistas c ON c.id=e.`encargado_id` ".$q." ORDER BY e.id DESC ";  
+					LEFT OUTER JOIN capturistas c ON c.id=e.`encargado_id` ".$q." ORDER BY e.num_equipo DESC, id DESC ";  
  
 				$resultado = mysqli_query($this->con(), $sql);  
 				while ($res = mysqli_fetch_row($resultado)) {

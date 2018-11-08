@@ -64,19 +64,20 @@ $df->SetFont('Arial','',12);
 $df->Ln(18);
 
 
-$df->Multicell(180,5,utf8_decode("Comprobante de entrega del equipo con número de folio $num_equipo, el cual pertenece a PRESTAMOS RESPONSABLES SA DE CV y se hace entrega el día $fecha_entrega a $nombre quien se compromete a hacer uso del equipo exclusivamente dentro del ámbito laboral. Especificaciones del equipo entregado:"),0,'J',0);
+$df->Multicell(180,5,utf8_decode("Comprobante de entrega del equipo con número de folio $num_equipo, el cual pertenece a PRESTAMOS RESPONSABLES SA DE CV y se le hace entrega a $nombre quien se compromete a hacer uso del equipo exclusivamente dentro del ámbito laboral. Especificaciones del equipo entregado:"),0,'J',0);
 $df->Ln(10);
 if($num_equipo > 0)
 {
 	$df->Ln(5);
 	$df->Cell(10);
 	$df->SetFont('Arial','B',11);
-	$df->Cell(1,5,'ID  # EQUIPO   TIPO                                             DESCRIPCION',0,0,'N',false);
+	$df->Cell(1,5,'ID  # EQUIPO   TIPO                     FECHA ENTREGA                      DESCRIPCION',0,0,'N',false);
 	$df->SetFont('Arial','',10);
 	$df->Ln(5);
-	$sql = "SELECT e.id, e.`num_equipo`, t.`descripcion`, e.`descripcion`
+	$sql = "SELECT e.id, e.`num_equipo`, t.`descripcion`, e.`descripcion`, r.fecha_entrega
 	FROM i_equipo e 
 	INNER JOIN i_tipo_equipo t ON e.`tipo_equipo_id`=t.`id`
+	INNER JOIN i_responsivas r ON r.`equipo_id`=e.`id`
 	WHERE e.num_equipo=$num_equipo AND e.estatus_id=5";
 	$resultado = mysqli_query($c->con(), $sql); 
 	while ($res = mysqli_fetch_row($resultado)) 
@@ -85,6 +86,7 @@ if($num_equipo > 0)
 		$numEquipo = $res[ 1 ];
 		$tipo = $res[ 2 ];
 		$descripcionE = $res[ 3 ];
+		$fechaEntrega = $res[ 4 ];
 
 		$df->Ln(3);
 		$df->Cell(10);
@@ -93,8 +95,11 @@ if($num_equipo > 0)
 		$df->Cell(1,5,"         ".$numEquipo,0,0,'C',false);
 		$df->Cell(10);
 		$df->Cell(1,5,"     ".$tipo."  ",0,0,'N',false);
+		$df->Cell(40); 
+		$df->Cell(1,5,"                                  ".$fechaEntrega,0,0,'C',false);
 		$df->Cell(30);
 		$df->Multicell(120,5,utf8_decode($descripcionE),0,'J',0);
+		
 	}
 }
 $df->Ln(12);

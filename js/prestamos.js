@@ -99,7 +99,7 @@ $(document).ready(function(){
         
 
         prestamosp({ opcion : 1,capturista_id:capturistaId,fecha_solicitud:fecha_solicitud, puesto_id:puesto_id, sucursal_id: sucursal_id, empresa_id:empresa_id, numTarjeta:numTarjeta, beneficiarioCuenta:beneficiarioCta, nombreBanco:nombreBanco, monto_solicitado:monto_solicitado, quincenas:quincenas, meses_a_pagar: meses_pagar, interes_prestamo: interes_prestamo, tipo_abono:tipo_abono, descuento_mensual: descuento,monto_total:monto_total_pagar, inicio_descuento:inicio_descuento, fin_descuento:fin_descuento, monto_letra:monto_letra},respInsertarSolicutd);
-            
+        prestamosp({ opcion : 4},respInsertarCorrida);
 
     });
     
@@ -114,9 +114,7 @@ $(document).ready(function(){
        if (!data && data == null)
        return;  
 
-       M.toast({html: 'Datos insertados!.', classes: 'rounded green'}); 
-       location.href="/RedSocialBancaprepa/prestamospersonales/solicitarprestamo.php";
-       return;
+       
 
    }
 
@@ -171,6 +169,32 @@ $(document).ready(function(){
        
 
         cargarMenuPorRol();
+    }
+
+    var respInsertarCorrida = function(data) {
+        if (!data && data == null)
+        return;  
+ 
+        var fecha = data[0].fecha;
+        var idsolicitud = data[0].id;
+        var quincenas = data[0].quincenas;
+        var descuento_mensual = data[0].descuento_mensual;
+
+        console.log("Insertando corrida......");
+        prestamosp({ opcion : 4,prestamoId:idsolicitud, fecha:fecha, quincenas:quincenas, abono:descuento_mensual},respFinalInsertarCorrida );
+    }
+
+    
+
+    var respFinalInsertarCorrida = function(data) {
+        if (!data && data == null)
+        return;  
+
+
+       M.toast({html: 'Datos insertados!.', classes: 'rounded green'}); 
+      // location.href="/RedSocialBancaprepa/prestamospersonales/solicitarprestamo.php";
+       return;
+        
     }
     
     ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////

@@ -14,6 +14,12 @@
 		case 2: 
 				echo (json_encode($prestamos->cargarSolicitudesPorEmpleado($_REQUEST['capturista_id'])));
 		break;
+		case 3: 
+				echo (json_encode($prestamos->insertarCorridas($_REQUEST['prestamoId'],$_REQUEST['fecha'],$_REQUEST['quincenas'],$_REQUEST['abono'])));
+		break;
+		case 4: 
+				echo (json_encode($prestamos->cargarUltimoIdSolicitud()));
+		break;
  
  	}
  
