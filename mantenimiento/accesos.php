@@ -52,7 +52,8 @@
                         <p><label><input type="checkbox" id="busquedaEquipoCh" onChange="habDesAccesos(tipoRolAc.value,'busquedaEquipoCh',16)"/><span>Busqueda de Equipo</span></label></p>
                         <p><label><input type="checkbox" id="mantPubCh" onChange="habDesAccesos(tipoRolAc.value,'mantPubCh',17)"/><span>Mantenimiento de Publicaciones</span></label></p>
                         <p><label><input type="checkbox" id="capAreas" onChange="habDesAccesos(tipoRolAc.value,'capAreas',18)"/><span>Captura de Areas</span></label></p>
-                        
+                        <p><label><input type="checkbox" id="crearSolpp" onChange="habDesAccesos(tipoRolAc.value,'crearSolpp',19)"/><span>Crear Solicitudes Prestamos Personales</span></label></p>
+                        <p><label><input type="checkbox" id="solicitudesPp" onChange="habDesAccesos(tipoRolAc.value,'solicitudesPp',20)"/><span>Solicitudes Prestamos Personales</span></label></p>
                     </div>
             </div>             
            

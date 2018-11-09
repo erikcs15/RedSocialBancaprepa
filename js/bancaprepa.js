@@ -1851,6 +1851,12 @@ var respAccesosPorRol  = function(data) {
             case '18':
                 $('#capAreas').prop('checked', true); 
             break;
+            case '19':
+                $('#crearSolpp').prop('checked', true); 
+            break;
+            case '20':
+                $('#solicitudesPp').prop('checked', true); 
+            break;
         }    
     }
 } 
@@ -1858,7 +1864,7 @@ var respAccesosPorRol  = function(data) {
 
 //---------Respuesta para actualizar los accesos al menu de agregar publicacion
 var respUpdateAccesos = function(data) { 
-    console.log(data);
+    
     if (!data && data == null)
     {
         M.toast({html: 'Acceso no actualizado, consulte con el area de sistemas', classes: 'rounded red'}); 
@@ -1868,6 +1874,7 @@ var respUpdateAccesos = function(data) {
     M.toast({html: 'Acceso Actualizado!', classes: 'rounded #43a047 green darken-1'}); 
 
     //Actualiza de nuevo los accesos
+    console.log(data);
     
 }
 
@@ -1968,6 +1975,14 @@ var respCargarMenu  = function(data) {
             case '18':
              document.getElementById('m_catalogos').style.display = 'block'; 
              document.getElementById('catAreas').style.display = 'block';
+            break;
+            case '19':
+             document.getElementById('m_Prestamos').style.display = 'block'; 
+             document.getElementById('m_crearSolicitud').style.display = 'block';
+            break;
+            case '20':
+             document.getElementById('m_Prestamos').style.display = 'block'; 
+             document.getElementById('m_solicitudes').style.display = 'block';
             break;
         }    
     }
@@ -2070,6 +2085,8 @@ function cargarAccesos(rol_id){
     $('#busquedaEquipoCh').prop('checked', false);
     $('#mantPubCh').prop('checked', false);
     $('#capAreas').prop('checked', false);
+    $('#crearSolpp').prop('checked', false);
+    $('#solicitudesPp').prop('checked', false);
 
 
 

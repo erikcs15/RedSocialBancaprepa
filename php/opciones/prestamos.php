@@ -20,6 +20,12 @@
 		case 4: 
 				echo (json_encode($prestamos->cargarUltimoIdSolicitud()));
 		break;
+		case 5: 
+				echo (json_encode($prestamos->calcularFechaPagoInicialYFinal($_REQUEST['fecha'],$_REQUEST['quincenas'])));
+		break;
+		case 6: 
+				echo (json_encode($prestamos->cargarSolicitudes()));
+		break;
  
  	}
  

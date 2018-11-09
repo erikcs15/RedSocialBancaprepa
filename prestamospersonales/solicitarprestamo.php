@@ -12,7 +12,7 @@
         
 </head>
 <link rel="icon" type="image/png" href="/img/favicon.ico" /> 
-    <body onload="cargarSolicitud()">
+    <body onload="cargarCreacionSolicitud()">
     <div id="container" ><!-- CONTENEDOR 1 -->
          <div class="nav-wrapper">
            <?php

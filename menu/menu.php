@@ -72,6 +72,12 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
                     <li><a id="m_mantenimientoTickets" style='display:none;' class=" waves-effect blue darken-4 white-text" name ="mantenimientoTickets" ><i class="material-icons white-text">build</i>Mantenimiento de tickets</a></li>
                     </ul>
                   <li><a id="correos" class=" waves-effect white-text"  name ="correos white-text"><i class="material-icons white-text">local_post_office</i>Correos</a></li> 
+                  <li><a  id="m_Prestamos" style='display:none;' name ="prestamosdd" class="dropdown-trigger white-text" data-target='prestamosdd'><i class="material-icons white-text">bubble_chart</i><i class="material-icons right white-text">arrow_drop_down</i>Prest. Personales</a></li>
+                    <ul id='prestamosdd' class='dropdown-content blue darken-4'>
+                    <li><a id="m_crearSolicitud" style='display:none;' class="waves-effect blue darken-4 white-text" name ="m_crearSolicitud" href="\RedSocialBancaprepa\prestamospersonales\solicitarprestamo.php"><i class="material-icons white-text">add_circle_outline</i>Crear Solicitud</a></li> 
+                    <li><a id="m_solicitudes"  class="waves-effect blue darken-4 white-text" style='display:none;' name ="m_solicitudes" href="\RedSocialBancaprepa\prestamospersonales\solicitudes.php"><i class="material-icons white-text">bubble_chart</i>Solicitudes</a></li> 
+                    </ul>
+                    <li><div class="divider"></div></li>
                   <li><a  id="m_Inventario" style='display:none;' name ="ticketsdd" class="dropdown-trigger white-text" data-target='inventariodd'><i class="material-icons white-text">content_paste</i><i class="material-icons right white-text">arrow_drop_down</i>Inventario</a></li>
                     <ul id='inventariodd' class='dropdown-content blue darken-4'>
                     <li><a id="capInv" style='display:none;' class="waves-effect blue darken-4 white-text" name ="capInv" href="/RedSocialBancaprepa\inventario\capturainv.php"><i class="material-icons white-text">laptop_chromebook</i>Capturar Equipo</a></li> 

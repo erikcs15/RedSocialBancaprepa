@@ -31,6 +31,8 @@ $(document).ready(function(){
           $("#monto_total_pagar").val(total_pagar);
           $("#descuento").val(descuento.toFixed(2));
           $("#monto_letra").val(totalConLetra);
+          var fecha_solicitud=$('#fecha_solicitud').val();
+          prestamosp({ opcion : 5, fecha:fecha_solicitud, quincenas:quincenas},respCargarFechaInicioYFinal);
           
       }
     });
@@ -171,6 +173,61 @@ $(document).ready(function(){
         cargarMenuPorRol();
     }
 
+    var respCargarSolicitudes = function(data) { 
+    
+        if (!data && data == null) 
+        return; 
+
+        var d = '';
+        var x = '';
+
+
+
+        for (var i = 0; i < data.length; i++) 
+        {
+            var nombre=String(data[i].capturista);
+            console.log("-------"+nombre);
+            if(nombre=="undefined")
+            {
+               d+= '<tr>'+
+               '<td>Sin prestamos solicitados</td>'+
+               '<td class="left">'+ 
+               '</tr> ';  
+               $("#tablaSolicitudes").html(d);
+            }
+            else
+            {
+                if(i%2==0)
+                {
+                    x='even';
+                }
+                else
+                {
+                    x='odd';
+                }
+                d+= '<tr>'+
+                '<td>'+data[i].id+'</td>'+
+                '<td>'+data[i].capturista+'</td>'+
+                '<td>'+data[i].fecha_solicitud+'</td>'+ 
+                '<td>$'+data[i].monto_solicitado+'</td>'+ 
+                '<td>$'+data[i].monto_autorizado+'</td>'+ 
+                '<td>'+data[i].estatus+'</td>'+ 
+                '<td class="left">'+
+                '<a onClick="autorizarPrestamos('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small teal lighten-1 btn modal-trigger" href="#modalAutorizarPrestamos"><i class="material-icons">thumbs_up_down</i></a>' + 
+                '<a class="waves-effect waves-light btn-floating btn-small indigo darken-4 btn modal-trigger" href="#!"><i class="material-icons">local_printshop</i></a>' + 
+                '<a class="waves-effect waves-light btn-floating btn-small grey btn modal-trigger" href="#!"><i class="material-icons">comment</i></a>' + 
+                '</td>'+
+                '</tr> ';
+
+                $("#tablaSolicitudes").html(d);
+            }
+        }
+        
+       
+
+        cargarMenuPorRol();
+    }
+
     var respInsertarCorrida = function(data) {
         if (!data && data == null)
         return;  
@@ -199,14 +256,45 @@ $(document).ready(function(){
        return;
         
     }
-    
+    var respCargarFechaInicioYFinal = function(data) {
+        if (!data && data == null)
+        return;  
+
+        var fechaInicio= data[0].inicio;
+        var fechaFinal = data[0].fechafinal;
+
+        console.log("Fecha inicio: "+fechaInicio+" Fecha final: "+fechaFinal);
+        
+        //Se transforma la fecha para poder insertarla en el input del html
+        var f=new Date(fechaInicio);
+        var mes = f.getMonth()+1; //obteniendo mes
+        var dia = f.getDate()+1; //obteniendo dia
+        var ano = f.getFullYear(); //obteniendo año
+        if(dia<10)
+            dia='0'+dia; //agrega cero si el menor de 10
+        if(mes<10)
+            mes='0'+mes //agrega cero si el menor de 10
+        document.getElementById('inicio_descuento').value=ano+"-"+mes+"-"+dia;
+
+        var f2=new Date(fechaFinal);
+        var mesF = f2.getMonth()+1; //obteniendo mes
+        var diaF = f2.getDate()+1; //obteniendo dia
+        var anoF = f2.getFullYear(); //obteniendo año
+        if(diaF<10)
+            diaF='0'+diaF; //agrega cero si el menor de 10
+        if(mesF<10)
+            mesF='0'+mesF //agrega cero si el menor de 10
+        document.getElementById('fin_descuento').value=anoF+"-"+mesF+"-"+diaF;
+    }
+
+
     ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
     
-    function cargarSolicitud()
+    function cargarCreacionSolicitud()
     {
         var f=new Date();
         
@@ -236,6 +324,32 @@ $(document).ready(function(){
         
     }
 
+    
+    function swAutorizar()
+    {
+        console.log("CAMBIO");
+        if($('#chAutorizar').is(":checked")) 
+        { 
+            document.getElementById('montoAutorizar').style.display = 'block';
+            document.getElementById('textoMontoA').style.display = 'block';
+        } 
+        else
+        {
+            document.getElementById('montoAutorizar').style.display = 'none';
+            document.getElementById('textoMontoA').style.display = 'none';
+        }
+    }
+    function cargarSolicitud()
+    {
+        
+        prestamosp({ opcion : 6},respCargarSolicitudes );
+        
+    }
+    
+    function autorizarPrestamos(prestamoId)
+    {
+        console.log("Id prestamo: "+prestamoId); 
+    }
 
     function formatDate(date) {
         var d = new Date(date),

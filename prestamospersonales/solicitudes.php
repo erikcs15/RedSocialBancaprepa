@@ -19,7 +19,7 @@
                 include('../menu/menu.php');
             ?>
         </div>
-        <h3 class="header " align="center" style="color:#1a237e;">Solicitud de Prestamo Personal</h3> 
+        <h3 class="header " align="center" style="color:#1a237e;">Solicitudes de Prestamos Personales</h3> 
       
         <div class="row"><!-- CONTENEDOR 1 -->
             <div class="col s12">
@@ -27,18 +27,17 @@
                     <thead >
                     <tr>
                         <th>Id</th>
-                        <th>Nombre</th>
+                        <th>Nombre del Solicitante</th>
                         <th>Fecha Solicitud</th>
                         <th>Monto Solicitado</th>
-                        <th>Monto Total a Pagar</th>
-                        <th>Descuento quincenal</th>
+                        <th>Monto Autorizado</th>
                         <th>Estatus</th>
-                        <th>Fecha Autorizado</th>
-                        <th>Persona que autorizo</th>                                       
+                        <th>Acciones</th>
+                                                         
                     </tr>
                     </thead>
 
-                    <tbody id="tablaSolicitudPrestamo">
+                    <tbody id="tablaSolicitudes">
                         
                     </tbody>
                 </table>
@@ -60,5 +59,41 @@
                 $('.sidenav').sidenav();
             });
         </script> 
+
+        <!-------------------- Modal para agregar empresa-------------------------->
+    <div id="modalAutorizarPrestamos" class="modal">
+           <nav class="teal lighten-1">
+               <div class="nav-wrapper">
+                   <a href="#!" class="brand-logo">
+                       <i class="large material-icons">thumbs_up_down</i>Autorizar Prestamo
+                   </a>
+               </div>
+           </nav>
+           <div class="modal-content">
+           <h6><b>¿Autorizar Prestamo?</b></h6>
+                <div class="switch" onChange="swAutorizar()">
+                        <label>
+                        No Autorizar
+                        <input type="checkbox" id="chAutorizar">
+                        <span class="lever"></span>
+                        Autorizar
+                        </label>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <textarea id="txtArea" class="materialize-textarea"></textarea>
+                        <label id="textoArea" for="txtArea">Comentario:</label>
+                    </div>
+                    <div class="input-field col s2">
+                        <input id="montoAutorizar" style='display:none;' type="text" class="validate">
+                        <label id="textoMontoA" style='display:none;' for="montoAutorizar">Monto a Autorizar</label>
+                    </div>
+                </div>
+           </div>
+           <div class="modal-footer">
+               <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
+               <a id="btnAutorizarPrestamo" class="waves-effect waves-light btn teal lighten-1 right"><i class="material-icons left">thumbs_up_down</i>Aceptar</a>
+           </div>
+    </div>
     </body>
 </html>
