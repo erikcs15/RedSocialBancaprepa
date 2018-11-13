@@ -60,7 +60,7 @@
             });
         </script> 
 
-        <!-------------------- Modal para agregar empresa-------------------------->
+        <!-------------------- Modal para autorizar-------------------------->
     <div id="modalAutorizarPrestamos" class="modal">
            <nav class="teal lighten-1">
                <div class="nav-wrapper">

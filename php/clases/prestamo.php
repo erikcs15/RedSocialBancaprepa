@@ -50,7 +50,7 @@
             $datos=array();
             $i=0; 
             $sql="SELECT p.id, c.descripcion,p.fecha_solicitud,p.monto_solicitado, p.monto_total, e.descripcion, 
-                IFNULL(p.fecha_autorizado, '-'), IFNULL(p.capturista_id_autorizo, '-'), p.descuento_mensual, IFNULL(p.comentarios_autorizacion, '-'),
+                IFNULL(p.fecha_autorizado, '-'), IFNULL(c.descripcion, '-'), p.descuento_mensual, IFNULL(p.comentarios_autorizacion, '-'),
                 p.monto_autorizado
                 FROM b_prestamo_solicitudes p
                 INNER JOIN estatus e ON e.id=p.estatus_id
@@ -84,7 +84,7 @@
         
         public function cargarSolicitudes()
         {
-            $q="";
+            
             $res=array();
             $datos=array();
             $i=0; 
@@ -94,7 +94,9 @@
                 FROM b_prestamo_solicitudes p
                 INNER JOIN estatus e ON e.id=p.estatus_id
                 INNER JOIN capturistas c ON c.id=p.capturista_id ORDER BY p.id DESC";
+
             
+
             $resultado = mysqli_query($this->con(), $sql); 
             while ($res = mysqli_fetch_row($resultado)) {
 
@@ -146,6 +148,34 @@
                 }
             return $datos;  
         }
+
+        public function cargarSolicitudxId($id_solicitud)
+        {
+            $q="";
+            $res=array();
+            $datos=array();
+            $i=0; 
+            $sql="SELECT id, quincenas, monto_autorizado, fecha_autorizado
+                    FROM b_prestamo_solicitudes
+                    Where id=$id_solicitud"; 
+                
+            $resultado = mysqli_query($this->con(), $sql); 
+            while ($res = mysqli_fetch_row($resultado)) {
+
+                $datos[$i]['id'] = $res[0];
+                $datos[$i]['quincenas'] = $res[1];
+                $datos[$i]['monto_autorizado'] = $res[2];
+                $datos[$i]['fecha_autorizado'] = $res[3];
+                $i++;
+
+            } 
+            if ( count($datos )==0) { 
+                $datos[0]['id']  =0;
+                return  $datos; 
+                }
+            return $datos;  
+        }
+
 
         public function insertarCorridas($prestamoId,$fecha_corridap, $quincenas, $pago)
         {
@@ -305,6 +335,48 @@
             }
             return $datos; 
         }
+
+        public function autorizarPrestamo($prestamoId,$comentario,$id_usuario_autorizador,$montoFinal)
+        {
+            $res=array();
+            $datos=array();
+            $resultado  =array();
+           
+            $sql="UPDATE b_prestamo_solicitudes SET estatus_id=5, fecha_autorizado=CURDATE(), capturista_id_autorizo=$id_usuario_autorizador, 
+                comentarios_autorizacion='$comentario', monto_autorizado=$montoFinal WHERE id=$prestamoId";
+            
+            $resultado = mysqli_query($this->con(), $sql);   
+            $datos['b_prestamo_solicitudes'] =  array('0' => '0' );
+            return  $datos;	
+        }
+
+        public function actualizarPrestamo($prestamoId,$interes,$descuento,$montoFinal,$montoLetra)
+        {
+            $res=array();
+            $datos=array();
+            $resultado  =array();
+           
+            $sql="UPDATE b_prestamo_solicitudes SET interes_prestamo=$interes, descuento_mensual=$descuento, monto_total=$montoFinal, 
+                monto_letra='$montoLetra' WHERE id=$prestamoId";
+            
+            $resultado = mysqli_query($this->con(), $sql);   
+            $datos['b_prestamo_solicitudes'] =  array('0' => '0' );
+            return  $datos;	
+        }
+
+        public function actualizarPrestamoFechasPago($fecha_ini, $fecha_fin, $id_solicitud)
+        {
+            $res=array();
+            $datos=array();
+            $resultado  =array();
+           
+            $sql="UPDATE b_prestamo_solicitudes SET inicio_descuento='$interes', fin_descuento='$fecha_fin' WHERE id=$id_solicitud";
+            
+            $resultado = mysqli_query($this->con(), $sql);   
+            $datos['b_prestamo_solicitudes'] =  array('0' => '0' );
+            return  $datos;	
+        }
+       
 
     }
 

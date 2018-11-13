@@ -26,6 +26,18 @@
 		case 6: 
 				echo (json_encode($prestamos->cargarSolicitudes()));
 		break;
+		case 7: 
+				echo (json_encode($prestamos->autorizarPrestamo($_REQUEST['id_prestamo'],$_REQUEST['coment'],$_REQUEST['capturista_autoriza'],$_REQUEST['montoAutorizado'])));
+		break;
+		case 8: 
+				echo (json_encode($prestamos->cargarSolicitudxId($_REQUEST['id_solicitud'])));
+		break;
+		case 9: 
+				echo (json_encode($prestamos->actualizarPrestamo($_REQUEST['id_solicitud'],$_REQUEST['interes_prestamo'],$_REQUEST['descuento_mensual'],$_REQUEST['monto_total'], $_REQUEST['monto_letra'])));
+		break;
+		case 10: 
+				echo (json_encode($prestamos->actualizarPrestamoFechasPago($_REQUEST['fecha_ini'],$_REQUEST['fecha_fin'],$_REQUEST['solicitud_id'])));
+		break;
  
  	}
  

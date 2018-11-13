@@ -104,6 +104,19 @@ $(document).ready(function(){
         
 
     });
+
+    
+    $( "#btnAutorizarPrestamo" ).click(function() {
+        var id_prestamo = Cookies.get('p_idprestamo');
+        var comentarios=$('#txtArea').val();
+        var usuario_autorizador=Cookies.get('b_capturista_id');
+        var montoFinal= $('#montoAutorizar').val();
+        prestamosp({ opcion : 7,id_prestamo:id_prestamo, coment:comentarios, capturista_autoriza:usuario_autorizador, montoAutorizado:montoFinal},respAutorizarPrestamo );
+        prestamosp({ opcion : 8,id_solicitud:id_prestamo},respReajustarSolicitud );
+        
+
+    }); 
+
     
 });
     
@@ -116,7 +129,8 @@ $(document).ready(function(){
        if (!data && data == null)
        return;  
 
-       prestamosp({ opcion : 4},respInsertarCorrida);
+       M.toast({html: 'Solicitud creada, espere a que se contacten con ustedes para una respuesta!.', classes: 'rounded green'});
+       prestamosp({ opcion : 6}, respCargarSolicitudes);
 
    }
 
@@ -129,7 +143,7 @@ $(document).ready(function(){
         var x = '';
 
 
-
+        
         for (var i = 0; i < data.length; i++) 
         {
             var nombre=String(data[i].capturista);
@@ -178,10 +192,12 @@ $(document).ready(function(){
         if (!data && data == null) 
         return; 
 
+
+        console.log(data);
         var d = '';
         var x = '';
 
-
+        
 
         for (var i = 0; i < data.length; i++) 
         {
@@ -251,7 +267,7 @@ $(document).ready(function(){
 
 
        M.toast({html: 'Datos insertados!.', classes: 'rounded green'}); 
-       location.href="/RedSocialBancaprepa/prestamospersonales/solicitarprestamo.php";
+       location.href="/RedSocialBancaprepa/prestamospersonales/solicitudes.php";
        console.log(data);
        return;
         
@@ -285,6 +301,73 @@ $(document).ready(function(){
         if(mesF<10)
             mesF='0'+mesF //agrega cero si el menor de 10
         document.getElementById('fin_descuento').value=anoF+"-"+mesF+"-"+diaF;
+    }
+
+    var respReajustarFechas = function(data) {
+        if (!data && data == null)
+        return;  
+
+        var fechaInicio= data[0].inicio;
+        var fechaFinal = data[0].fechafinal;
+        var id_prestamo = Cookies.get('p_idprestamo');
+        prestamosp({ opcion : 10, fecha_ini:fechaInicio, fecha_fin:fechaFinal, solicitud_id:id_prestamo},respReajusteFecha2 );
+    }
+
+    
+    var respReajusteFecha2 = function(data) {
+        if (!data && data == null)
+        return;          
+    }
+    
+    var respAutorizarPrestamo = function(data) {
+        if (!data && data == null)
+        return;  
+
+
+       M.toast({html: 'Datos insertados!.', classes: 'rounded green'}); 
+       $("#modalAutorizarPrestamos").modal("close");
+       console.log(data);
+       return;
+        
+    }
+
+    var respReajustarSolicitud = function(data) {
+        if (!data && data == null)
+        return;
+        var id_solicitud=0;
+        id_solicitud=data[0].id;
+        var quincenas=0;
+        quincenas =  data[0].quincenas;
+        var mesesApagar=0;
+        mesesApagar=quincenas/2;
+        var montoAutorizadoF=0;
+        montoAutorizadoF= parseInt(data[0].monto_autorizado);
+        var interes = 0;
+        interes =parseInt((montoAutorizadoF*0.05)*mesesApagar);
+        var total_pagar=0;
+        total_pagar=parseInt(interes+montoAutorizadoF);
+        var descuento=0;
+        descuento=(total_pagar/quincenas).toFixed(2);
+        var totalConLetra = NumeroALetras(total_pagar);
+        var fecha_autorizado = data[0].fecha_autorizado;
+
+        console.log("|monto autorizado:|"+montoAutorizadoF);
+        console.log("|quincenas:|"+quincenas);
+        console.log("|meses_pagar:|"+mesesApagar);
+        console.log("|interes_prestamo:|"+interes);
+        console.log("|descuento:|"+descuento);
+        console.log("|monto_total_pagar:|"+total_pagar);
+        console.log("|monto_letra:|"+totalConLetra);
+        console.log("|fecha autorizado:|"+fecha_autorizado);
+
+        
+        prestamosp({ opcion : 9, id_solicitud:id_solicitud, interes_prestamo:interes, descuento_mensual:descuento, monto_total:total_pagar,monto_letra:totalConLetra},respAjusteRealizado);
+        prestamosp({ opcion : 3,prestamoId:id_solicitud, fecha:fecha_autorizado, quincenas:quincenas, abono:descuento},respFinalInsertarCorrida );
+        prestamosp({ opcion : 5, fecha:fecha_autorizado, quincenas:quincenas},respCargarFechaInicioYFinal);
+    }
+
+    var respAjusteRealizado = function(data) {
+         
     }
 
 
@@ -327,6 +410,7 @@ $(document).ready(function(){
     
     function swAutorizar()
     {
+       
         console.log("CAMBIO");
         if($('#chAutorizar').is(":checked")) 
         { 
@@ -341,14 +425,14 @@ $(document).ready(function(){
     }
     function cargarSolicitud()
     {
-        
-        prestamosp({ opcion : 6},respCargarSolicitudes );
+        prestamosp({ opcion : 6}, respCargarSolicitudes);
         
     }
     
     function autorizarPrestamos(prestamoId)
     {
         console.log("Id prestamo: "+prestamoId); 
+        Cookies.set("p_idprestamo",prestamoId);
     }
 
     function formatDate(date) {
