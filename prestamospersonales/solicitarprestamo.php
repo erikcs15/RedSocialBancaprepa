@@ -113,11 +113,14 @@
                         <th>Nombre</th>
                         <th>Fecha Solicitud</th>
                         <th>Monto Solicitado</th>
+                        <th>Quincenas</th>
+                        <th>Monto Autorizado</th>
                         <th>Monto Total a Pagar</th>
                         <th>Descuento quincenal</th>
                         <th>Estatus</th>
                         <th>Fecha Autorizado</th>
-                        <th>Persona que autorizo</th>                                       
+                        <th>Persona que autorizo</th>    
+                        <th>Comentarios</th>                                       
                     </tr>
                     </thead>
 
@@ -144,6 +147,48 @@
                 $('.sidenav').sidenav();
             });
         </script> 
+
+
+    <div id="modalinfoPrestamo" class="modal">
+           <nav class="teal lighten-1">
+               <div class="nav-wrapper">
+                   <a href="#!" class="brand-logo">
+                       <i class="large material-icons">comment</i>Información del Prestamo
+                   </a>
+               </div>
+           </nav>
+           <div class="modal-content">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <h7>Comentarios:</h7>
+                        <textarea id="textoAreaInfo" class="materialize-textarea" disabled></textarea>
+                    </div>
+                    <div class="input-field col s3">
+                        <h7 id="texto_monto_autorizado" style='display:none;'>Monto autorizado:</h7>
+                        <input id="textoMontoAInfo" style='display:none;' type="text" class="validate" disabled>
+                    </div>
+                    <div class="col s12">
+                        <table class="highlight">
+                            <thead >
+                            <tr>
+                                <th>Numero de pago</th>
+                                <th>Cantidad</th>
+                                <th>Fecha de pago</th>
+                                <th>Abonado</th>                                 
+                            </tr>
+                            </thead>
+
+                            <tbody id="tablaCorrida">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+           </div>
+           <div class="modal-footer">
+               <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cerrar</a>
+           </div>
+    </div>
 
     
  

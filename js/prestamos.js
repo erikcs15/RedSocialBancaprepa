@@ -110,9 +110,21 @@ $(document).ready(function(){
         var id_prestamo = Cookies.get('p_idprestamo');
         var comentarios=$('#txtArea').val();
         var usuario_autorizador=Cookies.get('b_capturista_id');
-        var montoFinal= $('#montoAutorizar').val();
-        prestamosp({ opcion : 7,id_prestamo:id_prestamo, coment:comentarios, capturista_autoriza:usuario_autorizador, montoAutorizado:montoFinal},respAutorizarPrestamo );
-        prestamosp({ opcion : 8,id_solicitud:id_prestamo},respReajustarSolicitud );
+
+        if($('#chAutorizar').is(":checked")) 
+        { 
+            var montoFinal= $('#montoAutorizar').val();
+            prestamosp({ opcion : 7,id_prestamo:id_prestamo, coment:comentarios, capturista_autoriza:usuario_autorizador, montoAutorizado:montoFinal},respAutorizarPrestamo );
+            prestamosp({ opcion : 8,id_solicitud:id_prestamo},respReajustarSolicitud );
+            prestamosp({ opcion : 6}, respCargarSolicitudes);
+        } 
+        else
+        {
+            prestamosp({ opcion : 11,id_prestamo:id_prestamo, coment:comentarios, capturista_autoriza:usuario_autorizador},respNoAutorizarPrestamo );
+            prestamosp({ opcion : 6}, respCargarSolicitudes);
+            
+        }
+        
         
 
     }); 
@@ -129,8 +141,29 @@ $(document).ready(function(){
        if (!data && data == null)
        return;  
 
-       M.toast({html: 'Solicitud creada, espere a que se contacten con ustedes para una respuesta!.', classes: 'rounded green'});
-       prestamosp({ opcion : 6}, respCargarSolicitudes);
+       var capturistaId = Cookies.get('b_capturista_id');
+
+       M.toast({html: 'Solicitud creada, espere a que se contacten con usted para una respuesta!.', classes: 'rounded green'});
+       prestamosp({ opcion : 2,capturista_id:capturistaId},respCargarSolicitudesPorCapturista );
+
+       $('#nombre_solicitante').val("");
+       $('#fecha_solicitud').val("");
+       $('#tipo_abono').val("");
+        
+       $('#num_tarjeta').val("");
+       $('#bnf_cta').val("");
+       $('#nombre_banco').val("");
+       $('#monto_solicitado').val("");
+       $('#quincenas').val("");
+       $('#meses_pagar').val("");
+       $('#interes_prestamo').val("");
+       $('#tipo_abono').val("");
+       $('#descuento').val("");
+       $('#monto_total_pagar').val("");
+       $('#monto_letra').val("");
+       $('#inicio_descuento').val("");
+       $('#fin_descuento').val("");
+
 
    }
 
@@ -158,25 +191,53 @@ $(document).ready(function(){
             }
             else
             {
-                if(i%2==0)
+                if(data[i].estatus!="ACTIVO")
                 {
-                    x='even';
+                    d+= '<tr>'+
+                    '<td>'+data[i].id+'</td>'+
+                    '<td>'+data[i].capturista+'</td>'+
+                    '<td>'+data[i].fecha_solicitud+'</td>'+ 
+                    '<td>$'+data[i].monto_solicitado+'</td>'+
+                    '<td>'+data[i].quincenas+'</td>'+
+                    '<td>-</td>'+ 
+                    '<td>$'+data[i].monto_pagar+'</td>'+ 
+                    '<td>$'+data[i].descuento_mensual+'</td>'+ 
+                    '<td>'+data[i].estatus+'</td>'+ 
+                    '<td>'+data[i].fecha_autorizado+'</td>'+ 
+                    '<td>'+data[i].capturista_autorizo+'</td>'+ 
+                    '<td class="left">'+
+                    '<a onClick="informacionPrestamo('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small grey btn modal-trigger" href="#modalinfoPrestamo"><i class="material-icons">comment</i></a>' + 
+                    '</td>' +
+                    '</tr> ';
                 }
                 else
                 {
-                    x='odd';
+                    if(i%2==0)
+                    {
+                        x='even';
+                    }
+                    else
+                    {
+                        x='odd';
+                    }
+                    d+= '<tr>'+
+                    '<td>'+data[i].id+'</td>'+
+                    '<td>'+data[i].capturista+'</td>'+
+                    '<td>'+data[i].fecha_solicitud+'</td>'+ 
+                    '<td>$'+data[i].monto_solicitado+'</td>'+ 
+                    '<td>'+data[i].quincenas+'</td>'+
+                    '<td>$'+data[i].monto_autorizado+'</td>'+ 
+                    '<td>$'+data[i].monto_pagar+'</td>'+ 
+                    '<td>$'+data[i].descuento_mensual+'</td>'+ 
+                    '<td>'+data[i].estatus+'</td>'+ 
+                    '<td>'+data[i].fecha_autorizado+'</td>'+ 
+                    '<td>'+data[i].capturista_autorizo+'</td>'+ 
+                    '<td class="left">'+
+                    '<a onClick="informacionPrestamo('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small grey btn modal-trigger" href="#modalinfoPrestamo"><i class="material-icons">comment</i></a>' + 
+                    '</td>' +
+                    '</tr> ';
                 }
-                d+= '<tr>'+
-                '<td>'+data[i].id+'</td>'+
-                '<td>'+data[i].capturista+'</td>'+
-                '<td>'+data[i].fecha_solicitud+'</td>'+ 
-                '<td>$'+data[i].monto_solicitado+'</td>'+ 
-                '<td>$'+data[i].monto_pagar+'</td>'+ 
-                '<td>$'+data[i].descuento_mensual+'</td>'+ 
-                '<td>'+data[i].estatus+'</td>'+ 
-                '<td>'+data[i].fecha_autorizado+'</td>'+ 
-                '<td>'+data[i].capturista_autorizo+'</td>'+ 
-                '</tr> ';
+                
 
                 $("#tablaSolicitudPrestamo").html(d);
             }
@@ -213,27 +274,58 @@ $(document).ready(function(){
             }
             else
             {
-                if(i%2==0)
+                if(data[i].monto_autorizado=="-")
                 {
-                    x='even';
+                    if(i%2==0)
+                    {
+                        x='even';
+                    }
+                    else
+                    {
+                        x='odd';
+                    }
+                    d+= '<tr>'+
+                    '<td>'+data[i].id+'</td>'+
+                    '<td>'+data[i].capturista+'</td>'+
+                    '<td>'+data[i].fecha_solicitud+'</td>'+ 
+                    '<td>$'+data[i].monto_solicitado+'</td>'+ 
+                    '<td>'+data[i].quincenas+'</td>'+  
+                    '<td>$'+data[i].monto_autorizado+'</td>'+ 
+                    '<td>-</td>'+
+                    '<td>'+data[i].estatus+'</td>'+ 
+                    '<td class="left">'+
+                    '<a onClick="autorizarPrestamos('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small teal lighten-1 btn modal-trigger" href="#modalAutorizarPrestamos"><i class="material-icons">thumbs_up_down</i></a>' + 
+                    '<a onClick="informacionPrestamo('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small grey btn modal-trigger" href="#modalinfoPrestamo"><i class="material-icons">comment</i></a>' + 
+                    '</td>'+
+                    '</tr> ';
                 }
                 else
                 {
-                    x='odd';
+                    if(i%2==0)
+                    {
+                        x='even';
+                    }
+                    else
+                    {
+                        x='odd';
+                    }
+                    d+= '<tr>'+
+                    '<td>'+data[i].id+'</td>'+
+                    '<td>'+data[i].capturista+'</td>'+
+                    '<td>'+data[i].fecha_solicitud+'</td>'+ 
+                    '<td>$'+data[i].monto_solicitado+'</td>'+ 
+                    '<td>'+data[i].quincenas+'</td>'+  
+                    '<td>$'+data[i].monto_autorizado+'</td>'+ 
+                    '<td>$'+data[i].descuento_mensual+'</td>'+
+                    '<td>'+data[i].estatus+'</td>'+ 
+                    '<td class="left">'+
+                    '<a onClick="autorizarPrestamos('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small teal lighten-1 btn modal-trigger" href="#modalAutorizarPrestamos"><i class="material-icons">thumbs_up_down</i></a>' + 
+                    '<a onClick="informacionPrestamo('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small grey btn modal-trigger" href="#modalinfoPrestamo"><i class="material-icons">comment</i></a>' + 
+                    '</td>'+
+                    '</tr> ';
+
                 }
-                d+= '<tr>'+
-                '<td>'+data[i].id+'</td>'+
-                '<td>'+data[i].capturista+'</td>'+
-                '<td>'+data[i].fecha_solicitud+'</td>'+ 
-                '<td>$'+data[i].monto_solicitado+'</td>'+ 
-                '<td>$'+data[i].monto_autorizado+'</td>'+ 
-                '<td>'+data[i].estatus+'</td>'+ 
-                '<td class="left">'+
-                '<a onClick="autorizarPrestamos('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small teal lighten-1 btn modal-trigger" href="#modalAutorizarPrestamos"><i class="material-icons">thumbs_up_down</i></a>' + 
-                '<a class="waves-effect waves-light btn-floating btn-small indigo darken-4 btn modal-trigger" href="#!"><i class="material-icons">local_printshop</i></a>' + 
-                '<a class="waves-effect waves-light btn-floating btn-small grey btn modal-trigger" href="#!"><i class="material-icons">comment</i></a>' + 
-                '</td>'+
-                '</tr> ';
+                
 
                 $("#tablaSolicitudes").html(d);
             }
@@ -266,16 +358,18 @@ $(document).ready(function(){
         return;  
 
 
-       M.toast({html: 'Datos insertados!.', classes: 'rounded green'}); 
-       location.href="/RedSocialBancaprepa/prestamospersonales/solicitudes.php";
+       M.toast({html: 'Solicitud actualizada!.', classes: 'rounded green'}); 
+       prestamosp({ opcion : 6}, respCargarSolicitudes);
        console.log(data);
        return;
         
     }
+    
     var respCargarFechaInicioYFinal = function(data) {
         if (!data && data == null)
         return;  
 
+        console.log(data);
         var fechaInicio= data[0].inicio;
         var fechaFinal = data[0].fechafinal;
 
@@ -324,7 +418,19 @@ $(document).ready(function(){
         return;  
 
 
-       M.toast({html: 'Datos insertados!.', classes: 'rounded green'}); 
+       M.toast({html: 'Prestamo Autorizado!.', classes: 'rounded green'}); 
+       $("#modalAutorizarPrestamos").modal("close");
+       console.log(data);
+       return;
+        
+    }
+
+    var respNoAutorizarPrestamo = function(data) {
+        if (!data && data == null)
+        return;  
+
+
+       M.toast({html: 'Prestamo NO Autorizado!.', classes: 'rounded red'}); 
        $("#modalAutorizarPrestamos").modal("close");
        console.log(data);
        return;
@@ -369,6 +475,83 @@ $(document).ready(function(){
     var respAjusteRealizado = function(data) {
          
     }
+
+    
+    var respInfoSolicitudes = function(data) {
+        if (!data && data == null)
+        return;
+        
+        console.log(data[0].estatus_id);
+        if(data[0].estatus_id==5)
+        {
+            console.log("activo");
+            document.getElementById('texto_monto_autorizado').style.display = 'block';
+            document.getElementById('textoMontoAInfo').style.display = 'block';
+            $("#textoAreaInfo").val(data[0].comentarios);
+            $("#textoMontoAInfo").val(data[0].monto_autorizado);
+        }
+        else
+        {
+            document.getElementById('texto_monto_autorizado').style.display = 'none';
+            document.getElementById('textoMontoAInfo').style.display = 'none';
+            $("#textoAreaInfo").val(data[0].comentarios);
+        }
+ 
+    }
+
+    var respCargarCorridaXID = function(data) { 
+    
+        if (!data && data == null) 
+        return; 
+
+
+        console.log(data);
+        var d = '';
+        var x = '';
+
+        
+
+        for (var i = 0; i < data.length; i++) 
+        {
+            var nombre=String(data[i].abonado);
+            console.log("-------"+nombre);
+            if(nombre=="undefined")
+            {
+               d+= '<tr>'+
+               '<td>Sin corrida realizada</td>'+
+               '<td class="left">'+ 
+               '</tr> ';  
+               $("#tablaCorrida").html(d);
+            }
+            else
+            {
+                
+                if(i%2==0)
+                {
+                    x='even';
+                }
+                else
+                {
+                    x='odd';
+                }
+                d+= '<tr>'+
+                '<td>'+data[i].num_pago+'</td>'+
+                '<td>$'+data[i].cantidad+'</td>'+
+                '<td>'+data[i].fecha+'</td>'+ 
+                '<td>'+data[i].abonado+'</td>'+ 
+                '</tr> ';
+                
+
+                $("#tablaCorrida").html(d);
+            }
+        }
+        
+       
+
+       
+    }
+
+    
 
 
     ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
@@ -433,6 +616,13 @@ $(document).ready(function(){
     {
         console.log("Id prestamo: "+prestamoId); 
         Cookies.set("p_idprestamo",prestamoId);
+    }
+
+    function informacionPrestamo(prestamoId)
+    {
+        prestamosp({ opcion : 8, id_solicitud:prestamoId}, respInfoSolicitudes);
+        prestamosp({ opcion : 12, id_prestamo:prestamoId}, respCargarCorridaXID);
+        
     }
 
     function formatDate(date) {

@@ -38,6 +38,12 @@
 		case 10: 
 				echo (json_encode($prestamos->actualizarPrestamoFechasPago($_REQUEST['fecha_ini'],$_REQUEST['fecha_fin'],$_REQUEST['solicitud_id'])));
 		break;
+		case 11: 
+				echo (json_encode($prestamos->NoAutorizarPrestamo($_REQUEST['id_prestamo'],$_REQUEST['coment'],$_REQUEST['capturista_autoriza'])));
+		break;
+		case 12: 
+				echo (json_encode($prestamos->cargarCorridaXid($_REQUEST['id_prestamo'])));
+		break;
  
  	}
  

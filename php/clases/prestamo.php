@@ -50,12 +50,13 @@
             $datos=array();
             $i=0; 
             $sql="SELECT p.id, c.descripcion,p.fecha_solicitud,p.monto_solicitado, p.monto_total, e.descripcion, 
-                IFNULL(p.fecha_autorizado, '-'), IFNULL(c.descripcion, '-'), p.descuento_mensual, IFNULL(p.comentarios_autorizacion, '-'),
-                p.monto_autorizado
+                IFNULL(p.fecha_autorizado, '-'),IFNULL(c2.`descripcion`, '-'), p.descuento_mensual, IFNULL(p.comentarios_autorizacion, '-'),
+                p.monto_autorizado, p.quincenas
                 FROM b_prestamo_solicitudes p
                 INNER JOIN estatus e ON e.id=p.estatus_id
                 INNER JOIN capturistas c ON c.id=p.capturista_id
-                WHERE p.capturista_id= $capturista_id"; 
+                LEFT JOIN capturistas c2 ON c2.id=p.`capturista_id_autorizo`
+                WHERE p.capturista_id= $capturista_id Order by p.id desc"; 
             
             $resultado = mysqli_query($this->con(), $sql); 
             while ($res = mysqli_fetch_row($resultado)) {
@@ -71,6 +72,7 @@
                 $datos[$i]['descuento_mensual'] = $res[8];
                 $datos[$i]['comentario'] = $res[9];
                 $datos[$i]['monto_autorizado'] = $res[10];
+                $datos[$i]['quincenas'] = $res[11];
                 $i++;
 
             } 
@@ -90,7 +92,7 @@
             $i=0; 
             $sql="SELECT p.id, c.descripcion,p.fecha_solicitud,p.monto_solicitado, p.monto_total, e.descripcion, 
                 IFNULL(p.fecha_autorizado, '-'), IFNULL(p.capturista_id_autorizo, '-'), p.descuento_mensual, IFNULL(p.comentarios_autorizacion, '-'),
-                IFNULL(p.monto_autorizado,'-')
+                IFNULL(p.monto_autorizado,'-'), p.`quincenas`
                 FROM b_prestamo_solicitudes p
                 INNER JOIN estatus e ON e.id=p.estatus_id
                 INNER JOIN capturistas c ON c.id=p.capturista_id ORDER BY p.id DESC";
@@ -111,6 +113,7 @@
                 $datos[$i]['descuento_mensual'] = $res[8];
                 $datos[$i]['comentario'] = $res[9];
                 $datos[$i]['monto_autorizado'] = $res[10];
+                $datos[$i]['quincenas'] = $res[11];
                 $i++;
 
             } 
@@ -155,7 +158,7 @@
             $res=array();
             $datos=array();
             $i=0; 
-            $sql="SELECT id, quincenas, monto_autorizado, fecha_autorizado
+            $sql="SELECT id, quincenas, monto_autorizado, fecha_autorizado, comentarios_autorizacion, estatus_id
                     FROM b_prestamo_solicitudes
                     Where id=$id_solicitud"; 
                 
@@ -166,6 +169,8 @@
                 $datos[$i]['quincenas'] = $res[1];
                 $datos[$i]['monto_autorizado'] = $res[2];
                 $datos[$i]['fecha_autorizado'] = $res[3];
+                $datos[$i]['comentarios'] = $res[4];
+                $datos[$i]['estatus_id'] = $res[5];
                 $i++;
 
             } 
@@ -257,15 +262,15 @@
 
         public function calcularFechaPagoInicialYFinal($fecha_corridap, $quincenas)
         {
+            
             $datos=array();
             $i=0; 
-            //return $prestamoId.'-'.$fecha_corridap.'-'.$quincenas.'-'.$pago;
-          $anio=0;
-          $mes=0;
-          $dia=0;
-          //$fecha=date('2018-11-15');
-          $dias_mes=0;
-           
+            $anio=0;
+            $mes=0;
+            $dia=0;
+            //$fecha=date('2018-11-15');
+            $dias_mes=0;
+            
             list($anio, $mes, $dia) = explode('-', $fecha_corridap);
            
             if (empty($anio) || empty($mes))
@@ -376,6 +381,50 @@
             $datos['b_prestamo_solicitudes'] =  array('0' => '0' );
             return  $datos;	
         }
+
+        public function NoAutorizarPrestamo($prestamoId,$comentario,$id_usuario_autorizador)
+        {
+            $res=array();
+            $datos=array();
+            $resultado  =array();
+           
+            $sql="UPDATE b_prestamo_solicitudes SET estatus_id=3, fecha_autorizado=CURDATE(), capturista_id_autorizo=$id_usuario_autorizador, 
+                comentarios_autorizacion='$comentario' WHERE id=$prestamoId";
+            
+            $resultado = mysqli_query($this->con(), $sql);   
+            $datos['b_prestamo_solicitudes'] =  array('0' => '0' );
+            return  $datos;	
+        }
+
+        public function cargarCorridaXid($id_solicitud)
+        {
+            $q="";
+            $res=array();
+            $datos=array();
+            $i=0; 
+            $sql="SELECT s.id, cor.`num_pago`, cor.`abono`, cor.`fecha_pago`, cor.`abonado`
+            FROM b_prestamo_corridas cor
+            INNER JOIN b_prestamo_solicitudes s ON s.id=cor.`prestamo_personal_id`
+            WHERE s.id=$id_solicitud ORDER BY cor.num_pago"; 
+                
+            $resultado = mysqli_query($this->con(), $sql); 
+            while ($res = mysqli_fetch_row($resultado)) {
+
+                $datos[$i]['id'] = $res[0];
+                $datos[$i]['num_pago'] = $res[1];
+                $datos[$i]['cantidad'] = $res[2];
+                $datos[$i]['fecha'] = $res[3];
+                $datos[$i]['abonado'] = $res[4];
+                $i++;
+
+            } 
+            if ( count($datos )==0) { 
+                $datos[0]['id']  =0;
+                return  $datos; 
+                }
+            return $datos;  
+        }
+
        
 
     }

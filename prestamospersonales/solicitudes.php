@@ -30,7 +30,9 @@
                         <th>Nombre del Solicitante</th>
                         <th>Fecha Solicitud</th>
                         <th>Monto Solicitado</th>
+                        <th>Quincenas</th>
                         <th>Monto Autorizado</th>
+                        <th>Descuento Mensual</th>
                         <th>Estatus</th>
                         <th>Acciones</th>
                                                          
@@ -93,6 +95,31 @@
            <div class="modal-footer">
                <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
                <a id="btnAutorizarPrestamo" class="waves-effect waves-light btn teal lighten-1 right"><i class="material-icons left">thumbs_up_down</i>Aceptar</a>
+           </div>
+    </div>
+    
+    <div id="modalinfoPrestamo" class="modal">
+           <nav class="teal lighten-1">
+               <div class="nav-wrapper">
+                   <a href="#!" class="brand-logo">
+                       <i class="large material-icons">comment</i>Información del Prestamo
+                   </a>
+               </div>
+           </nav>
+           <div class="modal-content">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <h7>Comentarios:</h7>
+                        <textarea id="textoAreaInfo" class="materialize-textarea" disabled></textarea>
+                    </div>
+                    <div class="input-field col s3">
+                        <h7 id="texto_monto_autorizado" style='display:none;'>Monto autorizado:</h7>
+                        <input id="textoMontoAInfo" style='display:none;' type="text" class="validate" disabled>
+                    </div>
+                </div>
+           </div>
+           <div class="modal-footer">
+               <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cerrar</a>
            </div>
     </div>
     </body>
