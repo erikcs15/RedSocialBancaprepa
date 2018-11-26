@@ -3052,6 +3052,40 @@
 			}
 
 
+			
+			public function verifSiYaTieneResponsiva($equipo_id)
+			{
+				$q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
+				$v="N";
+
+				$sql="SELECT COUNT(equipo_id), $equipo_id
+				FROM i_responsivas r
+				WHERE r.equipo_id=$equipo_id";
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['contador'] = $res[0];
+				   $datos[$i]['equipo_id'] = $res[1];
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['contador']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+
 
 			
 

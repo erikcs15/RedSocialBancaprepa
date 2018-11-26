@@ -175,6 +175,7 @@
                                 <option value="prestamoslacasita">prestamoslacasita</option>
                                 <option value="presico">presico</option>
                                 <option value="fundacionamiga">fundacionamiga</option>
+                                <option value="dejur">dejur</option>
                             </select>
                             <label></label>
                         </div>

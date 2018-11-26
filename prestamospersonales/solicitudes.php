@@ -116,6 +116,22 @@
                         <h7 id="texto_monto_autorizado" style='display:none;'>Monto autorizado:</h7>
                         <input id="textoMontoAInfo" style='display:none;' type="text" class="validate" disabled>
                     </div>
+                    <div class="col s12">
+                        <table class="highlight">
+                            <thead >
+                            <tr>
+                                <th>Numero de pago</th>
+                                <th>Cantidad</th>
+                                <th>Fecha de pago</th>
+                                <th>Abonado</th>                                 
+                            </tr>
+                            </thead>
+
+                            <tbody id="tablaCorrida">
+                                
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
            </div>
            <div class="modal-footer">

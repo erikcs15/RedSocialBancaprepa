@@ -113,6 +113,7 @@ $(document).ready(function(){
 
         if($('#chAutorizar').is(":checked")) 
         { 
+            prestamosp({ opcion : 13,id_prestamo:id_prestamo},respBorrarCorrida );
             var montoFinal= $('#montoAutorizar').val();
             prestamosp({ opcion : 7,id_prestamo:id_prestamo, coment:comentarios, capturista_autoriza:usuario_autorizador, montoAutorizado:montoFinal},respAutorizarPrestamo );
             prestamosp({ opcion : 8,id_solicitud:id_prestamo},respReajustarSolicitud );
@@ -321,7 +322,8 @@ $(document).ready(function(){
                     '<td class="left">'+
                     '<a onClick="autorizarPrestamos('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small teal lighten-1 btn modal-trigger" href="#modalAutorizarPrestamos"><i class="material-icons">thumbs_up_down</i></a>' + 
                     '<a onClick="informacionPrestamo('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small grey btn modal-trigger" href="#modalinfoPrestamo"><i class="material-icons">comment</i></a>' + 
-                    '</td>'+
+                    '<a onClick="imprimirCartaResponsiva('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small indigo darken-4 btn modal-trigger"><i class="material-icons">local_printshop</i></a>' + 
+                        '</td>'+
                     '</tr> ';
 
                 }
@@ -552,6 +554,31 @@ $(document).ready(function(){
     }
 
     
+    var respBorrarCorrida = function(data) { 
+    
+        if (!data && data == null) 
+        return;        
+    }
+
+    var respImprimirResponsivaPP= function(data) { 
+    
+        if (!data && data == null) 
+        return; 
+
+        var fecha=data[0].fecha;
+        var capturista = data[0].nombre_capturista;
+        var monto_autorizado=data[0].monto_autorizado;
+        
+         var a = document.createElement('a');
+         a.href="../reportes/responsivaPp.php?fecha="+fecha+"&nombre="+capturista+"&monto="+monto_autorizado;
+         a.target="_blanck";
+         document.body.appendChild(a);
+         a.click();
+
+        
+    }
+
+    
 
 
     ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
@@ -578,7 +605,7 @@ $(document).ready(function(){
             mes='0'+mes //agrega cero si el menor de 10
         document.getElementById('fecha_solicitud').value=ano+"-"+mes+"-"+dia;
        // var fecha="0"+f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();
-        
+        console.log(ano+"/"+mes+"/"+dia);
         $('#nombre_solicitante').val(nombre);
         $('#puesto_solicitud').val(puesto);
         $('#sucursal_solicitud').val(sucursal); 
@@ -622,8 +649,15 @@ $(document).ready(function(){
     {
         prestamosp({ opcion : 8, id_solicitud:prestamoId}, respInfoSolicitudes);
         prestamosp({ opcion : 12, id_prestamo:prestamoId}, respCargarCorridaXID);
-        
     }
+
+    function imprimirCartaResponsiva(prestamoId)
+    {
+        //Carga el equipo por su id para despues deshabilitarla
+        console.log("Prestamo ID:"+prestamoId);
+        prestamosp({ opcion : 14, id_prestamo:prestamoId}, respImprimirResponsivaPP);
+    }
+    
 
     function formatDate(date) {
         var d = new Date(date),

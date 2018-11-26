@@ -211,7 +211,8 @@
             }
             else
             {
-                $fecha=$this->DateAdd($fecha,15);
+                $dias_mes = $this->diasMes($mes,$anio);
+                $fecha=$anio."-".$mes."-".$dias_mes;
             }
             
            // return $fecha;
@@ -268,11 +269,13 @@
             $anio=0;
             $mes=0;
             $dia=0;
+            $fecha="";
+
             //$fecha=date('2018-11-15');
             $dias_mes=0;
             
             list($anio, $mes, $dia) = explode('-', $fecha_corridap);
-           
+          
             if (empty($anio) || empty($mes))
                 list($anio, $mes, $dia) = explode('-', $fecha_corridap);
 
@@ -289,7 +292,11 @@
             }
             else
             {
-                $fecha=$this->DateAdd($fecha,15);
+                $dias_mes = $this->diasMes($mes,$anio);
+                $fecha=$anio."-".$mes."-".$dias_mes;
+                //$fecha=$this->DateAdd($fecha_corridap,/*($dias_mes-15) */$difDias);
+
+                
             }
             
            // return $fecha;
@@ -420,6 +427,46 @@
             } 
             if ( count($datos )==0) { 
                 $datos[0]['id']  =0;
+                return  $datos; 
+                }
+            return $datos;  
+        }
+
+        public function EliminarCorridaSiTiene($prestamoId)
+        {
+            $res=array();
+            $datos=array();
+            $resultado  =array();
+           
+            $sql="DELETE from b_prestamo_corridas WHERE prestamo_personal_id=$prestamoId";
+            
+            $resultado = mysqli_query($this->con(), $sql);   
+            $datos['b_prestamo_corridas'] =  array('0' => '0' );
+            return "HEChO";	
+        }
+
+        public function cargarInfoPrestamo($id_solicitud)
+        {
+            $q="";
+            $res=array();
+            $datos=array();
+            $i=0; 
+            $sql="SELECT DATE_FORMAT( CURDATE(), '%d de %b de %Y') AS fecha, c.`descripcion`, s.`monto_autorizado` 
+            FROM b_prestamo_solicitudes s 
+            INNER JOIN capturistas c ON c.`id`= s.`capturista_id`
+            WHERE s.id=$id_solicitud"; 
+                
+            $resultado = mysqli_query($this->con(), $sql); 
+            while ($res = mysqli_fetch_row($resultado)) {
+
+                $datos[$i]['fecha'] = $res[0];
+                $datos[$i]['nombre_capturista'] = $res[1];
+                $datos[$i]['monto_autorizado'] = $res[2];
+                $i++;
+
+            } 
+            if ( count($datos )==0) { 
+                $datos[0]['fecha']  =0;
                 return  $datos; 
                 }
             return $datos;  

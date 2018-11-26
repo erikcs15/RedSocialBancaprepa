@@ -346,6 +346,9 @@
 		case 106:
 			echo (json_encode($usuario->cargarTipoEquipoXId($_REQUEST['tipo_id'])));
 		break;
+		case 107:
+			echo (json_encode($usuario->verifSiYaTieneResponsiva($_REQUEST['equipo_id'])));
+		break;
 
  	}
  

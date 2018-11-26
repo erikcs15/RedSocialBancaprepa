@@ -627,7 +627,15 @@ $( "#BtnAgregarCorreo" ).click(function() {
             }
             else
             {
-                correoarmado=correo+"@"+dominio+".com";
+                if(dominio=="dejur")
+                {
+                    correoarmado=correo+"@"+dominio+".com.mx";
+                }
+                else
+                {
+                    correoarmado=correo+"@"+dominio+".com";
+                }
+               
             }
             console.log(correoarmado);
 

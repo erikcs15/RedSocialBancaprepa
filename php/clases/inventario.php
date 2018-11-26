@@ -100,6 +100,16 @@
 
 				return $datos;
 			}
+			public function deshabilitarResponsivas($equipo_id){
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				 $query=" UPDATE i_responsivas SET estatus=4 WHERE equipo_id=$equipo_id";  
+					$resp=	mysqli_query($this->con(), $query); 
+
+				return $datos;
+			}
 
 }
 

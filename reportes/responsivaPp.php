@@ -16,13 +16,11 @@ class DF extends PDF
     }
 }
 
-$fecha_inicial = '01/01/2018';
-$fecha_final = '02/02/2018';
 
-$num_equipo 	= $_REQUEST[ 'numEquipo'];
-$fecha_entrega 	= $_REQUEST[ 'fecha_entrega' ];
-$nombre 	= $_REQUEST[ 'capturista' ];
-$comentarios 	= $_REQUEST[ 'comentarios' ];
+
+$fecha_entrega 	= $_REQUEST[ 'fecha' ];
+$nombre 	= $_REQUEST[ 'nombre' ];
+$monto 	= $_REQUEST[ 'monto' ];
 //$id_equipo = $_REQUEST[ 'id_equipo' ];
 
 /*
@@ -57,15 +55,16 @@ $totalFondo 	= 0;
 $df->SetFont('Arial','B',17);
 $df->Ln(50);
 $df->Cell(50);
-$df->Cell(195,5,"COMPROBANTE DE ENTREGA",0,0,'J',false);
+$df->Cell(95,5,"CARTA RESPONSIVA DE PRESTAMO PERSONAL",0,0,'C',false);
 
 $df->SetFont('Arial','',12);
 
 $df->Ln(18);
 
 
-$df->Multicell(180,5,utf8_decode("Comprobante de entrega del equipo con número de folio $num_equipo, el cual pertenece a PRESTAMOS RESPONSABLES SA DE CV y se le hace entrega a $nombre quien se compromete a hacer uso del equipo exclusivamente dentro del ámbito laboral. Especificaciones del equipo entregado:"),0,'J',0);
+$df->Multicell(190,5,utf8_decode("En la ciudad de Culiacan, Sinaloa a $fecha_entrega, a través del presente se hace constar que comparece ante mi el C. $nombre, quien recibe la cantidad de $monto pesos (moneda nacional), por concepto de Prestamo Personal de igual manera en este mismo acto se hace constar que el  C. $nombre se compromete hacer la devolucion del monto otorgado en prestamo una vez terminado la relacion laboral dentro de la empresa denominada __________________ aunando que este se podra descontar de su finiquito que tendria que percibir al momento de la recisión laboral."),0,'J',0);
 $df->Ln(10);
+/*
 if($num_equipo > 0)
 {
 	$df->Ln(5);
@@ -101,15 +100,11 @@ if($num_equipo > 0)
 		$df->Multicell(120,5,utf8_decode($descripcionE),0,'J',0);
 		
 	}
-}
+}*/
 $df->Ln(12);
-$df->Multicell(180,5,utf8_decode("                                                Recibe:                                                                             Entrega:"),0,'',0);
-$df->Ln(10);
-$df->Multicell(180,5,utf8_decode("                             ___________________________                                    ___________________________  "),0,'',0);
-$df->Ln(10);
-$df->Multicell(180,5,utf8_decode("                                                                                        Lugar y fecha  "),0,'',0);
-$df->Ln(10);
-$df->Multicell(180,5,utf8_decode("                                                                  ___________________________________ "),0,'',0);
+$df->Multicell(180,5,utf8_decode("                                                 ________________________________                   "),0,'',0);
+$df->Multicell(180,5,utf8_decode("                                                    $nombre "),0,'',0);
+$df->Multicell(180,5,utf8_decode("                                                       Acreedor del prestamo personal  "),0,'',0);
 
 //Fondo del texto Gris Claro Claro
 /*

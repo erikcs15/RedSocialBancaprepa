@@ -23,6 +23,9 @@
 		case 5: 
  			   echo (json_encode($inventario->eliminarArea($_REQUEST['area_id'])));
 		break;
+		case 6: 
+ 			   echo (json_encode($inventario->deshabilitarResponsivas($_REQUEST['equipo_id'])));
+		break;
 
  
  	}

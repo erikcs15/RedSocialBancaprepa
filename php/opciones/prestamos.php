@@ -44,6 +44,12 @@
 		case 12: 
 				echo (json_encode($prestamos->cargarCorridaXid($_REQUEST['id_prestamo'])));
 		break;
+		case 13: 
+				echo (json_encode($prestamos->EliminarCorridaSiTiene($_REQUEST['id_prestamo'])));
+		break;
+		case 14: 
+				echo (json_encode($prestamos->cargarInfoPrestamo($_REQUEST['id_prestamo'])));
+		break;
  
  	}
  
