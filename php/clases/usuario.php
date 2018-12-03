@@ -1350,7 +1350,7 @@
 				$i=0;
 
 				
-				$sql="SELECT MAX(id) AS id FROM b_publicaciones_bancaprepa";
+				$sql="SELECT MAX(id) AS id FROM b_publicaciones_bancaprepa WHERE capturista_id=$usuario";
 				
 				$resultado = mysqli_query($this->con(), $sql); 
 
@@ -2397,7 +2397,7 @@
 
 				
 				$sql="SELECT id, descripcion
-						FROM capturistas WHERE descripcion like '%$nom%'"; 
+						FROM capturistas WHERE descripcion like '%$nom%' AND estatus_id=5"; 
 
 				$resultado = mysqli_query($this->con(), $sql); 
 

@@ -2744,12 +2744,12 @@ var respInsertarTablaTemp = function(data) {
         return;
     }
     
-    for (var i = 0; i < data.length; i++) {    
-       var id_publicacion=data[i].id;
-       $("#idpublicacion1").val(id_publicacion);
-       //se le asigna a un input que esta oculto para guardarlo y que no se borro
+    
+    var id_publicacion=data[0].id;
+    $("#idpublicacion1").val(id_publicacion);
+    //se le asigna a un input que esta oculto para guardarlo y que no se borre
 
-    }
+    
 
     //se toma el id del usuario para cargar los datos de la tabla temporal
     var usuario = Cookies.get('b_capturista_id');
@@ -2811,7 +2811,7 @@ var respCargarParaInsertarTablaConfirmaciones = function(data) {
         var puesto=data[i].puesto_id;
         var empresa=data[i].empresa_id;
         var sucursal=data[i].sucursal_id;
-        console.log("publicacion:"+publicacion+" puesto"+puesto+" empresa:"+empresa);
+        console.log("publicacion:"+publicacion+" puesto"+puesto+" empresa:"+empresa+"  Sucursal:"+sucursal);
         if(puesto==0)
         {
             console.log("Puesto es igual a 0");
@@ -2834,7 +2834,7 @@ var respCargarParaInsertarTablaConfirmaciones = function(data) {
             onRequest({ opcion : 55 ,puesto_id:puesto, empresa_id:empresa, publicacion_id:publicacion}, respTablaConfirmaciones);
         }
      }
-     $( "#formFiles" ).submit();
+     //$( "#formFiles" ).submit();
      console.log("TERMINANDO!!!!!!!!!!");
 }
 /*
@@ -2874,7 +2874,7 @@ var respInsertarTablaConfirmaciones = function(data) {
     console.log("______________________TERMINAAAAA____________");
     
 }
-
+*/
 var respTablaConfirmaciones = function(data) { 
     if (!data && data == null)
     {
@@ -2886,7 +2886,7 @@ var respTablaConfirmaciones = function(data) {
 
     
 }
-*/
+
 var pubdd = '';
 var auxiliar=0;
 var respCargaPublicacionesFinal = function(data) { 
@@ -3517,7 +3517,7 @@ var respCargarVistosEmpleados = function(data) {
     var vis = '';
     var f = '';
     var h = '';
-    var n=1;
+    var n=0;
      for (var i = 0; i < data.length; i++) {
          n++;
         var nombre=String(data[i].nombre);

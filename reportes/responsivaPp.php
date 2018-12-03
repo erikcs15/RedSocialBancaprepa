@@ -62,7 +62,7 @@ $df->SetFont('Arial','',12);
 $df->Ln(18);
 
 
-$df->Multicell(190,5,utf8_decode("En la ciudad de Culiacan, Sinaloa a $fecha_entrega, a través del presente se hace constar que comparece ante mi el C. $nombre, quien recibe la cantidad de $monto pesos (moneda nacional), por concepto de Prestamo Personal de igual manera en este mismo acto se hace constar que el  C. $nombre se compromete hacer la devolucion del monto otorgado en prestamo una vez terminado la relacion laboral dentro de la empresa denominada __________________ aunando que este se podra descontar de su finiquito que tendria que percibir al momento de la recisión laboral."),0,'J',0);
+$df->Multicell(190,15,utf8_decode("En la ciudad de ________________, _______________ a $fecha_entrega, a través del presente se hace constar que comparece ante mi el C. $nombre, quien recibe la cantidad de $monto pesos (moneda nacional), por concepto de Prestamo Personal de igual manera en este mismo acto se hace constar que el  C. $nombre se compromete hacer la devolucion del monto otorgado en prestamo una vez terminado la relacion laboral dentro de la empresa denominada Prestaciones Responsables S.A. de C.V. aunando que este se podra descontar de su finiquito que tendria que percibir al momento de la recisión laboral."),0,'J',0);
 $df->Ln(10);
 /*
 if($num_equipo > 0)
@@ -104,7 +104,7 @@ if($num_equipo > 0)
 $df->Ln(12);
 $df->Multicell(180,5,utf8_decode("                                                 ________________________________                   "),0,'',0);
 $df->Multicell(180,5,utf8_decode("                                                    $nombre "),0,'',0);
-$df->Multicell(180,5,utf8_decode("                                                       Acreedor del prestamo personal  "),0,'',0);
+$df->Multicell(180,5,utf8_decode("                                                     Acreedor del prestamo personal  "),0,'',0);
 
 //Fondo del texto Gris Claro Claro
 /*
