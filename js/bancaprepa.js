@@ -21,7 +21,6 @@ $(document).ready(function(){
         onRequest({ opcion : 101,capturista_id:capturista_id,cel:cel},resGuardarCel);
         
   });
-
       
     //CERRAR SESION
     $( "#btnCerrarSession" ).click(function() { 
@@ -102,7 +101,6 @@ $(document).ready(function(){
 
         //$( "#formFiles" ).submit();
       });
-      
 
       //gurdar datos  de la publicacion
 
@@ -194,7 +192,7 @@ $(document).ready(function(){
      //el boton de notificacion nos enviara al inicio para ver las publicaciones faltantess
      $( "#btnNotiF" ).click(function() {  
 
-        location.href="/RedSocialBancaprepa/index.php";
+        location.href="/index.php";
         
      });
 
@@ -238,28 +236,28 @@ $(document).ready(function(){
 
      //Redirige al login 
      $( "#salirsesion" ).click(function() { 
-        location.href="/RedSocialBancaprepa/login.html";
+        location.href="/login.html";
      });
      //Redirige al catalogo de empresas
      $( "#catemp" ).click(function() { 
         
-        location.href="/RedSocialBancaprepa/catalogos/catemp.php";
+        location.href="/catalogos/catemp.php";
      });
     //Redirige al catalogo de rolas
      $( "#catroles" ).click(function() { 
-        location.href="/RedSocialBancaprepa/catalogos/catroles.php";
+        location.href="/catalogos/catroles.php";
      });
      //Redirige al catalogo de tipo de documentos
      $( "#catdoc" ).click(function() { 
-        location.href="/RedSocialBancaprepa/catalogos/catdoc.php";
+        location.href="/catalogos/catdoc.php";
      });
      //Redirige al inicio
      $( "#m_inicio" ).click(function() { 
-        location.href="/RedSocialBancaprepa/index.php";
+        location.href="/index.php";
      });
       //Redirige a los accesos
      $( "#m_accesos" ).click(function() { 
-        location.href="/RedSocialBancaprepa/mantenimiento/accesos.php";
+        location.href="/mantenimiento/accesos.php";
      });
      
      $( "#tipoRolAc" ).keypress(function() { 
@@ -267,19 +265,19 @@ $(document).ready(function(){
      });
      
      $( "#correos" ).click(function() { 
-        location.href="/RedSocialBancaprepa/catalogos/catcorreos.php";
+        location.href="/catalogos/catcorreos.php";
      });
 
      $( "#m_rol_usu" ).click(function() { 
-        location.href="/RedSocialBancaprepa/mantenimiento/rolusu.php";
+        location.href="/mantenimiento/rolusu.php";
      });
 
      $( "#m_usuarios" ).click(function() { 
-        location.href="/RedSocialBancaprepa/mantenimiento/usuariosTabla.php";
+        location.href="/mantenimiento/usuariosTabla.php";
      });
      
      $( "#catEquipo" ).click(function() { 
-        location.href="/RedSocialBancaprepa/catalogos/cattiposequipo.php";
+        location.href="/catalogos/cattiposequipo.php";
      });
      
 
@@ -595,7 +593,7 @@ $("#BtnAgregarPub").click(function() {
     console.log(documento);
  
     return;
-    onRequest({ opcion : 21, texto:textoPublicacion, tipopub:tipodoc},respAgregaPublicacion);
+   // onRequest({ opcion : 21, texto:textoPublicacion, tipopub:tipodoc},respAgregaPublicacion);
 
 });
 //----------------------------------------CORREOS------------------------------------
@@ -642,7 +640,6 @@ $( "#BtnAgregarCorreo" ).click(function() {
             onRequest({ opcion : 64, usuario_id:idusuario, dominio:dominio,correo:correoarmado, pass:pass },respAgregaCorreo);
 
         }
-        
     }
 
 
@@ -802,6 +799,8 @@ function cargarEmpresas(){
     onRequest({ opcion : 2 ,empresa:""}, respEmpresas);
    
 }
+
+
 //Funcion para cargar roles
 function cargarRoles(){
     onRequest({ opcion : 3 ,rol:""}, respRoles);
@@ -1110,10 +1109,10 @@ var respUser = function(data) {
             Cookies.set("b_puesto_id",data[0].puesto_id);   
             Cookies.set("b_sucursal",data[0].sucursal); 
             Cookies.set("b_puesto",data[0].puesto);  
-            Cookies.set("b_telefono",data[0].telefono);            
-            Cookies.set("b_id_sucursal",data[0].id_sucursal);
+            Cookies.set("b_telefono",data[0].telefono);   
+            Cookies.set("b_id_sucursal",data[0].id_sucursal);         
             Cookies.set("b_empresa",data[0].empresa);
-            location.href="/RedSocialBancaprepa/index.php";
+            location.href="/index.php";
 
          return;
      }
@@ -1872,7 +1871,7 @@ var respAccesosPorRol  = function(data) {
 
 //---------Respuesta para actualizar los accesos al menu de agregar publicacion
 var respUpdateAccesos = function(data) { 
-    
+    console.log(data);
     if (!data && data == null)
     {
         M.toast({html: 'Acceso no actualizado, consulte con el area de sistemas', classes: 'rounded red'}); 
@@ -1882,7 +1881,6 @@ var respUpdateAccesos = function(data) {
     M.toast({html: 'Acceso Actualizado!', classes: 'rounded #43a047 green darken-1'}); 
 
     //Actualiza de nuevo los accesos
-    console.log(data);
     
 }
 
@@ -2095,7 +2093,6 @@ function cargarAccesos(rol_id){
     $('#capAreas').prop('checked', false);
     $('#crearSolpp').prop('checked', false);
     $('#solicitudesPp').prop('checked', false);
-
 
 
     onRequest({ opcion : 22 ,id_rol:rol_id}, respAccesosPorRol);
@@ -2686,7 +2683,7 @@ var respCargarTablaTmp = function(data) {
             '<td>'+data[i].sucursal+'</td>'+
             '<td>'+data[i].puesto+'</td>'+
             '<td class="left">'+
-            '<a onclick="eliminarDeTablaTmp('+data[i].id_empresa+','+data[i].id_puesto+','+data[i].sucursal+')"  class="waves-effect waves-light btn-floating btn-small red darken-4 btn modal-trigger tooltipped" data-tooltip="Eliminar puesto" data-delay="50"  ><i class="material-icons">delete_forever</i></a>'+ 
+            '<a onclick="eliminarDeTablaTmp('+data[i].id_empresa+','+data[i].id_puesto+','+data[i].id_sucursal+')"  class="waves-effect waves-light btn-floating btn-small red darken-4 btn modal-trigger tooltipped" data-tooltip="Eliminar puesto" data-delay="50"  ><i class="material-icons">delete_forever</i></a>'+ 
             '</tr> '; 
         }
     }
@@ -2784,9 +2781,6 @@ var respInsertarDetallePub = function(data) {
     console.log("Probando algo aqui------"+publicacion);  
     onRequest({ opcion : 53 ,publicacion_id:publicacion}, respCargarParaInsertarTablaConfirmaciones);
 
-
-    
-
 }
 
 var respInsertarDetallePubF = function(data) { 
@@ -2836,6 +2830,7 @@ var respCargarParaInsertarTablaConfirmaciones = function(data) {
      }
      $( "#formFiles" ).submit();
      console.log("TERMINANDO!!!!!!!!!!");
+    
 }
 /*
 var respInsertarTablaConfirmaciones = function(data) { 
@@ -2849,7 +2844,7 @@ var respInsertarTablaConfirmaciones = function(data) {
     for (var i = 0; i < data.length; i++) 
     {
         var verif=String(data[0].empleado_id);
-        console.log("------ VERIIIF--"+i);
+        console.log("------ VERIIIF--"+verif);
         if(verif==0)
         {
             M.toast({html: 'No hay empleados que cumplan con dichos parametros, favor de verificarlo', classes: 'rounded red'});
@@ -2865,13 +2860,12 @@ var respInsertarTablaConfirmaciones = function(data) {
 
             onRequest({ opcion : 56 ,publicacion_id:publicacion,empleado_id:empleado,puesto_id:puesto,empresa_id:empresa}, respTablaConfirmaciones);
             M.toast({html: 'Publicacion Realizada correctamente', classes: 'rounded green'});
-            //$( "#formFiles" ).submit();
+            $( "#formFiles" ).submit();
         }
         
        
     }
 
-    console.log("______________________TERMINAAAAA____________");
     
 }
 */
@@ -2908,9 +2902,8 @@ var respCargaPublicacionesFinal = function(data) {
         }
         else{
             $("#CargarPublicacionesVaciasVistas").empty();
-
                 if(data[i].formato=="PDF"){    
-                     /*   pubdd+=  '<div class="col s12 l8 offset-l2" > '+
+                       /* pubdd+=  '<div class="col s12 l8 offset-l2" > '+
                         '<div class="card"> '+
                         '       <div class="card-image waves-effect waves-block waves-light">'+
                         '          <iframe src="imagenes/publicaciones/'+ruta+'"  class="col s12" style="border: none;height:500px"></iframe>'+
@@ -2925,16 +2918,16 @@ var respCargaPublicacionesFinal = function(data) {
                         '            <p>'+data[i].descripcion+'.</p>'+
                         '         </div>'+
                         '  </div>'+
-                        '</div> ';   */
+                        '</div> ';        */
 
-                      pubdd+='<div class="col l2 mb-5 mt-5 mr-5" style="border:1px black solid">'+
+                          pubdd+='<div class="col s10 m3 l2 mb-5 mt-5 mr-5 z-depth-2">'+
                               '<a class="modal-trigge" onclick="abrirModalImg('+data[i].id_publicacion+')"  href="#">'+
-                              '<img class="mosaico" src="/RedSocialBancaprepa/img/pdf.png"></a>'+
-                              '<b> <p class="break-word" style="width: 100%;">'+data[i].titulo+'</p></b>'+
-                             '</div> ';    
+                              '<img class="mosaico z-depth-5" src="/img/pdf.png"></a>'+
+                              '<b> <p class="break-word" >'+data[i].titulo.substring(0,20)+'</p></b>'+
+                             '</div> ';  
                 }
                 else{
-                        /*pubdd+=  '<div class="col s12 l8 offset-l2" > '+
+                       /* pubdd+=  '<div class="col s12 l8 offset-l2" > '+
                         '<div class="card"> '+
                         '       <div class="card-image waves-effect waves-block waves-light">'+
                         '          <img class="activator" src="imagenes/publicaciones/'+ruta+'">'+
@@ -2949,13 +2942,14 @@ var respCargaPublicacionesFinal = function(data) {
                         '            <p>'+data[i].descripcion+'.</p>'+
                         '         </div>'+
                         '  </div>'+
-                        '</div> ';  */
+                        '</div> ';    */
 
-                         pubdd+='<div class="col l2 mb-5 mt-5 mr-5" style="border:1px black solid" >'+
+
+                         pubdd+='<div class="col s10 m3 l2 mb-5 mt-5 mr-5 z-depth-2"  >'+
                               '<a class="modal-trigge" onclick="abrirModalImg('+data[i].id_publicacion+')"  href="#">'+
-                              '<img class="mosaico" src="imagenes/publicaciones/'+ruta+'"></a>'+
+                              '<img class="mosaico  z-depth-5" src="imagenes/publicaciones/'+ruta+'"></a>'+
                               '<b> <p class="break-word" >'+data[i].titulo.substring(0,20)+'</p></b>'+
-                             '</div> ';      
+                             '</div> ';   
                 }
         }
     }
@@ -3374,7 +3368,7 @@ var respAgregaTicket = function(data) {
     
 
     M.toast({html: 'Ticket insertado correctamente ', classes: 'rounded green'}); 
-    location.href="/RedSocialBancaprepa/mandarTicket.php";
+    location.href="/mandarTicket.php";
     
 }
 
@@ -3519,7 +3513,7 @@ var respCargarVistosEmpleados = function(data) {
     var h = '';
     var n=0;
      for (var i = 0; i < data.length; i++) {
-         n++;
+        n++;
         var nombre=String(data[i].nombre);
         console.log("-------"+nombre);
         if(nombre=="undefined")
@@ -3847,10 +3841,63 @@ var respVerifNombreUsuario = function(data) {
     
    
 }
-function abrirModalImg(id){
 
-    console.log(id);
+function abrirModalImg(id){
+ 
 
     $("#modalImg").modal("open");
 
+     onRequest({ opcion : 107 ,imgId:id}, cargaImg); 
+
+}
+
+var cargaImg = function(data) { 
+    if (!data && data == null)
+        return;  
+
+
+      console.log(data)
+      pubdd="";
+      var i=0;
+
+      if(data[0].formato=="PDF"){  
+
+           pubdd+=  '<div   style="width:100%;" > '+
+                        '<div class="card"> '+
+                        '       <div class="card-image waves-effect waves-block waves-light">'+
+                        '          <iframe src="/RedSocialBancaprepa/imagenes/publicaciones/'+data[i].imagen+'"  class="col s12" style="border: none;height:700px;width:100%"></iframe>'+
+                        '     </div>'+
+                        '    <div class="card-content">'+
+                        '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+
+                        '        <p>  &nbsp;&nbsp'+data[i].fecha+'&nbsp; '+data[i].hora+'</p>'+
+                        '      </div>'+
+                        '      <div class="card-reveal">'+
+                        '           <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>'+data[i].titulo+'</span>'+
+                        '            <p>'+data[i].descripcion+'.</p>'+
+                        '         </div>'+
+                        '  </div>'+
+                        '</div> '; 
+
+
+      }else{
+
+          pubdd+=  '<div class="col s12 l8 offset-l2" > '+
+                        '<div class="card"> '+
+                        '       <div class="card-image waves-effect waves-block waves-light">'+
+                        '          <img class="activator" src="/RedSocialBancaprepa/imagenes/publicaciones/'+data[i].imagen+'">'+
+                        '     </div>'+
+                        '    <div class="card-content">'+
+                        '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+
+                        '        <p>  &nbsp;&nbsp'+data[i].fecha+'&nbsp; '+data[i].hora+'</p>'+
+                        '        </div>'+
+                        '      <div class="card-reveal">'+
+                        '           <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>'+data[i].titulo+'</span>'+
+                        '            <p>'+data[i].descripcion+'.</p>'+
+                        '         </div>'+
+                        '  </div>'+
+                        '</div> '; 
+      }
+    
+    $("#contPublicacion").html(pubdd);
+   
 }

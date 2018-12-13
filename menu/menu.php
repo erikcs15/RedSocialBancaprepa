@@ -42,7 +42,7 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
         </nav>
 
 
-    <ul id="slide-out" class="sidenav sidenav-fixed blue darken-3 "  style="transform: translateX(-100%);">
+    <ul id="slide-out" class="sidenav sidenav-fixed blue darken-4 "  style="transform: translateX(-100%);">
                   <li>
                     <div class="user-view">
                       <div class="background" id="sidenav2">
@@ -57,9 +57,19 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
                   <li><a id="m_inicio" name ="inicio" class="waves-effect white-text " ><i class="material-icons white-text">home</i>Inicio</a></li>
                   <li><a href="/RedSocialBancaprepa/bancaprepa.php" name ="bancaprepa" id="m_bancaprepa" class="waves-effect white-text"><i class="material-icons white-text">assignment</i>Publicaciones Vistas</a></li>
                   <!--<li><a id="m_agregarPub" class="subheader waves-effect modal-trigger" href="#modalAgregarPub"><i class="material-icons">add_circle</i>Agregar publicación</a></li>  -->
+                  <li><a id="m_articulos_venta" href="/RedSocialBancaprepa/sales/sales.php" class=" waves-effect white-text" ><i class="material-icons white-text">local_grocery_store</i>Articulos en Venta</a></li>
                   <li><a id="M_cargaA" style='display:none;' href="/RedSocialBancaprepa\documentos\addfile.php" class=" waves-effect white-text"><i class="material-icons white-text">file_upload</i>Carga de Archivos</a></li>
+                  
+                  <li><a id="m_politicas"  href="/RedSocialBancaprepa/rh/verpoliticas.php" class=" waves-effect white-text" ><i class="material-icons white-text">priority_high</i>Politicas</a></li>
+                  <li><a id="m_formatos" href="/RedSocialBancaprepa/rh/verpoliticas.php" class=" waves-effect white-text" ><i class="material-icons white-text">format_line_spacing</i>Formatos</a></li>
+                  <li><a id="m_manuales" href="/RedSocialBancaprepa/rh/verpoliticas.php" class=" waves-effect white-text" ><i class="material-icons white-text">import_contacts</i>Manuales</a></li>
+                  <li><a id="m_mercancia" href="/RedSocialBancaprepa/sales/stock.php" class=" waves-effect white-text" ><i class="material-icons white-text">business_center</i>Registro Stock</a></li>
+                   <li><a id="m_mercancia" href="/RedSocialBancaprepa/cp/cp.php" class=" waves-effect white-text" ><i class="material-icons white-text">markunread_mailbox</i>CP</a></li>
+
+
                   <li><a id="m_mantenimientoPub" style='display:none;' href="/RedSocialBancaprepa\mantPub.php" class=" waves-effect white-text" name ="m_mantenimientoPub"><i class="material-icons white-text">featured_play_list</i>Mmto. Publicaciones</a></li>
-                  <li><a id="m_votaciones"  href="/RedSocialBancaprepa\mvotaciones\votaciones.php" class=" waves-effect white-text"><i class="material-icons white-text">file_upload</i>Votaciones</a></li> 
+                  <li><div class="divider"></div></li>
+                  <!-- li><a id="m_votaciones"  href="/RedSocialBancaprepa\mvotaciones\votaciones.php" class=" waves-effect white-text"><i class="material-icons white-text">file_upload</i>Votaciones</a></li--> 
                   <!--<li><a  id="mmto_votaciones"  name ="mmto_votaciones" class="dropdown-trigger white-text" data-target='votacionesdd'><i class="material-icons white-text">insert_comment</i><i class="material-icons right white-text">arrow_drop_down</i>Mmto. Votaciones</a></li>
                     <ul id='votacionesdd' class='dropdown-content blue darken-4'>
                     <li><a id="m_crearVotaciones"  class=" waves-effect blue darken-4 white-text" href="/RedSocialBancaprepa\mvotaciones\crearVotaciones.php"><i class="material-icons white-text">create</i>Crear Votaciones</a></li>
