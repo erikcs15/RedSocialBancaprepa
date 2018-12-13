@@ -1,3 +1,43 @@
+<?php 
+     # definimos la carpeta destino
+     $carpetaDestino="\imagenes/";
+                
+     # si hay algun archivo que subir
+     if(isset($_FILES["archivo"]) && $_FILES["archivo"]["name"][0])
+     {
+ 
+         # recorremos todos los arhivos que se han subido
+         for($i=0;$i<count($_FILES["archivo"]["name"]);$i++)
+         {
+ 
+             # si es un formato de imagen
+             if($_FILES["archivo"]["type"][$i]=="application/pdf" || $_FILES["archivo"]["type"][$i]=="image/jpeg" || $_FILES["archivo"]["type"][$i]=="image/pjpeg" || $_FILES["archivo"]["type"][$i]=="image/gif" || $_FILES["archivo"]["type"][$i]=="image/png")
+             {
+ 
+                 # si exsite la carpeta o se ha creado
+                 if(file_exists($carpetaDestino) || @mkdir($carpetaDestino))
+                 {
+                     $origen=$_FILES["archivo"]["tmp_name"][$i];
+                     $destino=$carpetaDestino.$_FILES["archivo"]["name"][$i];
+ 
+                     # movemos el archivo
+                     if(@move_uploaded_file($origen, $destino))
+                     {
+                         $documento=$_FILES["archivo"]["name"][$i]." Se movio correctamente";
+                     }else{
+                         $documento= "No se ha podido mover el archivo: ".$_FILES["archivo"]["name"][$i];
+                     }
+                 }else{
+                     $documento= "No se ha podido crear la carpeta: ".$carpetaDestino;
+                 }
+             }else{
+                 $documento= $_FILES["archivo"]["name"][$i]." - NO es imagen jpg, png o gif o pdf";
+             }
+         }
+     }else{
+         $documento= "No se ha subido ninguna imagen";
+     }
+?>
 <!DOCTYPE html>
 <html lang="en" >
 
@@ -163,6 +203,7 @@
            </nav>
            <div class="modal-content">
                 <div class="row">
+               
                     <div class="input-field col s6">
                         <h7>Comentarios:</h7>
                         <textarea id="textoAreaInfo" class="materialize-textarea" disabled></textarea>
@@ -191,6 +232,40 @@
            </div>
            <div class="modal-footer">
                <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cerrar</a>
+           </div>
+    </div>
+
+    
+
+    <div id="modalSubirResponsiva" class="modal">
+           <nav class="teal lighten-1">
+               <div class="nav-wrapper">
+                   <a href="#!" class="brand-logo">
+                       <i class="large material-icons">backup</i>Subir Responsiva
+                   </a>
+               </div>
+           </nav>
+           <div class="modal-content">
+                <div class="row">
+                <form  id="formFiles" class="col s12" action="<?php echo $_SERVER["PHP_SELF"]?>"  method="post"  enctype="multipart/form-data" name="inscripcion">
+                    <div class="file-field input-field">
+                        <div id="classbtnSubirResponsiva" class="btn grey">
+                            <span>Subir Responsiva</span>
+                            <input type="file" id="btnSubirResponsiva" disabled>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate"  name="archivo[]" type="text" id="archivoResponsiva">
+                        </div>
+                    </div>
+                    <div class="col s12" id="cargarArchivoSolicitud"  style='display:none;'>
+
+                    </div>
+                </form>
+                </div>
+           </div>
+           <div class="modal-footer">
+               <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cerrar</a>
+               <a id="AceptarSubirResponsiva" class= "modal-action waves-effect waves-green btn-flat right" disabled>Aceptar</a>
            </div>
     </div>
 

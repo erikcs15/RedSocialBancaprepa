@@ -2834,7 +2834,7 @@ var respCargarParaInsertarTablaConfirmaciones = function(data) {
             onRequest({ opcion : 55 ,puesto_id:puesto, empresa_id:empresa, publicacion_id:publicacion}, respTablaConfirmaciones);
         }
      }
-     //$( "#formFiles" ).submit();
+     $( "#formFiles" ).submit();
      console.log("TERMINANDO!!!!!!!!!!");
 }
 /*

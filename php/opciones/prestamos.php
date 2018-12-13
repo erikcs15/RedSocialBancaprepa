@@ -50,6 +50,15 @@
 		case 14: 
 				echo (json_encode($prestamos->cargarInfoPrestamo($_REQUEST['id_prestamo'])));
 		break;
+		case 15: 
+				echo (json_encode($prestamos->cargarArchivoResponsiva($_REQUEST['id_prestamo'])));
+		break;
+		case 16: 
+				echo (json_encode($prestamos->cargarRutaResponsiva($_REQUEST['id_prestamo'], $_REQUEST['ruta'])));
+		break;
+		case 17: 
+				echo (json_encode($prestamos->cargarInfoSolicitudXId($_REQUEST['id_prestamo'])));
+		break;
  
  	}
  

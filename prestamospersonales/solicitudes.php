@@ -83,13 +83,19 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s6">
-                        <textarea id="txtArea" class="materialize-textarea"></textarea>
-                        <label id="textoArea" for="txtArea">Comentario:</label>
+                        Comentario:
+                        <textarea id="txtArea" class="materialize-textarea"></textarea> 
                     </div>
                     <div class="input-field col s2">
+                        Monto:
                         <input id="montoAutorizar" style='display:none;' type="text" class="validate">
-                        <label id="textoMontoA" style='display:none;' for="montoAutorizar">Monto a Autorizar</label>
+                        
                     </div>
+                </div>
+                <div class="row">
+                <div class="col s12" id="cargarArchivoSolicitud"  style='display:none;'>
+
+                </div>
                 </div>
            </div>
            <div class="modal-footer">

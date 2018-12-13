@@ -51,7 +51,7 @@
             $i=0; 
             $sql="SELECT p.id, c.descripcion,p.fecha_solicitud,p.monto_solicitado, p.monto_total, e.descripcion, 
                 IFNULL(p.fecha_autorizado, '-'),IFNULL(c2.`descripcion`, '-'), p.descuento_mensual, IFNULL(p.comentarios_autorizacion, '-'),
-                p.monto_autorizado, p.quincenas
+                p.monto_autorizado, p.quincenas, p.estatus_id
                 FROM b_prestamo_solicitudes p
                 INNER JOIN estatus e ON e.id=p.estatus_id
                 INNER JOIN capturistas c ON c.id=p.capturista_id
@@ -73,6 +73,49 @@
                 $datos[$i]['comentario'] = $res[9];
                 $datos[$i]['monto_autorizado'] = $res[10];
                 $datos[$i]['quincenas'] = $res[11];
+                $datos[$i]['id_estatus'] = $res[12];
+                $i++;
+
+            } 
+            if ( count($datos )==0) { 
+                $datos[0]['id']  =0;
+                return  $datos; 
+                }
+            return $datos;  
+        }
+
+
+        public function cargarInfoSolicitudXId($solicitud_id)
+        {
+            $q="";
+            $res=array();
+            $datos=array();
+            $i=0; 
+            $sql="SELECT p.id, c.descripcion,p.fecha_solicitud,p.monto_solicitado, p.monto_total, e.descripcion, 
+                IFNULL(p.fecha_autorizado, '-'),IFNULL(c2.`descripcion`, '-'), p.descuento_mensual, IFNULL(p.comentarios_autorizacion, '-'),
+                p.monto_autorizado, p.quincenas, p.estatus_id
+                FROM b_prestamo_solicitudes p
+                INNER JOIN estatus e ON e.id=p.estatus_id
+                INNER JOIN capturistas c ON c.id=p.capturista_id
+                LEFT JOIN capturistas c2 ON c2.id=p.`capturista_id_autorizo`
+                WHERE p.id= $solicitud_id Order by p.id desc"; 
+            
+            $resultado = mysqli_query($this->con(), $sql); 
+            while ($res = mysqli_fetch_row($resultado)) {
+
+                $datos[$i]['id'] = $res[0];
+                $datos[$i]['capturista'] = $res[1];
+                $datos[$i]['fecha_solicitud'] = $res[2];
+                $datos[$i]['monto_solicitado'] = $res[3];
+                $datos[$i]['monto_pagar'] = $res[4];
+                $datos[$i]['estatus'] = $res[5];
+                $datos[$i]['fecha_autorizado'] = $res[6];
+                $datos[$i]['capturista_autorizo'] = $res[7];
+                $datos[$i]['descuento_mensual'] = $res[8];
+                $datos[$i]['comentario'] = $res[9];
+                $datos[$i]['monto_autorizado'] = $res[10];
+                $datos[$i]['quincenas'] = $res[11];
+                $datos[$i]['id_estatus'] = $res[12];
                 $i++;
 
             } 
@@ -92,7 +135,7 @@
             $i=0; 
             $sql="SELECT p.id, c.descripcion,p.fecha_solicitud,p.monto_solicitado, p.monto_total, e.descripcion, 
                 IFNULL(p.fecha_autorizado, '-'), IFNULL(p.capturista_id_autorizo, '-'), p.descuento_mensual, IFNULL(p.comentarios_autorizacion, '-'),
-                IFNULL(p.monto_autorizado,'-'), p.`quincenas`
+                IFNULL(p.monto_autorizado,'-'), p.`quincenas`, p.estatus_id
                 FROM b_prestamo_solicitudes p
                 INNER JOIN estatus e ON e.id=p.estatus_id
                 INNER JOIN capturistas c ON c.id=p.capturista_id ORDER BY p.id DESC";
@@ -114,6 +157,7 @@
                 $datos[$i]['comentario'] = $res[9];
                 $datos[$i]['monto_autorizado'] = $res[10];
                 $datos[$i]['quincenas'] = $res[11];
+                $datos[$i]['id_estatus'] = $res[12];
                 $i++;
 
             } 
@@ -158,7 +202,7 @@
             $res=array();
             $datos=array();
             $i=0; 
-            $sql="SELECT id, quincenas, monto_autorizado, fecha_autorizado, comentarios_autorizacion, estatus_id
+            $sql="SELECT id, quincenas, monto_autorizado, fecha_autorizado, comentarios_autorizacion, estatus_id, monto_solicitado
                     FROM b_prestamo_solicitudes
                     Where id=$id_solicitud"; 
                 
@@ -171,6 +215,7 @@
                 $datos[$i]['fecha_autorizado'] = $res[3];
                 $datos[$i]['comentarios'] = $res[4];
                 $datos[$i]['estatus_id'] = $res[5];
+                $datos[$i]['monto_solicitado'] = $res[6];
                 $i++;
 
             } 
@@ -451,7 +496,11 @@
             $res=array();
             $datos=array();
             $i=0; 
-            $sql="SELECT DATE_FORMAT( CURDATE(), '%d de %b de %Y') AS fecha, c.`descripcion`, s.`monto_autorizado` 
+            $sql2="SET lc_time_names = 'es_ES';"; 
+                
+            mysqli_query($this->con(), "SET lc_time_names = 'es_ES';"); 
+
+            $sql="SELECT DATE_FORMAT( CURDATE(), '%d de %M de %Y') AS fecha, c.`descripcion`, s.`monto_autorizado` 
             FROM b_prestamo_solicitudes s 
             INNER JOIN capturistas c ON c.`id`= s.`capturista_id`
             WHERE s.id=$id_solicitud"; 
@@ -470,6 +519,43 @@
                 return  $datos; 
                 }
             return $datos;  
+        }
+
+        public function cargarArchivoResponsiva($id_solicitud)
+        {
+            $q="";
+            $res=array();
+            $datos=array();
+            $i=0; 
+            $sql="SELECT id, archivo_responsiva
+                FROM b_prestamo_solicitudes WHERE id=$id_solicitud"; 
+                
+            $resultado = mysqli_query($this->con(), $sql); 
+            while ($res = mysqli_fetch_row($resultado)) {
+
+                $datos[$i]['id'] = $res[0];
+                $datos[$i]['archivo_responsiva'] = $res[1];
+                $i++;
+
+            } 
+            if ( count($datos )==0) { 
+                $datos[0]['id']  =0;
+                return  $datos; 
+                }
+            return $datos;  
+        }
+
+        public function cargarRutaResponsiva($prestamoId,$ruta_responsiva)
+        {
+            $res=array();
+            $datos=array();
+            $resultado  =array();
+           
+            $sql="UPDATE b_prestamo_solicitudes SET archivo_responsiva='$ruta_responsiva' WHERE id=$prestamoId";
+            
+            $resultado = mysqli_query($this->con(), $sql);   
+            $datos['b_prestamo_solicitudes'] =  array('0' => '0' );
+            return  $datos;	
         }
 
        
