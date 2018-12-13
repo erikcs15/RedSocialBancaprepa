@@ -629,6 +629,8 @@
 				$resultado  =array();
 				$i=0;
 
+				$txtUsuario=$_COOKIE["b_menu_roles"];  
+
 				$sql="INSERT INTO b_menu_roles (id_rol, id_menu) VALUES ($rol_id,$menu_id);";
 				
 				$resultado = mysqli_query($this->con(), $sql);   
@@ -644,7 +646,7 @@
 				$resultado  =array();
 				$i=0;
 
-				
+				$txtUsuario=$_COOKIE["b_menu_roles"];  
 
 				$sql="DELETE FROM b_menu_roles WHERE id_rol=$rol_id AND id_menu=$menu_id";
 				
@@ -3050,9 +3052,34 @@
 				return $datos;  
 
 			}
+			public function cargarImg($imgId)
+			{ 
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				$sql="SELECT titulo,descripcion,imagen,documento,fecha,hora,formato FROM b_publicaciones_bancaprepa WHERE id=$imgId"; 
+ 
+				$resultado = mysqli_query($this->con(), $sql);  
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['titulo'] = $res[0];
+				   $datos[$i]['descripcion'] = $res[1]; 
+				   $datos[$i]['imagen'] = $res[2]; 
+				   $datos[$i]['documento'] = $res[3];
+				   $datos[$i]['fecha'] = $res[4]; 
+				   $datos[$i]['hora'] = $res[5]; 
+				   $datos[$i]['formato'] = $res[6];
+				   $i++;
+
+				} 
+				
 
 
-			
+				return $datos;  
+
+			}
+
 			public function verifSiYaTieneResponsiva($equipo_id)
 			{
 				$q="";
