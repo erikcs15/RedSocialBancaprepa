@@ -31,6 +31,10 @@
                 <input placeholder="Fecha solicitud" id="fecha_solicitud" type="date" class="validate" disabled>
                 <label for="fecha_solicitud"><b>Fecha Solicitud:</b></label>
             </div>
+            <div class="input-field col s2">
+                <a id="btnAbrirPoliticas" class="waves-effect btn blue darken-4"><i class="material-icons left">book</i>Politicas</a>
+                <br></br>
+            </div>
             <div class="input-field col s3 offset-s1">
                 <input placeholder="Puesto" id="puesto_solicitud" type="text" class="validate" disabled>
                 <label for="puesto_solicitud"><b>Puesto:</b></label>

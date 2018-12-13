@@ -130,6 +130,11 @@ $(document).ready(function(){
 
     }); 
 
+
+    $( "#btnAbrirPoliticas" ).click(function() {
+        location.href="/RedSocialBancaprepa/img/politica.pdf";
+    }); 
+
     
 });
     
