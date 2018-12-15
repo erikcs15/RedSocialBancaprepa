@@ -75,3 +75,69 @@
                     
                 </div>
 </div>
+
+   <!-- Modal Structure -->
+      <div id="modalImagenes" class="modal">
+        <div class="modal-content">
+          <div class="container">
+              <div class="row">
+                  <div class="col s12 l12" id="divGaleria">
+
+                  </div>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+        </div>
+      </div>
+
+
+      <div id="modalSolicitar" class="modal modal-large">
+        <nav class=" blue accent-4">
+                    <div class="nav-wrapper">
+                        <a class="brand-logo">
+                            Solicitud de articulo
+                        </a>
+                    </div>
+                </nav>
+        <div class="modal-content">
+          <div class="container">
+            <div class="row">
+                    <div class="input-field col s12 l2">
+                      <input type="text" class="validate black-text" disabled value=" <?php
+                            echo $_COOKIE['b_capturista_id'];
+                            ?>">
+                      <label for="txtIdSolicitar">Id</label>
+                    </div>
+                    <div class="input-field col s12 l10">
+                      <input type="text" class="validate black-text" disabled value=" <?php
+                            echo $_COOKIE['b_capturista'];
+                            ?>">
+                      <label class="active">Solicitante</label>                    
+                   </div>
+              </div>
+              <div class="row">
+                    <div class="input-field col s12 l2">
+                      <input  " id="txtIdSolicitar" type="text" class="validate black-text" disabled value=" ">
+                      <label for="txtIdSolicitar"># Articulo</label>
+                    </div>
+                    <div class="input-field col s12 l10">
+                      <textarea id="txtSolicitud" class="materialize-textarea"> </textarea>
+                      <label for="txtSolicitud">Contacto</label>                    
+                   </div>
+              </div>
+              <div class="row" id="vistaSolicitud">
+                
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer">  
+          <div class="row ">
+            <center>
+              <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red white-text  hide-on-med-and-up">Cerrar</a>
+            </center>
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red white-text  hide-on-med-and-down">Cerrar</a>
+          </div>
+        </div>
+      </div>

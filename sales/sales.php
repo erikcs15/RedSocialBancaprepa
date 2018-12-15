@@ -29,6 +29,9 @@
         </div>  
     </div><!-- CONTENEDOR 1 -->
 
+    <?php
+                include('modals.php');
+            ?>
 
 
     <script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
@@ -53,6 +56,15 @@
         function verImg(id){
             inventarios({ opcion : 15,id:id }, respGalery); 
         }
+
+        function solicitarArticulo(id){
+            console.log(id);
+
+            $("#txtIdSolicitar").val(id);
+
+
+            inventarios({ opcion : 16,id:id }, respPreviewSolicitud); 
+        }
         //respuestas
         var respStock = function(data) { 
             if (!data && data == null)
@@ -72,7 +84,7 @@
                         datanew='';
                     }
                     documento+='<div class="row z-depth-2">'+
-                                    '<div class="col l4  " > '+
+                                    '<div class="col l3  " > '+
                                     '<a onclick="verImg('+data[i].id+')" href="#modalImagenes" class="modal-trigger"><img src="../imagenes/stock/'+data[i].imagen+'" class="imgstock"></a>'+
                                     '</div>'+
                                     '<div class="col l8  " >'+
@@ -92,7 +104,7 @@
                                                 '<div class="col s12 l12 ">'+
                                                     '<div class="col s6 l6 " id="txtPrecio"> <spam class="strikethrough"> <b> $'+data[i].precio_real+'</spam></b></div>'+
                                                     '<div class="col s6 l6 ">'+
-                                                        '<a class="waves-effect waves-light btn right blue"><i class="material-icons right">add_shopping_cart</i>'+'Solicitar</a>'+
+                                                        '<a onclick="solicitarArticulo('+data[i].id+')" class=" modal-trigger waves-effect waves-light btn right blue" href="#modalSolicitar"><i class="material-icons right">add_shopping_cart</i>'+'Solicitar</a>'+
                                                     '</div>'+
                                                 '</div>'+ 
                                                 '<div class="col s12 l12">'+
@@ -133,22 +145,67 @@
             
         }
 
-    </script> 
-   <!-- Modal Structure -->
-      <div id="modalImagenes" class="modal">
-        <div class="modal-content">
-          <div class="container">
-              <div class="row">
-                  <div class="col s12 l12" id="divGaleria">
 
-                  </div>
-              </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-        </div>
-      </div>
+         var respPreviewSolicitud = function(data) { 
+            if (!data && data == null)
+                return;  
+            
+              var documento='';
+              var datanew='';
+    
+                for(var i=0; i<data.length; i++){
+
+                    if(data[i].antiguedad<8){
+                        datanew='<div class="col s2 l2 left-align">'+
+                                                    '<b><span class="new badge green lighten-1"></span></b>'+
+                                                '</div>';
+                    }
+                    else{
+                        datanew='';
+                    }
+                    documento+='<div class="row z-depth-2">'+
+                                    '<div class="col l4  " > '+
+                                    '<a onclick="verImg('+data[i].id+')" href="#modalImagenes" class="modal-trigger"><img src="../imagenes/stock/'+data[i].imagen+'" class="imgstock"></a>'+
+                                    '</div>'+
+                                    '<div class="col l8  " >'+
+                                        '<div class="minicont">'+
+                                            '<div class="row">'+
+                                                '<div class="col s10 l10 left-align">'+
+                                                    '<div class="col s6">'+
+                                                        '<h5 id="txtTipo">'+data[i].tipo+'</h5>'+
+                                                    '</div> '+
+                                               '</div>'+datanew
+                                                +
+                                                '<div class="col s12 l12 grey-text">'+
+                                                    '<div class="col s12 l6" id="txtDescripcion">'+
+                                                        ''+data[i].descripcion+''+
+                                                    '</div>'+
+                                               '</div>'+
+                                                '<div class="col s12 l12 ">'+
+                                                    '<div class="col s12 l6 " id="txtPrecio"> <spam class="strikethrough"> <b> $'+data[i].precio_real+'</spam></b></div>'+
+                                                    '<div class="col s6 l6 ">'+
+                                                    '</div>'+
+                                                '</div>'+ 
+                                                '<div class="col s12 l12">'+
+                                                   '<div class="col s12 l6 " id="txtQuincenas">'+
+                                                       '<b>Ahora:  <spam class="deep-orange-text"> $'+data[i].precio+'</spam></b>'+
+                                                  
+                                                       ' a <b>'+data[i].quincenas+' qna.</b>'+
+                                                   '</div> '+
+                                                '</div>'+
+                                            '</div> '+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>';
+                }               
+                
+                $('#vistaSolicitud').html(documento);  
+
+            
+        }
+
+    </script> 
+
     
  
     </body>

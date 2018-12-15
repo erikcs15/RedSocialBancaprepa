@@ -53,6 +53,9 @@
 		case 15: 
  			   echo (json_encode($inventario->cargarCarousel($_REQUEST['id'])));
 		break;
+		case 16: 
+ 			   echo (json_encode($inventario->cargarPrevioEnSolicitud($_REQUEST['id'])));
+		break;
 
 
 

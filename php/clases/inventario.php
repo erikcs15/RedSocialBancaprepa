@@ -367,6 +367,34 @@
 				return $datos;
 			}
 
+			public function cargarPrevioEnSolicitud($id){
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				 $query="SELECT pe.id,d.docName,te.descripcion equipo,CONCAT(pe.descripcion,' ',pe.marca,' ','Modelo :',modelo) descripcion,ROUND((pe.pago-(pe.pago*.10))) precio,pe.pago precioNormal,IF((pe.pago-(pe.pago*.10))>6000,10,5) quincenas,pe.fecha_captura,IF( DATEDIFF(CURDATE(),pe.fecha_captura)>7,1,0) antiguedad FROM b_img_pago_esp d
+						JOIN b_pagos_especie pe ON pe.id=d.pago_id
+						JOIN i_tipo_equipo te ON te.id=pe.tipo_id
+						WHERE pe.estatus_id=5 AND pe.id=$id GROUP BY d.pago_id";    
+
+					$respuesta= mysqli_query($this->con(), $query);  
+					while ($res = mysqli_fetch_row($respuesta)) {
+
+					   $datos[$i]['id'] = $res[0]; 
+					   $datos[$i]['imagen'] = $res[1];
+					   $datos[$i]['tipo'] = $res[2];
+					   $datos[$i]['descripcion'] = $res[3];
+					   $datos[$i]['precio'] = $res[4];
+					   $datos[$i]['precio_real'] = $res[5];
+					   $datos[$i]['quincenas'] = $res[6];
+					   $datos[$i]['fecha_captura'] = $res[7];
+					   $datos[$i]['antiguedad'] = $res[8];
+					   $i++;
+
+					} 
+				return $datos;
+			}
+
 }
 
 ?>
