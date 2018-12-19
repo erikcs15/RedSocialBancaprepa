@@ -15,10 +15,15 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
                     
                         <a href="#" class="brand-logo hide-on-small-only"><i class="material-icons ">grain</i>Intranet Bancaprepa</a>
                         <a href="#" class="brand-logo hide-on-large-only"><i class="material-icons ">grain</i>Intranet</a>
-                
+
+                        <ul class="right hide-on-med-and-down">
+                            <li><span id="mensajesUnread" class="counts white-text"></span> <a href="#modalInbox" id="inbox" class='waves-effect waves-dark modal-trigger' ><i  class="material-icons">email</i> </a>
+                        <ul id="dropdownNotificacion" class="dropdown-content">     
+                        </ul>
+
                         <ul class="right hide-on-med-and-down">
                             <li><span id="btnNotiF" class="counts white-text"></span> <a class='dropdown-button waves-effect waves-dark' href='/RedSocialBancaprepa/index.php' data-activates='dropdown_message'><i id="iconNotiF" class="material-icons">notifications_active</i> </a>
-                            <ul id="dropdownNotificacion" class="dropdown-content">     
+                               
                         </ul>
                         
                         <ul id="dropdownCuenta" class="dropdown-content">
@@ -63,7 +68,21 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
                   <li><a id="m_politicas"  href="/RedSocialBancaprepa/rh/verpoliticas.php" class=" waves-effect white-text" ><i class="material-icons white-text">priority_high</i>Politicas</a></li>
                   <li><a id="m_formatos" href="/RedSocialBancaprepa/rh/verpoliticas.php" class=" waves-effect white-text" ><i class="material-icons white-text">format_line_spacing</i>Formatos</a></li>
                   <li><a id="m_manuales" href="/RedSocialBancaprepa/rh/verpoliticas.php" class=" waves-effect white-text" ><i class="material-icons white-text">import_contacts</i>Manuales</a></li>
-                  <li><a id="m_mercancia" href="/RedSocialBancaprepa/sales/stock.php" class=" waves-effect white-text" ><i class="material-icons white-text">business_center</i>Registro Stock</a></li>
+                 
+
+                     <!------------------------------------------------------->
+                  <li><a   name ="stock" class="dropdown-trigger white-text" data-target='desplegableStock'><i class="material-icons white-text">card_travel</i><i class="material-icons right white-text">arrow_drop_down</i>Articulos</a></li>
+                    <ul id='desplegableStock' class='dropdown-content blue darken-4'> 
+
+                      <li><a   class="waves-effect blue darken-4 white-text"  href="/RedSocialBancaprepa/sales/stock.php"><i class="material-icons white-text">business_center</i>Registro Stock</a></li>
+
+                      <li><a   class="waves-effect blue darken-4 white-text"  href="/RedSocialBancaprepa/sales/solicitudesStock.php"><i class="material-icons white-text">description</i>Gestion Solicitudes</a></li>
+    
+                    
+                    
+                    </ul>
+
+
                    <li><a id="m_mercancia" href="/RedSocialBancaprepa/cp/cp.php" class=" waves-effect white-text" ><i class="material-icons white-text">markunread_mailbox</i>CP</a></li>
 
 
@@ -174,3 +193,59 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
     </div>
     
   </div>
+
+    <!-- Modal Structure -->
+  <div id="modalInbox" class="modal modal-fixed-footer" >
+    
+    <div class="modal-content">
+       <nav class=" blue accent-4">
+                    <div class="nav-wrapper">
+                        <a class="brand-logo">
+                            Mensajes
+                        </a>
+                    </div>
+      </nav>
+      <div class="row">
+          <div class="col s12 " >
+            
+            <ul class="collapsible" id="cajaDeMensajes">
+               <li>
+                <div class="collapsible-header">21<i class="material-icons red-text">local_post_office</i>Axel Cortez</div>
+                <div class="collapsible-body cajaPorUser" id="">
+                  <p ><b class="green-text">Axel Cortez:</b> bienvendo.</p>
+                  <p><b>Sergio Ponce:</b> Gracias.</p>
+                </div> 
+
+              </li>
+            </ul>
+            
+            
+          </div>
+
+      </div>
+      <!--div class="row">
+              <div class="input-field col s12">
+                <textarea id="textarea1" class="materialize-textarea"></textarea> 
+              </div>
+              <div class="container">
+                <div class="row ">
+                          <div class="col s6 offset-s3">
+                            <a class="waves-effect waves-light btn red"><i class="material-icons left">close</i>Cancelar</a>
+                            <a class="waves-effect waves-light btn green"><i class="material-icons right">send</i>Enviar</a>
+        
+                          </div>
+                      
+                </div>  
+              </div>
+
+      </div--> 
+    </div>
+    
+  </div>
+
+
+  <script type="text/javascript">
+    
+
+  </script>
+

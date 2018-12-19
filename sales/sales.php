@@ -45,12 +45,29 @@
     <script>
         $(document).ready(function(){
             $('.sidenav').sidenav();
+
+            $("#aceptarSolicitud").click(function() { 
+                var articulo_id = $('#txtIdSolicitar').val();  
+                var capturista_id =$('#txtIdSolicitar').val()   
+                var comentario =$("#txtSolicitud").val();      
+
+                if(comentario.length<3){
+                        M.toast({html: 'Es nesesario agregar una nota.', classes: 'rounded red'})
+                    return;
+                }
+
+                inventarios({ opcion : 17 ,articulo_id:articulo_id,capturista_id:capturista_id,comentario:comentario}, respGuardarSolicitud);
+
+             });
+
         });
         //funciones
         function cargarStock(){
             inventarios({ opcion : 14 }, respStock);
             console.log('ven')
             onRequest({ opcion : 70 }, respcargasucursales); 
+            inventarios({ opcion : 22}, respInboxPendientes);
+            inventarios({ opcion : 23}, respMensajes);
         }
 
         function verImg(id){
@@ -201,6 +218,22 @@
                 
                 $('#vistaSolicitud').html(documento);  
 
+            
+        }
+
+         var respGuardarSolicitud = function(data) { 
+            if (!data && data == null)
+                return;  
+
+            if(data[0].respuesta==2){
+                 M.toast({html: 'Se genero correctamente la solicitud.', classes: 'rounded green'});
+                 $("#txtSolicitud").val("");  
+
+            }else{
+                 M.toast({html: 'Ocurrio un error al intentar guardar los datos.', classes: 'rounded red'})
+            }
+
+            $("#modalSolicitar").modal('close');
             
         }
 

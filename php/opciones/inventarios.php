@@ -56,6 +56,27 @@
 		case 16: 
  			   echo (json_encode($inventario->cargarPrevioEnSolicitud($_REQUEST['id'])));
 		break;
+		case 17: 
+ 			   echo (json_encode($inventario->guardarSolicitud($_REQUEST['articulo_id'],$_REQUEST['capturista_id'],$_REQUEST['comentario'])));
+		break;
+		case 18: 
+ 			   echo (json_encode($inventario->cargarSolicitudes()));
+		break;
+		case 19: 
+ 			   echo (json_encode($inventario->verSolicitud($_REQUEST['solicitud_id'])));
+		break;
+		case 20: 
+ 			   echo (json_encode($inventario->preAutorizarSolicitud($_REQUEST['solicitud_id'])));
+		break;
+		case 21: 
+ 			   echo (json_encode($inventario->autorizarSolicitud($_REQUEST['solicitud_id'],$_REQUEST['nota'],$_REQUEST['quincenas'],$_REQUEST['pagoQuincenal'],$_REQUEST['monto'])));
+		break;
+		case 22: 
+ 			   echo (json_encode($inventario->mensajesPendientes($_COOKIE["b_capturista_id"])));
+		break;
+		case 23: 
+ 			   echo (json_encode($inventario->cargarMensajes($_COOKIE["b_capturista_id"])));
+		break;
 
 
 

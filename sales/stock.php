@@ -236,6 +236,7 @@
             onRequest({ opcion : 71 }, respcargatiposequipo); 
             //console.log("here")
             inventarios({ opcion : 10 }, respCargarPagosEspecie); 
+            inventarios({ opcion : 22}, respInboxPendientes);
         }
 
         function limpiarCampos(){

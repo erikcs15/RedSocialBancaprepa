@@ -94,7 +94,7 @@
 
 
       <div id="modalSolicitar" class="modal modal-large">
-        <nav class=" blue accent-4">
+                <nav class=" blue accent-4">
                     <div class="nav-wrapper">
                         <a class="brand-logo">
                             Solicitud de articulo
@@ -127,6 +127,10 @@
                       <label for="txtSolicitud">Contacto</label>                    
                    </div>
               </div>
+              <div class="row">
+                <center><a id="aceptarSolicitud" class="waves-effect waves-light btn"><i class="material-icons right">offline_pin</i>button</a>
+              </center>
+              </div>
               <div class="row" id="vistaSolicitud">
                 
               </div>
@@ -138,6 +142,110 @@
               <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red white-text  hide-on-med-and-up">Cerrar</a>
             </center>
             <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red white-text  hide-on-med-and-down">Cerrar</a>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div id="modalDetallesArticulo" class="modal modal-large">
+        <nav class=" blue accent-4">
+                    <div class="nav-wrapper">
+                        <a class="brand-logo">
+                            Detalles del Articulo
+                        </a>
+                    </div>
+                </nav>
+        <div class="modal-content">
+          <div class="container">
+              <div class="row">
+                <dir></dir>
+                    <div class="input-field col s12 l2">
+                      <input id="txtSolicitanteId" type="text" class="validate black-text" disabled value=" ">
+                      <label for="txtSolicitanteId" class="active black-text">Id</label>
+                    </div>
+                    <div class="input-field col s12 l8">
+                      <input id="txtSolicitante" type="text" class="validate black-text" disabled value=" ">
+                      <label for="txtSolicitante" class="active black-text">Solicitante</label>                    
+                   </div>
+                   <div class="input-field col s12 l2">
+                      <input id="txtAntiguedad" type="text" class="validate black-text" disabled value=" ">
+                      <label for="txtAntiguedad" class="active black-text">Antiguedad</label>                    
+                   </div>
+              </div>
+              <div class="row">
+                   <div class="input-field col s12 l12">
+                      <textarea id="txtComentario" class="materialize-textarea"  > </textarea>
+                      <label for="txtComentario" class="active black-text">Comentario</label>
+                    </div>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer">  
+          <div class="row ">
+            <center>
+              <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red white-text  hide-on-med-and-up">Cerrar</a>
+            </center>
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red white-text  hide-on-med-and-down">Cerrar</a>
+          </div>
+        </div>
+      </div>
+
+
+    <div id="modalAprobarSolicitud" class="modal">
+       <nav class=" blue accent-4">
+            <div class="nav-wrapper">
+                <a class="brand-logo">
+                    Autorizar Solicitud
+                </a>
+            </div>
+        </nav>
+        <div class="modal-content">
+          <div class="container">
+            <div class="row">
+                    <div class="input-field col s12 l2">
+                      <input id="txtIdAutorizado" type="text" class="validate black-text" disabled value=" ">
+                      <label for="txtIdAutorizado">Id</label>
+                    </div>
+                    <div class="input-field col s12 l10">
+                      <input id="txtNombreSolicitante" type="text" class="validate black-text" disabled value=" ">
+                      <label class="active">Solicitante</label>                    
+                   </div>
+              </div>
+              <div class="row"> 
+                    <div class="input-field col s12 l2">
+                      <input  id="txtIdSolcitudAtutorizar" type="text" class="validate black-text" disabled value=" ">
+                      <label for="txtIdSolcitudAtutorizar"># Solicitud</label>
+                    </div>
+                    <div class="input-field col s12 l10">
+                      <textarea id="txtNotaAutorizacion" class="materialize-textarea"> </textarea>
+                      <label for="txtNotaAutorizacion">Nota</label>                    
+                   </div> 
+              </div>
+              <div class="row"> 
+                    <div class="input-field col s12 l3">
+                      <input  id="txtPrecioReal" type="text" class="validate black-text" disabled value=" ">
+                      <label for="txtPrecioReal" class="black-text">Precio Real</label>
+                    </div>
+                    <div class="input-field col s12 l3">
+                      <input  id="txtPrecio" type="text" class="validate black-text" disabled value=" ">
+                      <label for="txtPrecio" class="black-text">Precio Especial</label>
+                    </div>
+                    <div class="input-field col s2 l3">
+                      <input onkeydown="calcularPago(event)"  id="txtQuincenasAutorizar" type="number" min='1' class="validate black-text"  value="0" >
+                      <label for="txtQuincenasAutorizar" class="black-text">Quincenas</label>                    
+                   </div>
+                   <div class="input-field col s2 l3">
+                      <input  id="txtPagoQuincenal" type="text" class="validate black-text" disabled value="0">
+                      <label for="txtPagoQuincenal" class="black-text">Pago Quincenal</label>                    
+                   </div>  
+              </div>
+              <div class="row">
+                  <center>
+                    <a  href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red white-text  ">Cerrar</a>
+                    <a onclick="autorizarSolicitudArticulo()" href="#!" class="modal-action waves-effect waves-green btn-flat green white-text  ">Autorizar</a>
+                 </center>
+              </div>
           </div>
         </div>
       </div>
