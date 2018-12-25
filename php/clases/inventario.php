@@ -150,7 +150,7 @@
 
 				return $datos;
 			}
-			public function registrarStock($txtIdPagoEspecie,$txtFecha,$txtCoordinacion,$cboSucursal,$txtIdDist,$txtDistribuidora,$txtPago,$cboEquipo,$txtMarca,$txtModelo,$txtSerie,$txtDescripcion,$txtUbicacion,$txtEstatus){
+			public function registrarStock($txtIdPagoEspecie,$txtFecha,$txtCoordinacion,$cboSucursal,$txtIdDist,$txtDistribuidora,$txtPago,$cboEquipo,$txtMarca,$txtModelo,$txtSerie,$txtDescripcion,$txtUbicacion){
  
 
 				$capturista_id=$_COOKIE["b_capturista_id"];
@@ -168,7 +168,6 @@
 									  pago = '$txtPago',
 									  descripcion = '$txtDescripcion',
 									  ubicacion = '$txtUbicacion',
-									  asignado = '$txtEstatus',
 									  marca = '$txtMarca',
 									  modelo = '$txtModelo',
 									  serie = '$txtSerie',
@@ -189,7 +188,6 @@
 					             tipo_id,
 					             descripcion,
 					             ubicacion,
-					             asignado,
 					             marca,
 					             modelo,
 					             serie,
@@ -200,13 +198,12 @@
 						values ('$txtFecha',
 						        '$txtCoordinacion',
 						        '$cboSucursal',
-						        '$txtIdCoor',
+						        '$txtIdDist',
 						        '$txtDistribuidora',
 						        '$txtPago',
 						        '$cboEquipo',
 						        '$txtDescripcion',
 						        '$txtUbicacion',
-						        '$txtEstatus',
 						        '$txtMarca',
 						        '$txtModelo',
 						        '$txtSerie',
@@ -318,7 +315,7 @@
 				$datos=array();
 				$i=0; 
 
-				 $query="SELECT pe.id,d.docName,te.descripcion equipo,CONCAT(pe.descripcion,' ',pe.marca,' ','Modelo :',modelo) descripcion,ROUND((pe.pago-(pe.pago*.10))) precio,pe.pago precioNormal,IF((pe.pago-(pe.pago*.10))>6000,10,5) quincenas,pe.fecha_captura,IF( DATEDIFF(CURDATE(),pe.fecha_captura)>7,1,0) antiguedad FROM b_img_pago_esp d
+				 $query="SELECT pe.id,d.docName,te.descripcion equipo,CONCAT(pe.descripcion,' ',pe.marca,' ','Modelo :',modelo) descripcion,ROUND((pe.pago-(pe.pago*.10))) precio,pe.pago precioNormal,IF((pe.pago-(pe.pago*.10))<=6000,'5-10','10-14') quincenas,pe.fecha_captura,IF( DATEDIFF(CURDATE(),pe.fecha_captura)>7,1,0) antiguedad FROM b_img_pago_esp d
 						JOIN b_pagos_especie pe ON pe.id=d.pago_id
 						JOIN i_tipo_equipo te ON te.id=pe.tipo_id
 						WHERE pe.estatus_id=5 GROUP BY d.pago_id ORDER BY pe.fecha DESC";    
@@ -345,7 +342,7 @@
 				$datos=array();
 				$i=0; 
 
-				 $query="SELECT pe.id,d.docName,te.descripcion equipo,CONCAT(pe.descripcion,' ',pe.marca,' ','Modelo :',modelo) descripcion,ROUND((pe.pago-(pe.pago*.10))) precio,pe.pago precioNormal,IF((pe.pago-(pe.pago*.10))>6000,10,5) quincenas,pe.fecha_captura,IF( DATEDIFF(CURDATE(),pe.fecha_captura)>7,1,0) antiguedad FROM b_img_pago_esp d
+				 $query="SELECT pe.id,d.docName,te.descripcion equipo,CONCAT(pe.descripcion,' ',pe.marca,' ','Modelo :',modelo) descripcion,ROUND((pe.pago-(pe.pago*.10))) precio,pe.pago precioNormal,IF((pe.pago-(pe.pago*.10))<=6000,'5-10','10-14') quincenas,pe.fecha_captura,IF( DATEDIFF(CURDATE(),pe.fecha_captura)>7,1,0) antiguedad FROM b_img_pago_esp d
 						JOIN b_pagos_especie pe ON pe.id=d.pago_id
 						JOIN i_tipo_equipo te ON te.id=pe.tipo_id
 						WHERE pe.estatus_id=5 AND pe.id=$id  ORDER BY pe.fecha DESC";    
@@ -373,7 +370,7 @@
 				$datos=array();
 				$i=0; 
 
-				 $query="SELECT pe.id,d.docName,te.descripcion equipo,CONCAT(pe.descripcion,' ',pe.marca,' ','Modelo :',modelo) descripcion,ROUND((pe.pago-(pe.pago*.10))) precio,pe.pago precioNormal,IF((pe.pago-(pe.pago*.10))>6000,10,5) quincenas,pe.fecha_captura,IF( DATEDIFF(CURDATE(),pe.fecha_captura)>7,1,0) antiguedad FROM b_img_pago_esp d
+				 $query="SELECT pe.id,d.docName,te.descripcion equipo,CONCAT(pe.descripcion,' ',pe.marca,' ','Modelo :',modelo) descripcion,ROUND((pe.pago-(pe.pago*.10))) precio,pe.pago precioNormal,IF((pe.pago-(pe.pago*.10))<=6000,'5-10','10-14') quincenas,pe.fecha_captura,IF( DATEDIFF(CURDATE(),pe.fecha_captura)>7,1,0) antiguedad FROM b_img_pago_esp d
 						JOIN b_pagos_especie pe ON pe.id=d.pago_id
 						JOIN i_tipo_equipo te ON te.id=pe.tipo_id
 						WHERE pe.estatus_id=5 AND pe.id=$id GROUP BY d.pago_id  ORDER BY pe.fecha DESC";    
@@ -395,15 +392,15 @@
 					} 
 				return $datos;
 			}
-			public function guardarSolicitud($articulo_id,$capturista_id,$comentario){
+			public function guardarSolicitud($articulo_id,$capturista_id,$comentario,$quincenas){
 				$res=array();
 				$datos=array();
 				$i=0; 
 			
 				$capturista_id=$_COOKIE["b_capturista_id"];
 
-				$query="INSERT INTO b_solicitud_articulo(comentario,articulo_id,empleado_id,estatus_id,fecha_captura,hora_captura)
-			   										VALUE('$comentario',$articulo_id,$capturista_id,5,CURDATE(),CURTIME())";   
+				$query="INSERT INTO b_solicitud_articulo(comentario,articulo_id,empleado_id,quincenas,nota_autorizacion,estatus_id,fecha_captura,hora_captura)
+			   										VALUE('$comentario',$articulo_id,$capturista_id,$quincenas,' ',5,CURDATE(),CURTIME())";   
 				$respuesta= mysqli_query($this->con(), $query);  
 
 
@@ -472,7 +469,8 @@
 				$datos=array();
 				$i=0; 
 
-				 $query="SELECT sa.empleado_id,c.descripcion,sa.articulo_id,sa.id,pe.pago ,round(pe.pago-(pe.pago*.10)) c_descuento FROM b_solicitud_articulo sa
+				 $query="SELECT sa.empleado_id,c.descripcion,sa.articulo_id,sa.id,pe.pago ,round(pe.pago-(pe.pago*.10)) c_descuento,sa.quincenas,
+				 			round((pe.pago-(pe.pago*.10))/quincenas) FROM b_solicitud_articulo sa
 							JOIN capturistas c ON c.id=sa.empleado_id 
 							JOIN b_pagos_especie pe ON pe.id=sa.articulo_id WHERE sa.id=$solicitud_id";    
 
@@ -485,6 +483,8 @@
 					   $datos[$i]['solicitud_id'] = $res[3];
 					   $datos[$i]['precio'] = $res[4];
 					   $datos[$i]['p_descuento'] = $res[5];
+					   $datos[$i]['quincenas'] = $res[6];
+					   $datos[$i]['pagoQuincenal'] = $res[7];
 					    $i++;
 
 					} 
@@ -551,6 +551,21 @@
 					$respuesta= mysqli_query($this->con(), $query);  
 					while ($res = mysqli_fetch_row($respuesta)) 
 					   $datos[$i]['mensajes'] = $res[0];   
+					
+				return $datos;
+			}
+			public function validarQuincenas($articulo_id){
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				 $query="SELECT ROUND((pe.pago-(pe.pago*.10))) precio FROM b_img_pago_esp d
+						JOIN b_pagos_especie pe ON pe.id=d.pago_id
+						JOIN i_tipo_equipo te ON te.id=pe.tipo_id
+						WHERE pe.estatus_id=5 AND pe.id=$articulo_id GROUP BY d.pago_id  ORDER BY pe.fecha DESC";   
+					$respuesta= mysqli_query($this->con(), $query);  
+					while ($res = mysqli_fetch_row($respuesta)) 
+					   $datos[$i]['precio'] = $res[0];   
 					
 				return $datos;
 			}

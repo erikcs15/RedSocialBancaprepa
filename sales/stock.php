@@ -24,20 +24,20 @@
 
         <div class="container-fluid"><!-- CONTENEDOR 2--> 
                   <div class="row"><!-- ROW 1-->
-                    <div class="input-field col l1 offset-l1">
+                    <div class="input-field col l1 s4">
                       <input id="txtIdPagoEspecie" class="black-text" type="text" placeholder=" " value="0" disabled>
                       <label class="black-text active" for="txtIdPagoEspecie"  >Id</label>
                     </div>
 
-                    <div class="input-field col l2 ">
+                    <div class="input-field col l2 s8">
                       <input id="txtFecha" type="date" placeholder=" ">
                       <label class="black-text active" for="txtFecha"  >Fecha</label>
                     </div>
-                    <div class="input-field col l2">
+                    <div class="input-field col l2 s12">
                       <input id="txtCoordinacion" type="text"  placeholder=" ">
                       <label class="black-text active" for="txtCoordinacion"  >Coordinacion</label>
                     </div>
-                    <div class="input-field col l2">
+                    <div class="input-field col l3 s12">
                       <select id="cboSucursal">
                           <option value="" disabled selected>Choose your option</option>
                           <option value="1">Option 1</option>
@@ -46,21 +46,21 @@
                       </select>
                         <label class="black-text">Sucursal</label>
                     </div>
-                    <div class="input-field col l1">
-                      <input id="txtIdDist" type="number" min="01"  placeholder=" ">
+                    <div class="input-field col l1 s4">
+                      <input id="txtIdDist" type="text" onKeyPress="return soloNumeros(event)"  placeholder="0">
                       <label class="black-text active" for="txtIdDist"  >Id</label>
                     </div>
-                    <div class="input-field col l2">
+                    <div class="input-field col l3 s8">
                       <input id="txtDistribuidora" type="text"   placeholder=" ">
                       <label class="black-text active" for="txtDistribuidora"  >Distribuidora</label>
                     </div>
                   </div><!-- ROW 1-->
                   <div class="row"> <!-- ROW 2-->
-                    <div class="input-field col l2 offset-l1">
-                      <input id="txtPago" type="number" min="01" placeholder=" ">
+                    <div class="input-field col l2 s4">
+                      <input id="txtPago" type="text" onKeyPress="return soloNumeros(event)" placeholder=" ">
                       <label class="black-text active" for="txtPago"  >Pago en Especie</label>
                     </div>
-                    <div class="input-field col l2">
+                    <div class="input-field col l3 s8">
                       <select id="cboEquipo">
                           <option value="" disabled selected>Choose your option</option>
                           <option value="1">Option 1</option>
@@ -69,33 +69,30 @@
                       </select>
                         <label class="black-text">Tipo de Equipo</label>
                     </div> 
-                    <div class="input-field col l2">
-                      <input id="txtMarca" type="text"   placeholder=" ">
-                      <label class="black-text active" for="txtMarca"  >Marca</label>
-                    </div>
-                    <div class="input-field col l2">
-                      <input id="txtModelo" type="text"   placeholder=" ">
-                      <label class="black-text active" for="txtModelo"  >Modelo</label>
-                    </div>
-                    <div class="input-field col l2">
-                      <input id="txtSerie" type="text"   placeholder=" ">
-                      <label class="black-text active" for="txtSerie"  >Serie</label>
-                    </div>
-                  </div><!-- ROW 2-->
-                  <div class="row"><!-- ROW 3-->
-                    <div class="input-field col l3 offset-l1">
+                    <div class="input-field col l4 s12">
                       <input id="txtDescripcion" type="text"   placeholder=" ">
                       <label class="black-text active" for="txtDescripcion"  >Descripcion</label>
                     </div>
-                    <div class="input-field col l3 ">
+                     <div class="input-field col l3 s12">
+                      <input id="txtMarca" type="text"   placeholder=" ">
+                      <label class="black-text active" for="txtMarca"  >Marca</label>
+                    </div>
+
+                  </div><!-- ROW 2-->
+                  <div class="row"><!-- ROW 3-->
+                   
+                    <div class="input-field col l2 s12">
+                      <input id="txtModelo" type="text"   placeholder=" ">
+                      <label class="black-text active" for="txtModelo"  >Modelo</label>
+                    </div>
+                    <div class="input-field col l2 s12">
+                      <input id="txtSerie" type="text"   placeholder=" ">
+                      <label class="black-text active" for="txtSerie"  >Serie</label>
+                    </div>
+                    <div class="input-field col l3 s12">
                       <input id="txtUbicacion" type="text"   placeholder=" ">
                       <label class="black-text active" for="txtUbicacion"  >Ubicacion</label>
-                    </div>
-                    <div class="input-field col l4 ">
-                      <input id="txtEstatus" type="text"   placeholder=" ">
-                      <label class="black-text active" for="txtEstatus"  >Estatus Actual</label>
-                    </div>
-                      
+                    </div>                      
                   </div><!-- ROW 3--> 
                   <div class="row center">
                         <a class="waves-effect waves-light btn red" onclick="limpiarCampos()"><i class="material-icons left">clear</i>Cancelar</a>
@@ -108,9 +105,9 @@
         <div class="container-fluid">
             
                 <div class="row">
-                    <div class="col l12 s12  scroller3" >
+                    <div class="col l12 s12  scroller3 " >
                         <hr>
-                        <table class="highlight">
+                        <table class="highlight responsive-table">
                             <thead>
                               <tr>
                                   <th>#</th>
@@ -164,6 +161,7 @@
             
             $('select').formSelect();
 
+
             //eventos
 
              $("#btnGuardarArticulo").click(function() { 
@@ -181,9 +179,8 @@
                 var txtModelo =$("#txtModelo").val().toUpperCase();
                 var txtSerie =$("#txtSerie").val().toUpperCase();
                 var txtDescripcion =$("#txtDescripcion").val().toUpperCase();
-                var txtUbicacion =$("#txtUbicacion").val().toUpperCase();
-                var txtEstatus =$("#txtEstatus").val().toUpperCase();
-
+                var txtUbicacion =$("#txtUbicacion").val().toUpperCase(); 
+ 
                 if(txtFecha==""){
                     M.toast({html: 'Es necesario ingresar la fecha.', classes: 'rounded red'}); 
                     return;
@@ -192,7 +189,7 @@
                     M.toast({html: 'Es necesario la coordinacion ala que pertenece.', classes: 'rounded red'}); 
                     return;
                 } 
-                if(txtIdCoor==""){
+                if(txtIdCoor<=0){
                     M.toast({html: 'Es necesario indicar el Id del distribuidora.', classes: 'rounded red'}); 
                     return;
                 } 
@@ -221,7 +218,7 @@
                     return;
                 } 
 
-                inventarios({ opcion :9,txtIdPagoEspecie:txtIdPagoEspecie,txtFecha:txtFecha, txtCoordinacion:txtCoordinacion,cboSucursal:cboSucursal,txtIdCoor:txtIdCoor,txtDistribuidora:txtDistribuidora,txtPago:txtPago,cboEquipo:cboEquipo,txtMarca:txtMarca,txtModelo:txtModelo,txtSerie:txtSerie,txtDescripcion:txtDescripcion,txtUbicacion:txtUbicacion,txtEstatus:txtEstatus},resRegistroStock);
+                inventarios({ opcion :9,txtIdPagoEspecie:txtIdPagoEspecie,txtFecha:txtFecha, txtCoordinacion:txtCoordinacion,cboSucursal:cboSucursal,txtIdCoor:txtIdCoor,txtDistribuidora:txtDistribuidora,txtPago:txtPago,cboEquipo:cboEquipo,txtMarca:txtMarca,txtModelo:txtModelo,txtSerie:txtSerie,txtDescripcion:txtDescripcion,txtUbicacion:txtUbicacion},resRegistroStock);
                  
 
              });
@@ -239,6 +236,14 @@
             inventarios({ opcion : 22}, respInboxPendientes);
         }
 
+        function soloNumeros(e){
+
+          var key = window.Event ? e.which : e.keyCode
+
+          return ((key >= 48 && key <= 57) || (key==8))
+
+        }
+
         function limpiarCampos(){
                 $("#txtIdPagoEspecie").val("0");
                 $("#txtFecha").val("");
@@ -251,7 +256,7 @@
                 $("#txtSerie").val("");
                 $("#txtDescripcion").val("");
                 $("#txtUbicacion").val("");
-                $("#txtEstatus").val("");
+                
         }
 
         function deshabilitarPagoEspecie(id){
@@ -304,7 +309,7 @@
         if (!data && data == null)
             return;  
      
-        var documento='<option value="0" selected>Seleccione Tipo Equipo</option>';
+        var documento='<option value="0" selected>Tipo de Equipo</option>';
     
         for(var i=0; i<data.length; i++){
             documento+='<option value='+data[i].id+'>'+data[i].descripcion+'</option>';
@@ -317,9 +322,7 @@
     var resRegistroStock = function(data) { 
         if (!data && data == null)
             return;  
-        
-        console.log(data)
-
+         
         if(data[0].respuesta<3){
             M.toast({html: 'Los datos se an guardado correctamente.', classes: 'rounded green'});
             limpiarCampos();
@@ -357,8 +360,7 @@
      var respBuscarPago = function(data) { 
         if (!data && data == null)
             return;  
-
-          console.log(data)
+ 
 
                 $("#txtIdPagoEspecie").val(data[0].id);
                 $("#txtFecha").val(data[0].fecha);
@@ -371,8 +373,7 @@
                 $("#txtSerie").val(data[0].serie);
                 $("#txtDescripcion").val(data[0].descripcion);
                 $("#txtUbicacion").val(data[0].ubicacion);
-                $("#txtEstatus").val(data[0].asignado);
-   
+                   
          
     }
  

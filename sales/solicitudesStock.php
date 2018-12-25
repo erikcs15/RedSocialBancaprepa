@@ -187,8 +187,8 @@
               $("#txtIdSolcitudAtutorizar").val(data[0].solicitud_id);
               $("#txtPrecioReal").val(data[0].precio);
               $("#txtPrecio").val(data[0].p_descuento);  
-              $("#txtPagoQuincenal").val("0");
-              $("#txtNotaAutorizacion").val(""); 
+              $("#txtQuincenasAutorizar").val(data[0].quincenas);
+              $("#txtPagoQuincenal").val(data[0].pagoQuincenal); 
         }
 
         var respAutorizarCargo = function(data){

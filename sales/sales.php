@@ -48,23 +48,24 @@
 
             $("#aceptarSolicitud").click(function() { 
                 var articulo_id = $('#txtIdSolicitar').val();  
-                var capturista_id =$('#txtIdSolicitar').val()   
+                var capturista_id =$('#txtIdSolicitar').val();   
                 var comentario =$("#txtSolicitud").val();      
+                var quincenas =$("#txtQuincenasSolicitadas").val();
 
                 if(comentario.length<3){
                         M.toast({html: 'Es nesesario agregar una nota.', classes: 'rounded red'})
                     return;
                 }
 
-                inventarios({ opcion : 17 ,articulo_id:articulo_id,capturista_id:capturista_id,comentario:comentario}, respGuardarSolicitud);
+                inventarios({opcion:24,articulo_id:articulo_id},respValidarQuincenas);
+
 
              });
 
         });
         //funciones
         function cargarStock(){
-            inventarios({ opcion : 14 }, respStock);
-            console.log('ven')
+            inventarios({ opcion : 14 }, respStock); 
             onRequest({ opcion : 70 }, respcargasucursales); 
             inventarios({ opcion : 22}, respInboxPendientes);
             inventarios({ opcion : 23}, respMensajes);
@@ -81,6 +82,14 @@
 
 
             inventarios({ opcion : 16,id:id }, respPreviewSolicitud); 
+        }
+
+        function soloNumeros(e){
+
+          var key = window.Event ? e.which : e.keyCode
+
+          return ((key >= 48 && key <= 57) || (key==8))
+
         }
         //respuestas
         var respStock = function(data) { 
@@ -148,15 +157,17 @@
 
             console.log(data)
             
-              var documento='<div class="carousel col s12">';
+              var documento='<div class="carousel carousel-slider">';
     
                 for(var i=0; i<data.length; i++){
-                    documento +='<a class="carousel-item" href="#one!"><img  src="../imagenes/stock/'+data[i].imagen+'"></a>';
+                    documento +='<a class="carousel-item" href="#'+data[i].imagen+'!"><img  src="../imagenes/stock/'+data[i].imagen+'"></a>';
                     
                 }               
                 
                 $('#divGaleria').html('</div>'+documento);  
-                $('.carousel').carousel();
+                $('.carousel.carousel-slider').carousel({
+                        fullWidth: true
+                      });
                 $('.materialboxed').materialbox();
 
             
@@ -227,13 +238,50 @@
 
             if(data[0].respuesta==2){
                  M.toast({html: 'Se genero correctamente la solicitud.', classes: 'rounded green'});
-                 $("#txtSolicitud").val("");  
+                 $("#txtSolicitud").val(""); 
+                 $("#txtQuincenasSolicitadas").val("");  
 
             }else{
                  M.toast({html: 'Ocurrio un error al intentar guardar los datos.', classes: 'rounded red'})
             }
 
             $("#modalSolicitar").modal('close');
+            
+        }
+
+         var respValidarQuincenas = function(data) { 
+            if (!data && data == null)
+                return;  
+
+            console.log(data)
+            var articulo_id = $('#txtIdSolicitar').val();  
+            var capturista_id =$('#txtIdSolicitar').val();   
+            var comentario =$("#txtSolicitud").val();      
+            var quincenas =$("#txtQuincenasSolicitadas").val(); 
+
+            if(data[0].precio<=6000){
+
+                if (quincenas<=10) {
+                    inventarios({ opcion : 17 ,articulo_id:articulo_id,capturista_id:capturista_id,comentario:comentario,quincenas:quincenas}, respGuardarSolicitud);
+                }
+                else{
+                      M.toast({html: 'Este articulo solo puede tener hasta 10 quincenas', classes: 'rounded red'})
+                }
+                 
+                
+
+            }else{
+
+                 if (quincenas<=14) {
+                    inventarios({ opcion : 17 ,articulo_id:articulo_id,capturista_id:capturista_id,comentario:comentario,quincenas:quincenas}, respGuardarSolicitud);
+                }
+                else{
+                      M.toast({html: 'Este articulo solo puede tener hasta 14 quincenas', classes: 'rounded red'})
+                }
+                
+            }
+
+          
             
         }
 

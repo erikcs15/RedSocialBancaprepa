@@ -44,65 +44,88 @@
 <div id="modalCargarImg" class="modal">
                 <nav class=" blue accent-4">
                     <div class="nav-wrapper">
-                        <a href="#!" class="brand-logo">
-                            Cargar de imagen
-                        </a>
-                    </div>
-                </nav>
-                <div class="modal-content"> 
-                    <div class="container"> 
-                       <div class="video-container">
-                           <iframe id="frameImg"  width="853" height="480" src="img.<?php  ?>" frameborder="0" allowfullscreen>
-                            
-                            </iframe>
-                       </div>
+                       
                         
-
+                        <div class="container-fluid">
+                              <div class="row">
+                                <div class="col s6">
+                                   <a href="#!" class="brand-logo">
+                                        Cargar de imagen
+                                    </a>
+                                </div>
+                                <div class="col s6 ">
+                                  <a  class="waves-effect modal-close waves-light btn-small right accent-4 grey">X</a>
+                                </div>
+                              </div>
+                        </div>  
+                    </div> 
+                          
+                 </nav>
+                <div class="modal-content"> 
+                    <div class="container">  
+                           <iframe id="frameImg"  src="img.<?php  ?>" frameborder="0" allowfullscreen >
+                            
+                            </iframe> 
                     </div>
-                </div>
-                <div class="row" >
-                            <div class="col s6 right"    >
-                            <a onclick="cancelarPagoEspecie()" class="waves-effect waves-light btn  accent-4 green"><i class="material-icons left">done</i>Aceptar</a>
-                                
-                            </div>
-                            <div class="col s6 "   >
-                            <a  class="waves-effect modal-close waves-light btn right accent-4 red"><i class="material-icons left">close</i>Cancelar</a>
-                            </div>
-                </div>
+                </div> 
                 
-                
-                <div class="modal-footer"> 
-                    
-                </div>
+                 
 </div>
 
    <!-- Modal Structure -->
-      <div id="modalImagenes" class="modal">
-        <div class="modal-content">
-          <div class="container">
-              <div class="row">
-                  <div class="col s12 l12" id="divGaleria">
+ 
+      <div id="modalImagenes" class="modal modal-large"  >
+         <nav class=" blue accent-4">
+              <div class="nav-wrapper">
+                 
+                  
+                  <div class="container-fluid">
+                        <div class="row">
+                          <div class="col s6">
+                             <a href="#!" class="brand-logo">
+                                 Imagenes de Articulo
+                              </a>
+                          </div>
+                          <div class="col s6 ">
+                            <a  class="waves-effect modal-close waves-light btn-small right accent-4 grey">X</a>
+                          </div>
+                        </div>
+                  </div>  
+              </div> 
+                    
+           </nav>
 
-                  </div>
-              </div>
+        <div class="modal-content">
+          <div class="container-fluid">
+              <div class="row" id="divGaleria">               </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-        </div>
+        </div> 
       </div>
 
 
       <div id="modalSolicitar" class="modal modal-large">
-                <nav class=" blue accent-4">
+               <nav class=" blue accent-4">
                     <div class="nav-wrapper">
-                        <a class="brand-logo">
-                            Solicitud de articulo
-                        </a>
-                    </div>
-                </nav>
+                       
+                        
+                        <div class="container-fluid">
+                              <div class="row">
+                                <div class="col s6">
+                                   <a href="#!" class="brand-logo">
+                                        Solicitud de Articulo
+                                    </a>
+                                </div>
+                                <div class="col s6 ">
+                                  <a  class="waves-effect modal-close waves-light btn-small right accent-4 grey">X</a>
+                                </div>
+                              </div>
+                        </div>  
+                    </div> 
+                          
+                 </nav>
+
         <div class="modal-content">
-          <div class="container">
+          <div class="container-fluid">
             <div class="row">
                     <div class="input-field col s12 l2">
                       <input type="text" class="validate black-text" disabled value=" <?php
@@ -122,26 +145,22 @@
                       <input  " id="txtIdSolicitar" type="text" class="validate black-text" disabled value=" ">
                       <label for="txtIdSolicitar"># Articulo</label>
                     </div>
-                    <div class="input-field col s12 l10">
+                    <div class="input-field col s12 l6">
                       <textarea id="txtSolicitud" class="materialize-textarea"> </textarea>
                       <label for="txtSolicitud">Contacto</label>                    
                    </div>
+                   <div class="input-field col s12 l4">
+                      <input id="txtQuincenasSolicitadas" class="validate black-tex" value="0" onKeyPress="return soloNumeros(event)"> 
+                      <label for="txtQuincenasSolicitadas" class="active">Quincenas</label>                    
+                   </div>
               </div>
               <div class="row">
-                <center><a id="aceptarSolicitud" class="waves-effect waves-light btn"><i class="material-icons right">offline_pin</i>button</a>
+                <center><a id="aceptarSolicitud" class="waves-effect waves-light btn"><i class="material-icons right">offline_pin</i>Aceptar</a>
               </center>
               </div>
               <div class="row" id="vistaSolicitud">
                 
               </div>
-          </div>
-        </div>
-        <div class="modal-footer">  
-          <div class="row ">
-            <center>
-              <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red white-text  hide-on-med-and-up">Cerrar</a>
-            </center>
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red white-text  hide-on-med-and-down">Cerrar</a>
           </div>
         </div>
       </div>
@@ -232,11 +251,11 @@
                       <label for="txtPrecio" class="black-text">Precio Especial</label>
                     </div>
                     <div class="input-field col s2 l3">
-                      <input onkeydown="calcularPago(event)"  id="txtQuincenasAutorizar" type="number" min='1' class="validate black-text"  value="0" >
-                      <label for="txtQuincenasAutorizar" class="black-text">Quincenas</label>                    
+                      <input onkeydown="calcularPago(event)"  id="txtQuincenasAutorizar"   min='1' class="validate black-text"  value="0" disabled >
+                      <label for="txtQuincenasAutorizar" class="black-text active">Quincenas</label>                    
                    </div>
                    <div class="input-field col s2 l3">
-                      <input  id="txtPagoQuincenal" type="text" class="validate black-text" disabled value="0">
+                      <input  id="txtPagoQuincenal" type="text" class="validate black-text" disabled value="0" disabled>
                       <label for="txtPagoQuincenal" class="black-text">Pago Quincenal</label>                    
                    </div>  
               </div>

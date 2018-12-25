@@ -1115,7 +1115,7 @@ var respUser = function(data) {
             Cookies.set("b_telefono",data[0].telefono);   
             Cookies.set("b_id_sucursal",data[0].id_sucursal);         
             Cookies.set("b_empresa",data[0].empresa);
-            location.href="/index.php";
+            location.href="/RedSocialBancaprepa/index.php";
 
          return;
      }
@@ -1912,9 +1912,8 @@ var respCargarMenu  = function(data) {
 
        // console.log(data)
         var usuario = Cookies.get('b_capturista_id');
-        if(usuario<1){
-          console.log('vale');
-          window.location = "login.html";
+        if(usuario<1){ 
+          window.location = "RedSocialBancaprepa/login.html";
         }
 
         console.log(data);
