@@ -12,14 +12,36 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////// EVENTOS ////////////////////////////////////////////////////////////////
     $("#CrearTicketbtn").click(function() {
         var usuario = Cookies.get('b_capturista_id');
-        var area=$("#areaApoyo").val();
         var titulo=$("#tituloDD option:selected").text();
         var desc=$("#descripcionTicket").val();
         var correo=$("#email").val();
         var telefono=$("#tel").val();
-        console.log("ID empleado="+usuario+" Area de apoyo:"+area+" titulo:"+titulo);
+        console.log("ID empleado="+usuario+" titulo:"+titulo);
         console.log("desc:"+desc+" email:"+correo+" telefono:"+telefono);
-        tickets({ opcion : 1, capturista:usuario, area:area,titulo:titulo, desc:desc, email:correo, tel:telefono },respAgregaTicket);
+      
+
+      
+        if(titulo=="Titulo")
+        {
+            M.toast({html: 'Ingrese el titulo!', classes: 'rounded red'});
+            return;
+        }
+        if(desc=="")
+        {
+            M.toast({html: 'Ingrese la descripcion!', classes: 'rounded red'});
+            return;
+        }
+        if(correo=="")
+        {
+            M.toast({html: 'Agregue su correo!', classes: 'rounded red'});
+            return;
+        }
+        if(telefono=="")
+        {
+            M.toast({html: 'Agregue su telefono!', classes: 'rounded red'});
+            return;
+        }
+        tickets({ opcion : 1, capturista:usuario,titulo:titulo, desc:desc, email:correo, tel:telefono },respAgregaTicket);
 
     });
 
@@ -106,7 +128,7 @@ $(document).ready(function(){
             }
             else
             {
-                if(data[i].id_estatus==12)
+                if(data[i].id_estatus==13)
                 {
                    if(i%2==0)
                    {
@@ -287,7 +309,16 @@ $(document).ready(function(){
         var d="";
         for (var i = 0; i < data.length; i++) 
         {
-            d+="<p><b>"+data[i].de+"</b>   &nbsp;"+data[i].fecha+"  "+data[i].hora+"</p><br><p>"+data[i].mensaje+"</p><br>";
+            var de=String(data[i].de);
+            if(de=="undefined")
+            {
+                d+="<p><b>Sin comentarios.</b></p><br>";
+            }
+            else
+            {
+                d+="<p><b>"+data[i].de+"</b>   &nbsp;"+data[i].fecha+"  "+data[i].hora+"</p><br><p>"+data[i].mensaje+"</p><br>";
+            }
+
         }
         $('#cardTicketAdm').html(d); 
     }

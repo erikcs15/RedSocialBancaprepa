@@ -10,7 +10,7 @@
 		 
 		
  		case 1: 
- 			   echo (json_encode($ticket->crearTicket($_REQUEST['capturista'],$_REQUEST['area'],$_REQUEST['titulo'],$_REQUEST['desc'],$_REQUEST['email'],$_REQUEST['tel'])));
+ 			   echo (json_encode($ticket->crearTicket($_REQUEST['capturista'],$_REQUEST['titulo'],$_REQUEST['desc'],$_REQUEST['email'],$_REQUEST['tel'])));
 		break; 
 		case 2: 
 				echo (json_encode($ticket->cargarTicketsXusuario($_REQUEST['capturista'])));

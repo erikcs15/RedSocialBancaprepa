@@ -5,7 +5,7 @@
     class ticket extends Conectar
     {
         
-        public function crearTicket($capturistaId,$area,$titulo,$desc, $email, $telefono) 
+        public function crearTicket($capturistaId,$titulo,$desc, $email, $telefono) 
         {
             $res=array();
             $datos=array();
@@ -13,8 +13,8 @@
             $i=0;
 
 
-            $sql="INSERT INTO b_tickets(capturista_id,area_id,titulo,descripcion, email, telefono, fecha_creacion, hora_creacion, estatus_id) 
-                     VALUES($capturistaId, $area, '$titulo', '$desc', '$email', $telefono, CURDATE(), CURTIME(), 13)";
+            $sql="INSERT INTO b_tickets(capturista_id,titulo,descripcion, email, telefono, fecha_creacion, hora_creacion, estatus_id) 
+                     VALUES($capturistaId, '$titulo', '$desc', '$email', $telefono, CURDATE(), CURTIME(), 13)";
         
             $resultado = mysqli_query($this->con(), $sql);   
 
@@ -35,7 +35,8 @@
                 INNER JOIN capturistas c ON c.`id`=t.`capturista_id`
                 INNER JOIN estatus e ON e.`id`=t.`estatus_id`
                 LEFT JOIN capturistas c2 ON c2.id=t.`usuario_resolviendo`
-                WHERE t.capturista_id=$capturista"; 
+                WHERE t.capturista_id=$capturista
+                ORDER BY t.id DESC"; 
 
             $resultado = mysqli_query($this->con(), $sql); 
 
@@ -73,7 +74,8 @@
                 FROM b_tickets t
                 INNER JOIN capturistas c ON c.`id`=t.`capturista_id`
                 INNER JOIN estatus e ON e.`id`=t.`estatus_id`
-                left JOIN capturistas c2 ON c2.id=t.`usuario_resolviendo`"; 
+                left JOIN capturistas c2 ON c2.id=t.`usuario_resolviendo` 
+                ORDER BY t.id DESC"; 
 
             $resultado = mysqli_query($this->con(), $sql); 
 

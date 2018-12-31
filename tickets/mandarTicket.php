@@ -26,19 +26,6 @@
             <form class="col s8 offset-s2">
                     <div class="row">
                         <div class="input-field col s6">
-                            <i class="material-icons prefix">business</i>
-                            <select id="areaApoyo">
-                            <option value="" disabled selected>Area</option>
-                            <option value="1">Sistemas</option>
-                            <option value="2">Credito</option>
-                            <option value="3">Cartera</option>
-                            <option value="4">Call Center</option>
-                            </select>
-                            <label>Seleccione el area del cual necesita apoyo:</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s6">
                         <i class="material-icons prefix">mode_edit</i>
                             <select id="tituloDD">
                                 <option value="" disabled selected>Titulo</option>
