@@ -720,20 +720,7 @@ $("#passEmpleado").keypress(function(e) {
     });
 
 
-    $("#CrearTicketbtn").click(function() {
-        var usuario = Cookies.get('b_capturista_id');
-        var area=$("#areaApoyo").val();
-        var titulo=$("#tituloDD option:selected").text();
-        var desc=$("#descripcionTicket").val();
-        var correo=$("#email").val();
-        var telefono=$("#tel").val();
-        console.log("ID empleado="+usuario+" Area de apoyo:"+area+" titulo:"+titulo);
-        console.log("desc:"+desc+" email:"+correo+" telefono:"+telefono);
-        onRequest({ opcion : 73, usuario_id:usuario, area_id:area,titulo:titulo, descripcion:desc, correo:correo, telefono:telefono },respAgregaTicket);
-
-      
     
-    });
 
     
     $("#btnEditPub").click(function() {
@@ -837,10 +824,6 @@ function cargarCorreos(){
     
 }
 
-function cargarTickets(){
-    onRequest({ opcion : 75 }, respCargarTickets);
-    
-}
 
 function cargarMenuPorRol(){
     
@@ -1113,7 +1096,7 @@ var respUser = function(data) {
             Cookies.set("b_id_sucursal",data[0].id_sucursal);         
             Cookies.set("b_empresa",data[0].empresa);
             location.href="/index.php";
-
+            
          return;
      }
      else{ 
@@ -3358,56 +3341,6 @@ var respBorrarCorreoFinal = function(data) {
 
 
 
-var respAgregaTicket = function(data) { 
-    //se insertan los datos en la tabla confirmaciones!
-    if (!data && data == null)
-    {
-        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
-        return;
-    }
-    
-
-    M.toast({html: 'Ticket insertado correctamente ', classes: 'rounded green'}); 
-    location.href="/mandarTicket.php";
-    
-}
-
-var respCargarTickets = function(data) { 
-    
-    if (!data && data == null) 
-    return; 
-
-    var d = '';
-    var x = '';
-
-
-
-     for (var i = 0; i < data.length; i++) {
-     if(i%2==0)
-     {
-         x='even';
-     }
-     else
-     {
-         x='odd';
-     }
-     d+= '<tr>'+
-     '<td>'+data[i].id+'</td>'+
-     '<td>'+data[i].titulo+'</td>'+
-     '<td>'+data[i].descripcion+'</td>'+
-     '<td>'+data[i].solicitado+'</td>'+
-     '<td>'+data[i].estatus+'</td>'+ 
-     '<td class="'+x+' left">'+
-     //'<a onclick="editarDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarDoc"><i class="material-icons">edit</i></a>' + 
-     //'<a onclick="deshabDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabDoc"><i class="material-icons">do_not_disturb_alt</i></a>' + 
-     //'<a onclick="BorrarDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarDoc"><i class="material-icons">delete</i></a>' +
-     '</td>'  +'</tr> ';
-     }
-     
-     $("#tablaTicketsGeneral").html(d);
-
-     cargarMenuPorRol();
-}
 
 
 var respPermitirPublicacion = function(data) { 

@@ -91,6 +91,11 @@
                         <input id="montoAutorizar" style='display:none;' type="text" class="validate">
                         
                     </div>
+                    <div class="col s2">
+                        <br>
+                        <br>
+                        <a id="btnAutorizarPrestamo" class="waves-effect waves-light btn teal lighten-1 right"><i class="material-icons left">thumbs_up_down</i>Autorizar</a>
+                    </div>
                 </div>
                 <div class="row">
                 <div class="col s12" id="cargarArchivoSolicitud"  style='display:none;'>
@@ -99,8 +104,8 @@
                 </div>
            </div>
            <div class="modal-footer">
-               <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cancelar</a>
-               <a id="btnAutorizarPrestamo" class="waves-effect waves-light btn teal lighten-1 right"><i class="material-icons left">thumbs_up_down</i>Aceptar</a>
+               <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat right">Cancelar</a>
+               
            </div>
     </div>
     

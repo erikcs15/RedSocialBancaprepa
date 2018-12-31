@@ -13,7 +13,7 @@
         
 </head>
 <link rel="icon" type="image/png" href="../img/favicon.ico" /> 
-    <body onLoad="cargarMenuPorRol()">
+    <body onLoad="cargarTicketsPorUsuario()">
     <div id="container" ><!-- CONTENEDOR 1 -->
         <div class="nav-wrapper">
            <?php
@@ -68,23 +68,7 @@
                             <input id="tel" type="tel" class="validate">
                             <label for="tel">Telefono para contacto</label>
                         </div> 
-                        <div class="col s6">
-                            <!-- selección única -->
-                            <select name="miselect" class="chosen" data-placeholder="Elige un color">
-                            <option value=""></option>
-                            <option value="azul">Azul</option>
-                            <option value="amarillo">Amarillo</option>
-                            <option value="blanco">Blanco</option>
-                            <option value="gris">Gris</option>
-                            <option value="marron">Marrón</option>
-                            <option value="naranja">Naranja</option>
-                            <option value="negro">Negro</option>
-                            <option value="rojo">Rojo</option>
-                            <option value="verde">Verde</option>
-                            <option value="violeta">Violeta</option>
-                            </select>
-
-                        </div>
+                       
                         <div class="col s12" align="center">
                             <a id="CrearTicketbtn" class="waves-effect btn blue darken-4"><i class="material-icons left">add</i>Crear Ticket</a>
                         </div>
@@ -93,6 +77,34 @@
 
                    
             </form>
+            <div class="col s12">
+        <div class="card">
+            <div class="card-content">
+                <div id="content">
+                    <div class="row"><!-- CONTENEDOR 1 -->
+                            <div class="col s12"><!-- CONTENEDOR 2 -->
+                                    <table class="highlight">
+                                        <thead >
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Titulo</th>
+                                            <th>Descripcion</th>
+                                            <th>Solicitado por:</th>
+                                            <th>Atendido por:</th> 
+                                            <th>Estatus</th>                                            
+                                        </tr>
+                                        </thead>
+
+                                        <tbody id="tablaTicketsGeneral">
+                                           
+                                        </tbody>
+                                    </table>
+                                </div><!-- CONTENEDOR 2 -->
+                    </div><!-- CONTENEDOR 1 -->
+                </div>
+            </div>
+        </div>
+        </div>
         </div>
 
              
@@ -101,12 +113,45 @@
     
     </div>
 
+
+
+    <div id="modalComentariosTicket" class="modal">
+           <nav class="blue">
+               <div class="nav-wrapper">
+                   <a href="#!" class="brand-logo">
+                       <i class="large material-icons">comment</i>Comentarios Ticket
+                   </a>
+               </div>
+           </nav>
+           <div class="modal-content">
+           <div class="card">
+            <div  class="card-content" id="cardTicketAdm">
+              
+            </div>
+           </div>
+               <form class="col s12 no-padding">
+               <div class="input-field col s6">
+                        Comentario:
+                        <textarea id="comentarioTicket" class="materialize-textarea"></textarea> 
+                        <a id="btnComentarioTicket" class="waves-effect waves-light btn blue right"><i class="material-icons left">send</i>enviar</a> 
+               </div>
+               </form>
+              
+               <div class="s2">
+                  <!--  <a id="btnComentarioTicket" class="waves-effect waves-light btn blue right"><i class="material-icons left">delete</i>Aceptar</a> -->
+                </div>
+           </div>
+           <div class="modal-footer">
+               <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat right">Cancelar</a>
+           </div>
+    </div>
+
     <script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
     <script type="text/javascript" src="../js/materialize.min.js"></script>
     <script type="text/javascript" src="../js/ajax.js"></script>
     <script type="text/javascript" src="../js/bancaprepa.js"></script>
     <script type="text/javascript" src="../js/js.cookie.js"></script>
-    <script type="text/javascript" src="../js/chosen.jquery.js"></script>
+    <script type="text/javascript" src="../js/tickets.js"></script>
 
     <script>
         $(document).ready(function(){
