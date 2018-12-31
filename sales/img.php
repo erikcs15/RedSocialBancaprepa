@@ -1,6 +1,8 @@
 <?php 
      # definimos la carpeta destino
      $carpetaDestino="../imagenes/stock/";
+
+    // setcookie("idArticulo",$_REQUEST['txtIdCarga']);
                 
      # si hay algun archivo que subir
      if(isset($_FILES["archivo"]) && $_FILES["archivo"]["name"][0])
@@ -11,7 +13,7 @@
          {
  
              # si es un formato de imagen
-             if($_FILES["archivo"]["type"][$i]=="application/pdf" || $_FILES["archivo"]["type"][$i]=="image/jpeg" || $_FILES["archivo"]["type"][$i]=="image/pjpeg" || $_FILES["archivo"]["type"][$i]=="image/gif" || $_FILES["archivo"]["type"][$i]=="image/png")
+             if( $_FILES["archivo"]["type"][$i]=="image/jpeg" || $_FILES["archivo"]["type"][$i]=="image/pjpeg" || $_FILES["archivo"]["type"][$i]=="image/gif" || $_FILES["archivo"]["type"][$i]=="image/png")
              {
  
                  # si exsite la carpeta o se ha creado
@@ -63,19 +65,11 @@
         <div class="row ">
             <form  id="formFiles" class="col s12 l6 offset-l3 " action="<?php echo $_SERVER["PHP_SELF"]?>"  method="post"  enctype="multipart/form-data" name="inscripcion">
                 <div class="row" >
-                    <div class="input-field col s2 l1">
-                    <input  id="txtIdCarga" type="text" class="validate black-text" disabled value="<?php echo $_REQUEST['txtIdCarga']?>">
-                    <label for="txtIdCarga" class="black-text">Id</label>
-                    </div> 
-                      <div class="input-field col s10 l10">
-                    <input  id="txtDescripcion" type="text" class="validate black-text" disabled value="">
-                    <label for="txtDescripcion" class="black-text">Descripcion</label>
-                    </div> 
-
-
-                </div>
-                <div class="row">
-                    <div class="file-field input-field s10 l10">
+                    <div class="input-field col s2 l2">
+                        <input  id="txtIdCarga" type="text" class="validate black-text" disabled value="<?php echo $_REQUEST['txtIdCarga']?>">
+                        <label for="txtIdCarga" class="black-text"># Articulo</label>
+                    </div>  
+                    <div class="file-field input-field s12 l12">
                         <div id="btndocId" class="btn "> 
                              <span><i class="material-icons right">cloud_upload</i>Cargar</span>
                             <input id="docId"  type="file" name="archivo[]" >
@@ -84,7 +78,8 @@
                             <input id="txtDocName" class="file-path validate" type="text">
                         </div>
                     </div>
-                </div>
+
+                </div> 
             
                 
                        
@@ -101,15 +96,8 @@
     </div>
 
     
-            <div id="cargarImgStock" class="modal">
-                <nav class=" orange accent-4">
-                    <div class="nav-wrapper">
-                        <a href="#!" class="brand-logo">
-                            <i class="large material-icons right">record_voice_over</i>Aceptar Carga
-                        </a>
-                    </div>
-                </nav>
-
+            <div id="cargarImgStock" class="modal" style="width: 98%;">
+                
                 <div class="modal-content"> 
                     <center> <h5><strong>¿Seguro que desea realizar la carga?</strong></h5></center>
                 </div>
@@ -124,10 +112,7 @@
                             </div>
                 </div>
                 
-                
-                <div class="modal-footer"> 
-                    
-                </div>
+                 
             </div>
 
 

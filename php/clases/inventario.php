@@ -150,7 +150,7 @@
 
 				return $datos;
 			}
-			public function registrarStock($txtIdPagoEspecie,$txtFecha,$txtCoordinacion,$cboSucursal,$txtIdDist,$txtDistribuidora,$txtPago,$cboEquipo,$txtMarca,$txtModelo,$txtSerie,$txtDescripcion,$txtUbicacion,$txtEstatus){
+			public function registrarStock($txtIdPagoEspecie,$txtFecha,$txtCoordinacion,$cboSucursal,$txtIdDist,$txtDistribuidora,$txtPago,$cboEquipo,$txtMarca,$txtModelo,$txtSerie,$txtDescripcion,$txtUbicacion){
  
 
 				$capturista_id=$_COOKIE["b_capturista_id"];
@@ -168,7 +168,6 @@
 									  pago = '$txtPago',
 									  descripcion = '$txtDescripcion',
 									  ubicacion = '$txtUbicacion',
-									  asignado = '$txtEstatus',
 									  marca = '$txtMarca',
 									  modelo = '$txtModelo',
 									  serie = '$txtSerie',
@@ -189,7 +188,6 @@
 					             tipo_id,
 					             descripcion,
 					             ubicacion,
-					             asignado,
 					             marca,
 					             modelo,
 					             serie,
@@ -200,13 +198,12 @@
 						values ('$txtFecha',
 						        '$txtCoordinacion',
 						        '$cboSucursal',
-						        '$txtIdCoor',
+						        '$txtIdDist',
 						        '$txtDistribuidora',
 						        '$txtPago',
 						        '$cboEquipo',
 						        '$txtDescripcion',
 						        '$txtUbicacion',
-						        '$txtEstatus',
 						        '$txtMarca',
 						        '$txtModelo',
 						        '$txtSerie',
@@ -239,7 +236,8 @@
 				 $query=" SELECT pe.id,te.descripcion,s.nomComercial,pe.descripcion,e.descripcion FROM b_pagos_especie pe
 							 JOIN i_tipo_equipo te ON te.id=pe.tipo_id
 							 JOIN sucursales s ON s.id=pe.sucursal_id
-							 JOIN estatus e ON e.id=pe.estatus_id";    
+							 JOIN estatus e ON e.id=pe.estatus_id
+							ORDER BY pe.id DESC";    
 							 
 					$respuesta= mysqli_query($this->con(), $query);  
 					while ($res = mysqli_fetch_row($respuesta)) {
@@ -317,10 +315,10 @@
 				$datos=array();
 				$i=0; 
 
-				 $query="SELECT pe.id,d.docName,te.descripcion equipo,CONCAT(pe.descripcion,' ',pe.marca,' ','Modelo :',modelo) descripcion,ROUND((pe.pago-(pe.pago*.10))) precio,pe.pago precioNormal,IF((pe.pago-(pe.pago*.10))>6000,10,5) quincenas,pe.fecha_captura,IF( DATEDIFF(CURDATE(),pe.fecha_captura)>7,1,0) antiguedad FROM b_img_pago_esp d
+				 $query="SELECT pe.id,d.docName,te.descripcion equipo,CONCAT(pe.descripcion,' ',pe.marca,' ','Modelo :',modelo) descripcion,ROUND((pe.pago-(pe.pago*.10))) precio,pe.pago precioNormal,IF((pe.pago-(pe.pago*.10))<=6000,'5-10','10-14') quincenas,pe.fecha_captura,IF( DATEDIFF(CURDATE(),pe.fecha_captura)>7,1,0) antiguedad FROM b_img_pago_esp d
 						JOIN b_pagos_especie pe ON pe.id=d.pago_id
 						JOIN i_tipo_equipo te ON te.id=pe.tipo_id
-						WHERE pe.estatus_id=5 GROUP BY d.pago_id";    
+						WHERE pe.estatus_id=5 GROUP BY d.pago_id ORDER BY pe.fecha DESC";    
 
 					$respuesta= mysqli_query($this->con(), $query);  
 					while ($res = mysqli_fetch_row($respuesta)) {
@@ -344,10 +342,10 @@
 				$datos=array();
 				$i=0; 
 
-				 $query="SELECT pe.id,d.docName,te.descripcion equipo,CONCAT(pe.descripcion,' ',pe.marca,' ','Modelo :',modelo) descripcion,ROUND((pe.pago-(pe.pago*.10))) precio,pe.pago precioNormal,IF((pe.pago-(pe.pago*.10))>6000,10,5) quincenas,pe.fecha_captura,IF( DATEDIFF(CURDATE(),pe.fecha_captura)>7,1,0) antiguedad FROM b_img_pago_esp d
+				 $query="SELECT pe.id,d.docName,te.descripcion equipo,CONCAT(pe.descripcion,' ',pe.marca,' ','Modelo :',modelo) descripcion,ROUND((pe.pago-(pe.pago*.10))) precio,pe.pago precioNormal,IF((pe.pago-(pe.pago*.10))<=6000,'5-10','10-14') quincenas,pe.fecha_captura,IF( DATEDIFF(CURDATE(),pe.fecha_captura)>7,1,0) antiguedad FROM b_img_pago_esp d
 						JOIN b_pagos_especie pe ON pe.id=d.pago_id
 						JOIN i_tipo_equipo te ON te.id=pe.tipo_id
-						WHERE pe.estatus_id=5 AND pe.id=$id";    
+						WHERE pe.estatus_id=5 AND pe.id=$id  ORDER BY pe.fecha DESC";    
 
 					$respuesta= mysqli_query($this->con(), $query);  
 					while ($res = mysqli_fetch_row($respuesta)) {
@@ -364,6 +362,211 @@
 					   $i++;
 
 					} 
+				return $datos;
+			}
+
+			public function cargarPrevioEnSolicitud($id){
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				 $query="SELECT pe.id,d.docName,te.descripcion equipo,CONCAT(pe.descripcion,' ',pe.marca,' ','Modelo :',modelo) descripcion,ROUND((pe.pago-(pe.pago*.10))) precio,pe.pago precioNormal,IF((pe.pago-(pe.pago*.10))<=6000,'5-10','10-14') quincenas,pe.fecha_captura,IF( DATEDIFF(CURDATE(),pe.fecha_captura)>7,1,0) antiguedad FROM b_img_pago_esp d
+						JOIN b_pagos_especie pe ON pe.id=d.pago_id
+						JOIN i_tipo_equipo te ON te.id=pe.tipo_id
+						WHERE pe.estatus_id=5 AND pe.id=$id GROUP BY d.pago_id  ORDER BY pe.fecha DESC";    
+
+					$respuesta= mysqli_query($this->con(), $query);  
+					while ($res = mysqli_fetch_row($respuesta)) {
+
+					   $datos[$i]['id'] = $res[0]; 
+					   $datos[$i]['imagen'] = $res[1];
+					   $datos[$i]['tipo'] = $res[2];
+					   $datos[$i]['descripcion'] = $res[3];
+					   $datos[$i]['precio'] = $res[4];
+					   $datos[$i]['precio_real'] = $res[5];
+					   $datos[$i]['quincenas'] = $res[6];
+					   $datos[$i]['fecha_captura'] = $res[7];
+					   $datos[$i]['antiguedad'] = $res[8];
+					   $i++;
+
+					} 
+				return $datos;
+			}
+			public function guardarSolicitud($articulo_id,$capturista_id,$comentario,$quincenas){
+				$res=array();
+				$datos=array();
+				$i=0; 
+			
+				$capturista_id=$_COOKIE["b_capturista_id"];
+
+				$query="INSERT INTO b_solicitud_articulo(comentario,articulo_id,empleado_id,quincenas,nota_autorizacion,estatus_id,fecha_captura,hora_captura)
+			   										VALUE('$comentario',$articulo_id,$capturista_id,$quincenas,' ',5,CURDATE(),CURTIME())";   
+				$respuesta= mysqli_query($this->con(), $query);  
+
+
+				if($respuesta>0){
+					$datos[$i]['respuesta'] = '2';
+				}else{
+
+					$datos[$i]['respuesta'] = '3';
+				}
+
+				return $datos;
+			}
+
+			public function cargarSolicitudes(){
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				 $query="SELECT pe.id,c.descripcion,s.nomComercial,te.descripcion,ROUND((pe.pago-(pe.pago*.10))) costo, es.descripcion ,CONCAT(sa.fecha_captura,' ',sa.hora_captura) fecha,sa.id,sa.estatus_id FROM b_solicitud_articulo sa
+						JOIN b_pagos_especie pe ON pe.id=sa.articulo_id 
+						JOIN capturistas c ON c.id=sa.empleado_id
+						JOIN sucursales s ON s.id=c.sucursal_id
+						JOIN estatus es ON es.id=sa.estatus_id
+						JOIN i_tipo_equipo te ON te.id=pe.tipo_id
+						 ORDER BY sa.id DESC";    
+
+					$respuesta= mysqli_query($this->con(), $query);  
+					while ($res = mysqli_fetch_row($respuesta)) {
+
+					   $datos[$i]['id'] = $res[0]; 
+					   $datos[$i]['solicitante'] = $res[1];
+					   $datos[$i]['sucursal'] = $res[2];
+					   $datos[$i]['articulo'] = $res[3];
+					   $datos[$i]['costo'] = $res[4];
+					   $datos[$i]['estatus'] = $res[5];
+					   $datos[$i]['fecha'] = $res[6];
+					   $datos[$i]['solicitud_id'] = $res[7];  
+					   $datos[$i]['estatus_id'] = $res[8];
+					    $i++;
+
+					} 
+				return $datos;
+			}
+			public function verSolicitud($solicitud_id){
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				 $query="SELECT sa.empleado_id,c.descripcion,sa.comentario,ROUND((DATEDIFF(CURDATE(),c.fecha_ingreso)/365),2) antiguedad FROM b_solicitud_articulo sa
+							JOIN capturistas c ON c.id=sa.empleado_id WHERE sa.id=$solicitud_id";    
+
+					$respuesta= mysqli_query($this->con(), $query);  
+					while ($res = mysqli_fetch_row($respuesta)) {
+
+					   $datos[$i]['empleado_id'] = $res[0]; 
+					   $datos[$i]['empleado'] = $res[1];
+					   $datos[$i]['comentario'] = $res[2];
+					   $datos[$i]['antiguedad'] = $res[3]." Años";
+					    $i++;
+
+					} 
+				return $datos;
+			}
+			public function preAutorizarSolicitud($solicitud_id){
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				 $query="SELECT sa.empleado_id,c.descripcion,sa.articulo_id,sa.id,pe.pago ,round(pe.pago-(pe.pago*.10)) c_descuento,sa.quincenas,
+				 			round((pe.pago-(pe.pago*.10))/quincenas) FROM b_solicitud_articulo sa
+							JOIN capturistas c ON c.id=sa.empleado_id 
+							JOIN b_pagos_especie pe ON pe.id=sa.articulo_id WHERE sa.id=$solicitud_id";    
+
+					$respuesta= mysqli_query($this->con(), $query);  
+					while ($res = mysqli_fetch_row($respuesta)) {
+
+					   $datos[$i]['empleado_id'] = $res[0]; 
+					   $datos[$i]['empleado'] = $res[1];
+					   $datos[$i]['articulo_id'] = $res[2]; 
+					   $datos[$i]['solicitud_id'] = $res[3];
+					   $datos[$i]['precio'] = $res[4];
+					   $datos[$i]['p_descuento'] = $res[5];
+					   $datos[$i]['quincenas'] = $res[6];
+					   $datos[$i]['pagoQuincenal'] = $res[7];
+					    $i++;
+
+					} 
+				return $datos;
+			}
+
+			public function autorizarSolicitud($solicitud_id,$nota,$quincenas,$pago_quincenal,$monto){
+				$res=array();
+				$datos=array();
+				$i=0;
+				$capturista_id=$_COOKIE["b_capturista_id"];
+
+				$query="UPDATE b_solicitud_articulo SET autorizante=$capturista_id,monto=$monto,quincenas=$quincenas,pago_quincenal=$pago_quincenal,nota_autorizacion='$nota',fecha_autorizado=CURDATE(),hora_autorizado=CURTIME(),estatus_id=10	WHERE id=$solicitud_id";  
+				mysqli_query($this->con(), $query);  
+
+				$query="SELECT articulo_id,empleado_id FROM b_solicitud_articulo WHERE id=$solicitud_id";   
+				$respuesta= mysqli_query($this->con(), $query);  
+				while ($res = mysqli_fetch_row($respuesta)){
+					$articulo_id = $res[0];
+					$empleado_id =$res[1];
+				} 
+				   	
+
+				
+				$query="UPDATE b_pagos_especie SET estatus_id=11 WHERE id=$articulo_id"; 
+						$respuesta= mysqli_query($this->con(), $query);
+
+				$query="UPDATE b_solicitud_articulo SET estatus_id=2 WHERE articulo_id=$articulo_id AND id<>$solicitud_id"; 
+						$respuesta= mysqli_query($this->con(), $query);  
+
+				$query="INSERT INTO b_inbox(mensaje,emisor_id,fecha_envio,hora_envio,receptor_id)
+						VALUE('SU SOLICITUD DE ARTICULO FUE APROVADA SIGA EL PROCESO CON SU GERENTE',0,CURDATE(),CURTIME(),$empleado_id)"; 
+						$respuesta= mysqli_query($this->con(), $query);
+
+				$datos[$i]['respuesta'] = '2';	
+
+				return $datos;
+			}
+
+
+			public function mensajesPendientes($capturista_id){
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				 $query="SELECT COUNT(*) FROM b_inbox WHERE receptor_id=$capturista_id";  
+				// return $query;
+					$respuesta= mysqli_query($this->con(), $query);  
+					while ($res = mysqli_fetch_row($respuesta)) 
+					   $datos[$i]['mensajes'] = $res[0];  
+
+
+				return $datos;
+			}
+
+
+			public function cargarMensajes($capturista_id){
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				 $query="SELECT COUNT(*) FROM b_inbox WHERE receptor_id=$capturista_id";  
+				// return $query;
+					$respuesta= mysqli_query($this->con(), $query);  
+					while ($res = mysqli_fetch_row($respuesta)) 
+					   $datos[$i]['mensajes'] = $res[0];   
+					
+				return $datos;
+			}
+			public function validarQuincenas($articulo_id){
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				 $query="SELECT ROUND((pe.pago-(pe.pago*.10))) precio FROM b_img_pago_esp d
+						JOIN b_pagos_especie pe ON pe.id=d.pago_id
+						JOIN i_tipo_equipo te ON te.id=pe.tipo_id
+						WHERE pe.estatus_id=5 AND pe.id=$articulo_id GROUP BY d.pago_id  ORDER BY pe.fecha DESC";   
+					$respuesta= mysqli_query($this->con(), $query);  
+					while ($res = mysqli_fetch_row($respuesta)) 
+					   $datos[$i]['precio'] = $res[0];   
+					
 				return $datos;
 			}
 

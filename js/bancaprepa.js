@@ -1,7 +1,7 @@
 // Funcion principal de Jquery la cual escanea en tiempo real nuestro documento para verificar que los eventos se ejecuten correctamente
 $(document).ready(function(){
 
-
+    $('.collapsible').collapsible();
 
     //Inicialización de los select Materialize
     $('select').formSelect();
@@ -835,6 +835,8 @@ function cargarMenuPorRol(){
 
     onRequest({ opcion : 27}, respCargarTipoDedoc);
 
+    inventarios({ opcion : 22}, respInboxPendientes); 
+
 }
 
 //cargamos el menu de publicaciones
@@ -922,6 +924,7 @@ function eliminarEmp(empid) {
      M.toast({html: 'No olvides agregar los puestos!', classes: 'rounded blue'}); 
      onRequest({ opcion : 43 ,idemp:empresa}, respCargarRolesXempChb);
      onRequest({ opcion : 102 ,empresa:empresa}, respCargaSucursalesXEmpresa);
+     inventarios({ opcion : 22}, respInboxPendientes); 
  }
 
 
@@ -1095,8 +1098,8 @@ var respUser = function(data) {
             Cookies.set("b_telefono",data[0].telefono);   
             Cookies.set("b_id_sucursal",data[0].id_sucursal);         
             Cookies.set("b_empresa",data[0].empresa);
-            location.href="/index.php";
-            
+            location.href="/RedSocialBancaprepa/index.php";
+
          return;
      }
      else{ 
@@ -1892,9 +1895,8 @@ var respCargarMenu  = function(data) {
 
        // console.log(data)
         var usuario = Cookies.get('b_capturista_id');
-        if(usuario<1){
-          console.log('vale');
-          window.location = "login.html";
+        if(usuario<1){ 
+          window.location = "RedSocialBancaprepa/login.html";
         }
 
         console.log(data);
@@ -2607,6 +2609,8 @@ var respCargaSucursalesXEmpresa = function(data) {
     }
     $('#sucursalesDD').html(documento);
     $('#sucursalesDD').formSelect(); 
+
+    inventarios({ opcion : 22}, respInboxPendientes);
     
 }
 
@@ -3155,6 +3159,7 @@ var respNotificaciones = function(data) {
     
     $("#btnNotiF").html(txt);    
 }
+
 
 
 var respCargarEmpleadoCorreo = function(data) { 
@@ -3833,4 +3838,24 @@ var cargaImg = function(data) {
     
     $("#contPublicacion").html(pubdd);
    
+}
+
+
+var respInboxPendientes = function(data) { 
+    //se insertan los datos en la tabla confirmaciones!
+    if (!data && data == null)
+    {
+        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
+        return;
+    }
+    
+    if(data[0].mensajes>0)
+    {
+      $("#inbox").addClass('red-text');
+    }
+    else{
+      $("#inbox").removeClass('red-text');
+    }
+
+    $("#mensajesUnread").html(data[0].mensajes);    
 }
