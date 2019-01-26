@@ -36,7 +36,7 @@
                 INNER JOIN estatus e ON e.`id`=t.`estatus_id`
                 LEFT JOIN capturistas c2 ON c2.id=t.`usuario_resolviendo`
                 WHERE t.capturista_id=$capturista
-                ORDER BY t.id DESC"; 
+                ORDER BY e.`descripcion` ASC"; 
 
             $resultado = mysqli_query($this->con(), $sql); 
 
@@ -70,12 +70,12 @@
             $i=0; 
 
             
-            $sql="SELECT t.id, t.`titulo`, t.`descripcion`, c.`descripcion`, e.`descripcion`, c2.`descripcion`
+            $sql="SELECT t.id, t.`titulo`, t.`descripcion`, c.`descripcion`, e.`descripcion`, c2.`descripcion`, t.estatus_id
                 FROM b_tickets t
                 INNER JOIN capturistas c ON c.`id`=t.`capturista_id`
                 INNER JOIN estatus e ON e.`id`=t.`estatus_id`
                 left JOIN capturistas c2 ON c2.id=t.`usuario_resolviendo` 
-                ORDER BY t.id DESC"; 
+                ORDER BY e.`descripcion` ASC"; 
 
             $resultado = mysqli_query($this->con(), $sql); 
 
@@ -86,6 +86,7 @@
                 $datos[$i]['solicitado'] = $res[3];
                 $datos[$i]['estatus'] = $res[4];
                 $datos[$i]['usuario_resolviendo'] = $res[5];
+                $datos[$i]['id_estatus'] = $res[6];
                 $i++;
 
             } 

@@ -111,6 +111,7 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
                     <ul id='inventariodd' class='dropdown-content blue darken-4'>
                     <li><a id="capInv" style='display:none;' class="waves-effect blue darken-4 white-text" name ="capInv" href="/RedSocialBancaprepa\inventario\capturainv.php"><i class="material-icons white-text">laptop_chromebook</i>Capturar Equipo</a></li> 
                     <li><a id="busquedaEquipo"  class="waves-effect blue darken-4 white-text" style='display:none;' name ="busquedaEquipo" href="/RedSocialBancaprepa\inventario\busquedaEquipo.php"><i class="material-icons white-text">search</i>Busqueda equipo</a></li> 
+                    <li><a id="creaInventario"  class="waves-effect blue darken-4 white-text"  name ="creaInventario" href="/RedSocialBancaprepa\inventario\inventario.php"><i class="material-icons white-text">chrome_reader_mode</i>Inventario</a></li> 
                     </ul>
     
                   <li><div class="divider"></div></li>

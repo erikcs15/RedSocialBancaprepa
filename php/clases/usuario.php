@@ -198,11 +198,12 @@
 				}
 
 				
-				$sql="SELECT c.id, cor.dominio, s.nomComercial, c.descripcion, cor.correo, cor.pass, cor.entregado, cor.estatus, r.`descripcion`
+				$sql="SELECT c.id, cor.dominio, s.nomComercial, c.descripcion, cor.correo, cor.pass, cor.entregado, e.descripcion, r.`descripcion`
 						FROM capturistas c
 						INNER JOIN b_correos cor ON cor.capturista_id=c.id
 						INNER JOIN sucursales s ON s.id = c.sucursal_id 
-						INNER JOIN roles r ON c.`rol_id`=r.`id`".$q." ORDER BY cor.id DESC"; 
+						INNER JOIN roles r ON c.`rol_id`=r.`id`
+						INNER JOIN estatus e ON e.id=c.estatus_id ".$q." ORDER BY cor.id DESC"; 
 				$resultado = mysqli_query($this->con(), $sql); 
 
 				
@@ -2344,9 +2345,12 @@
 				$i=0; 
 
 				
-				$sql="SELECT id, descripcion, nota_cancelacion, fecha_baja, num_equipo, marca, modelo, serie, sucursal_id, valor_factura, area_id,
-				tipo_equipo_id
-					FROM i_equipo WHERE id=$idequipo"; 
+				$sql="SELECT e.id, e.descripcion, e.nota_cancelacion, e.fecha_baja, e.num_equipo, e.marca, e.modelo, e.serie, e.sucursal_id, e.valor_factura, e.area_id,
+				e.tipo_equipo_id, s.nomComercial,t.`descripcion`
+				FROM i_equipo e
+				INNER JOIN sucursales s ON s.`id`=e.sucursal_id
+				INNER JOIN i_tipo_equipo t ON t.`id`=e.`tipo_equipo_id`
+				WHERE e.id=$idequipo"; 
 
 				$resultado = mysqli_query($this->con(), $sql); 
 
@@ -2363,6 +2367,8 @@
 				   $datos[$i]['valor_factura'] = $res[9];
 				   $datos[$i]['area_id'] = $res[10];
 				   $datos[$i]['tipo'] = $res[11];
+				   $datos[$i]['nombre_sucursal'] = $res[12];
+				   $datos[$i]['tipo_equipo'] = $res[13];
 				   $i++;
 
 				} 
@@ -2886,10 +2892,11 @@
 				$i=0; 
 				$v="N";
 
-				$sql="SELECT s.id, s.`nomComercial`
-					FROM b_empresa_sucursales es
-					INNER JOIN sucursales s ON s.id= es.sucursal_id
-					WHERE empresa_id=$empresa_id";
+				$sql="SELECT sucursales.id AS sucursal_id
+						, sucursales.nomComercial AS sucursal
+						FROM sucursales 
+						WHERE sucursales.activa = 'S' AND sucursales.b_estatus='S' AND b_empresa = $empresa_id
+						ORDER BY nomComercial ASC";
 				
 				$resultado = mysqli_query($this->con(), $sql); 
 
@@ -3116,6 +3123,329 @@
 				return $datos;  
 
 			}
+
+
+		//////////////////////////////////////////////////////////	//AGREGAAAAAAAAAAAAAR AL QUE ESTA EN EL SERVIDOR DESDE AQUÍ
+
+			public function insertEnInventarioGeneral($sucursal)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+				$txtUsuario=$_COOKIE["b_capturista_id"];  
+	
+				$sql="INSERT INTO i_inventario(sucursal_id, capturista_id, fecha, hora, estatus_id) 
+									VALUES($sucursal,$txtUsuario, CURDATE(),CURTIME(), 1)";
+			    
+				$resultado = mysqli_query($this->con(), $sql);   
+				
+				$datos['i_inventario'] =  array('0' => '0' );
+				return  $datos;	
+			}
+
+
+			public function insertEnInventarioDetalle($equipo)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				
+				$sql="INSERT INTO i_inventario_detalle (inventario_id, equipo_id, fecha_insertado, hora_insertado) 
+					  SELECT id,  $equipo, CURDATE(), CURTIME()
+						FROM i_inventario
+						ORDER BY id DESC
+						LIMIT 1";
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+
+				$datos['id'] =  array('0' => '0' );
+				return  $datos;	
+			}
+
+			
+			public function cargarTodosInventarios($sucursal_id)
+			{
+				$q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
+				
+
+				$sql="SELECT i.id, s.`nomComercial`, i.`fecha`, i.hora, IFNULL(i.`fecha_terminado`,'-'), IFNULL(i.`hora_terminado`,'-'), e.`descripcion`,e.id, c.`descripcion`
+				FROM i_inventario i 
+				INNER JOIN sucursales s ON s.id=i.sucursal_id
+				INNER JOIN estatus e ON e.`id`=i.`estatus_id`
+				INNER JOIN capturistas c ON c.id=i.capturista_id
+				where i.sucursal_id = $sucursal_id
+				ORDER BY i.id DESC";
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['id_inventario'] = $res[0];
+				   $datos[$i]['sucursal_nombre'] = $res[1];
+				   $datos[$i]['fecha_creado'] = $res[2];
+				   $datos[$i]['hora_creado'] = $res[3];
+				   $datos[$i]['fecha_terminado'] = $res[4];
+				   $datos[$i]['hora_terminado'] = $res[5];
+				   $datos[$i]['estatus'] = $res[6];	   
+				   $datos[$i]['estatus_id'] = $res[7];	   
+				   $datos[$i]['capturista'] = $res[8];	
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id_inventario']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+			
+			public function iniciarInventario($sucursal)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				$txtUsuario=$_COOKIE["b_capturista_id"];  
+				
+				$sql="INSERT INTO i_inventario (sucursal_id, capturista_id, fecha,hora, estatus_id) 
+					  VALUES ($sucursal, $txtUsuario, CURDATE(), CURTIME(), 1) ";
+						
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+
+				$datos['id_emp'] =  array('0' => '0' );
+				return  $datos;	
+			}
+
+			public function finalizarInventario()
+			{
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				$sql="SELECT id
+					FROM i_inventario
+					ORDER BY id DESC
+					LIMIT 1"; 
+ 
+				$resultado = mysqli_query($this->con(), $sql);  
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['id_inventario'] = $res[0];
+				  
+				   $i++;
+
+				} 
+				
+
+
+				return $datos;  
+				
+			}
+
+			public function actualizarInventario($id_inventario)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+				$txtUsuario=$_COOKIE["b_capturista_id"];  
+	
+				$sql="UPDATE i_inventario SET fecha_terminado=CURDATE(), hora_terminado=CURTIME(), estatus_id=2 WHERE id=$id_inventario";
+			    
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['i_inventario'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
+
+			public function cargarEquiposPorInventario($inventario_id)
+			{
+				$q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
+				
+
+				$sql="SELECT i.id, e.id, t.descripcion, e.`descripcion`, s.`nomComercial`, IFNULL(c.`descripcion`,'-'), e.marca, e.sucursal_id
+				FROM i_inventario i 
+				INNER JOIN i_inventario_detalle d ON d.inventario_id=i.id
+				INNER JOIN i_equipo e ON e.id = d.equipo_id
+				INNER JOIN sucursales s ON s.id=i.sucursal_id
+				INNER JOIN i_tipo_equipo t ON t.id = e.tipo_equipo_id
+				LEFT JOIN capturistas c ON c.id = e.`encargado_id`
+				WHERE i.id=$inventario_id AND e.`estatus_id`=5 ORDER BY e.id asc";
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['id_inventario'] = $res[0];
+				   $datos[$i]['id_equipo'] = $res[1];
+				   $datos[$i]['tipo_equipo'] = $res[2];
+				   $datos[$i]['desc'] = $res[3];
+				   $datos[$i]['sucursal'] = $res[4];
+				   $datos[$i]['encargado_nombre'] = $res[5]; 
+				   $datos[$i]['marca'] = $res[6];
+				   $datos[$i]['id_sucursal'] = $res[7];
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id_inventario']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+			
+
+			public function eliminarInventarioXID($inventario_id)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+				
+	
+				$sql="DELETE FROM i_inventario_detalle WHERE inventario_id=$inventario_id";
+			    
+				$resultado = mysqli_query($this->con(), $sql);   
+
+				$datos['i_inventario_detalle'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
+
+			public function insertEnInventarioDetalleEditar($id_inventario,$equipo)
+			{
+				
+				
+				
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+
+				$sql="INSERT INTO i_inventario_detalle(inventario_id, equipo_id, fecha_insertado, hora_insertado) 
+					  VALUES($id_inventario,$equipo, CURDATE(), CURTIME() ) ";
+				
+				
+						
+				
+				$resultado = mysqli_query($this->con(), $sql);   
+
+				$datos['inventario_id'] =  array('0' => '0' );
+				return  $datos;	
+			}
+
+			public function cargarEquipoXidPara_Inventario($idequipo)
+			{
+  
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				
+				$sql="SELECT e.id, e.descripcion, e.nota_cancelacion, e.fecha_baja, e.num_equipo, e.marca, e.modelo, e.serie, e.sucursal_id, e.valor_factura, e.area_id,
+				e.tipo_equipo_id, s.nomComercial,t.`descripcion`
+				FROM i_equipo e
+				INNER JOIN sucursales s ON s.`id`=e.sucursal_id
+				INNER JOIN i_tipo_equipo t ON t.`id`=e.`tipo_equipo_id`
+				WHERE e.id=$idequipo and e.estatus_id=5"; 
+
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['descripcion'] = $res[1];
+				   $datos[$i]['nota'] = $res[2];
+				   $datos[$i]['fechaB'] = $res[3];
+				   $datos[$i]['numEquipo'] = $res[4];
+				   $datos[$i]['marca'] = $res[5];
+				   $datos[$i]['modelo'] = $res[6];
+				   $datos[$i]['serie'] = $res[7];
+				   $datos[$i]['sucursal'] = $res[8];
+				   $datos[$i]['valor_factura'] = $res[9];
+				   $datos[$i]['area_id'] = $res[10];
+				   $datos[$i]['tipo'] = $res[11];
+				   $datos[$i]['nombre_sucursal'] = $res[12];
+				   $datos[$i]['tipo_equipo'] = $res[13];
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+			public function cargarEquiposPorInventarioComparando($inventario_id, $sucursal_id)
+			{
+				$q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
+				
+
+				$sql="SELECT e.id, t.`descripcion`, s.`nomComercial`, IFNULL(c.`descripcion`,'-'),IFNULL(d.`equipo_id`,'-') AS invetariado
+				FROM i_equipo e 
+				LEFT JOIN i_inventario_detalle d ON d.`equipo_id`=e.`id` AND d.`inventario_id`= $inventario_id
+				INNER JOIN sucursales s ON s.id=e.`sucursal_id`
+				LEFT JOIN capturistas c ON c.id=e.`encargado_id`
+				INNER JOIN i_tipo_equipo t ON t.id=e.`tipo_equipo_id`
+				WHERE e.`sucursal_id`= $sucursal_id
+				ORDER BY invetariado DESC";
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['id_equipo'] = $res[0];
+				   $datos[$i]['tipo_equipo'] = $res[1];
+				   $datos[$i]['sucursal_nombre'] = $res[2];
+				   $datos[$i]['encargado'] = $res[3];
+				   $datos[$i]['inventariado'] = $res[4];
+				  
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id_equipo']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
 
 
 

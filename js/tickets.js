@@ -5,11 +5,14 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////// INICIALIZAR VARIABLES ////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////// INICIALIZAR VARIABLES ////////////////////////////////////////////////////////////////
          $('.modal').modal();
+         
     ///////////////////////////////////////////////////////// EVENTOS ////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////// EVENTOS ////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////// EVENTOS ////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////// EVENTOS ////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////// EVENTOS ////////////////////////////////////////////////////////////////
+
+   
     $("#CrearTicketbtn").click(function() {
         var usuario = Cookies.get('b_capturista_id');
         var titulo=$("#tituloDD option:selected").text();
@@ -79,6 +82,14 @@ $(document).ready(function(){
     });
 
 
+    $("#ActualizarMensajesManTicket").click(function() {
+        var ticket_id=Cookies.get('b_ticket_id');
+        tickets({ opcion : 8, ticket_id: ticket_id}, respCargarMensajes);
+    
+    });
+    
+   
+
 
 });
     ///////////////////////////////////////////////////////// RESPUESTAS ////////////////////////////////////////////////////////////////
@@ -87,7 +98,7 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////// RESPUESTAS ////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////// RESPUESTAS ////////////////////////////////////////////////////////////////
 
-    
+ 
 
     var respAgregaTicket = function(data) { 
         //se insertan los datos en la tabla confirmaciones!
@@ -117,7 +128,8 @@ $(document).ready(function(){
     
     
         console.log("Length:"+data.length);
-         for (var i = 0; i < data.length; i++) {
+         for (var i = 0; i < data.length; i++) 
+         {
              var titulo=String(data[i].titulo);
             if(titulo=="undefined")
             {
@@ -128,58 +140,83 @@ $(document).ready(function(){
             }
             else
             {
-                if(data[i].id_estatus==13)
+                var estatus=data[i].id_estatus;
+                if(estatus==13)
                 {
-                   if(i%2==0)
-                   {
-                       x='even';
-                   }
-                   else
-                   {
-                       x='odd';
-                   }
-                   d+= '<tr>'+
-                   '<td>'+data[i].id+'</td>'+
-                   '<td>'+data[i].titulo+'</td>'+
-                   '<td>'+data[i].descripcion+'</td>'+
-                   '<td>'+data[i].solicitado+'</td>'+
-                   '<td>-</td>'+
-                   '<td>'+data[i].estatus+'</td>'+ 
-                   '<td class="'+x+' left">'+
-                   //'<a onclick="editarDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarDoc"><i class="material-icons">edit</i></a>' + 
-                   //'<a onclick="deshabDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabDoc"><i class="material-icons">do_not_disturb_alt</i></a>' + 
-                   //'<a onclick="BorrarDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarDoc"><i class="material-icons">delete</i></a>' +
-                   '</td>'  +'</tr> ';
+                    if(i%2==0)
+                    {
+                        x='even';
+                    }
+                    else
+                    {
+                        x='odd';
+                    }
+                    d+= '<tr>'+
+                    '<td>'+data[i].id+'</td>'+
+                    '<td>'+data[i].titulo+'</td>'+
+                    '<td>'+data[i].descripcion+'</td>'+
+                    '<td>'+data[i].solicitado+'</td>'+
+                    '<td>-</td>'+
+                    '<td>'+data[i].estatus+'</td>'+ 
+                    '<td class="'+x+' left">'+
+                    //'<a onclick="editarDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarDoc"><i class="material-icons">edit</i></a>' + 
+                    //'<a onclick="deshabDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabDoc"><i class="material-icons">do_not_disturb_alt</i></a>' + 
+                    //'<a onclick="BorrarDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarDoc"><i class="material-icons">delete</i></a>' +
+                    '</td>'  +'</tr> ';
                 }
                 else
                 {
-                  
-                   if(i%2==0)
-                   {
-                       x='even';
-                   }
-                   else
-                   {
-                       x='odd';
-                   }
-                   d+= '<tr>'+
-                   '<td>'+data[i].id+'</td>'+
-                   '<td>'+data[i].titulo+'</td>'+
-                   '<td>'+data[i].descripcion+'</td>'+
-                   '<td>'+data[i].solicitado+'</td>'+
-                   '<td>'+data[i].usuario_resolviendo+'</td>'+
-                   '<td>'+data[i].estatus+'</td>'+ 
-                   '<td class="'+x+' left">'+
-                   '<a onclick="comentTicket('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalComentariosTicket"><i class="material-icons">comment</i></a>' + 
-                   //'<a onclick="deshabDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabDoc"><i class="material-icons">do_not_disturb_alt</i></a>' + 
-                   //'<a onclick="BorrarDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarDoc"><i class="material-icons">delete</i></a>' +
-                   '</td>'  +'</tr> ';
-                   }
-                   
-                 
+                    if(estatus==2)
+                    {
+                        if(i%2==0)
+                        {
+                            x='even';
+                        }
+                        else
+                        {
+                            x='odd';
+                        }
+                        d+= '<tr>'+
+                        '<td>'+data[i].id+'</td>'+
+                        '<td>'+data[i].titulo+'</td>'+
+                        '<td>'+data[i].descripcion+'</td>'+
+                        '<td>'+data[i].solicitado+'</td>'+
+                        '<td>'+data[i].usuario_resolviendo+'</td>'+
+                        '<td>'+data[i].estatus+'</td>'+ 
+                        '<td class="'+x+' left">'+
+                        '<a onclick="comentTicket('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small grey btn modal-trigger" href="#modalComentariosTicket"><i class="material-icons">comment</i></a>' + 
+                        '<a class="waves-effect waves-light btn-floating btn-small green btn modal-trigger"><i class="material-icons">assignment_turned_in</i></a>' + 
+                        //'<a onclick="BorrarDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarDoc"><i class="material-icons">delete</i></a>' +
+                        '</td>'  +'</tr> ';
+                    }
+                    else
+                    {
+                        if(i%2==0)
+                        {
+                            x='even';
+                        }
+                        else
+                        {
+                            x='odd';
+                        }
+                        d+= '<tr>'+
+                        '<td>'+data[i].id+'</td>'+
+                        '<td>'+data[i].titulo+'</td>'+
+                        '<td>'+data[i].descripcion+'</td>'+
+                        '<td>'+data[i].solicitado+'</td>'+
+                        '<td>'+data[i].usuario_resolviendo+'</td>'+
+                        '<td>'+data[i].estatus+'</td>'+ 
+                        '<td class="'+x+' left">'+
+                        '<a onclick="comentTicket('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalComentariosTicket"><i class="material-icons">comment</i></a>' + 
+                        //'<a class="waves-effect waves-light btn-floating btn-small green btn modal-trigger"><i class="material-icons">assignment_turned_in</i></a>' + 
+                        //'<a onclick="BorrarDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarDoc"><i class="material-icons">delete</i></a>' +
+                        '</td>'  +'</tr> ';
+                    }
                 }
                 
             }
+                
+        }
              
            
                 
@@ -209,25 +246,82 @@ $(document).ready(function(){
             }
             else
             {
-                if(i%2==0)
+                if(data[i].id_estatus==13)
                 {
-                    x='even';
+                    if(i%2==0)
+                    {
+                        x='even';
+                    }
+                    else
+                    {
+                        x='odd';
+                    }
+                    d+= '<tr>'+
+                    '<td>'+data[i].id+'</td>'+
+                    '<td>'+data[i].titulo+'</td>'+
+                    '<td>'+data[i].descripcion+'</td>'+
+                    '<td>'+data[i].solicitado+'</td>'+
+                    '<td>-</td>'+
+                    '<td>'+data[i].estatus+'</td>'+ 
+                    '<td class="'+x+' left">'+
+                    '<a onclick="adminTicket('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small indigo darken-4 btn modal-trigger" href="#modalAdminTicket"><i class="material-icons">build</i></a>' + 
+                    //'<a onclick="deshabDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabDoc"><i class="material-icons">do_not_disturb_alt</i></a>' + 
+                    //'<a onclick="BorrarDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarDoc"><i class="material-icons">delete</i></a>' +
+                    '</td>'  +'</tr> ';                  
+
                 }
                 else
                 {
-                    x='odd';
+                    if(data[i].id_estatus==2)
+                    {
+                        if(i%2==0)
+                        {
+                            x='even';
+                        }
+                        else
+                        {
+                            x='odd';
+                        }
+                        d+= '<tr>'+
+                        '<td>'+data[i].id+'</td>'+
+                        '<td>'+data[i].titulo+'</td>'+
+                        '<td>'+data[i].descripcion+'</td>'+
+                        '<td>'+data[i].solicitado+'</td>'+
+                        '<td>'+data[i].usuario_resolviendo+'</td>'+
+                        '<td>'+data[i].estatus+'</td>'+ 
+                        '<td class="'+x+' left">'+
+                        '<a onclick="adminTicket('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small indigo darken-4 btn modal-trigger" href="#modalAdminTicket"><i class="material-icons">build</i></a>' + 
+                        '<a class="waves-effect waves-light btn-floating btn-small green btn modal-trigger"><i class="material-icons">assignment_turned_in</i></a>' + 
+                        //'<a onclick="BorrarDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarDoc"><i class="material-icons">delete</i></a>' +
+                        '</td>'  +'</tr> ';          
+                    }
+                    else
+                    {
+                        if(i%2==0)
+                        {
+                            x='even';
+                        }
+                        else
+                        {
+                            x='odd';
+                        }
+                        d+= '<tr>'+
+                        '<td>'+data[i].id+'</td>'+
+                        '<td>'+data[i].titulo+'</td>'+
+                        '<td>'+data[i].descripcion+'</td>'+
+                        '<td>'+data[i].solicitado+'</td>'+
+                        '<td>'+data[i].usuario_resolviendo+'</td>'+
+                        '<td>'+data[i].estatus+'</td>'+ 
+                        '<td class="'+x+' left">'+
+                        '<a onclick="adminTicket('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small indigo darken-4 btn modal-trigger" href="#modalAdminTicket"><i class="material-icons">build</i></a>' + 
+                        //'<a onclick="deshabDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabDoc"><i class="material-icons">do_not_disturb_alt</i></a>' + 
+                        //'<a onclick="BorrarDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarDoc"><i class="material-icons">delete</i></a>' +
+                        '</td>'  +'</tr> ';          
+                    }
+                            
+
                 }
-                d+= '<tr>'+
-                '<td>'+data[i].id+'</td>'+
-                '<td>'+data[i].titulo+'</td>'+
-                '<td>'+data[i].descripcion+'</td>'+
-                '<td>'+data[i].solicitado+'</td>'+
-                '<td>'+data[i].estatus+'</td>'+ 
-                '<td class="'+x+' left">'+
-                '<a onclick="adminTicket('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small indigo darken-4 btn modal-trigger" href="#modalAdminTicket"><i class="material-icons">build</i></a>' + 
-                //'<a onclick="deshabDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabDoc"><i class="material-icons">do_not_disturb_alt</i></a>' + 
-                //'<a onclick="BorrarDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarDoc"><i class="material-icons">delete</i></a>' +
-                '</td>'  +'</tr> ';                  
+               
 
             }
         }
@@ -273,6 +367,7 @@ $(document).ready(function(){
 
         
         M.toast({html: 'Estatus Actualizado!=)', classes: 'rounded green'});
+        cargarTickets();
     }
     var respMensajesAdmn = function(data) { 
         if (!data && data == null)
@@ -323,6 +418,25 @@ $(document).ready(function(){
         $('#cardTicketAdm').html(d); 
     }
 
+    var respCargarComentarioPorEstatus = function(data) { 
+        if (!data && data == null)
+        return;  
+
+        var estatus=data[0].estatus;
+        if(estatus==2)
+        {
+            console.log("Estatus finalizado");
+            $("#comentarioTicket").attr('disabled','disabled');
+            $("#btnComentarioTicket").attr('disabled','disabled');
+        }
+        else
+        {
+            console.log("Estatus NO finalizado");
+            $("#comentarioTicket").removeAttr("disabled");
+            $("#btnComentarioTicket").removeAttr("disabled");
+        }
+    }
+
 
 
     ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
@@ -347,7 +461,13 @@ $(document).ready(function(){
 
     function comentTicket(id)
     {
+        console.log("ADMINISTRACION DE TICKETS");
+        Cookies.set("b_ticket_id", id );
+        var ticket_id=Cookies.get('b_ticket_id');
+        console.log("TICKET ID DESDE COOKIES: "+ticket_id);
+        tickets({ opcion : 4, id_ticket: id}, respCargarComentarioPorEstatus);
         tickets({ opcion : 8, ticket_id: id}, respCargarMensajes);
+        
     }
     
     function adminTicket(id)
@@ -358,6 +478,10 @@ $(document).ready(function(){
         console.log("TICKET ID DESDE COOKIES: "+ticket_id);
         tickets({ opcion : 4, id_ticket:id}, respCargarAdminTicket);
         tickets({ opcion : 8, ticket_id: ticket_id}, respCargarMensajes);
+       
+       
     }
+
     
+
  

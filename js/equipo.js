@@ -1,5 +1,10 @@
 $(document).ready(function(){
 
+    $(document).on('click', '.borrar', function (event) {
+        event.preventDefault();
+        $(this).closest('tr').remove();
+    });
+
     $("#BtnAgregarEquipo").click(function() {
         var nombreEquipo='';
         nombreEquipo = $("#nomequipo").val();
@@ -173,6 +178,177 @@ $(document).ready(function(){
 
 
     });
+
+    $("#cargarInfoEquipo").click(function() {
+        var cadena = $('#codArticulo').val();
+        var separador = "'"; // un espacio en blanco
+        var limite    = 1;
+        var id_equipo = parseInt(cadena.split(separador, limite));
+
+        console.log("ID del equipo escaneado: "+id_equipo);
+        onRequest({ opcion : 118 ,equipo_id:id_equipo}, respCargarEquipoParaInventario);
+    });
+
+    
+
+    $("#finalizarInventario").click(function() {
+            var tableReg = document.getElementById('tablaInventario');
+			var sucursal_id = $("#sucursalesdd").val();
+            
+            onRequest({ opcion : 109 ,sucursal:sucursal_id}, respInsertarEnInventarioGeneral);
+
+            console.log("LENGHT= "+(tableReg.rows.length-1));
+            // Recorremos todas las filas con contenido de la tabla
+            
+            for (var i = 1; i < tableReg.rows.length ; i++)
+            {
+            
+                compareWith = document.getElementById("tablaInventario").rows[i].cells.item(0).innerHTML;
+
+                console.log("DATOS= "+compareWith );
+                    
+                onRequest({ opcion : 110 ,equipo_id:compareWith}, respInsertarEnInventarioDetalle);
+            
+            }
+            console.log("Terminaste los deberes!");
+            M.toast({html: 'Inventario Creado.', classes: 'rounded green'}); 
+
+            location.reload();
+    });
+
+    $('#codArticulo').keypress(function(e){   
+        if(e.which == 13){      
+            var cadena = $('#codArticulo').val();
+            var separador = "'"; // un espacio en blanco
+            var limite    = 1;
+            var id_equipo = parseInt(cadena.split(separador, limite));
+    
+            console.log("ID del equipo escaneado: "+id_equipo);
+            onRequest({ opcion : 118 ,equipo_id:id_equipo}, respCargarEquipoParaInventario); 
+        }   
+       });    
+        
+    $("#btnBusquedaInv").click(function() {
+        var sucursal_id = parseInt($("#sucursalesdd").val());
+
+        if(sucursal_id==0)
+        {
+            M.toast({html: 'Seleccione una sucursal!.', classes: 'rounded red'});
+        }
+        else
+        {
+            document.getElementById('tablaCreaInventario').style.display = 'block';
+            onRequest({ opcion : 111 ,sucursal:sucursal_id}, respCargarInventario);
+        }
+        
+    });
+
+    ///------------------------------------Editar y Finalizar el inventario------------------------------------------------
+    $("#cargarInfoEquipoEditar").click(function() {
+        var cadena = $('#codArticuloEdit').val();
+        var separador = "'"; // un espacio en blanco
+        var limite    = 1;
+        var id_equipo = parseInt(cadena.split(separador, limite));
+
+        console.log("ID del equipo escaneado: "+id_equipo);
+        onRequest({ opcion : 118 ,equipo_id:id_equipo}, respParaEditarCargarEquipoParaInventario);
+    });
+
+    
+
+    $("#finalizarInventarioEditar").click(function() {
+           
+            
+            var id_inventario = Cookies.get('i_inventarioID');
+
+            //Eliminar todo para volverlo a cargar
+            onRequest({ opcion : 116 ,inventario_id:id_inventario}, respEliminarInventario);
+             
+
+            //location.reload();
+    });
+
+    $('#codArticuloEdit').keypress(function(e){   
+        if(e.which == 13){      
+            var cadena = $('#codArticuloEdit').val();
+            var separador = "'"; // un espacio en blanco
+            var limite    = 1;
+            var id_equipo = parseInt(cadena.split(separador, limite));
+
+            console.log("ID del equipo escaneado: "+id_equipo);
+            onRequest({ opcion : 118 ,equipo_id:id_equipo}, respParaEditarCargarEquipoParaInventario);
+        }   
+       });   
+       
+       
+       $("#cerrarInventario").click(function() {
+        var tableReg = document.getElementById('tablaInventario');
+        var sucursal_id = $("#sucursalesdd").val();
+        
+        onRequest({ opcion : 109 ,sucursal:sucursal_id}, respInsertarEnInventarioGeneral);
+
+        console.log("LENGHT= "+(tableReg.rows.length-1));
+        // Recorremos todas las filas con contenido de la tabla
+        
+        for (var i = 1; i < tableReg.rows.length ; i++)
+        {
+        
+            compareWith = document.getElementById("tablaInventario").rows[i].cells.item(0).innerHTML;
+
+            console.log("DATOS= "+compareWith );
+                
+            onRequest({ opcion : 110 ,equipo_id:compareWith}, respInsertarEnInventarioDetalle);
+        
+        }
+        console.log("Terminaste los deberes!");
+        M.toast({html: 'Inventario Creado.', classes: 'rounded green'}); 
+
+        
+           
+            
+        var id_inventario = Cookies.get('i_inventarioID');
+
+       
+        onRequest({ opcion : 113 }, respFinalizarInventario1);
+         
+
+        //location.reload();
+       });
+
+       
+
+       $("#cerrarInventarioEdit").click(function() {
+
+
+        var id_inventario = Cookies.get('i_inventarioID');
+
+            //Eliminar todo para volverlo a cargar
+        onRequest({ opcion : 116 ,inventario_id:id_inventario}, respEliminarInventarioEditar);
+        
+        
+        var id_inventario = Cookies.get('i_inventarioID');
+
+       
+        onRequest({ opcion : 114 ,inventario_id:id_inventario}, respFinalizarInventario);
+         
+
+        //location.reload();
+       });
+
+       
+       $("#btnIniciaInventario").click(function() {
+            var sucursal_id = parseInt($("#sucursalesdd").val());
+
+            if(sucursal_id==0)
+            {
+                M.toast({html: 'Seleccione una sucursal!.', classes: 'rounded red'});
+            }
+            else
+            {
+                $('#modalCrearInventario').modal('open'); 
+            }
+       });
+    
 
 });
     function cargarMenuPorRol(){
@@ -390,6 +566,55 @@ $(document).ready(function(){
 
         return (sa);
     }
+
+    ///// __________________________ AGREGAR DESDE AQUI A SERVIDOR FUNCIONES------------------------
+
+    function muestraBoton()
+    {
+       var opcion= $('#selectOpcion').val();
+       console.log("OPCION:"+opcion);
+       if(opcion==1)
+       {
+            document.getElementById('btnBusquedaInv').style.display = 'none';
+            document.getElementById('btnIniciaInventario').style.display = 'block';
+            document.getElementById('tablaCreaInventario').style.display = 'none';
+       }
+       else
+       {
+          document.getElementById('btnIniciaInventario').style.display = 'none';
+          document.getElementById('btnBusquedaInv').style.display = 'block';
+          document.getElementById('tablaCreaInventario').style.display = 'none';
+       }
+
+    }
+    
+    function inventario()
+    {
+        onRequest({ opcion : 70 }, respcargasucursales);
+    }
+
+    function editarInventario(id_inventario)
+    {
+        console.log("Inventario ID= "+id_inventario);
+
+        Cookies.set("i_inventarioID",id_inventario);
+
+        onRequest({ opcion : 115, inventario_id:id_inventario }, respCargarInventarioParaEditar);
+    }
+
+
+    function verInventario(id_inventario)
+    {
+        console.log("Inventario ID= "+id_inventario);
+
+        var suc= $('#sucursalesdd').val();
+       console.log("SUCURSAL: "+ suc);
+        onRequest({ opcion : 119, inventario_id:id_inventario, sucursal:suc}, respCargarInventarioParaVer);
+    } 
+    
+
+
+    //RESPUESTAS-----------------------------------------------------------------------------------------------------------
     var respInventario = function(data) { 
     
         if (!data && data == null) 
@@ -1124,6 +1349,451 @@ $(document).ready(function(){
             return;
         }
         M.toast({html: 'Asignado.', classes: 'rounded green'}); 
+    }
+
+    
+    var respCargarEquipoParaInventario = function(data) 
+    {
+        if (!data && data == null) 
+        return; 
+
+        var sucursal=$('#sucursalesdd').val();
+        console.log("VIENDO SUCURSAL= "+sucursal);
+        var d = '';
+        var x = '';
+        var found=0;
+        var compareWith="";
+        var tableReg = document.getElementById('tablaInventario');
+
+        console.log("LENGHT= "+(tableReg.rows.length-1));
+        for (var i = 1; i < tableReg.rows.length ; i++)
+        {
+        
+            compareWith = document.getElementById("tablaInventario").rows[i].cells.item(0).innerHTML;
+
+            console.log("DATOS= "+compareWith );
+                
+            if(data[0].id==compareWith)
+            {
+                
+                found=1;
+                M.toast({html: 'Dato repetido.', classes: 'rounded red'}); 
+                return;
+            }
+            else
+            {
+                found=0;
+            }
+           
+        }
+
+        
+
+        
+        if(found==0)
+        {
+            var Descripcion=String(data[0].descripcion);
+           
+            if(Descripcion=="undefined")
+            {
+                M.toast({html: 'Sin datos sobre ese equipo!.', classes: 'rounded red'}); 
+            
+            }
+            else
+            {
+                if(sucursal==data[0].sucursal)
+                {
+                    var fila="<tr><td>"+data[0].id+"</td><td>"+data[0].tipo_equipo+"</td><td>"+data[0].nombre_sucursal+"</td><td>"+data[0].descripcion+"</td><td>"+data[0].marca+"</td><td>"+data[0].modelo+"</td></tr> "+
+                    '<td><input type="button" class="borrar" value="Eliminar" /></td>';
+                    var btn = document.createElement("TR");
+                    btn.innerHTML=fila;
+                    document.getElementById("tablaInventarioDeEquipo").appendChild(btn);
+                }
+                else
+                {
+                    
+                    var opcion = confirm("Agregaste un equipo que no es de esa sucursal, estas seguro que quieres agregarlo a esta sucursal?");
+                    if (opcion == true) 
+                    {
+                        
+                        var fila="<tr><td>"+data[0].id+"</td><td>"+data[0].tipo_equipo+"</td><td>"+data[0].nombre_sucursal+"</td><td>"+data[0].descripcion+"</td><td>"+data[0].marca+"</td><td>"+data[0].modelo+"</td></tr> "+
+                        '<td><input type="button" class="borrar" value="Eliminar" /></td>';
+                        var btn = document.createElement("TR");
+                        btn.innerHTML=fila;
+                        document.getElementById("tablaInventarioDeEquipo").appendChild(btn);
+                    } 
+                    else 
+                    {
+                        M.toast({html: '¡Equipo no agregado!.', classes: 'rounded red'});
+                    }
+                    
+                    
+                }
+                
+            
+            }
+        }
+        else
+        {
+            M.toast({html: 'Dato repetido.', classes: 'rounded red'}); 
+            return;
+        }
+        
+            
+        
+        $('#codArticulo').val("");
+    }
+
+
+    var respInsertarEnInventarioGeneral = function(data) 
+    {
+        if (!data && data == null) 
+        return; 
+
+
+        console.log("INSERTADO EN INVENTARIO GENERAL");
+    }
+
+    
+    var respInsertarEnInventarioDetalle = function(data) 
+    {
+        if (!data && data == null) 
+        return; 
+
+
+        console.log("INSERTADO EN INVENTARIO GENERAL");
+    }
+
+    var respCargarInventario = function(data) 
+    {
+        if (!data && data == null) 
+        return; 
+
+        var d="";
+
+        for (var i = 0; i < data.length; i++) 
+        {
+            var sucursal=String(data[i].sucursal_nombre);
+            console.log("-------"+sucursal);
+            if(sucursal=="undefined")
+            {
+                d+= '<tr>'+
+                '<td>Sin equipos registrados en la sucursal seleccionada</td>'+
+                '<td class="left">'+ 
+                '</tr> ';  
+            }
+            else
+            {
+                
+                if(data[i].estatus_id==2)
+                {
+                    d+="<tr> "+
+                    '<td>'+data[i].id_inventario+'</td>'+ 
+                    '<td>'+data[i].sucursal_nombre+'</td>'+ 
+                    '<td>'+data[i].fecha_creado+'</td>'+  
+                    '<td>'+data[i].hora_creado+'</td>'+
+                    '<td>'+data[i].fecha_terminado+'</td>'+
+                    '<td>'+data[i].hora_terminado+'</td>'+
+                    '<td>'+data[i].capturista+'</td>'+
+                    '<td>'+data[i].estatus+'</td>'+
+                    "<td> <a onclick='editarInventario("+data[i].id_inventario+");' class='waves-effect waves-light btn-floating btn-small blue btn modal-trigger' href='#modalEditarInventario' disabled><i class='material-icons'>edit</i></a> </td>" +
+                    "<td> <a onclick='verInventario("+data[i].id_inventario+");' class='waves-effect waves-light btn-floating btn-small teal darken-4 btn modal-trigger' href='#modalVerInventario'><i class='material-icons'>assignment</i></a> </td>" +
+                    '</tr> ';
+                }
+                else
+                {
+                    d+="<tr> "+
+                    '<td>'+data[i].id_inventario+'</td>'+ 
+                    '<td>'+data[i].sucursal_nombre+'</td>'+ 
+                    '<td>'+data[i].fecha_creado+'</td>'+  
+                    '<td>'+data[i].hora_creado+'</td>'+
+                    '<td>'+data[i].fecha_terminado+'</td>'+
+                    '<td>'+data[i].hora_terminado+'</td>'+
+                    '<td>'+data[i].capturista+'</td>'+
+                    '<td>'+data[i].estatus+'</td>'+
+                    "<td> <a onclick='editarInventario("+data[i].id_inventario+");' class='waves-effect waves-light btn-floating btn-small blue btn modal-trigger' href='#modalEditarInventario'><i class='material-icons'>edit</i></a> </td>" +
+                    "<td> <a onclick='verInventario("+data[i].id_inventario+");' class='waves-effect waves-light btn-floating btn-small teal darken-4 btn modal-trigger' href='#modalVerInventario'><i class='material-icons'>assignment</i></a> </td>" +
+                    '</tr> ';
+                }
+                
+            }
+            
+            
+        }
+
+        $("#datosInventario").html(d);
+
+        
+    }
+
+    
+    var respCargarInventarioParaEditar = function(data) 
+    {
+        if (!data && data == null) 
+        return; 
+
+        var d="";
+        Cookies.set("sucursal_inv_paraEditar",data[0].id_sucursal);
+
+        for (var i = 0; i < data.length; i++) 
+        {
+            var sucursal=String(data[i].sucursal);
+            console.log("-------"+sucursal);
+            if(sucursal=="undefined")
+            {
+                
+            }
+            else
+            {
+                d+="<tr> "+
+                '<td>'+data[i].id_equipo+'</td>'+ 
+                '<td>'+data[i].tipo_equipo+'</td>'+  
+                '<td>'+data[i].desc+'</td>'+
+                '<td>'+data[i].sucursal+'</td>'+
+                '<td>'+data[i].marca+'</td>'+
+                '<td>'+data[i].encargado_nombre+'</td>'+     
+                '<td><input type="button" class="borrar" value="Eliminar" /></td>';           
+                '</tr> ';
+            }
+            
+            
+        }
+
+        $("#tablaInventarioDeEquipoEditar").html(d);
+
+        
+    }
+
+    var respParaEditarCargarEquipoParaInventario = function(data) 
+    {
+        if (!data && data == null) 
+        return; 
+
+        var sucursal = Cookies.get("sucursal_inv_paraEditar");
+        console.log("SUCURSAL PARA EDITAR DESDE COOKIES: "+ sucursal);
+        var d = '';
+        var x = '';
+        var found=0;
+        var compareWith="";
+        var tableReg = document.getElementById('tablaInventarioEditar');
+
+        console.log("LENGHT= "+(tableReg.rows.length-1));
+        for (var i = 1; i < tableReg.rows.length ; i++)
+        {
+        
+            compareWith = document.getElementById("tablaInventarioEditar").rows[i].cells.item(0).innerHTML;
+
+            console.log("DATOS= "+compareWith );
+                
+            if(data[0].id==compareWith)
+            {
+                
+                found=1;
+                M.toast({html: 'Dato repetido.', classes: 'rounded red'}); 
+                return;
+            }
+            else
+            {
+                found=0;
+            }
+           
+        }
+
+
+        if(found==0)
+        {
+            var Descripcion=String(data[0].descripcion);
+           
+            if(Descripcion=="undefined")
+            {
+                M.toast({html: 'Sin datos sobre ese equipo!.', classes: 'rounded red'}); 
+            
+            }
+            else
+            {
+                if(sucursal==data[0].sucursal)
+                {
+                    var fila="<tr><td>"+data[0].id+"</td><td>"+data[0].tipo_equipo+"</td><td>"+data[0].descripcion+"</td><td>"+data[0].nombre_sucursal+"</td><td>"+data[0].marca+"</td><td>"+data[0].modelo+"</td></tr> "+
+                    '<td><input type="button" class="borrar" value="Eliminar" /></td>';
+                    var btn = document.createElement("TR");
+                    btn.innerHTML=fila;
+                    document.getElementById("tablaInventarioDeEquipoEditar").appendChild(btn);
+                }
+                else
+                {
+                    
+                    var opcion = confirm("Agregaste un equipo que no es de esa sucursal, estas seguro que quieres agregarlo a esta sucursal?");
+                    if (opcion == true) 
+                    {
+                        
+                        var fila="<tr><td>"+data[0].id+"</td><td>"+data[0].tipo_equipo+"</td><td>"+data[0].descripcion+"</td><td>"+data[0].nombre_sucursal+"</td><td>"+data[0].marca+"</td><td>"+data[0].modelo+"</td></tr> "+
+                        '<td><input type="button" class="borrar" value="Eliminar" /></td>';
+                        var btn = document.createElement("TR");
+                        btn.innerHTML=fila;
+                        document.getElementById("tablaInventarioDeEquipoEditar").appendChild(btn);
+                    } 
+                    else 
+                    {
+                        M.toast({html: '¡Equipo no agregado!.', classes: 'rounded red'});
+                    }
+                    
+                    
+                }
+                
+            
+            }
+        }
+        else
+        {
+            M.toast({html: 'Dato repetido.', classes: 'rounded red'}); 
+            return;
+        }
+        
+            
+        
+        $('#codArticuloEdit').val("");
+    }
+
+
+    
+
+    var respEliminarInventario = function(data) 
+    {
+        if (!data && data == null) 
+        return; 
+
+
+        console.log("eliminado inventario");
+
+
+        var id_inventario = Cookies.get('i_inventarioID');
+
+        var tableReg = document.getElementById('tablaInventarioEditar');
+        console.log("LENGHT= "+(tableReg.rows.length-1));
+        // Recorremos todas las filas con contenido de la tabla
+        
+        for (var i = 1; i < tableReg.rows.length ; i++)
+        {
+        
+            compareWith = document.getElementById("tablaInventarioEditar").rows[i].cells.item(0).innerHTML;
+
+            console.log("DATOS= "+compareWith );
+                
+            onRequest({ opcion : 110 ,inventario_id:id_inventario,equipo_id:compareWith}, respInsertarEnInventarioDetalle);
+        
+        }
+        console.log("Terminaste los deberes!");
+        M.toast({html: 'Inventario editado.', classes: 'rounded green'});
+
+        location.reload();
+
+
+    }
+    var respEliminarInventarioEditar = function(data) 
+    {
+        if (!data && data == null) 
+        return; 
+
+
+        console.log("eliminado inventario");
+
+
+        var id_inventario = Cookies.get('i_inventarioID');
+
+        var tableReg = document.getElementById('tablaInventarioEditar');
+        console.log("LENGHT= "+(tableReg.rows.length-1));
+        // Recorremos todas las filas con contenido de la tabla
+        
+        for (var i = 1; i < tableReg.rows.length ; i++)
+        {
+        
+            compareWith = document.getElementById("tablaInventarioEditar").rows[i].cells.item(0).innerHTML;
+
+            console.log("DATOS= "+compareWith );
+                
+            onRequest({ opcion : 110 ,inventario_id:id_inventario,equipo_id:compareWith}, respInsertarEnInventarioDetalle);
+        
+        }
+        console.log("Terminaste los deberes!");
+        M.toast({html: 'Inventario editado.', classes: 'rounded green'});
+
+        
+
+
+    }
+    
+
+    var respFinalizarInventario1 = function(data) 
+    {
+        if (!data && data == null) 
+        return; 
+
+
+        var id_inventario=data[0].id_inventario;
+        onRequest({ opcion : 114 ,inventario_id:id_inventario}, respFinalizarInventario);
+
+
+    }
+
+    var respFinalizarInventario = function(data) 
+    {
+        if (!data && data == null) 
+        return; 
+
+
+        console.log("FINALIZADO inventario");
+
+        M.toast({html: 'Inventario Finalizado.', classes: 'rounded green'});
+
+        location.reload();
+
+
+    }
+
+    var respCargarInventarioParaVer = function(data) 
+    {
+        if (!data && data == null) 
+        return; 
+
+        var d="";
+       var inv="";
+
+        for (var i = 0; i < data.length; i++) 
+        {
+            var sucursal=String(data[i].sucursal_nombre);
+            console.log("-------"+sucursal);
+            if(sucursal=="undefined")
+            {
+                d+="<tr> "+
+                '<td>Sin equipos registrados en este inventario. </td>'+
+                '</tr> ';
+            }
+            else
+            {
+                if(data[i].inventariado=="-")
+                {
+                    inv="No";
+                }
+                else
+                {
+                    inv="Si";
+                }
+                d+="<tr> "+
+                '<td>'+data[i].id_equipo+'</td>'+ 
+                '<td>'+data[i].tipo_equipo+'</td>'+  
+                '<td>'+data[i].sucursal_nombre+'</td>'+                 
+                '<td>'+data[i].encargado+'</td>'+          
+                '<td>'+inv+'</td>'+             
+                '</tr> ';
+
+            }
+            
+            
+        }
+
+        $("#tablaInventarioDeEquipoVer").html(d);
+
+        
     }
 
 

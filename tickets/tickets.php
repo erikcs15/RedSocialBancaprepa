@@ -40,6 +40,7 @@
                                             <th>Titulo</th>
                                             <th>Descripcion</th>
                                             <th>Solicitado por:</th>
+                                            <th>Atendiendo:</th>
                                             <th>Estatus</th>                                            
                                         </tr>
                                         </thead>
@@ -77,11 +78,12 @@
             <br><br>
            <div class="card">
             <div  class="card-content" id="cardTicketAdm">
-              
+           
             </div>
            </div>
                <form class="col s12 no-padding">
                <div class="input-field col s6">
+               <a id="ActualizarMensajesManTicket" class="waves-effect waves-light btn-floating btn-small indigo darken-4 left"><i class="material-icons">autorenew</i></a> <br> <br>
                         Comentario:
                         <textarea id="comentarioTicketAdm" class="materialize-textarea"></textarea> 
                         <a id="btnComentarioTicketAdm" class="waves-effect waves-light btn indigo darken-4 right"><i class="material-icons left">send</i>enviar</a> 
@@ -93,7 +95,7 @@
                 </div>
            </div>
            <div class="modal-footer">
-               <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat right">Cancelar</a>
+               <a class= " modal-action modal-close waves-effect waves-green btn-flat right">Cerrar</a>
            </div>
     </div>
 
