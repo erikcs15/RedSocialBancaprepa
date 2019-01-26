@@ -720,20 +720,7 @@ $("#passEmpleado").keypress(function(e) {
     });
 
 
-    $("#CrearTicketbtn").click(function() {
-        var usuario = Cookies.get('b_capturista_id');
-        var area=$("#areaApoyo").val();
-        var titulo=$("#tituloDD option:selected").text();
-        var desc=$("#descripcionTicket").val();
-        var correo=$("#email").val();
-        var telefono=$("#tel").val();
-        console.log("ID empleado="+usuario+" Area de apoyo:"+area+" titulo:"+titulo);
-        console.log("desc:"+desc+" email:"+correo+" telefono:"+telefono);
-        onRequest({ opcion : 73, usuario_id:usuario, area_id:area,titulo:titulo, descripcion:desc, correo:correo, telefono:telefono },respAgregaTicket);
-
-      
     
-    });
 
     
     $("#btnEditPub").click(function() {
@@ -837,10 +824,6 @@ function cargarCorreos(){
     
 }
 
-function cargarTickets(){
-    onRequest({ opcion : 75 }, respCargarTickets);
-    
-}
 
 function cargarMenuPorRol(){
     
@@ -2906,54 +2889,20 @@ var respCargaPublicacionesFinal = function(data) {
         }
         else{
             $("#CargarPublicacionesVaciasVistas").empty();
-                if(data[i].formato=="PDF"){    
-                       /* pubdd+=  '<div class="col s12 l8 offset-l2" > '+
-                        '<div class="card"> '+
-                        '       <div class="card-image waves-effect waves-block waves-light">'+
-                        '          <iframe src="imagenes/publicaciones/'+ruta+'"  class="col s12" style="border: none;height:500px"></iframe>'+
-                        '     </div>'+
-                        '    <div class="card-content">'+
-                        '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+
-                        '        <p>  &nbsp;&nbsp'+data[i].fecha+'&nbsp; '+data[i].hora+'</p>'+
-                        '         <p><a onclick="btnVista('+data[i].id_publicacion+')" class="btn-floating waves-effect waves-light btn indigo darken-4 disabled" ><i class="material-icons left">remove_red_eye</i></a></p>'+
-                        '      </div>'+
-                        '      <div class="card-reveal">'+
-                        '           <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>'+data[i].titulo+'</span>'+
-                        '            <p>'+data[i].descripcion+'.</p>'+
-                        '         </div>'+
-                        '  </div>'+
-                        '</div> ';        */
-
-                          pubdd+='<div class="col s10 m3 l2 mb-5 mt-5 mr-5 z-depth-2">'+
-                              '<a class="modal-trigge" onclick="abrirModalImg('+data[i].id_publicacion+')"  href="#">'+
-                              '<img class="mosaico z-depth-5" src="/img/pdf.png"></a>'+
-                              '<b> <p class="break-word" >'+data[i].titulo.substring(0,20)+'</p></b>'+
-                             '</div> ';  
+                if(data[i].formato=="PDF"){ 
+                    console.log("ES PDF");   
+                        pubdd+='<div class="col s10 m3 l2 mb-5 mt-5 mr-5 z-depth-2">'+
+                        '<a class="modal-trigger" onclick="abrirModalImg('+data[i].id_publicacion+')"  href="#">'+
+                        '<img class="mosaico z-depth-5" src="/img/pdf.png"></a>'+
+                        '<b> <p class="break-word" >'+data[i].titulo.substring(0,20)+'</p></b>'+
+                        '</div> ';  
                 }
                 else{
-                       /* pubdd+=  '<div class="col s12 l8 offset-l2" > '+
-                        '<div class="card"> '+
-                        '       <div class="card-image waves-effect waves-block waves-light">'+
-                        '          <img class="activator" src="imagenes/publicaciones/'+ruta+'">'+
-                        '     </div>'+
-                        '    <div class="card-content">'+
-                        '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+
-                        '        <p>  &nbsp;&nbsp'+data[i].fecha+'&nbsp; '+data[i].hora+'</p>'+
-                        '         <p><a onclick="btnVista('+data[i].id_publicacion+')" class="btn-floating waves-effect waves-light btn indigo darken-4" disabled><i class="material-icons left">remove_red_eye</i></a></p>'+
-                        '      </div>'+
-                        '      <div class="card-reveal">'+
-                        '           <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>'+data[i].titulo+'</span>'+
-                        '            <p>'+data[i].descripcion+'.</p>'+
-                        '         </div>'+
-                        '  </div>'+
-                        '</div> ';    */
-
-
-                         pubdd+='<div class="col s10 m3 l2 mb-5 mt-5 mr-5 z-depth-2"  >'+
-                              '<a class="modal-trigge" onclick="abrirModalImg('+data[i].id_publicacion+')"  href="#">'+
-                              '<img class="mosaico  z-depth-5" src="imagenes/publicaciones/'+ruta+'"></a>'+
-                              '<b> <p class="break-word" >'+data[i].titulo.substring(0,20)+'</p></b>'+
-                             '</div> ';   
+                        pubdd+='<div class="col s10 m3 l2 mb-5 mt-5 mr-5 z-depth-2"  >'+
+                        '<a class="modal-trigger" onclick="abrirModalImg('+data[i].id_publicacion+')"  href="#">'+
+                        '<img class="mosaico  z-depth-5" src="imagenes/publicaciones/'+ruta+'"></a>'+
+                        '<b> <p class="break-word" >'+data[i].titulo.substring(0,20)+'</p></b>'+
+                       '</div> ';  
                 }
         }
     }
@@ -3062,6 +3011,8 @@ var respCargaPublicacionesFinalNuevas = function(data) {
                         '</div> ';     
                 }
                 else{
+                    if(data[i].formato=="IMG")
+                    {
                         pubdd2+= '<div class="col s12 l8 offset-l2" > '+
                         '<div class="card"> '+
                         '       <div class="card-image waves-effect waves-block waves-light">'+
@@ -3078,6 +3029,32 @@ var respCargaPublicacionesFinalNuevas = function(data) {
                         '         </div>'+
                         '  </div>'+
                         '</div> ';
+                    }
+                    else
+                    {
+                        console.log("ES VIDEO");
+                        pubdd2+= '<div class="col s6 offset-l2" > '+
+                        '<div class="card"> '+
+                        '       <div class="card-image waves-effect waves-block waves-light">' +
+                        '<video class="responsive-video" controls>'+
+                        '<source src="imagenes/publicaciones/'+ruta+'" type="video/mp4">'+
+                        '</video>'+
+                        '     </div>'+
+                        '    <div class="card-content">'+
+                        '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+
+                        '        <p>  &nbsp;&nbsp'+data[i].fecha+'&nbsp; '+data[i].hora+'</p>'+
+                        '         <p><a onclick="btnVista('+data[i].id_publicacion+')" class="btn-floating waves-effect waves-light btn indigo darken-4" ><i class="material-icons left">remove_red_eye</i></a></p>'+
+                        '      </div>'+
+                        '      <div class="card-reveal">'+
+                        '           <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>'+data[i].titulo+'</span>'+
+                        '            <p>'+data[i].descripcion+'.</p>'+
+                        '         </div>'+
+                        '  </div>'+
+                        '</div> ';
+                        
+                        pubdd+='<div class="video-container"></a> </div>';   
+                    }
+                        
                 }
         }
     }
@@ -3363,56 +3340,6 @@ var respBorrarCorreoFinal = function(data) {
 
 
 
-var respAgregaTicket = function(data) { 
-    //se insertan los datos en la tabla confirmaciones!
-    if (!data && data == null)
-    {
-        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
-        return;
-    }
-    
-
-    M.toast({html: 'Ticket insertado correctamente ', classes: 'rounded green'}); 
-    location.href="/mandarTicket.php";
-    
-}
-
-var respCargarTickets = function(data) { 
-    
-    if (!data && data == null) 
-    return; 
-
-    var d = '';
-    var x = '';
-
-
-
-     for (var i = 0; i < data.length; i++) {
-     if(i%2==0)
-     {
-         x='even';
-     }
-     else
-     {
-         x='odd';
-     }
-     d+= '<tr>'+
-     '<td>'+data[i].id+'</td>'+
-     '<td>'+data[i].titulo+'</td>'+
-     '<td>'+data[i].descripcion+'</td>'+
-     '<td>'+data[i].solicitado+'</td>'+
-     '<td>'+data[i].estatus+'</td>'+ 
-     '<td class="'+x+' left">'+
-     //'<a onclick="editarDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarDoc"><i class="material-icons">edit</i></a>' + 
-     //'<a onclick="deshabDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabDoc"><i class="material-icons">do_not_disturb_alt</i></a>' + 
-     //'<a onclick="BorrarDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarDoc"><i class="material-icons">delete</i></a>' +
-     '</td>'  +'</tr> ';
-     }
-     
-     $("#tablaTicketsGeneral").html(d);
-
-     cargarMenuPorRol();
-}
 
 
 var respPermitirPublicacion = function(data) { 

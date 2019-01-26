@@ -93,7 +93,7 @@
             $i=0; 
             $sql="SELECT p.id, c.descripcion,p.fecha_solicitud,p.monto_solicitado, p.monto_total, e.descripcion, 
                 IFNULL(p.fecha_autorizado, '-'),IFNULL(c2.`descripcion`, '-'), p.descuento_mensual, IFNULL(p.comentarios_autorizacion, '-'),
-                p.monto_autorizado, p.quincenas, p.estatus_id
+                p.monto_autorizado, p.quincenas, p.estatus_id, p.archivo_responsiva
                 FROM b_prestamo_solicitudes p
                 INNER JOIN estatus e ON e.id=p.estatus_id
                 INNER JOIN capturistas c ON c.id=p.capturista_id
@@ -116,6 +116,7 @@
                 $datos[$i]['monto_autorizado'] = $res[10];
                 $datos[$i]['quincenas'] = $res[11];
                 $datos[$i]['id_estatus'] = $res[12];
+                $datos[$i]['ruta'] = $res[13];
                 $i++;
 
             } 
@@ -135,7 +136,7 @@
             $i=0; 
             $sql="SELECT p.id, c.descripcion,p.fecha_solicitud,p.monto_solicitado, p.monto_total, e.descripcion, 
                 IFNULL(p.fecha_autorizado, '-'), IFNULL(p.capturista_id_autorizo, '-'), p.descuento_mensual, IFNULL(p.comentarios_autorizacion, '-'),
-                IFNULL(p.monto_autorizado,'-'), p.`quincenas`, p.estatus_id
+                IFNULL(p.monto_autorizado,'-'), p.`quincenas`, p.estatus_id, p.`archivo_responsiva`
                 FROM b_prestamo_solicitudes p
                 INNER JOIN estatus e ON e.id=p.estatus_id
                 INNER JOIN capturistas c ON c.id=p.capturista_id ORDER BY p.id DESC";
@@ -158,6 +159,7 @@
                 $datos[$i]['monto_autorizado'] = $res[10];
                 $datos[$i]['quincenas'] = $res[11];
                 $datos[$i]['id_estatus'] = $res[12];
+                $datos[$i]['ruta'] = $res[13];
                 $i++;
 
             } 
@@ -227,7 +229,7 @@
         }
 
 
-        public function insertarCorridas($prestamoId,$fecha_corridap, $quincenas, $pago)
+        public function insertarCorridas($prestamoId,$fecha_corridap, $quincenas, $pago, $totalApagar)
         {
             //$fecha = $this->fechaPrimerPago( $fecha_corridap);
 
@@ -267,7 +269,8 @@
             $x=1;
             while ($x <= $quincenas)
             {
-
+                $penultimo=$quincenas-1;
+                $pago = round($pago);
 
                 if($x==1)
                 {
@@ -276,31 +279,66 @@
                 }
                 else
                 {
-                    $anio=0;
-                    $mes=0;
-                    $dia=0;
-                    $dias_mes=0;
-                    list($anio, $mes, $dia) = explode('-', $fecha);
-           
-                    if (empty($anio) || empty($mes))
-                        list($anio, $mes, $dia) = explode('-', $fecha);
-
-                // return $dia.'-'.$mes.'-'.$anio;
-                    if ( $dia >= 1 && $dia <= 15 )
+                    if($x==$quincenas)
                     {
-                        // OBTENER LOS DIAS QUE TIENE UN MES //
-                        $dias_mes = $this->diasMes($mes,$anio);
-                        $fecha=$this->DateAdd($fecha,($dias_mes-15));
+                        $variableF=$pago*$penultimo;
+                        $pago=$totalApagar-$variableF;
+                        
+                        $anio=0;
+                        $mes=0;
+                        $dia=0;
+                        $dias_mes=0;
+                        list($anio, $mes, $dia) = explode('-', $fecha);
+            
+                        if (empty($anio) || empty($mes))
+                            list($anio, $mes, $dia) = explode('-', $fecha);
 
+                    // return $dia.'-'.$mes.'-'.$anio;
+                        if ( $dia >= 1 && $dia <= 15 )
+                        {
+                            // OBTENER LOS DIAS QUE TIENE UN MES //
+                            $dias_mes = $this->diasMes($mes,$anio);
+                            $fecha=$this->DateAdd($fecha,($dias_mes-15));
+
+                        }
+                        else
+                        {
+                            $fecha=$this->DateAdd($fecha,15);
+                        }
+                        $sql = "INSERT INTO b_prestamo_corridas (prestamo_personal_id, num_pago, abono, fecha_pago) VALUES($prestamoId, $x, $pago, '$fecha')";
+                        mysqli_query($this->con(), $sql);  
                     }
                     else
                     {
-                        $fecha=$this->DateAdd($fecha,15);
+                        $anio=0;
+                        $mes=0;
+                        $dia=0;
+                        $dias_mes=0;
+                        list($anio, $mes, $dia) = explode('-', $fecha);
+            
+                        if (empty($anio) || empty($mes))
+                            list($anio, $mes, $dia) = explode('-', $fecha);
+
+                    // return $dia.'-'.$mes.'-'.$anio;
+                        if ( $dia >= 1 && $dia <= 15 )
+                        {
+                            // OBTENER LOS DIAS QUE TIENE UN MES //
+                            $dias_mes = $this->diasMes($mes,$anio);
+                            $fecha=$this->DateAdd($fecha,($dias_mes-15));
+
+                        }
+                        else
+                        {
+                            $fecha=$this->DateAdd($fecha,15);
+                        }
+                        $sql = "INSERT INTO b_prestamo_corridas (prestamo_personal_id, num_pago, abono, fecha_pago) VALUES($prestamoId, $x, $pago, '$fecha')";
+                        mysqli_query($this->con(), $sql);   
                     }
-                    $sql = "INSERT INTO b_prestamo_corridas (prestamo_personal_id, num_pago, abono, fecha_pago) VALUES($prestamoId, $x, $pago, '$fecha')";
-                    mysqli_query($this->con(), $sql);   
+                
+                    
+                    
                 }
-               
+                
                 $x ++;
             }
             return "Exito!";
@@ -500,7 +538,7 @@
                 
             mysqli_query($this->con(), "SET lc_time_names = 'es_ES';"); 
 
-            $sql="SELECT DATE_FORMAT( CURDATE(), '%d de %M de %Y') AS fecha, c.`descripcion`, s.`monto_autorizado` 
+            $sql="SELECT DATE_FORMAT( CURDATE(), '%d de %M de %Y') AS fecha, c.`descripcion`, s.`monto_solicitado`, CURDATE() 
             FROM b_prestamo_solicitudes s 
             INNER JOIN capturistas c ON c.`id`= s.`capturista_id`
             WHERE s.id=$id_solicitud"; 
@@ -511,6 +549,7 @@
                 $datos[$i]['fecha'] = $res[0];
                 $datos[$i]['nombre_capturista'] = $res[1];
                 $datos[$i]['monto_autorizado'] = $res[2];
+                $datos[$i]['fechaR'] = $res[3];
                 $i++;
 
             } 

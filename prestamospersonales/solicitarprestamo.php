@@ -1,6 +1,6 @@
 <?php 
      # definimos la carpeta destino
-     $carpetaDestino="\imagenes/";
+     $carpetaDestino="imagenes/";
                 
      # si hay algun archivo que subir
      if(isset($_FILES["archivo"]) && $_FILES["archivo"]["name"][0])
@@ -162,8 +162,7 @@
                         <th>Monto Total a Pagar</th>
                         <th>Descuento quincenal</th>
                         <th>Estatus</th>
-                        <th>Fecha Autorizado</th>
-                        <th>Persona que autorizo</th>    
+                        <th>Fecha Autorizado</th>  
                         <th>Comentarios</th>                                       
                     </tr>
                     </thead>
@@ -247,19 +246,30 @@
            </nav>
            <div class="modal-content">
                 <div class="row">
-                <form  id="formFiles" class="col s12" action="<?php echo $_SERVER["PHP_SELF"]?>"  method="post"  enctype="multipart/form-data" name="inscripcion">
+                <form  id="formFiles2" class="col s12" action="<?php echo $_SERVER["PHP_SELF"]?>"  method="post"  enctype="multipart/form-data" name="inscripcion">
                     <div class="file-field input-field">
                         <div id="classbtnSubirResponsiva" class="btn grey">
                             <span>Subir Responsiva</span>
-                            <input type="file" id="btnSubirResponsiva" disabled>
+                            <input type="file" id="btnSubirResponsiva" name="archivo[]" disabled>
                         </div>
                         <div class="file-path-wrapper">
-                            <input class="file-path validate"  name="archivo[]" type="text" id="archivoResponsiva">
+                            <input class="file-path validate"   type="text" id="archivoResponsiva">
                         </div>
                     </div>
                     <div class="col s12" id="cargarArchivoSolicitud"  style='display:none;'>
 
                     </div>
+                    <!--div class="row">
+                        <div class="file-field input-field s10 l10">
+                            <div  class="btn "> 
+                                    <span><i class="material-icons right">cloud_upload</i>Cargar</span>
+                                <input id="docId"  type="file" name="archivo[]" >
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input id="archivoResponsiva" class="file-path validate" type="text">
+                            </div>
+                        </div>
+                    </div-->
                 </form>
                 </div>
            </div>
@@ -269,6 +279,36 @@
            </div>
     </div>
 
+
+    
+    <div id="cargarResponsivaModal" class="modal">
+                <nav class=" orange accent-4">
+                    <div class="nav-wrapper">
+                        <a href="#!" class="brand-logo">
+                            <i class="large material-icons right">record_voice_over</i>Aceptar Carga
+                        </a>
+                    </div>
+                </nav>
+
+                <div class="modal-content"> 
+                    <center> <h5><strong>¿Seguro que desea realizar la carga?</strong></h5></center>
+                </div>
+
+                <div class="row" >
+                            <div class="col s6 right"    >
+                            <a id="aceptarCarga" class="waves-effect waves-light btn  accent-4 blue"><i class="material-icons left">done</i>Aceptar</a>
+                                
+                            </div>
+                            <div class="col s6 "   >
+                            <a " class="waves-effect modal-close waves-light btn right accent-4 red"><i class="material-icons left">close</i>Cancelar</a>
+                            </div>
+                </div>
+                
+                
+                <div class="modal-footer"> 
+                    
+                </div>
+            </div>
     
  
     </body>

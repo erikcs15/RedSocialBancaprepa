@@ -353,6 +353,43 @@
 			echo (json_encode($usuario->verifSiYaTieneResponsiva($_REQUEST['equipo_id'])));
 		break;
 
+		//AGREGAR DESDE AQUÍ AL SERVIDOR!!!!!!!!!!!!!!!
+		
+		case 109:
+			echo (json_encode($usuario->insertEnInventarioGeneral($_REQUEST['sucursal'])));
+		break;
+		case 110:
+			echo (json_encode($usuario->insertEnInventarioDetalle($_REQUEST['equipo_id'])));
+		break;
+		case 111:
+			echo (json_encode($usuario->cargarTodosInventarios($_REQUEST['sucursal'])));
+		break;
+		case 112:
+			echo (json_encode($usuario->iniciarInventario($_REQUEST['sucursal'])));
+		break;
+		case 113:
+			echo (json_encode($usuario->finalizarInventario()));
+		break;
+		case 114:
+			echo (json_encode($usuario->actualizarInventario($_REQUEST['inventario_id'])));
+		break;
+		case 115:
+			echo (json_encode($usuario->cargarEquiposPorInventario($_REQUEST['inventario_id'])));
+		break;
+		case 116:
+			echo (json_encode($usuario->eliminarInventarioXID($_REQUEST['inventario_id'])));
+		break;
+		case 117:
+			echo (json_encode($usuario->insertEnInventarioDetalleEditar($_REQUEST['inventario_id'],$_REQUEST['equipo_id'])));
+		break;
+		case 118:
+			echo (json_encode($usuario->cargarEquipoXidPara_Inventario($_REQUEST['equipo_id'])));
+		break;
+		case 119:
+			echo (json_encode($usuario->cargarEquiposPorInventarioComparando($_REQUEST['inventario_id'],$_REQUEST['sucursal'])));
+		break;
+
+
  	}
  
 ?>
