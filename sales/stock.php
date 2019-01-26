@@ -111,6 +111,8 @@
                             <thead>
                               <tr>
                                   <th>#</th>
+                                  <th>Dist id</th>
+                                  <th>Distribuidora</th>
                                   <th>Articulo</th>
                                   <th>Sucursal</th> 
                                   <th>Detalle</th> 
@@ -259,20 +261,23 @@
                 
         }
 
-        function deshabilitarPagoEspecie(id){
-            $("#txtIdCancelacion").val(id);
+        function cambiarEstatus(id){
+            $("#txtIdEstatus").val(id);
         }
 
-        function cancelarPagoEspecie(){
-             var txtIdCancelacion = $("#txtUbicacion").val("");
-             var txtMotivo =   $("#txtMotivo").val("");
-
-             if(txtMotivo.length<5){
+        function cambiarEstatusPago(){
+             var txtIdEstatus = $("#txtIdEstatus").val();
+             var txtMotivo =   $("#txtMotivo").val();
+             var sltEstatusPago =$("#sltEstatusPago").val();
+             
+             if(sltEstatusPago!=5){
+              if(txtMotivo.length<5){
                     M.toast({html: 'El motivo no puede ir vacio', classes: 'rounded red'}); 
                     return;
                 } 
+              }
 
-            inventarios({ opcion : 11,txtIdCancelacion:txtIdCancelacion,txtMotivo:txtMotivo }, respCargarPagosEspecie); 
+            inventarios({ opcion : 11,txtIdEstatus:txtIdEstatus,txtMotivo:txtMotivo,sltEstatusPago:sltEstatusPago }, respCambiarEstatusPagos); 
 
         }
 
@@ -289,6 +294,7 @@
     
 
         //respuestas
+
 
     var respcargasucursales = function(data) { 
         if (!data && data == null)
@@ -344,11 +350,13 @@
         for(var i=0; i<data.length; i++){
             documento+="<tr>"+
                        "<td>"+data[i].id+"</td>"+
+                       "<td>"+data[i].distribuidora_id+"</td>"+
+                       "<td>"+data[i].distribuidora+"</td>"+
                        "<td>"+data[i].articulo+"</td>"+
                        "<td>"+data[i].sucursal+"</td>"+
                        "<td>"+data[i].descripcion+"</td>"+
                        "<td>"+data[i].estatus+"</td>"+
-                       "<td><a onclick='editarPagoEspecie("+data[i].id+")' class='waves-effect waves-light  btn-floating tooltipped' data-position='top' data-tooltip='Editar'><i class='material-icons left'>border_color</i></a> <a onclick='agregarImg("+data[i].id+")' class='waves-effect waves-light  btn-floating tooltipped  modal-trigger' data-position='top' data-tooltip='Agregar Imagen' href='#modalCargarImg'><i class='material-icons left'>camera_alt</i></a> <a onclick='deshabilitarPagoEspecie("+data[i].id+")' class='waves-effect waves-light  btn-floating tooltipped red modal-trigger' data-position='top' data-tooltip='Deshabilitar' href='#modalDeshabilitar'><i class='material-icons left'>do_not_disturb</i></a>              </td>"+
+                       "<td><a onclick='editarPagoEspecie("+data[i].id+")' class='waves-effect waves-light  btn-floating tooltipped' data-position='top' data-tooltip='Editar'><i class='material-icons left'>border_color</i></a> <a onclick='agregarImg("+data[i].id+")' class='waves-effect waves-light  btn-floating tooltipped  modal-trigger' data-position='top' data-tooltip='Agregar Imagen' href='#modalCargarImg'><i class='material-icons left'>camera_alt</i></a> <a onclick='cambiarEstatus("+data[i].id+")' class='waves-effect waves-light  btn-floating tooltipped blue modal-trigger' data-position='top' data-tooltip='Cambiar Estatus' href='#modalDeshabilitar'><i class='material-icons left'>autorenew</i></a>              </td>"+
                        "</tr>";
         }               
         
@@ -375,6 +383,15 @@
                 $("#txtUbicacion").val(data[0].ubicacion);
                    
          
+    }
+
+      var respCambiarEstatusPagos = function(data) { 
+        if (!data && data == null)
+            return;  
+         
+          inventarios({ opcion : 10 }, respCargarPagosEspecie); 
+
+          $("#modalDeshabilitar").modal('close');
     }
  
     </script> 

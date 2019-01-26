@@ -39,7 +39,7 @@
  			   echo (json_encode($inventario->cargarPagosEspecie()));
 		break;
 		case 11: 
- 			   echo (json_encode($inventario->deshabilitarPagoEspecie($_REQUEST['txtIdCancelacion'],$_REQUEST['txtMotivo'])));
+ 			   echo (json_encode($inventario->cambiarEstatusPago($_REQUEST['txtIdEstatus'],$_REQUEST['txtMotivo'],$_REQUEST['sltEstatusPago'])));
 		break;
 		case 12: 
  			   echo (json_encode($inventario->cargarImgStock($_REQUEST['txtId'],$_REQUEST['txtDocName'])));
