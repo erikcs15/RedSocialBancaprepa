@@ -388,6 +388,9 @@
 		case 119:
 			echo (json_encode($usuario->cargarEquiposPorInventarioComparando($_REQUEST['inventario_id'],$_REQUEST['sucursal'])));
 		break;
+		case 120:
+			echo (json_encode($usuario->eliminarInvRecienCreado($_REQUEST['inventario_id'])));
+		break;
 
 
  	}

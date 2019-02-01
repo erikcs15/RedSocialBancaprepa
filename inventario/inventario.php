@@ -147,7 +147,7 @@
           
            </div>
            <div class="modal-footer">
-               <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Aceptar</a>
+               <a id="cancelarCreaciondeInventario" class= " modal-action waves-effect waves-green btn-flat left">Cancelar</a>
               
            </div>
     </div>
@@ -225,7 +225,9 @@
                             <tr id="trCreaInventarioVer">
                                 <th>Id</th>
                                 <th>Tipo de Equipo</th>
+                                <th>Descripcion</th>
                                 <th>Sucursal</th>
+                                <th>Area</th>
                                 <th>Encargado</th>
                                 <th>Inventariado</th>
                             </tr>

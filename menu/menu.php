@@ -60,7 +60,7 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
                 
 
                   <li><a id="m_inicio" name ="inicio" class="waves-effect white-text " ><i class="material-icons white-text">home</i>Inicio</a></li>
-                  <li><a href="/RedSocialBancaprepa/bancaprepa.php" name ="bancaprepa" id="m_bancaprepa" class="waves-effect white-text"><i class="material-icons white-text">assignment</i>Publicaciones Vistas</a></li>
+                  <li><a href="/RedSocialBancaprepa/bancaprepa.php" name ="bancaprepa" id="m_bancaprepa" class="waves-effect white-text"><i class="material-icons white-text">assignment</i>Publicaciones</a></li>
                   <!--<li><a id="m_agregarPub" class="subheader waves-effect modal-trigger" href="#modalAgregarPub"><i class="material-icons">add_circle</i>Agregar publicación</a></li>  -->
                   <li><a id="m_articulos_venta" href="/RedSocialBancaprepa/sales/sales.php" class=" waves-effect white-text" ><i class="material-icons white-text">local_grocery_store</i>Articulos en Venta</a></li>
                   <li><a id="M_cargaA" style='display:none;' href="/RedSocialBancaprepa\documentos\addfile.php" class=" waves-effect white-text"><i class="material-icons white-text">file_upload</i>Carga de Archivos</a></li>

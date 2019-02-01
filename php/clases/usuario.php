@@ -1476,39 +1476,79 @@
 				$i=0;
 				$var="S";
 				
-				$sql="SELECT p.id, p.titulo, p.descripcion,p.imagen,p.formato, conf.empresa_id,conf.puesto_id, conf.visto, p.documento_id, 
-				DATE_FORMAT( p.fecha, '%d/%b/%Y') AS fecha, DATE_FORMAT( p.hora, '%l:%i%p') AS hora
-				FROM b_publicaciones_bancaprepa p
-				INNER JOIN b_confirmaciones conf ON conf.publicacion_id=p.id
-				INNER JOIN capturistas c ON c.id=conf.empleado_id
-				WHERE c.id=$usuario AND conf.visto='$var' AND p.documento_id=$tipodoc AND p.estatus=5
-				ORDER BY p.id DESC";
+				if($tipodoc==1)
+				{
+					$sql="SELECT p.id, p.titulo, p.descripcion,p.imagen,p.formato, conf.empresa_id,conf.puesto_id, conf.visto, p.documento_id, 
+					DATE_FORMAT( p.fecha, '%d/%b/%Y') AS fecha, DATE_FORMAT( p.hora, '%l:%i%p') AS hora
+					FROM b_publicaciones_bancaprepa p
+					INNER JOIN b_confirmaciones conf ON conf.publicacion_id=p.id
+					INNER JOIN capturistas c ON c.id=conf.empleado_id
+					WHERE c.id=$usuario AND conf.visto='$var' AND p.documento_id=$tipodoc AND p.estatus=5
+					ORDER BY p.id DESC";
+
+					$resultado = mysqli_query($this->con(), $sql); 	
+
+					while ($res = mysqli_fetch_row($resultado)) 
+					{
+						$datos[$i]['id_publicacion'] = $res[0];	
+						$datos[$i]['titulo'] = $res[1];
+						$datos[$i]['descripcion'] = $res[2];
+						$datos[$i]['ruta'] = $res[3];
+						$datos[$i]['formato'] = $res[4];	
+						$datos[$i]['empresa_id'] = $res[5];
+						$datos[$i]['puesto_id'] = $res[6];	
+						$datos[$i]['visto'] = $res[7];
+						$datos[$i]['tipodoc'] = $res[8];
+						$datos[$i]['fecha'] = $res[9];
+						$datos[$i]['hora'] = $res[10];						   
+						$i++;
+					} 
 				
-				$resultado = mysqli_query($this->con(), $sql); 
+					if ( count($datos )==0) { 
+						$datos[0]['id_publicacion']  =0;
+						return  $datos; 
+					}
 
-				while ($res = mysqli_fetch_row($resultado)) {
 
-				   $datos[$i]['id_publicacion'] = $res[0];	
-				   $datos[$i]['titulo'] = $res[1];
-				   $datos[$i]['descripcion'] = $res[2];
-				   $datos[$i]['ruta'] = $res[3];
-				   $datos[$i]['formato'] = $res[4];	
-				   $datos[$i]['empresa_id'] = $res[5];
-				   $datos[$i]['puesto_id'] = $res[6];	
-				   $datos[$i]['visto'] = $res[7];
-				   $datos[$i]['tipodoc'] = $res[8];
-				   $datos[$i]['fecha'] = $res[9];
-				   $datos[$i]['hora'] = $res[10];						   
-				   $i++;
-				} 
+					return $datos; 
+
+				}
 				
-				if ( count($datos )==0) { 
-					$datos[0]['id_publicacion']  =0;
-					return  $datos; 
-				  }
+				else
+				{
+					$sql="SELECT p.id, p.titulo, p.descripcion,p.imagen,p.formato, p.documento_id, 
+					DATE_FORMAT( p.fecha, '%d/%b/%Y') AS fecha, DATE_FORMAT( p.hora, '%l:%i%p') AS hora
+					FROM b_publicaciones_bancaprepa p
+					WHERE p.documento_id=$tipodoc AND p.estatus=5
+					ORDER BY p.id DESC";
+
+					$resultado = mysqli_query($this->con(), $sql); 	
+
+					while ($res = mysqli_fetch_row($resultado)) 
+					{
+						$datos[$i]['id_publicacion'] = $res[0];	
+						$datos[$i]['titulo'] = $res[1];
+						$datos[$i]['descripcion'] = $res[2];
+						$datos[$i]['ruta'] = $res[3];
+						$datos[$i]['formato'] = $res[4];	
+						$datos[$i]['tipodoc'] = $res[5];
+						$datos[$i]['fecha'] = $res[6];
+						$datos[$i]['hora'] = $res[7];						   
+						$i++;
+					} 
+
+					if ( count($datos )==0) { 
+						$datos[0]['id_publicacion']  =0;
+						return  $datos; 
+					}
 
 
-				return $datos;  
+					return $datos; 
+				}
+
+
+				
+				 
 			}
 
 			public function ActualizarVisto($pub,$empleado)
@@ -1607,11 +1647,23 @@
 				$i=0;
 				$var="S";
 				
-				$sql="SELECT COUNT(p.id)
-				FROM b_publicaciones_bancaprepa p
-				INNER JOIN b_confirmaciones conf ON conf.publicacion_id=p.id
-				INNER JOIN capturistas c ON c.id=conf.empleado_id
-				WHERE c.id=$usuario AND conf.visto='$var' AND p.documento_id=$tipodoc";
+				if($tipodoc==1)
+				{
+					$sql="SELECT COUNT(p.id)
+					FROM b_publicaciones_bancaprepa p
+					INNER JOIN b_confirmaciones conf ON conf.publicacion_id=p.id
+					INNER JOIN capturistas c ON c.id=conf.empleado_id
+					WHERE c.id=$usuario AND conf.visto='$var' AND p.documento_id=$tipodoc";
+				}
+				else
+				{
+					$sql="SELECT COUNT(p.id)
+					FROM b_publicaciones_bancaprepa p
+					INNER JOIN b_confirmaciones conf ON conf.publicacion_id=p.id
+					INNER JOIN capturistas c ON c.id=conf.empleado_id
+					WHERE p.documento_id=$tipodoc";
+				}
+				
 				
 				$resultado = mysqli_query($this->con(), $sql); 
 
@@ -3413,12 +3465,14 @@
 				$i=0; 
 				
 
-				$sql="SELECT e.id, t.`descripcion`, s.`nomComercial`, IFNULL(c.`descripcion`,'-'),IFNULL(d.`equipo_id`,'-') AS invetariado
+				$sql="SELECT e.id, t.`descripcion`, s.`nomComercial`, IFNULL(c.`descripcion`,'-'),IFNULL(d.`equipo_id`,'-') AS invetariado,
+				a.`descripcion`, e.`descripcion`
 				FROM i_equipo e 
 				LEFT JOIN i_inventario_detalle d ON d.`equipo_id`=e.`id` AND d.`inventario_id`= $inventario_id
 				INNER JOIN sucursales s ON s.id=e.`sucursal_id`
 				LEFT JOIN capturistas c ON c.id=e.`encargado_id`
 				INNER JOIN i_tipo_equipo t ON t.id=e.`tipo_equipo_id`
+				INNER JOIN b_cat_areas a ON a.id=e.`area_id` 
 				WHERE e.`sucursal_id`= $sucursal_id
 				ORDER BY invetariado DESC";
 				
@@ -3431,6 +3485,8 @@
 				   $datos[$i]['sucursal_nombre'] = $res[2];
 				   $datos[$i]['encargado'] = $res[3];
 				   $datos[$i]['inventariado'] = $res[4];
+				   $datos[$i]['area'] = $res[5];
+				   $datos[$i]['descripcion'] = $res[6];
 				  
 				   $i++;
 
@@ -3444,6 +3500,25 @@
 
 				return $datos;  
 
+			}
+
+
+			public function eliminarInvRecienCreado($id_inventario)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+				$txtUsuario=$_COOKIE["b_capturista_id"];  
+	
+				$sql="DELETE FROM i_inventario WHERE id = $id_inventario";
+			    
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['i_inventario'] =  array('0' => '0' );
+				return  $datos;	
+				
 			}
 
 

@@ -2148,20 +2148,10 @@ var respCargaPublicacionesB = function(data) {
                 //console.log(data)
              var documento='';
              var primerMenu=0;
-             
-             
-             for(var i=0; i<data.length; i++){
-
-                if(i==0){
-                    primerMenu = data[i].id;
-                    documento+="<li class='tab'><a class='white-text  waves-effect waves-dark' id='tab"+data[i].id+"' onClick='cargarPublicacion("+data[i].id+")' ><strong>"+data[i].docuemento+"</strong></a></li>";
-                } 
-                else{
-                    documento+="<li class='tab'><a class='white-text  waves-effect waves-dark' id='tab"+data[i].id+"' onClick='cargarPublicacion("+data[i].id+")' ><strong>"+data[i].docuemento+"</strong></a></li>";
-                }
-                  
-             }
-              
+                
+            primerMenu = 1;
+            documento+="<li class='tab'><a class='white-text  waves-effect waves-dark' id='tab1' onClick='cargarPublicacion(1)' ><strong>Comunicados</strong></a></li>";
+        
          
              $('#tipoPublicacion').html(documento); 
 
@@ -2898,11 +2888,23 @@ var respCargaPublicacionesFinal = function(data) {
                         '</div> ';  
                 }
                 else{
+                    if(data[i].formato=="IMG")
+                    {
                         pubdd+='<div class="col s10 m3 l2 mb-5 mt-5 mr-5 z-depth-2"  >'+
                         '<a class="modal-trigger" onclick="abrirModalImg('+data[i].id_publicacion+')"  href="#">'+
                         '<img class="mosaico  z-depth-5" src="imagenes/publicaciones/'+ruta+'"></a>'+
                         '<b> <p class="break-word" >'+data[i].titulo.substring(0,20)+'</p></b>'+
                        '</div> ';  
+                    }
+                    else
+                    {
+                        pubdd+='<div class="col s10 m3 l2 mb-5 mt-5 mr-5 z-depth-2"  >'+
+                        '<a class="modal-trigger" onclick="abrirModalImg('+data[i].id_publicacion+')"  href="#">'+
+                        '<img class="mosaico z-depth-5" src="imagenes/publicaciones/video.jpg"></a>'+
+                        '<b> <p class="break-word" >'+data[i].titulo.substring(0,20)+'</p></b>'+
+                       '</div> '; 
+                    }
+                        
                 }
         }
     }
@@ -3118,7 +3120,7 @@ var respVerificarPublicacionesVistas = function(data) {
     else
     {
         vacio+='<div class="sinPub">'+
-            '<h4>Sin publicaciones vistas</h4>'+
+            '<h4>Sin publicaciones</h4>'+
             '<h5>Bienvenido '+nombre+'!</h5>'+
             '</div>';
             $("#CargarPublicacionesFinal").html(vacio);
@@ -3812,22 +3814,46 @@ var cargaImg = function(data) {
 
 
       }else{
+        if(data[i].formato=="IMG")
+        {
+            pubdd+=  '<div class="col s12 l8 offset-l2" > '+
+            '<div class="card"> '+
+            '       <div class="card-image waves-effect waves-block waves-light">'+
+            '          <img class="activator" src="/RedSocialBancaprepa/imagenes/publicaciones/'+data[i].imagen+'">'+
+            '     </div>'+
+            '    <div class="card-content">'+
+            '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+
+            '        <p>  &nbsp;&nbsp'+data[i].fecha+'&nbsp; '+data[i].hora+'</p>'+
+            '        </div>'+
+            '      <div class="card-reveal">'+
+            '           <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>'+data[i].titulo+'</span>'+
+            '            <p>'+data[i].descripcion+'.</p>'+
+            '         </div>'+
+            '  </div>'+
+            '</div> '; 
+        }
+        else
+        {
+            pubdd+=  '<div class="col s6 offset-l2" > '+
+            '<div class="card"> '+
+            '       <div class="card-image waves-effect waves-block waves-light">'+
+            '<video class="responsive-video" controls>'+
+            '<source src="imagenes/publicaciones/'+data[i].imagen+'" type="video/mp4">'+
+            '</video>'+
+            '     </div>'+
+            '    <div class="card-content">'+
+            '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+
+            '        <p>  &nbsp;&nbsp'+data[i].fecha+'&nbsp; '+data[i].hora+'</p>'+
+            '        </div>'+
+            '      <div class="card-reveal">'+
+            '           <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>'+data[i].titulo+'</span>'+
+            '            <p>'+data[i].descripcion+'.</p>'+
+            '         </div>'+
+            '  </div>'+
+            '</div> '; 
+        }
 
-          pubdd+=  '<div class="col s12 l8 offset-l2" > '+
-                        '<div class="card"> '+
-                        '       <div class="card-image waves-effect waves-block waves-light">'+
-                        '          <img class="activator" src="/RedSocialBancaprepa/imagenes/publicaciones/'+data[i].imagen+'">'+
-                        '     </div>'+
-                        '    <div class="card-content">'+
-                        '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+
-                        '        <p>  &nbsp;&nbsp'+data[i].fecha+'&nbsp; '+data[i].hora+'</p>'+
-                        '        </div>'+
-                        '      <div class="card-reveal">'+
-                        '           <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>'+data[i].titulo+'</span>'+
-                        '            <p>'+data[i].descripcion+'.</p>'+
-                        '         </div>'+
-                        '  </div>'+
-                        '</div> '; 
+         
       }
     
     $("#contPublicacion").html(pubdd);

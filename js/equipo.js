@@ -195,7 +195,7 @@ $(document).ready(function(){
             var tableReg = document.getElementById('tablaInventario');
 			var sucursal_id = $("#sucursalesdd").val();
             
-            onRequest({ opcion : 109 ,sucursal:sucursal_id}, respInsertarEnInventarioGeneral);
+            
 
             console.log("LENGHT= "+(tableReg.rows.length-1));
             // Recorremos todas las filas con contenido de la tabla
@@ -346,8 +346,23 @@ $(document).ready(function(){
             else
             {
                 $('#modalCrearInventario').modal('open'); 
+                onRequest({ opcion : 109 ,sucursal:sucursal_id}, respInsertarEnInventarioGeneral);
             }
        });
+
+       $("#cancelarCreaciondeInventario").click(function() {
+
+        var opcion = confirm("¿Seguro que desea salir? Se eliminará el inventario y no ha guardado nada.");
+                    if (opcion == true) 
+                    {
+                        onRequest({ opcion : 113}, respEliminarInventarioRecienCreado);
+                    } 
+                    else 
+                    {
+                        M.toast({html: 'Continue con la carga de equipos.', classes: 'rounded green'});
+                    }
+
+   });
     
 
 });
@@ -1781,7 +1796,9 @@ $(document).ready(function(){
                 d+="<tr> "+
                 '<td>'+data[i].id_equipo+'</td>'+ 
                 '<td>'+data[i].tipo_equipo+'</td>'+  
-                '<td>'+data[i].sucursal_nombre+'</td>'+                 
+                '<td>'+data[i].descripcion+'</td>'+   
+                '<td>'+data[i].sucursal_nombre+'</td>'+   
+                '<td>'+data[i].area+'</td>'+               
                 '<td>'+data[i].encargado+'</td>'+          
                 '<td>'+inv+'</td>'+             
                 '</tr> ';
@@ -1794,6 +1811,28 @@ $(document).ready(function(){
         $("#tablaInventarioDeEquipoVer").html(d);
 
         
+    }
+
+    
+
+    var respEliminarInventarioRecienCreado = function(data) 
+    {
+        if (!data && data == null) 
+        return; 
+
+        var id_inventario= data[0].id_inventario;
+        console.log("INVENTARIO ID= "+id_inventario);
+
+        
+        onRequest({ opcion : 120 ,inventario_id:id_inventario}, respInvEliminado);
+        
+    }
+
+
+    var respInvEliminado = function(data) 
+    {
+        M.toast({html: 'El Inventario recien creado ha sido eliminado.', classes: 'rounded red'});
+        $("#modalCrearInventario").modal("close");
     }
 
 
