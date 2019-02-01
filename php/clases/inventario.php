@@ -207,7 +207,7 @@
 						        '$txtMarca',
 						        '$txtModelo',
 						        '$txtSerie',
-						        5,
+						        12,
 						        CURDATE(),
 						        CURTIME(),
 						        $capturista_id);";   
@@ -233,10 +233,10 @@
 				$datos=array();
 				$i=0; 
 
-				 $query=" SELECT pe.id,te.descripcion,s.nomComercial,pe.descripcion,e.descripcion FROM b_pagos_especie pe
+				 $query=" SELECT pe.id,te.descripcion,s.nomComercial,pe.descripcion,e.descripcion,pe.distribuidora_id,pe.distribuidora FROM b_pagos_especie pe
 							 JOIN i_tipo_equipo te ON te.id=pe.tipo_id
 							 JOIN sucursales s ON s.id=pe.sucursal_id
-							 JOIN estatus e ON e.id=pe.estatus_id
+							 JOIN estatus e ON e.id=pe.estatus_id 
 							ORDER BY pe.id DESC";    
 							 
 					$respuesta= mysqli_query($this->con(), $query);  
@@ -247,6 +247,9 @@
 					   $datos[$i]['sucursal'] = $res[2];
 					   $datos[$i]['descripcion'] = $res[3];
 					   $datos[$i]['estatus'] = $res[4];
+					   $datos[$i]['distribuidora_id'] = $res[5];
+					   $datos[$i]['distribuidora'] = $res[6];
+
 					   $i++;
 
 					} 
@@ -254,7 +257,30 @@
 				return $datos;
 			}
 
-			public function deshabilitarPagoEspecie($id,$motivo){
+			public function cambiarEstatusPago($id,$motivo,$sltEstatusPago){
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				$capturista_id=$_COOKIE["b_capturista_id"];
+
+				 $query="SELECT estatus_id FROM b_pagos_especie WHERE id=$id";   
+					$respuesta= mysqli_query($this->con(), $query);  
+					while ($res = mysqli_fetch_row($respuesta)) {
+					   $estatus_actual = $res[0]; 
+					}
+
+
+				$query="INSERT INTO b_cambio_estatus_pe (pago_id,motivo,estatus_actual,estatus_nuevo,fecha_registro,hora_registro,capturista_id)
+													VALUE($id,'$motivo',$estatus_actual,$sltEstatusPago,CURDATE(),CURTIME(),$capturista_id)";   
+				$respuesta= mysqli_query($this->con(), $query);  
+
+
+				$query="UPDATE b_pagos_especie SET estatus_id=$sltEstatusPago WHERE id=$id";   
+				$respuesta= mysqli_query($this->con(), $query);  
+
+				return $datos[$i]['respuesta'] = '2';
+
 
 			}
 

@@ -1,10 +1,10 @@
 
 <!--MODAL PARA DESHABILITAR-->
 <div id="modalDeshabilitar" class="modal">
-                <nav class=" red accent-4">
+                <nav class=" blue accent-4">
                     <div class="nav-wrapper">
                         <a href="#!" class="brand-logo">
-                            Deshabilitar Pago
+                             Cambiar Estatus
                         </a>
                     </div>
                 </nav>
@@ -12,10 +12,20 @@
                     <div class="container"> 
                         <div class="row"><!-- ROW 1-->
                             <div class="input-field col l2">
-                              <input id="txtIdCancelacion" class="black-text" type="text" placeholder=" " disabled>
-                              <label class="black-text active" for="txtIdCancelacion"  >Id</label>
+                              <input id="txtIdEstatus" class="black-text" type="text" placeholder=" " disabled>
+                              <label class="black-text active" for="txtIdEstatus"  >Id</label>
                             </div>
-                            <div class="input-field col l10">
+                              <div class="input-field col l4">
+                                      <select id="sltEstatusPago">
+                                        <option value="0" disabled selected>Seleccione una Opcion</option>
+                                        <option value="5">ACTIVO</option>
+                                        <option value="3">CANCELADO</option>
+                                        <option value="11">VENDIDO</option>
+                                        <option value="12">STOCK</option>
+                                      </select>
+                                <label>Estatus</label>
+                              </div>
+                            <div class="input-field col l6">
                               <textarea id="txtMotivo" class="materialize-textarea" placeholder=" "></textarea>
                                  <label for="txtMotivo" class="black-text">Motivo</label>
                             </div>
@@ -25,7 +35,7 @@
                 </div>
                 <div class="row" >
                             <div class="col s6 right"    >
-                            <a onclick="cancelarPagoEspecie()" class="waves-effect waves-light btn  accent-4 green"><i class="material-icons left">done</i>Aceptar</a>
+                            <a onclick="cambiarEstatusPago()" class="waves-effect waves-light btn  accent-4 green"><i class="material-icons left">done</i>Aceptar</a>
                                 
                             </div>
                             <div class="col s6 "   >
