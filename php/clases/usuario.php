@@ -3420,10 +3420,11 @@
 
 				
 				$sql="SELECT e.id, e.descripcion, e.nota_cancelacion, e.fecha_baja, e.num_equipo, e.marca, e.modelo, e.serie, e.sucursal_id, e.valor_factura, e.area_id,
-				e.tipo_equipo_id, s.nomComercial,t.`descripcion`
+				e.tipo_equipo_id, s.nomComercial,t.`descripcion`, IFNULL(c.`descripcion`,'-')
 				FROM i_equipo e
 				INNER JOIN sucursales s ON s.`id`=e.sucursal_id
 				INNER JOIN i_tipo_equipo t ON t.`id`=e.`tipo_equipo_id`
+				LEFT JOIN capturistas c ON c.id=e.`encargado_id`
 				WHERE e.id=$idequipo and e.estatus_id=5"; 
 
 				$resultado = mysqli_query($this->con(), $sql); 
@@ -3443,6 +3444,7 @@
 				   $datos[$i]['tipo'] = $res[11];
 				   $datos[$i]['nombre_sucursal'] = $res[12];
 				   $datos[$i]['tipo_equipo'] = $res[13];
+				   $datos[$i]['encargado'] = $res[14];
 				   $i++;
 
 				} 

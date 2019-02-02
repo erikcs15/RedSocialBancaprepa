@@ -1628,7 +1628,7 @@ $(document).ready(function(){
             {
                 if(sucursal==data[0].sucursal)
                 {
-                    var fila="<tr><td>"+data[0].id+"</td><td>"+data[0].tipo_equipo+"</td><td>"+data[0].descripcion+"</td><td>"+data[0].nombre_sucursal+"</td><td>"+data[0].marca+"</td><td>"+data[0].modelo+"</td></tr> "+
+                    var fila="<tr><td>"+data[0].id+"</td><td>"+data[0].tipo_equipo+"</td><td>"+data[0].descripcion+"</td><td>"+data[0].nombre_sucursal+"</td><td>"+data[0].marca+"</td><td>"+data[0].encargado+"</td></tr> "+
                     '<td><input type="button" class="borrar" value="Eliminar" /></td>';
                     var btn = document.createElement("TR");
                     btn.innerHTML=fila;
@@ -1641,7 +1641,7 @@ $(document).ready(function(){
                     if (opcion == true) 
                     {
                         
-                        var fila="<tr><td>"+data[0].id+"</td><td>"+data[0].tipo_equipo+"</td><td>"+data[0].descripcion+"</td><td>"+data[0].nombre_sucursal+"</td><td>"+data[0].marca+"</td><td>"+data[0].modelo+"</td></tr> "+
+                        var fila="<tr><td>"+data[0].id+"</td><td>"+data[0].tipo_equipo+"</td><td>"+data[0].descripcion+"</td><td>"+data[0].nombre_sucursal+"</td><td>"+data[0].marca+"</td><td>"+data[0].encargado+"</td></tr> "+
                         '<td><input type="button" class="borrar" value="Eliminar" /></td>';
                         var btn = document.createElement("TR");
                         btn.innerHTML=fila;
@@ -1700,7 +1700,8 @@ $(document).ready(function(){
         console.log("Terminaste los deberes!");
         M.toast({html: 'Inventario editado.', classes: 'rounded green'});
 
-        location.reload();
+        //location.reload();
+        onRequest({ opcion : 115, inventario_id:id_inventario }, respCargarInventarioParaEditar);
 
 
     }
