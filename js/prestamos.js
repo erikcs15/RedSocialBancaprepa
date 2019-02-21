@@ -29,7 +29,7 @@ $(document).ready(function(){
           var montoSolicitado=0;
           montoSolicitado= parseInt($("#monto_solicitado").val());
           var interes = 0;
-          interes= (montoSolicitado*0.05)*mesesApagar;
+          interes= (montoSolicitado*0.03)*mesesApagar;
           var total_pagar=0;
           total_pagar=interes+montoSolicitado;
           var descuento=0;
@@ -126,6 +126,7 @@ $(document).ready(function(){
             
             var montoFinal= $('#montoAutorizar').val();
             prestamosp({ opcion : 7,id_prestamo:id_prestamo, coment:comentarios, capturista_autoriza:usuario_autorizador, montoAutorizado:montoFinal},respAutorizarPrestamo );
+            console.log("ID DEL PRESTAMO ANTES DE REAJUSTAR LA SOLICiTuD="+id_prestamo);
             prestamosp({ opcion : 8,id_solicitud:id_prestamo},respReajustarSolicitud );
             prestamosp({ opcion : 6}, respCargarSolicitudes);
         } 
@@ -552,6 +553,15 @@ $(document).ready(function(){
     var respReajustarSolicitud = function(data) {
         if (!data && data == null)
         return;
+
+
+        var f = new Date();
+
+        console.log("1|monto autorizado:|"+$("#montoAutorizar").val());
+        console.log("1|quincenas:|"+data[0].quincenas);
+        $("#montoAutorizar").val();
+
+        
         var id_solicitud=0;
         id_solicitud=data[0].id;
         var quincenas=0;
@@ -559,15 +569,15 @@ $(document).ready(function(){
         var mesesApagar=0;
         mesesApagar=quincenas/2;
         var montoAutorizadoF=0;
-        montoAutorizadoF= parseInt(data[0].monto_autorizado);
+        montoAutorizadoF= parseInt($("#montoAutorizar").val());
         var interes = 0;
-        interes =parseInt((montoAutorizadoF*0.05)*mesesApagar);
+        interes =parseInt((montoAutorizadoF*0.03)*mesesApagar);
         var total_pagar=0;
         total_pagar=parseInt(interes+montoAutorizadoF);
         var descuento=0;
         descuento=(total_pagar/quincenas).toFixed(2);
         var totalConLetra = NumeroALetras(total_pagar);
-        var fecha_autorizado = data[0].fecha_autorizado;
+        var fecha_autorizado =  f.getFullYear()+ "-" + (f.getMonth() +1) + "-" +f.getDate() ;
 
         console.log("|monto autorizado:|"+montoAutorizadoF);
         console.log("|quincenas:|"+quincenas);

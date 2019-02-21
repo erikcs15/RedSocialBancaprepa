@@ -101,11 +101,11 @@ if($num_equipo > 0)
 		
 	}
 }*/
-$df->Ln(12);
+$df->Ln(6);
 $df->Multicell(180,5,utf8_decode("                                                 ________________________________                   "),0,'',0);
-$df->Multicell(180,5,utf8_decode("                                                    $nombre "),0,'',0);
+$df->Multicell(180,5,utf8_decode("                                               $nombre "),0,'',0);
 $df->Multicell(180,5,utf8_decode("                                                     Acreedor del prestamo personal  "),0,'',0);
-$df->Ln(20);
+$df->Ln(16);
 $df->Multicell(180,5,utf8_decode("        ________________________________             _________________________________   "),0,'',0);
 $df->Multicell(180,5,utf8_decode("                          Nombre Gerente                                                       Firma Gerente               "),0,'',0);
 

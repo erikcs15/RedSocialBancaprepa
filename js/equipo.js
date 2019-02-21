@@ -942,7 +942,7 @@ $(document).ready(function(){
         console.log(data);
         console.log("------------"+data);
             for (var i = 0; i < data.length; i++) {
-                console.log("numero de equipo: "+data[i].numEquipo);
+               
                
                 if(data[i].estatus=="BAJA")
                 {
