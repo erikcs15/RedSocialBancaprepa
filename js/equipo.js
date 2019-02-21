@@ -1152,7 +1152,7 @@ $(document).ready(function(){
     
         $("#modalEditarEquipo").modal("close");
     
-        busquedaEquipo();
+   
     }
 
     var respCargaAreas = function(data) {  
