@@ -10,13 +10,13 @@
 		 
 		
  		case 1: 
- 			   echo (json_encode($ticket->crearTicket($_REQUEST['capturista'],$_REQUEST['titulo'],$_REQUEST['desc'],$_REQUEST['email'],$_REQUEST['tel'])));
+ 			   echo (json_encode($ticket->crearTicket($_REQUEST['capturista'],$_REQUEST['titulo'], $_REQUEST['departamento_id'],$_REQUEST['desc'],$_REQUEST['email'],$_REQUEST['tel'])));
 		break; 
 		case 2: 
 				echo (json_encode($ticket->cargarTicketsXusuario($_REQUEST['capturista'])));
 		break;
 		case 3:
-				echo (json_encode($ticket->cargarTickets()));
+				echo (json_encode($ticket->cargarTickets($_REQUEST['estatus_id'])));
 		break;
 		case 4:
 				echo (json_encode($ticket->cargarTicketsXid($_REQUEST['id_ticket'])));
@@ -32,6 +32,12 @@
 		break;
 		case 8:
 				echo (json_encode($ticket->cargarMensajesAdmiTicket($_REQUEST['ticket_id'])));
+		break;
+		case 9:
+				echo (json_encode($ticket->cargarSelectEstatus()));
+		break;
+		case 10:
+				echo (json_encode($ticket->cargarEstatusTicket2($_REQUEST['id_estatus'])));
 		break;
  	}
  

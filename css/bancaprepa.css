@@ -174,3 +174,28 @@
     -o-transform:rotate(-10deg);
     transform:rotate(-10deg);
 }
+
+.center1 {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.materialize-textarea
+{
+  height:600px;
+}
+
+#descripcionTicket {
+  margin:10px 0;
+  height:300px;
+}
+
+#comentarioTicket {
+  margin:10px 0;
+  height:300px;
+}
+
+#comentarioTicketAdm {
+  margin:10px 0;
+  height:300px;
+}

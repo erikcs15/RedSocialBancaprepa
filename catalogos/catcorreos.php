@@ -37,13 +37,13 @@
                                     <input id="nombreAbuscarCor" type="text" class="validate" placeholder="Nombre" onkeyup="buscaEmpleadosCor()"/>
                                     <label for="nombreAbuscarCor">Nombre</label>
                     </div>
-                    <div class="input-field col l3 s12">
+                    <div class="input-field col l3 s6">
                             <i class="material-icons prefix">business</i>
                             <select id="sucursalesAbuscar">
                             </select>
                             <label>Sucursal</label>
                     </div>
-                    <div class="input-field col l3 s12">
+                    <div class="input-field col l3 s6">
                                     <i class="material-icons prefix">folder_open</i>
                                     <select id="puestosCor">
                                     </select>
@@ -55,7 +55,7 @@
                             <label for="Id" class="activate" '></label>
                             <input placeholder="Id" id="idficticio" type="text" class="validate" style='display:none;' >
                     </div>
-                     <div class="input field col l4 " id="listaEmpleadosBC">
+                     <div class="input field col l4 s12" id="listaEmpleadosBC">
                                     <table class="highlight">
                                                     <tbody id="listaEmpleadosTablaBC">
                                                     

@@ -22,8 +22,8 @@
             setlocale(LC_ALL,"es_ES");
             $dias_mes = date("t",$dias_mes);
             return $dias_mes;
-    }
-        public function crearSolicitud($capturista_id,$fechaSolicitud, $puesto_id, $sucursal_id, $empresa_id, $numTarjeta, $beneficiarioCta, $nombreBanco, $montoSolicitado, $quincenas, $mesesApagar, $interes_prestamo, $tipo_abono, $descuento_mensual, $monto_total, $inicioDes, $finDes,$monto_letra)
+        }
+        public function crearSolicitud($capturista_id,$fechaSolicitud, $puesto_id, $sucursal_id, $empresa_id, $numTarjeta, $beneficiarioCta, $nombreBanco, $montoSolicitado, $quincenas, $mesesApagar, $interes_prestamo, $tipo_abono, $descuento_mensual, $monto_total, $inicioDes, $finDes,$monto_letra, $porc_interes)
         {
             $res=array();
 				$datos=array();
@@ -31,12 +31,12 @@
 				$i=0;	
 				$sql="INSERT INTO b_prestamo_solicitudes (capturista_id, fecha_solicitud, puesto_id, sucursal_id, empresa_id, 
                         numTarjeta, beneficiarioCuenta, nombreBanco, monto_solicitado, quincenas, meses_a_pagar, interes_prestamo, 
-                        tipo_abono, descuento_mensual, monto_total, inicio_descuento, fin_descuento, estatus_id, monto_letra)
+                        tipo_abono, descuento_mensual, monto_total, inicio_descuento, fin_descuento, estatus_id, monto_letra, porc_interes)
                         VALUES ($capturista_id,'$fechaSolicitud', $puesto_id, $sucursal_id, $empresa_id, '$numTarjeta', '$beneficiarioCta', 
                         '$nombreBanco', $montoSolicitado, $quincenas, $mesesApagar, $interes_prestamo, '$tipo_abono', $descuento_mensual, 
-                        $monto_total, '$inicioDes', '$finDes', 4, '$monto_letra')";
+                        $monto_total, '$inicioDes', '$finDes', 4, '$monto_letra', $porc_interes)";
            
-          
+                
 				$resultado = mysqli_query($this->con(), $sql);   
 	
 				$datos['b_prestamo_solicitudes'] =  array('0' => '0' );
@@ -51,7 +51,7 @@
             $i=0; 
             $sql="SELECT p.id, c.descripcion,p.fecha_solicitud,p.monto_solicitado, p.monto_total, e.descripcion, 
                 IFNULL(p.fecha_autorizado, '-'),IFNULL(c2.`descripcion`, '-'), p.descuento_mensual, IFNULL(p.comentarios_autorizacion, '-'),
-                p.monto_autorizado, p.quincenas, p.estatus_id
+                p.monto_autorizado, p.quincenas, p.estatus_id,  p.`archivo_responsiva`
                 FROM b_prestamo_solicitudes p
                 INNER JOIN estatus e ON e.id=p.estatus_id
                 INNER JOIN capturistas c ON c.id=p.capturista_id
@@ -74,6 +74,7 @@
                 $datos[$i]['monto_autorizado'] = $res[10];
                 $datos[$i]['quincenas'] = $res[11];
                 $datos[$i]['id_estatus'] = $res[12];
+                $datos[$i]['link'] = $res[13];
                 $i++;
 
             } 
@@ -128,18 +129,86 @@
         }
 
         
-        public function cargarSolicitudes()
+        public function cargarSolicitudes($suc, $estatus_id, $capid, $fecha_ini, $fecha_fin)
         {
             
             $res=array();
             $datos=array();
             $i=0; 
+            $q="";
+            if($suc>0 AND $estatus_id<=0 AND $capid<=0 AND $fecha_ini<=0 AND $fecha_fin<=0)
+            {	
+                $q = "WHERE c.sucursal_id=$suc";
+            }
+            if($suc>0 AND $estatus_id>0 AND $capid<=0 AND $fecha_ini<=0 AND $fecha_fin<=0)
+            {	
+                $q = "WHERE c.sucursal_id=$suc AND p.estatus_id=$estatus_id";
+            }
+            if($suc>0 AND $estatus_id<=0 AND $capid>0 AND $fecha_ini<=0 AND $fecha_fin<=0)
+            {	
+                $q = "WHERE c.sucursal_id=$suc AND p.capturista_id=$capid";
+            }
+            if($suc>0 AND $estatus_id<=0 AND $capid<=0 AND $fecha_ini>0 AND $fecha_fin>0)
+            {	
+                $q = "WHERE c.sucursal_id=$suc AND p.fecha_solicitud BETWEEN '$fecha_ini' AND '$fecha_fin'";
+            }
+            if($suc>0 AND $estatus_id<=0 AND $capid>0 AND $fecha_ini>0 AND $fecha_fin>0)
+            {	
+                $q = "WHERE c.sucursal_id=$suc AND p.capturista_id=$capid AND p.fecha_solicitud BETWEEN '$fecha_ini' AND '$fecha_fin'";
+            }
+            if($suc>0 AND $estatus_id>0 AND $capid>0 AND $fecha_ini<=0 AND $fecha_fin<=0)
+            {	
+                $q = "WHERE c.sucursal_id=$suc AND p.estatus_id=$estatus_id AND p.capturista_id=$capid ";
+            }
+            //-------------------------
+            if($suc<=0 AND $estatus_id>0 AND $capid<=0 AND $fecha_ini<=0 AND $fecha_fin<=0)
+            {	
+                $q = "WHERE p.estatus_id=$estatus_id";
+            }
+            if($suc<=0 AND $estatus_id>0 AND $capid>0 AND $fecha_ini<=0 AND $fecha_fin<=0)
+            {	
+                $q = "WHERE p.estatus_id=$estatus_id AND p.capturista_id=$capid";
+            }
+            if($suc<=0 AND $estatus_id>0 AND $capid>0 AND $fecha_ini>0 AND $fecha_fin>0)
+            {	
+                $q = "WHERE p.estatus_id=$estatus_id AND (p.fecha_solicitud BETWEEN '$fecha_ini' AND '$fecha_fin')";
+            }
+            if($suc<=0 AND $estatus_id>0 AND $capid>0 AND $fecha_ini>0 AND $fecha_fin>0)
+            {	
+                $q = "WHERE p.estatus_id=$estatus_id AND p.capturista_id=$capid AND (p.fecha_solicitud BETWEEN '$fecha_ini' AND '$fecha_fin')";
+            }
+            if($suc<=0 AND $estatus_id>0 AND $capid<=0 AND $fecha_ini>0 AND $fecha_fin>0)
+            {	
+                $q = "WHERE p.estatus_id=$estatus_id AND (p.fecha_solicitud BETWEEN '$fecha_ini' AND '$fecha_fin')";
+            }
+            //-------------------------------------------
+            if($suc<=0 AND $estatus_id<=0 AND $capid>0 AND $fecha_ini<=0 AND $fecha_fin<=0)
+            {	
+                $q = "WHERE p.capturista_id=$capid";
+            }
+            if($suc<=0 AND $estatus_id<=0 AND $capid>0 AND $fecha_ini>0 AND $fecha_fin>0)
+            {	
+                $q = "WHERE p.capturista_id=$capid AND (p.fecha_solicitud BETWEEN '$fecha_ini' AND '$fecha_fin')";
+            }
+            //---------------------------------------------------
+            if($suc<=0 AND $estatus_id<=0 AND $capid<=0 AND $fecha_ini>0 AND $fecha_fin>0)
+            {	
+                $q = "WHERE p.fecha_solicitud BETWEEN '$fecha_ini' AND '$fecha_fin'";
+            }
+            if($suc>0 AND $estatus_id>0 AND $capid>0 AND $fecha_ini>0 AND $fecha_fin>0)
+            {	
+                $q = "WHERE c.sucursal_id=$suc AND p.estatus_id=$estatus_id AND p.capturista_id=$capid AND (p.fecha_solicitud BETWEEN '$fecha_ini' AND '$fecha_fin')";
+            }
+
+
             $sql="SELECT p.id, c.descripcion,p.fecha_solicitud,p.monto_solicitado, p.monto_total, e.descripcion, 
-                IFNULL(p.fecha_autorizado, '-'), IFNULL(p.capturista_id_autorizo, '-'), p.descuento_mensual, IFNULL(p.comentarios_autorizacion, '-'),
-                IFNULL(p.monto_autorizado,'-'), p.`quincenas`, p.estatus_id, p.`archivo_responsiva`
-                FROM b_prestamo_solicitudes p
-                INNER JOIN estatus e ON e.id=p.estatus_id
-                INNER JOIN capturistas c ON c.id=p.capturista_id ORDER BY p.id DESC";
+                    IFNULL(p.fecha_autorizado, '-'), IFNULL(p.capturista_id_autorizo, '-'), p.descuento_mensual, IFNULL(p.comentarios_autorizacion, '-'),
+                    IFNULL(p.monto_autorizado,'-'), p.`quincenas`, p.estatus_id, p.`archivo_responsiva`, p.numTarjeta, p.nombreBanco, p.beneficiarioCuenta,
+                    suc.`nomComercial`, p.capturista_id
+                    FROM b_prestamo_solicitudes p
+                    INNER JOIN estatus e ON e.id=p.estatus_id
+                    INNER JOIN capturistas c ON c.id=p.capturista_id 
+                    INNER JOIN sucursales suc ON suc.id=c.sucursal_id ".$q." ORDER BY p.id DESC";
 
             
 
@@ -160,6 +229,11 @@
                 $datos[$i]['quincenas'] = $res[11];
                 $datos[$i]['id_estatus'] = $res[12];
                 $datos[$i]['ruta'] = $res[13];
+                $datos[$i]['numTarjeta'] = $res[14];
+                $datos[$i]['nombreBanco'] = $res[15];
+                $datos[$i]['beneficiarioCuenta'] = $res[16];
+                $datos[$i]['sucursalNombre'] = $res[17];
+                $datos[$i]['id_capturista'] = $res[18];
                 $i++;
 
             } 
@@ -465,7 +539,7 @@
             $datos=array();
             $resultado  =array();
            
-            $sql="UPDATE b_prestamo_solicitudes SET inicio_descuento='$interes', fin_descuento='$fecha_fin' WHERE id=$id_solicitud";
+            $sql="UPDATE b_prestamo_solicitudes SET inicio_descuento='$fecha_ini', fin_descuento='$fecha_fin' WHERE id=$id_solicitud";
             
             $resultado = mysqli_query($this->con(), $sql);   
             $datos['b_prestamo_solicitudes'] =  array('0' => '0' );
@@ -538,7 +612,7 @@
                 
             mysqli_query($this->con(), "SET lc_time_names = 'es_ES';"); 
 
-            $sql="SELECT DATE_FORMAT( CURDATE(), '%d de %M de %Y') AS fecha, c.`descripcion`, s.`monto_solicitado`, CURDATE() 
+            $sql="SELECT DATE_FORMAT( CURDATE(), '%d de %M de %Y') AS fecha, c.`descripcion`, s.`monto_solicitado`, CURDATE(), s.id, s.fin_descuento
             FROM b_prestamo_solicitudes s 
             INNER JOIN capturistas c ON c.`id`= s.`capturista_id`
             WHERE s.id=$id_solicitud"; 
@@ -550,6 +624,8 @@
                 $datos[$i]['nombre_capturista'] = $res[1];
                 $datos[$i]['monto_autorizado'] = $res[2];
                 $datos[$i]['fechaR'] = $res[3];
+                $datos[$i]['id_solicitud'] = $res[4];
+                $datos[$i]['fin_descuento'] = $res[5];
                 $i++;
 
             } 
@@ -560,8 +636,7 @@
             return $datos;  
         }
 
-        public function cargarArchivoResponsiva($id_solicitud)
-        {
+        public function cargarArchivoResponsiva($id_solicitud){
             $q="";
             $res=array();
             $datos=array();
@@ -580,7 +655,7 @@
             if ( count($datos )==0) { 
                 $datos[0]['id']  =0;
                 return  $datos; 
-                }
+            }
             return $datos;  
         }
 
@@ -596,6 +671,187 @@
             $datos['b_prestamo_solicitudes'] =  array('0' => '0' );
             return  $datos;	
         }
+
+        public function cargarSucursales()
+        {
+            $q="";
+            $res=array();
+            $datos=array();
+            $i=0; 
+            $sql="SELECT id, nomComercial 
+                    FROM sucursales
+                    ORDER BY nomComercial ASC"; 
+                
+            $resultado = mysqli_query($this->con(), $sql); 
+            while ($res = mysqli_fetch_row($resultado)) {
+
+                $datos[$i]['id'] = $res[0];
+                $datos[$i]['nomComercial'] = $res[1];
+                $i++;
+
+            } 
+            if ( count($datos )==0) { 
+                $datos[0]['id']  =0;
+                return  $datos; 
+                }
+            return $datos;  
+        }
+
+        public function cargarEstatus()
+        {
+            $q="";
+            $res=array();
+            $datos=array();
+            $i=0; 
+            $sql="SELECT id,descripcion 
+                    FROM estatus
+                    WHERE id=5 OR id=4 OR id=3 OR id=14"; 
+                
+            $resultado = mysqli_query($this->con(), $sql); 
+            while ($res = mysqli_fetch_row($resultado)) {
+
+                $datos[$i]['id'] = $res[0];
+                $datos[$i]['descripcion'] = $res[1];
+                $i++;
+
+            } 
+            if ( count($datos )==0) { 
+                $datos[0]['id']  =0;
+                return  $datos; 
+                }
+            return $datos;  
+        }
+
+        public function eliminarResponsiva($prestamoId)
+        {
+            $res=array();
+            $datos=array();
+            $resultado  =array();
+           
+            $sql="UPDATE b_prestamo_solicitudes SET archivo_responsiva=NULL WHERE id=$prestamoId";
+            
+            $resultado = mysqli_query($this->con(), $sql);   
+            $datos['b_prestamo_solicitudes'] =  array('0' => '0' );
+            return  $datos;	
+        }
+
+        public function cargarPagosPorFecha($fecha)
+        {
+            $q="";
+            $res=array();
+            $datos=array();
+            $i=0; 
+            $sql="SELECT c.id, c.descripcion, s.id, cor.num_pago, cor.abono, cor.abonado, cor.fecha_pago, 
+                IF('$fecha'<=cor.fecha_pago, 'Actual', 'Atrasado') AS actual, cor.id 
+                FROM b_prestamo_solicitudes s
+                INNER JOIN b_prestamo_corridas cor ON cor.prestamo_personal_id=s.id
+                INNER JOIN capturistas c ON c.id=s.capturista_id
+                WHERE cor.fecha_pago='$fecha' AND s.estatus_id=14
+                UNION
+                SELECT c.id, c.descripcion, s.id, cor.num_pago, cor.abono, cor.abonado, cor.fecha_pago, 
+                IF('$fecha'<=cor.fecha_pago, 'Actual', 'Atrasado') AS actual, cor.id 
+                FROM b_prestamo_solicitudes s
+                INNER JOIN b_prestamo_corridas cor ON cor.prestamo_personal_id=s.id
+                INNER JOIN capturistas c ON c.id=s.capturista_id
+                WHERE cor.fecha_pago<='$fecha' AND s.estatus_id=14 AND cor.abonado='NO'"; 
+                
+            $resultado = mysqli_query($this->con(), $sql); 
+            while ($res = mysqli_fetch_row($resultado)) {
+
+                $datos[$i]['id_capturista'] = $res[0];
+                $datos[$i]['capturista'] = $res[1];
+                $datos[$i]['prestamo_id'] = $res[2];
+                $datos[$i]['num_pago'] = $res[3];
+                $datos[$i]['abono'] = $res[4];
+                $datos[$i]['abonado'] = $res[5];
+                $datos[$i]['fecha_de_pago'] = $res[6];
+                $datos[$i]['actual_atrasado'] = $res[7];
+                $datos[$i]['id_num_pago'] = $res[8];
+                $i++;
+
+            } 
+            if ( count($datos )==0) { 
+                $datos[0]['id_capturista']  =0;
+                return  $datos; 
+                }
+            return $datos;  
+        }
+
+        public function reflejarPago($corrida_prestamoId)
+        {
+            $res=array();
+            $datos=array();
+            $resultado  =array();
+           
+            $sql="UPDATE b_prestamo_corridas SET abonado='SI' WHERE id=$corrida_prestamoId";
+            
+            $resultado = mysqli_query($this->con(), $sql);   
+            $datos['b_prestamo_corridas'] =  array('0' => '0' );
+            return  $datos;	
+        }
+
+        public function cargarReporte1Excel($suc)
+        {
+            $q="";
+            $res=array();
+            $datos=array();
+            $i=0; 
+            $add="";
+            if($suc>0)
+            {
+                $add="AND c.sucursal_id=$suc";
+            }
+            else{
+                $add="";
+            }
+            $sql='SELECT suc.nomComercial,c.id, c.descripcion, c.fecha_ingreso, c.sueldo_complemento, s.monto_autorizado, 
+                    s.monto_total, s.inicio_descuento, s.fin_descuento, 
+                    (SELECT COUNT(id)
+                    FROM b_prestamo_corridas cor
+                    WHERE prestamo_personal_id = s.id AND abonado="SI") , s.quincenas, s.descuento_mensual
+                    FROM b_prestamo_solicitudes s
+                    INNER JOIN capturistas c ON c.id=s.capturista_id 
+                    INNER JOIN sucursales suc ON suc.id=c.sucursal_id
+                    WHERE s.estatus_id=14 '.$add.' '; 
+                
+            $resultado = mysqli_query($this->con(), $sql); 
+            while ($res = mysqli_fetch_row($resultado)) {
+
+                $datos[$i]['nombre_sucursal'] = $res[0];
+                $datos[$i]['id_capturista'] = $res[1];
+                $datos[$i]['capturista'] = $res[2];
+                $datos[$i]['fecha_ingreso'] = $res[3];
+                $datos[$i]['sueldo_complemento'] = $res[4];
+                $datos[$i]['monto_autorizado'] = $res[5];
+                $datos[$i]['monto_total'] = $res[6];
+                $datos[$i]['inicio_descuento'] = $res[7];
+                $datos[$i]['fin_descuento'] = $res[8];
+                $datos[$i]['numde_quincenasPag'] = $res[9];
+                $datos[$i]['quincenas_totales'] = $res[10];
+                $datos[$i]['descuento_mensual'] = $res[11];
+                $i++;
+
+            } 
+            if ( count($datos )==0) { 
+                $datos[0]['id_capturista']  =0;
+                return  $datos; 
+                }
+            return $datos;  
+        }
+
+        public function dispersarPrestamo($prestamo_id)
+        {
+            $res=array();
+            $datos=array();
+            $resultado  =array();
+           
+            $sql="UPDATE b_prestamo_solicitudes SET estatus_id=14 WHERE id=$prestamo_id";
+            
+            $resultado = mysqli_query($this->con(), $sql);   
+            $datos['b_prestamo_solicitudes'] =  array('0' => '0' );
+            return  $datos;	
+        }
+
 
        
 

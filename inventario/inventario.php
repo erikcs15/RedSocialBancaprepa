@@ -217,9 +217,20 @@
            </nav>
            <div class="modal-content modal-lg">
            <form class="col s12">
-                  
-                 
-                   <div class="col s4">
+                  <div class="row">
+                    <div class="input-field col s4">
+                        <i class="material-icons prefix">business</i>
+                        <select id="areadd">
+                        </select>
+                        <label>Area:</label>
+                   </div>
+                   <div class="input-field col s5">
+                        <a id="btnBusquedaPorArea"  class="waves-effect btn blue darken-4"><i class="material-icons left">search</i>Buscar</a>
+                   </div>
+                   <div class="input-field col s3">
+                        <a id="btnExcelInventario"  class="waves-effect btn blue darken-4"><i class="material-icons left">developer_board</i>Excel</a>
+                   </div>
+                   <div class="col s12">
                         <table class="responsive-table" id="tablaInventarioVer">
                             <thead >
                             <tr id="trCreaInventarioVer">
@@ -237,7 +248,31 @@
                                 
                             </tbody>
                         </table>
+
+                        <table class="highlight" width="100%"  border="0" cellspacing="0" cellpadding="0" style="display:none">
+                                        <thead >
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Tipo de Equipo</th>
+                                            <th>Descripcion</th>
+                                            <th>Sucursal</th>
+                                            <th>Area</th>
+                                            <th>Encargado</th>
+                                            <th>Inventariado</th>
+                                            <th>Marca</th>
+                                            <th>Modelo</th>
+                                            <th>Valor Factura</th>
+                                            <th>Serie</th>
+        
+                                        </tr>
+                                        </thead>
+
+                                        <tbody id="tablaInventarioDeEquipoVer2">
+                                           
+                                        </tbody>
+                                    </table>
                     </div>
+                  </div>
                </form>         
           
            </div>

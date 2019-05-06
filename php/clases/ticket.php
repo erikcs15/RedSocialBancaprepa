@@ -5,7 +5,7 @@
     class ticket extends Conectar
     {
         
-        public function crearTicket($capturistaId,$titulo,$desc, $email, $telefono) 
+        public function crearTicket($capturistaId,$titulo, $tipo, $desc, $email, $telefono) 
         {
             $res=array();
             $datos=array();
@@ -13,8 +13,8 @@
             $i=0;
 
 
-            $sql="INSERT INTO b_tickets(capturista_id,titulo,descripcion, email, telefono, fecha_creacion, hora_creacion, estatus_id) 
-                     VALUES($capturistaId, '$titulo', '$desc', '$email', $telefono, CURDATE(), CURTIME(), 13)";
+            $sql="INSERT INTO b_tickets(capturista_id,titulo, departamento_id, descripcion, email, telefono, fecha_creacion, hora_creacion, estatus_id) 
+                     VALUES($capturistaId, '$titulo', '$tipo','$desc', '$email', $telefono, CURDATE(), CURTIME(), 13)";
         
             $resultado = mysqli_query($this->con(), $sql);   
 
@@ -30,24 +30,28 @@
             $i=0; 
          
             
-            $sql="SELECT t.id, t.`titulo`, t.`descripcion`, c.`descripcion`, e.`descripcion`, c2.`descripcion`, t.estatus_id
+            $sql="SELECT t.id, t.`titulo`,DATE_FORMAT( t.fecha_creacion, '%d/%m/%Y') , t.`descripcion`, c.`descripcion`, e.`descripcion`, 
+                c2.`descripcion`, t.estatus_id, usu.`descripcion`
                 FROM b_tickets t
                 INNER JOIN capturistas c ON c.`id`=t.`capturista_id`
                 INNER JOIN estatus e ON e.`id`=t.`estatus_id`
                 LEFT JOIN capturistas c2 ON c2.id=t.`usuario_resolviendo`
+                INNER JOIN b_areas_apooyo usu ON usu.`id`=t.`departamento_id`
                 WHERE t.capturista_id=$capturista
-                ORDER BY e.`descripcion` ASC"; 
+                ORDER BY t.id DESC"; 
 
             $resultado = mysqli_query($this->con(), $sql); 
 
             while ($res = mysqli_fetch_row($resultado)) {
                 $datos[$i]['id'] = $res[0];
                 $datos[$i]['titulo'] = $res[1];
-                $datos[$i]['descripcion'] = $res[2];
-                $datos[$i]['solicitado'] = $res[3];
-                $datos[$i]['estatus'] = $res[4];
-                $datos[$i]['usuario_resolviendo'] = $res[5];
-                $datos[$i]['id_estatus'] = $res[6];
+                $datos[$i]['fecha'] = $res[2];
+                $datos[$i]['descripcion'] = $res[3];
+                $datos[$i]['solicitado'] = $res[4];
+                $datos[$i]['estatus'] = $res[5];
+                $datos[$i]['usuario_resolviendo'] = $res[6];
+                $datos[$i]['id_estatus'] = $res[7];
+                $datos[$i]['area_descripcion'] = $res[8];
                 $i++;
 
             } 
@@ -62,20 +66,29 @@
 
         }
 
-        public function cargarTickets()
+        public function cargarTickets($estatus_id)
         {
 
             $res=array();
             $datos=array();
             $i=0; 
+            $var="";
 
+            if($estatus_id>0)
+            {
+               $var= "WHERE t.estatus_id=$estatus_id";
+            }
+            else
+            {
+                $var="";
+            }
             
-            $sql="SELECT t.id, t.`titulo`, t.`descripcion`, c.`descripcion`, e.`descripcion`, c2.`descripcion`, t.estatus_id
+            $sql="SELECT t.id, t.`titulo`, t.`descripcion`, c.`descripcion`, e.`descripcion`, c2.`descripcion`, t.estatus_id,
+            DATE_FORMAT( t.fecha_creacion, '%d/%m/%Y'), t.`hora_creacion`
                 FROM b_tickets t
                 INNER JOIN capturistas c ON c.`id`=t.`capturista_id`
                 INNER JOIN estatus e ON e.`id`=t.`estatus_id`
-                left JOIN capturistas c2 ON c2.id=t.`usuario_resolviendo` 
-                ORDER BY e.`descripcion` ASC"; 
+                left JOIN capturistas c2 ON c2.id=t.`usuario_resolviendo` ".$var." ORDER BY e.`descripcion` ASC"; 
 
             $resultado = mysqli_query($this->con(), $sql); 
 
@@ -87,6 +100,8 @@
                 $datos[$i]['estatus'] = $res[4];
                 $datos[$i]['usuario_resolviendo'] = $res[5];
                 $datos[$i]['id_estatus'] = $res[6];
+                $datos[$i]['fechaC'] = $res[7];
+                $datos[$i]['horaC'] = $res[8];
                 $i++;
 
             } 
@@ -108,7 +123,7 @@
             $i=0; 
 
 
-            $sql="SELECT t.id, t.`titulo`,t.`estatus_id`
+            $sql="SELECT t.id, t.`titulo`,t.`fecha_creacion`, t.descripcion,  t.`estatus_id`
             FROM b_tickets t
             WHERE t.id=$id_ticket"; 
 
@@ -117,7 +132,9 @@
             while ($res = mysqli_fetch_row($resultado)) {
                 $datos[$i]['id'] = $res[0];
                 $datos[$i]['titulo'] = $res[1];
-                $datos[$i]['estatus'] = $res[2];
+                $datos[$i]['fecha'] = $res[2];
+                $datos[$i]['descripcion'] = $res[3];
+                $datos[$i]['estatus_id'] = $res[4];
                
                 $i++;
 
@@ -256,6 +273,78 @@
 
         }
 
+        public function cargarSelectEstatus()
+        {
+
+            $res=array();
+            $datos=array();
+            $i=0; 
+
+            
+            $sql=" SELECT id, descripcion 
+            FROM estatus
+            WHERE id=13 OR id=1 OR id=2"; 
+
+            $resultado = mysqli_query($this->con(), $sql); 
+
+            while ($res = mysqli_fetch_row($resultado)) {
+                $datos[$i]['id'] = $res[0];
+                $datos[$i]['descripcion'] = $res[1];
+                $i++;
+
+            } 
+            
+            if ( count($datos )==0) { 
+                $datos[0]['id']  =0;
+                return  $datos; 
+                }
+
+
+            return $datos;  
+
+        }
+
+        public function cargarEstatusTicket2($id_estatus)
+        {
+
+            $res=array();
+            $datos=array();
+            $i=0; 
+
+            
+            $sql="SELECT e.id, e.`descripcion` FROM estatus e WHERE e.id=$id_estatus"; 
+
+            $resultado = mysqli_query($this->con(), $sql); 
+
+            while ($res = mysqli_fetch_row($resultado)) {
+                $datos[$i]['id'] = $res[0];
+                $datos[$i]['estatus'] = $res[1];
+                $i++;
+
+            } 
+
+
+            $sql="SELECT e.id, e.`descripcion`
+            FROM estatus e WHERE e.id<>$id_estatus AND e.id=2"; 
+
+            $resultado = mysqli_query($this->con(), $sql); 
+
+            while ($res = mysqli_fetch_row($resultado)) {
+                $datos[$i]['id'] = $res[0];
+                $datos[$i]['estatus'] = $res[1];
+                $i++;
+
+            } 
+
+            if ( count($datos )==0) { 
+                $datos[0]['id']  =0;
+                return  $datos; 
+                }
+
+
+            return $datos;  
+
+        }
     }
 
 ?>

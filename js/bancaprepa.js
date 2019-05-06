@@ -1850,6 +1850,18 @@ var respAccesosPorRol  = function(data) {
             case '20':
                 $('#solicitudesPp').prop('checked', true); 
             break;
+            case '21':
+                $('#pagosPp').prop('checked', true); 
+            break;
+            case '22':
+                $('#reportesPp').prop('checked', true); 
+            break;
+            case '23':
+                $('#cartaFondoA').prop('checked', true); 
+            break;
+            case '24':
+                $('#solicitudesFondoAhorros').prop('checked', true); 
+            break;
         }    
     }
 } 
@@ -1938,7 +1950,8 @@ var respCargarMenu  = function(data) {
                 document.getElementById('correos').style.display = 'block';
                 break;
             case '11':
-              document.getElementById('m_bancaprepa').style.display = 'block';
+              //document.getElementById('m_bancaprepa').style.display = 'block'; 
+              console.log("a");
               break;
             case '12':
               document.getElementById('catEquipo').style.display = 'block';
@@ -1974,6 +1987,22 @@ var respCargarMenu  = function(data) {
             case '20':
              document.getElementById('m_Prestamos').style.display = 'block'; 
              document.getElementById('m_solicitudes').style.display = 'block';
+            break;
+            case '21':
+             document.getElementById('m_Prestamos').style.display = 'block'; 
+             document.getElementById('m_pagos').style.display = 'block';
+            break;
+            case '22':
+             document.getElementById('m_Prestamos').style.display = 'block'; 
+             document.getElementById('m_reportesp').style.display = 'block';
+            break;
+            case '23':
+             document.getElementById('m_fondoAhorro').style.display = 'block'; 
+             document.getElementById('m_fondoAhorro_menu').style.display = 'block'; 
+            break;
+            case '24':
+             document.getElementById('m_SolicitudesfondoAhorro').style.display = 'block';
+             document.getElementById('m_fondoAhorro_menu').style.display = 'block';  
             break;
         }    
     }
@@ -2078,6 +2107,10 @@ function cargarAccesos(rol_id){
     $('#capAreas').prop('checked', false);
     $('#crearSolpp').prop('checked', false);
     $('#solicitudesPp').prop('checked', false);
+    $('#pagosPp').prop('checked', false);
+    $('#reportesPp').prop('checked', false);
+    $('#cartaFondoA').prop('checked', false);
+    $('#solicitudesFondoAhorros').prop('checked', false);
 
 
     onRequest({ opcion : 22 ,id_rol:rol_id}, respAccesosPorRol);

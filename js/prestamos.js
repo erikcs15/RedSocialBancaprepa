@@ -5,6 +5,40 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////// INICIALIZAR VARIABLES ////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////// INICIALIZAR VARIABLES ////////////////////////////////////////////////////////////////
          $('.modal').modal();
+         $('#selectall').on('click', function () {
+            //verificar el estado de ese checkbox si esta marcado o no
+            var checked_status = this.checked;
+   
+            /*
+             * asignarle ese estatus a cada uno de los checkbox
+             * que tengan la clase "selectall"
+            */
+            $(".selectall").each(function () {
+              this.checked = checked_status;
+            });
+          });
+
+          $('#realizarPagos').click(function() {
+      
+            var arr = $('[name="checks[]"]:checked').map(function()
+            {
+              return this.value;
+            }).get();
+            
+            var str = arr.join(',');
+            
+           var valor1 = str;
+           console.log("---VALOR= "+valor1);
+           var arrayDeCadenas = valor1.split(',');
+           for (var i=0; i < arrayDeCadenas.length; i++) 
+           {
+                console.log("Valor= "+arrayDeCadenas[i]);
+                var corrida_prestamo_id=arrayDeCadenas[i];
+                prestamosp({ opcion : 22,corrida_prestamo_id:corrida_prestamo_id},respPagoReflejado );
+           }
+          
+          });
+
     ///////////////////////////////////////////////////////// EVENTOS ////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////// EVENTOS ////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////// EVENTOS ////////////////////////////////////////////////////////////////
@@ -29,7 +63,8 @@ $(document).ready(function(){
           var montoSolicitado=0;
           montoSolicitado= parseInt($("#monto_solicitado").val());
           var interes = 0;
-          interes= (montoSolicitado*0.03)*mesesApagar;
+          var porc_interes=3;
+          interes= (montoSolicitado*(porc_interes/100))*mesesApagar;
           var total_pagar=0;
           total_pagar=interes+montoSolicitado;
           var descuento=0;
@@ -46,7 +81,7 @@ $(document).ready(function(){
       }
     });
     $( "#btnCrearSolicitud" ).click(function() { 
-
+        var porc_interes=3;
         console.log("Boton presionado");
         var capturistaId = Cookies.get('b_capturista_id');
         var nombre_solicitante= $('#nombre_solicitante').val();
@@ -69,7 +104,21 @@ $(document).ready(function(){
         var inicio_descuento = $('#inicio_descuento').val();
         var fin_descuento = $('#fin_descuento').val();
 
-        
+        if(numTarjeta=="")
+        {
+            M.toast({html: 'Favor de ingresar el numero de tarjeta.', classes: 'rounded red'}); 
+            return;
+        }
+        if(beneficiarioCta=="")
+        {
+            M.toast({html: 'Favor de ingresar el beneficiario de la cuenta.', classes: 'rounded red'}); 
+            return;
+        }
+        if(nombreBanco=="")
+        {
+            M.toast({html: 'Favor de ingresar el nombre del banco.', classes: 'rounded red'}); 
+            return;
+        }
         if(monto_solicitado=="")
         {
             M.toast({html: 'Favor de ingresar el monto a solicitar.', classes: 'rounded red'}); 
@@ -109,36 +158,30 @@ $(document).ready(function(){
         console.log("|monto_letra:|"+monto_letra);
         
 
-        prestamosp({ opcion : 1,capturista_id:capturistaId,fecha_solicitud:fecha_solicitud, puesto_id:puesto_id, sucursal_id: sucursal_id, empresa_id:empresa_id, numTarjeta:numTarjeta, beneficiarioCuenta:beneficiarioCta, nombreBanco:nombreBanco, monto_solicitado:monto_solicitado, quincenas:quincenas, meses_a_pagar: meses_pagar, interes_prestamo: interes_prestamo, tipo_abono:tipo_abono, descuento_mensual: descuento,monto_total:monto_total_pagar, inicio_descuento:inicio_descuento, fin_descuento:fin_descuento, monto_letra:monto_letra},respInsertarSolicutd);
+        prestamosp({ opcion : 1,capturista_id:capturistaId,fecha_solicitud:fecha_solicitud, puesto_id:puesto_id, sucursal_id: sucursal_id, empresa_id:empresa_id, numTarjeta:numTarjeta, beneficiarioCuenta:beneficiarioCta, nombreBanco:nombreBanco, monto_solicitado:monto_solicitado, quincenas:quincenas, meses_a_pagar: meses_pagar, interes_prestamo: interes_prestamo, tipo_abono:tipo_abono, descuento_mensual: descuento,monto_total:monto_total_pagar, inicio_descuento:inicio_descuento, fin_descuento:fin_descuento, monto_letra:monto_letra, porc_interes:porc_interes},respInsertarSolicutd);
         
 
     });
 
     
-    $( "#btnAutorizarPrestamo" ).click(function() {
+    $("#btnAutorizarPrestamo").click(function() {
         var id_prestamo = Cookies.get('p_idprestamo');
         var comentarios=$('#txtArea').val();
         var usuario_autorizador=Cookies.get('b_capturista_id');
         prestamosp({ opcion : 13,id_prestamo:id_prestamo},respBorrarCorrida );
 
         if($('#chAutorizar').is(":checked")) 
-        { 
-            
+        {    
             var montoFinal= $('#montoAutorizar').val();
             prestamosp({ opcion : 7,id_prestamo:id_prestamo, coment:comentarios, capturista_autoriza:usuario_autorizador, montoAutorizado:montoFinal},respAutorizarPrestamo );
-            console.log("ID DEL PRESTAMO ANTES DE REAJUSTAR LA SOLICiTuD="+id_prestamo);
-            prestamosp({ opcion : 8,id_solicitud:id_prestamo},respReajustarSolicitud );
-            prestamosp({ opcion : 6}, respCargarSolicitudes);
+           
+            prestamosp({ opcion : 6, sucursal:"0", estatus_id:"0", capturista_id:"0", fecha_ini:"0", fecha_fin:"0"}, respCargarSolicitudes);
         } 
         else
         {
             prestamosp({ opcion : 11,id_prestamo:id_prestamo, coment:comentarios, capturista_autoriza:usuario_autorizador},respNoAutorizarPrestamo );
-            prestamosp({ opcion : 6}, respCargarSolicitudes);
-            
+            prestamosp({ opcion : 6, sucursal:"0", estatus_id:"0", capturista_id:"0", fecha_ini:"0", fecha_fin:"0"}, respCargarSolicitudes); 
         }
-        
-        
-
     }); 
 
 
@@ -155,6 +198,98 @@ $(document).ready(function(){
         prestamosp({ opcion : 16, id_prestamo:prestamo,ruta:ruta }, respSubirResponsiva);
     });
     
+    $( "#btnBuscarSolicitudes" ).click(function() {
+        var id_empleado = $('#IdEmpleadoSol').val();
+        var sucursal = $('#sucursalesSolicitudes').val();
+        var estatus_id = $('#estatusSolicitudes').val();
+        var fecha_ini = $('#desdeSol').val();
+        var fecha_fin = $('#hastaSol').val();
+
+        if(id_empleado=="")
+        {
+            console.log("No hay nada");
+            id_empleado="0";
+        }
+
+        if(fecha_ini=="")
+        {
+            console.log("No hay nada");
+            fecha_ini="0";
+        }
+        if(fecha_fin=="")
+        {
+            console.log("No hay nada");
+            fecha_fin="0";
+        }
+
+        console.log("ID_emplado= "+id_empleado+" sucursal= "+sucursal+ " estatus id= "+estatus_id+" fecha inicial= "+fecha_ini+" fecha final= "+fecha_fin);
+        
+        prestamosp({ opcion : 6, sucursal:sucursal, estatus_id:estatus_id, capturista_id:id_empleado, fecha_ini:fecha_ini, fecha_fin:fecha_fin}, respCargarSolicitudes);
+
+
+    });
+
+    $("#btnLimpiarSol").click(function() {
+    
+        $("#IdEmpleadoSol").val("");
+        $("#nombreAbuscarSol").val("");
+        $("#desdeSol").val("");
+        $("#hastaSol").val("");
+        prestamosp({ opcion : 18}, respCargarSucursales);
+        prestamosp({ opcion : 19}, respCargarEstatusSolicitudes);
+        
+         
+        M.toast({html: 'Filtros reestablecidos!', classes: 'rounded green'});  
+        return;
+    });
+    $("#btnExcelSol").click(function() {
+
+        console.log("presionado excel");
+        //descargarExcel();
+        fnExcelReportSolicitudes();
+    });
+
+    $( "#btnEliminarResp" ).click(function() {
+        var prestamo = Cookies.get('p_idprestamo');
+        console.log("Id prestamo para eliminar: "+prestamo);
+        prestamosp({ opcion : 20, id_prestamo:prestamo}, respEliminarResponsiva);
+    });
+    $( "#buscarPagosXfecha" ).click(function() {
+        var fecha = $("#fechaPago").val();
+        console.log("Presionaste boton para buscar "+fecha);
+        prestamosp({ opcion : 21, fecha:fecha}, respCargarPagosPorFecha);
+    });
+    $( "#btnExcelReporte" ).click(function() {
+       
+        console.log("Presionaste boton Excel");
+       
+        fnExcelReportesPrestamos();
+    });
+
+    $( "#btnBuscarXSuc" ).click(function() {
+        var suc=$("#sucursalesSolicitudes").val();
+
+        if (suc>0)
+        {
+            prestamosp({ opcion : 23, sucursal_id:suc}, respCargarReporte);
+        }
+        else
+        {
+            prestamosp({ opcion : 23, sucursal_id:"0"}, respCargarReporte); 
+        }
+        
+        
+    });
+    
+    $( "#btnDispersarPrestamo" ).click(function() {
+        console.log("DISPERSAR");
+        var prestamo_id = Cookies.get('p_idprestamo');
+        prestamosp({ opcion : 24, prestamo_id:prestamo_id}, respDispersado);
+        
+    });
+
+
+    
 });
     
     ///////////////////////////////////////////////////////// RESPUESTAS ////////////////////////////////////////////////////////////////
@@ -166,6 +301,7 @@ $(document).ready(function(){
        if (!data && data == null)
        return;  
 
+    
        var capturistaId = Cookies.get('b_capturista_id');
 
        M.toast({html: 'Solicitud creada, espere a que se contacten con usted para una respuesta!.', classes: 'rounded green'});
@@ -219,24 +355,50 @@ $(document).ready(function(){
             {
                 if(data[i].id_estatus==4)
                 {
-                    d+= '<tr>'+
-                    '<td>'+data[i].id+'</td>'+
-                    '<td>'+data[i].capturista+'</td>'+
-                    '<td>'+data[i].fecha_solicitud+'</td>'+ 
-                    '<td>$'+data[i].monto_solicitado+'</td>'+ 
-                    '<td>'+data[i].quincenas+'</td>'+
-                    '<td>$-</td>'+ 
-                    '<td>$'+data[i].monto_pagar+'</td>'+ 
-                    '<td>$'+data[i].descuento_mensual+'</td>'+ 
-                    '<td>'+data[i].estatus+'</td>'+ 
-                    '<td>-</td>'+ 
-                    '<td>-</td>'+ 
-                    '<td class="left">'+
-                    '<a onClick="informacionPrestamo('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small grey btn modal-trigger" href="#modalinfoPrestamo"><i class="material-icons">comment</i></a>' + 
-                    '<a onClick="imprimirCartaResponsiva('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small indigo darken-4 btn modal-trigger"><i class="material-icons">local_printshop</i></a>' + 
-                    '<a onClick="subirResponsiva('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small red btn modal-trigger" href="#modalSubirResponsiva"><i class="material-icons">backup</i></a>' + 
-                    '</td>' +
-                    '</tr> ';
+                    var link = String(data[i].link)
+                    if(link == "null")
+                    {
+                        d+= '<tr>'+
+                        '<td>'+data[i].id+'</td>'+
+                        '<td>'+data[i].capturista+'</td>'+
+                        '<td>'+data[i].fecha_solicitud+'</td>'+ 
+                        '<td>$'+data[i].monto_solicitado+'</td>'+ 
+                        '<td>'+data[i].quincenas+'</td>'+
+                        '<td>$-</td>'+ 
+                        '<td>$'+data[i].monto_pagar+'</td>'+ 
+                        '<td>$'+data[i].descuento_mensual+'</td>'+ 
+                        '<td>'+data[i].estatus+'</td>'+ 
+                        '<td>-</td>'+ 
+                        '<td>Falta subir la responsiva</td>'+ 
+                        '<td class="left">'+
+                        '<a onClick="informacionPrestamo('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small grey btn modal-trigger" href="#modalinfoPrestamo"><i class="material-icons">comment</i></a>' + 
+                        '<a onClick="imprimirCartaResponsiva('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small indigo darken-4 btn modal-trigger"><i class="material-icons">local_printshop</i></a>' + 
+                        '<a onClick="subirResponsiva('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small red btn modal-trigger" href="#modalSubirResponsiva"><i class="material-icons">backup</i></a>' + 
+                        '</td>' +
+                        '</tr> ';
+                    }
+                    else
+                    {
+                        d+= '<tr>'+
+                        '<td>'+data[i].id+'</td>'+
+                        '<td>'+data[i].capturista+'</td>'+
+                        '<td>'+data[i].fecha_solicitud+'</td>'+ 
+                        '<td>$'+data[i].monto_solicitado+'</td>'+ 
+                        '<td>'+data[i].quincenas+'</td>'+
+                        '<td>$-</td>'+ 
+                        '<td>$'+data[i].monto_pagar+'</td>'+ 
+                        '<td>$'+data[i].descuento_mensual+'</td>'+ 
+                        '<td>'+data[i].estatus+'</td>'+ 
+                        '<td>-</td>'+ 
+                        '<td>-</td>'+ 
+                        '<td class="left">'+
+                        '<a onClick="informacionPrestamo('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small grey btn modal-trigger" href="#modalinfoPrestamo"><i class="material-icons">comment</i></a>' + 
+                        '<a onClick="imprimirCartaResponsiva('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small indigo darken-4 btn modal-trigger"><i class="material-icons">local_printshop</i></a>' + 
+                        '<a onClick="subirResponsiva('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small red btn modal-trigger" href="#modalSubirResponsiva"><i class="material-icons">backup</i></a>' + 
+                        '</td>' +
+                        '</tr> ';
+                    }
+                   
                 }
                 else
                 {
@@ -317,7 +479,9 @@ $(document).ready(function(){
                 }
                 
 
+               
                 $("#tablaSolicitudPrestamo").html(d);
+                $('.tooltipped').tooltip();
             }
         }
         
@@ -335,6 +499,7 @@ $(document).ready(function(){
         console.log(data);
         var d = '';
         var x = '';
+        var d2 = '';
 
         
 
@@ -349,9 +514,12 @@ $(document).ready(function(){
                '<td class="left">'+ 
                '</tr> ';  
                $("#tablaSolicitudes").html(d);
+
+               
             }
             else
             {
+
                 console.log("-------"+data[i].id_estatus);
                 if(data[i].id_estatus==5)
                 {
@@ -365,6 +533,7 @@ $(document).ready(function(){
                     }
                     d+= '<tr>'+
                     '<td>'+data[i].id+'</td>'+
+                    '<td>'+data[i].sucursalNombre+'</td>'+
                     '<td>'+data[i].capturista+'</td>'+
                     '<td>'+data[i].fecha_solicitud+'</td>'+ 
                     '<td>$'+data[i].monto_solicitado+'</td>'+ 
@@ -376,9 +545,22 @@ $(document).ready(function(){
                     '<a onClick="autorizarPrestamos('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small teal lighten-1 btn modal-trigger" href="#modalAutorizarPrestamos" disabled><i class="material-icons">thumbs_up_down</i></a>' + 
                     '<a onClick="informacionPrestamo('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small grey btn modal-trigger" href="#modalinfoPrestamo"><i class="material-icons">comment</i></a>' + 
                     '<a onClick="autorizarPrestamos('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small orange btn modal-trigger" href="#modalAutorizarPrestamos"><i class="material-icons">edit</i></a>' + 
-                    '<a onClick="imprimirCarta('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" ><i class="material-icons">local_printshop</i></a>' + 
+                    '<a onClick="imprimirCarta('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small blue" ><i class="material-icons">local_printshop</i></a>' + 
+                    '<a onClick="dispersarPrestamo('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small  green darken-2 btn modal-trigger" href="#modalConfirmarDispersion"><i class="material-icons">attach_money</i></a>' + 
                     '</td>'+
                     '</tr> ';
+                    //------------------------------------------Para excel-----------------------------------------------------
+                    d2+='<tr>'+
+                    '<td>'+data[i].sucursalNombre+'</td>'+
+                    '<td>'+data[i].id_capturista+'</td>'+
+                    '<td>'+data[i].capturista+'</td>'+ 
+                    '<td>$'+data[i].monto_autorizado+'</td>'+ 
+                    '<td>'+data[i].quincenas+'</td>'+
+                    '<td>$'+data[i].descuento_mensual+'</td>'+
+                    '<td>'+"'"+data[i].numTarjeta+"'"+'</td>'+  
+                    '<td>'+data[i].nombreBanco+'</td>'+ 
+                    '<td>'+data[i].beneficiarioCuenta+'</td>'+
+                    '<td>'+data[i].estatus+'</td> </tr>';
                     
                 }
                 else
@@ -395,6 +577,7 @@ $(document).ready(function(){
                         }
                         d+= '<tr>'+
                         '<td>'+data[i].id+'</td>'+
+                        '<td>'+data[i].sucursalNombre+'</td>'+
                         '<td>'+data[i].capturista+'</td>'+
                         '<td>'+data[i].fecha_solicitud+'</td>'+ 
                         '<td>$'+data[i].monto_solicitado+'</td>'+ 
@@ -407,6 +590,17 @@ $(document).ready(function(){
                         '<a onClick="informacionPrestamo('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small grey btn modal-trigger" href="#modalinfoPrestamo"><i class="material-icons">comment</i></a>' + 
                         '</td>'+
                         '</tr> ';
+                        d2+='<tr>'+
+                        '<td>'+data[i].sucursalNombre+'</td>'+
+                        '<td>'+data[i].id_capturista+'</td>'+
+                        '<td>'+data[i].capturista+'</td>'+ 
+                        '<td>$'+data[i].monto_autorizado+'</td>'+ 
+                        '<td>'+data[i].quincenas+'</td>'+
+                        '<td>$'+data[i].descuento_mensual+'</td>'+
+                        '<td>'+"'"+data[i].numTarjeta+"'"+'</td>'+  
+                        '<td>'+data[i].nombreBanco+'</td>'+ 
+                        '<td>'+data[i].beneficiarioCuenta+'</td>'+
+                        '<td>'+data[i].estatus+'</td> </tr>';
                     }
                     else
                     {
@@ -420,6 +614,7 @@ $(document).ready(function(){
                         }
                         d+= '<tr>'+
                         '<td>'+data[i].id+'</td>'+
+                        '<td>'+data[i].sucursalNombre+'</td>'+
                         '<td>'+data[i].capturista+'</td>'+
                         '<td>'+data[i].fecha_solicitud+'</td>'+ 
                         '<td>$'+data[i].monto_solicitado+'</td>'+ 
@@ -429,17 +624,29 @@ $(document).ready(function(){
                         '<td>'+data[i].estatus+'</td>'+ 
                         '<td class="left">'+
                         '<a onClick="autorizarPrestamos('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small teal lighten-1 btn modal-trigger" href="#modalAutorizarPrestamos" disabled><i class="material-icons">thumbs_up_down</i></a>' + 
-                        '<a onClick="informacionPrestamo('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small grey btn modal-trigger" href="#modalinfoPrestamo"><i class="material-icons">comment</i></a>' + 
-                        '<a onClick="autorizarPrestamos('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small orange btn modal-trigger" href="#modalAutorizarPrestamos"><i class="material-icons">edit</i></a>' + 
-                        '<a onClick="imprimirCarta('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" ><i class="material-icons">local_printshop</i></a>' + 
+                        '<a onClick="informacionPrestamo('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small teal darken-3 btn modal-trigger" href="#modalinfoPrestamo"><i class="material-icons">comment</i></a>' + 
+                        //'<a onClick="autorizarPrestamos('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small orange btn modal-trigger" href="#modalAutorizarPrestamos"><i class="material-icons">edit</i></a>' + 
+                        //'<a onClick="imprimirCarta('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" ><i class="material-icons">local_printshop</i></a>' + 
                         '</td>'+
                         '</tr> ';
+                        d2+='<tr>'+
+                        '<td>'+data[i].sucursalNombre+'</td>'+
+                        '<td>'+data[i].id_capturista+'</td>'+
+                        '<td>'+data[i].capturista+'</td>'+ 
+                        '<td>$'+data[i].monto_autorizado+'</td>'+ 
+                        '<td>'+data[i].quincenas+'</td>'+
+                        '<td>$'+data[i].descuento_mensual+'</td>'+
+                        '<td>'+"'"+data[i].numTarjeta+"'"+'</td>'+  
+                        '<td>'+data[i].nombreBanco+'</td>'+ 
+                        '<td>'+data[i].beneficiarioCuenta+'</td>'+
+                        '<td>'+data[i].estatus+'</td> </tr>';
                     }
                    
                 }
                 
 
                 $("#tablaSolicitudes").html(d);
+                $("#tablaSolicitudesExcel").html(d2);
             }
         }
         
@@ -448,20 +655,7 @@ $(document).ready(function(){
         cargarMenuPorRol();
     }
 
-    var respInsertarCorrida = function(data) {
-        if (!data && data == null)
-        return;  
- 
-        var fecha = data[0].fecha;
-        var idsolicitud = data[0].id;
-        var quincenas = data[0].quincenas;
-        var descuento_mensual = data[0].descuento_mensual;
-
-        console.log("Insertando corrida......");
-        
-        
-        prestamosp({ opcion : 3,prestamoId:idsolicitud, fecha:fecha, quincenas:quincenas, abono:descuento_mensual},respFinalInsertarCorrida );
-    }
+    
 
     
 
@@ -469,11 +663,13 @@ $(document).ready(function(){
         if (!data && data == null)
         return;  
 
+       
+        var fecha_autorizadoRE = Cookies.get('fecha_autorizado_Re');
+        var quincenasRE = Cookies.get('quincenas_Re');
+        prestamosp({ opcion : 5, fecha:fecha_autorizadoRE, quincenas:quincenasRE},respReAjustarFechaInicioYFinal);
 
-       M.toast({html: 'Solicitud actualizada!.', classes: 'rounded green'}); 
-       prestamosp({ opcion : 6}, respCargarSolicitudes);
-       console.log(data);
-       return;
+      
+  
         
     }
     
@@ -507,22 +703,56 @@ $(document).ready(function(){
         if(mesF<10)
             mesF='0'+mesF //agrega cero si el menor de 10
         document.getElementById('fin_descuento').value=anoF+"-"+mesF+"-"+diaF;
+
     }
 
-    var respReajustarFechas = function(data) {
+    var respReAjustarFechaInicioYFinal = function(data) {
         if (!data && data == null)
         return;  
 
+        console.log(data);
         var fechaInicio= data[0].inicio;
         var fechaFinal = data[0].fechafinal;
-        var id_prestamo = Cookies.get('p_idprestamo');
-        prestamosp({ opcion : 10, fecha_ini:fechaInicio, fecha_fin:fechaFinal, solicitud_id:id_prestamo},respReajusteFecha2 );
+        var id_solicitudRE = Cookies.get('p_idprestamo');
+        console.log("Fecha inicio: "+fechaInicio+" Fecha final: "+fechaFinal);
+        
+        //Se transforma la fecha para poder insertarla en el input del html
+        var f=new Date(fechaInicio);
+        var mes = f.getMonth()+1; //obteniendo mes
+        var dia = f.getDate()+1; //obteniendo dia
+        var ano = f.getFullYear(); //obteniendo año
+        if(dia<10)
+            dia='0'+dia; //agrega cero si el menor de 10
+        if(mes<10)
+            mes='0'+mes //agrega cero si el menor de 10
+        var fecha_inicio =  ano+"-"+mes+"-"+dia ;
+
+        var f2=new Date(fechaFinal);
+        var mesF = f2.getMonth()+1; //obteniendo mes
+        var diaF = f2.getDate()+1; //obteniendo dia
+        var anoF = f2.getFullYear(); //obteniendo año
+        if(diaF<10)
+            diaF='0'+diaF; //agrega cero si el menor de 10
+        if(mesF<10)
+            mesF='0'+mesF //agrega cero si el menor de 10
+        var fecha_fin = anoF+"-"+mesF+"-"+diaF ;
+
+
+        console.log("FECHAS== "+ fecha_inicio+" FECHA fin="+fecha_fin);
+        prestamosp({ opcion : 10, fecha_ini:fecha_inicio, fecha_fin:fecha_fin, solicitud_id:id_solicitudRE},respReajusteFecha2 );
+
+        
     }
 
     
     var respReajusteFecha2 = function(data) {
         if (!data && data == null)
-        return;          
+        return;         
+        $("#modalAutorizarPrestamos").modal("close"); 
+        M.toast({html: 'Solicitud actualizada!.', classes: 'rounded green'}); 
+        prestamosp({ opcion : 6, sucursal:"0", estatus_id:"0", capturista_id:"0", fecha_ini:"0", fecha_fin:"0"}, respCargarSolicitudes);
+        
+       
     }
     
     var respAutorizarPrestamo = function(data) {
@@ -530,10 +760,11 @@ $(document).ready(function(){
         return;  
 
 
-       M.toast({html: 'Prestamo Autorizado!.', classes: 'rounded green'}); 
-       $("#montoAutorizar").val("");
-       $("#txtArea").val("");
-       $("#modalAutorizarPrestamos").modal("close");
+       var id_prestamo = Cookies.get('p_idprestamo');
+       M.toast({html: 'Prestamo Autorizado!.', classes: 'rounded green'});
+       console.log("ID DEL PRESTAMO ANTES DE REAJUSTAR LA SOLICiTuD="+id_prestamo);
+       prestamosp({ opcion : 8,id_solicitud:id_prestamo},respReajustarSolicitud ); 
+       
        console.log(data);
       
         
@@ -554,48 +785,67 @@ $(document).ready(function(){
         if (!data && data == null)
         return;
 
+        var fecha_primerCorrida=$("#inicio_pago").val();
+        console.log("FECHA= "+fecha_primerCorrida);
+        if(fecha_primerCorrida==" ")
+        {
+            M.toast({html: 'Ingrese la fecha del primer pago porfavor.', classes: 'rounded red'}); 
+            return;
+        }
 
-        var f = new Date();
+        var f = new Date(fecha_primerCorrida);
 
         console.log("1|monto autorizado:|"+$("#montoAutorizar").val());
         console.log("1|quincenas:|"+data[0].quincenas);
-        $("#montoAutorizar").val();
+        console.log("FECHA= "+fecha_primerCorrida);
+        
 
         
-        var id_solicitud=0;
-        id_solicitud=data[0].id;
-        var quincenas=0;
-        quincenas =  data[0].quincenas;
-        var mesesApagar=0;
-        mesesApagar=quincenas/2;
-        var montoAutorizadoF=0;
-        montoAutorizadoF= parseInt($("#montoAutorizar").val());
-        var interes = 0;
-        interes =parseInt((montoAutorizadoF*0.03)*mesesApagar);
-        var total_pagar=0;
-        total_pagar=parseInt(interes+montoAutorizadoF);
-        var descuento=0;
-        descuento=(total_pagar/quincenas).toFixed(2);
-        var totalConLetra = NumeroALetras(total_pagar);
-        var fecha_autorizado =  f.getFullYear()+ "-" + (f.getMonth() +1) + "-" +f.getDate() ;
+        var id_solicitudRE=data[0].id;
+       
+        var quincenasRE=data[0].quincenas;
+    
+        var mesesApagarRE=quincenasRE/2;
+        var montoAutorizadoFRE=parseInt($("#montoAutorizar").val());
+        var interesRE = parseInt((montoAutorizadoFRE*0.03)*mesesApagarRE);
+        var total_pagarRE=parseInt(interesRE+montoAutorizadoFRE);
+        var descuentoRE=(total_pagarRE/quincenasRE).toFixed(2);
+        var totalConLetraRE = NumeroALetras(total_pagarRE);
+        var fecha_autorizadoRE =  f.getFullYear()+ "-" + (f.getMonth() +1) + "-" +f.getDate() ;
 
-        console.log("|monto autorizado:|"+montoAutorizadoF);
-        console.log("|quincenas:|"+quincenas);
-        console.log("|meses_pagar:|"+mesesApagar);
-        console.log("|interes_prestamo:|"+interes);
-        console.log("|descuento:|"+descuento);
-        console.log("|monto_total_pagar:|"+total_pagar);
-        console.log("|monto_letra:|"+totalConLetra);
-        console.log("|fecha autorizado:|"+fecha_autorizado);
+        console.log("|monto autorizado:|"+montoAutorizadoFRE);
+        console.log("|quincenas:|"+quincenasRE);
+        console.log("|meses_pagar:|"+mesesApagarRE);
+        console.log("|interes_prestamo:|"+interesRE);
+        console.log("|descuento:|"+descuentoRE);
+        console.log("|monto_total_pagar:|"+total_pagarRE);
+        console.log("|monto_letra:|"+totalConLetraRE);
+        console.log("|fecha autorizado:|"+fecha_autorizadoRE);
+
+        Cookies.set("fecha_autorizado_Re",fecha_autorizadoRE);
+        Cookies.set("quincenas_Re",quincenasRE);
+        Cookies.set("descuento_Re",descuentoRE);
+        Cookies.set("total_pagar_re",total_pagarRE);
+
+
 
         
-        prestamosp({ opcion : 9, id_solicitud:id_solicitud, interes_prestamo:interes, descuento_mensual:descuento, monto_total:total_pagar,monto_letra:totalConLetra},respAjusteRealizado);
-        prestamosp({ opcion : 3,prestamoId:id_solicitud, fecha:fecha_autorizado, quincenas:quincenas, abono:descuento, total:total_pagar},respFinalInsertarCorrida );
-        prestamosp({ opcion : 5, fecha:fecha_autorizado, quincenas:quincenas},respCargarFechaInicioYFinal);
+        prestamosp({ opcion : 9, id_solicitud:id_solicitudRE, interes_prestamo:interesRE, descuento_mensual:descuentoRE, monto_total:total_pagarRE,monto_letra:totalConLetraRE},respAjusteRealizado);
+        
+       
+        
     }
 
     var respAjusteRealizado = function(data) {
-         
+       
+        
+        var id_solicitudRE = Cookies.get('p_idprestamo');
+        var fecha_autorizadoRE = Cookies.get('fecha_autorizado_Re');
+        var quincenasRE = Cookies.get('quincenas_Re');
+        var descuentoRE = Cookies.get('descuento_Re');
+        var total_pagarRE = Cookies.get('total_pagar_re');
+
+        prestamosp({ opcion : 3,prestamoId:id_solicitudRE, fecha:fecha_autorizadoRE, quincenas:quincenasRE, abono:descuentoRE, total:total_pagarRE},respFinalInsertarCorrida );
     }
 
     
@@ -684,16 +934,16 @@ $(document).ready(function(){
         var fecha=data[0].fechaR;
         var capturista = data[0].nombre_capturista;
         var monto_autorizado=data[0].monto_autorizado;
+        var id=data[0].id_solicitud;
+        var fin_descuento=data[0].fin_descuento;
+        
         console.log(fecha);
-
-        var mesL="";
-        var f=new Date(fecha);
-        var mes = f.getMonth()+1; //obteniendo mes
-        var dia = f.getDate()+1; //obteniendo dia
-        var ano = f.getFullYear(); //obteniendo año
-        if(dia<10)
-            dia='0'+dia; //agrega cero si el menor de 10        
-
+        var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+       
+        //document.write(f.getDate() + " de " + meses[f.getMonth()] + " de " + f.getFullYear());
+        //var mesL="";
+       
+/*
         switch(mes) {
                 case 1:
                   mesL="Enero"
@@ -732,13 +982,69 @@ $(document).ready(function(){
                   mesL="Diciembre"
                 break;
               }
-
+        */
          var fechaCompleta="";
-         fechaCompleta=dia+" de "+mesL+" de "+ano;
+         //fechaCompleta=f.getDate() + " de " + meses[f.getMonth()+1] + " de " + f.getFullYear();
+         
+         var f2=new Date();
+         fechaCompleta=f2.getDate() + " de " + meses[f2.getMonth()] + " de " + f2.getFullYear();
          console.log("FECHA COMPLETA: "+fechaCompleta);
+
+         //---------------------------------------------------------------------------------------------------------------
+         // FECHA FINAL
+         var mesL2="";
+        var f2=new Date(fin_descuento);
+        var mes2 = f2.getMonth()+1; //obteniendo mes
+        var dia2 = f2.getDate()+1; //obteniendo dia
+        var ano2 = f2.getFullYear(); //obteniendo año
+        if(dia2<10)
+            dia2='0'+dia2; //agrega cero si el menor de 10        
+
+        switch(mes2) {
+                case 1:
+                  mesL2="Enero"
+                break;
+                case 2:
+                  mesL2="Febrero"
+                break;
+                case 3:
+                  mesL2="Marzo"
+                break;
+                case 4:
+                  mesL2="Abril"
+                break;
+                case 5:
+                  mesL2="Mayo"
+                break;
+                case 6:
+                  mesL2="Junio"
+                break;
+                case 7:
+                  mesL2="Julio"
+                break;
+                case 8:
+                  mesL2="Agosto"
+                break;
+                case 9:
+                  mesL2="Septiembre"
+                break;
+                case 10:
+                  mesL2="Octubre"
+                break;
+                case 11:
+                  mesL2="Noviembre"
+                break;
+                case 12:
+                  mesL2="Diciembre"
+                break;
+              }
+
+         var final_completa="";
+         final_completa=dia2+" de "+mesL2+" de "+ano2;
+         console.log("FECHA Final COMPLETA: "+final_completa);
          
          var a = document.createElement('a');
-         a.href="../reportes/responsivaPp.php?fecha="+fechaCompleta+"&nombre="+capturista+"&monto="+monto_autorizado;
+         a.href="../reportes/responsivaPp.php?fecha="+fechaCompleta+"&nombre="+capturista+"&monto="+monto_autorizado+"&id_solicitud="+id+"&final_completa="+final_completa;
          a.target="_blanck";
          document.body.appendChild(a);
          a.click();      
@@ -754,6 +1060,8 @@ $(document).ready(function(){
         var responsivapp = String(responsiva);
         var SolicitudCargada = "";
         console.log("Link responsiva: "+ responsivapp);
+        var ultimas3Letras=responsivapp.substr( responsivapp.length-3, responsivapp.length-3);
+        console.log("ULTIMAS 3 Letras= "+ultimas3Letras);
 
         if(responsivapp=="null")
         {
@@ -761,6 +1069,7 @@ $(document).ready(function(){
             $("#classbtnSubirResponsiva").removeClass('grey');
             $("#btnSubirResponsiva").removeAttr("disabled");
             $("#AceptarSubirResponsiva").removeAttr("disabled");
+            $("#btnEliminarResp").attr('disabled', "disabled");
             document.getElementById('cargarArchivoSolicitud').style.display = 'none';
         }
         else
@@ -769,11 +1078,23 @@ $(document).ready(function(){
             $("#classbtnSubirResponsiva").addClass('grey');
             $("#btnSubirResponsiva").attr('disabled','disabled');
             $("#AceptarSubirResponsiva").attr('disabled','disabled');
+            $("#btnEliminarResp").attr('disabled', false);
             M.toast({html: 'Ya cuenta con archivo cargado!.', classes: 'rounded green'}); 
             document.getElementById('cargarArchivoSolicitud').style.display = 'block';
-            SolicitudCargada+= '<div class="col s12 l8 offset-l2" > '+
-            '<img class="materialboxed" width="650" src="imagenes/'+responsivapp+'">'+
-            '</div> ';     
+            if(ultimas3Letras=="jpg" || ultimas3Letras=="png")
+            {
+                SolicitudCargada+= '<div class="col s12 l8 offset-l2" > '+
+                '<img class="materialboxed" width="650" src="imagenes/'+responsivapp+'">'+
+                '</div> ';     
+            }
+            else
+            {
+                SolicitudCargada+= '<div class="col s12 l8 offset-l2" > '+
+                '<iframe src="imagenes/'+responsivapp+'"  class="col s12" style="border: none;height:500px"></iframe>'+
+                '</div> '; 
+
+            }
+           
             $("#cargarArchivoSolicitud").html(SolicitudCargada);
         }
         
@@ -799,6 +1120,8 @@ $(document).ready(function(){
         var responsivapp = String(responsiva);
         var SolicitudCargada = "";
         console.log("Link responsiva: "+ responsivapp);
+        var ultimas3Letras=responsivapp.substr( responsivapp.length-3, responsivapp.length-3);
+        console.log("ULTIMAS 3 Letras= "+ultimas3Letras);
 
         if(responsivapp=="null")
         {
@@ -807,11 +1130,22 @@ $(document).ready(function(){
         }
         else
         {
-             
             document.getElementById('cargarArchivoSolicitud').style.display = 'block';
-            SolicitudCargada+= '<div class="col s12 l8 offset-l2" > '+
-            '<img class="materialboxed" width="650" src="imagenes/'+responsivapp+'">'+
-            '</div> ';     
+            if(ultimas3Letras=="jpg" || ultimas3Letras=="png")
+            {
+                SolicitudCargada+= '<div class="col s12 l8 offset-l2" > '+
+                '<img class="materialboxed" width="650" src="imagenes/'+responsivapp+'">'+
+                '</div> ';     
+            }
+            else
+            {
+                SolicitudCargada+= '<div class="col s12 l8 offset-l2" > '+
+                '<iframe src="imagenes/'+responsivapp+'"  class="col s12" style="border: none;height:500px"></iframe>'+
+                '</div> '; 
+
+            }
+             
+           
 
             $("#cargarArchivoSolicitud").html(SolicitudCargada);
         }
@@ -868,12 +1202,285 @@ $(document).ready(function(){
          a.click();        
     }
 
-    ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
     
+    var respCargarSucursales= function(data) { 
+    
+        
+        if (!data && data == null)
+        return;  
+
+        var documento='<option value="0"  selected>Seleccione Sucursal</option>';
+
+        for(var i=0; i<data.length; i++){
+        documento+='<option value='+data[i].id+'>'+data[i].nomComercial+'</option>';
+        }
+        
+
+        $('#sucursalesSolicitudes').html(documento);
+        $('#sucursalesSolicitudes').formSelect(); 
+    }
+    
+
+    var respCargarEstatusSolicitudes= function(data) { 
+    
+        
+        if (!data && data == null)
+        return;  
+
+        var documento='<option value="0"  selected>Seleccione estatus</option>';
+
+        for(var i=0; i<data.length; i++){
+        documento+='<option value='+data[i].id+'>'+data[i].descripcion+'</option>';
+        }
+        
+
+        $('#estatusSolicitudes').html(documento);
+        $('#estatusSolicitudes').formSelect(); 
+    }
+
+    var respBuscarEmpleadosSolicitudes = function(data) { 
+    
+        if (!data && data == null)
+        {
+            M.toast({html: 'No se encontraron coincidencias.', classes: 'rounded red'}); 
+            return;
+        }
+        
+        var d='';
+        for (var i = 0; i < data.length; i++) 
+        {
+            var nombre=String(data[i].descripcion);
+            if(nombre=="undefined")
+             {
+                d+= '<tr>'+
+                '<td>Sin coincidencias.</td>'+
+                "<td> <a onclick='CerrarYborrarDiv();' class='waves-effect waves-light btn-floating btn-small black'><i class='large material-icons'>mood_bad</i></a> " +
+                '<td class="left">'+ 
+                '</tr> ';  
+                
+             }
+             else
+             {
+                d+="<tr> <td>"+data[i].id+" - "+data[i].descripcion+" </td>" 
+                +"<td> <a onclick='agregarAdiv("+data[i].id+");' class='waves-effect waves-light btn-floating btn-small blue'><i class='material-icons'>add</i></a> " +
+                "</td> </tr> ";
+             }
+            
+            
+        }
+    
+        $("#listaEmpleadosBC").addClass("espacioClientes");
+        $("#listaEmpleadosTablaBC").html(d);
+    }
+
+    var respAgregarNombreAdiv = function(data) { 
+    
+        if (!data && data == null)
+        {
+            M.toast({html: 'No se encontraron coincidencias.', classes: 'rounded red'}); 
+            return;
+        }
+    
+        var nombre=data[0].nombre;
+        $("#nombreAbuscarSol").val(nombre);
+        console.log("NOMBRE A DIV="+nombre+" Y ID= "+ $("#IdEmpleadoSol").val() );
+
+        
+    }
+    
+    var respEliminarResponsiva = function(data) { 
+    
+        if (!data && data == null)
+        {
+            M.toast({html: 'No se encontraron coincidencias.', classes: 'rounded red'}); 
+            return;
+        }
+    
+        M.toast({html: 'Responsiva eliminada.', classes: 'rounded green'}); 
+
+        $("#modalSubirResponsiva").modal("close");
+
+        cargarCreacionSolicitud();
+    }
+    
+    var respCargarPagosPorFecha = function(data) { 
+        if (!data && data == null) 
+        return; 
+
+
+        console.log(data);
+        var d = '';
+        var x = '';
+
+        
+
+        for (var i = 0; i < data.length; i++) 
+        {
+            var nombre=String(data[i].capturista);
+            console.log("-------"+nombre);
+            if(nombre=="undefined")
+            {
+                $("#selectall").attr('disabled', "disabled");
+               d+= '<tr>'+
+               '<td>Sin pagos pendientes para la fecha seleccionada</td>'+
+               '<td class="left">'+ 
+               '</tr> ';  
+               $("#tablaPagos").html(d);
+            }
+            else
+            {
+                $("#selectall").removeAttr("disabled");
+                if(data[i].abonado=="SI")
+                {
+                    d+= '<tr>'+
+                    '<td>'+data[i].id_capturista+'</td>'+
+                    '<td>'+data[i].capturista+'</td>'+
+                    '<td>'+data[i].prestamo_id+'</td>'+ 
+                    '<td>'+data[i].num_pago+'</td>'+ 
+                    '<td>'+data[i].fecha_de_pago+'</td>'+ 
+                    '<td>Abonado</td>'+ 
+                    '<td>$'+data[i].abono+'</td>'+ 
+                    '<td>Abonado</td>'+ 
+                    '</tr> ';
+                }
+                else
+                {
+                    if(i%2==0)
+                    {
+                        x='even';
+                    }
+                    else
+                    {
+                        x='odd';
+                    }
+                    d+= '<tr>'+
+                    '<td>'+data[i].id_capturista+'</td>'+
+                    '<td>'+data[i].capturista+'</td>'+
+                    '<td>'+data[i].prestamo_id+'</td>'+ 
+                    '<td>'+data[i].num_pago+'</td>'+ 
+                    '<td>'+data[i].fecha_de_pago+'</td>'+ 
+                    '<td>'+data[i].actual_atrasado+'</td>'+ 
+                    '<td>$'+data[i].abono+'</td>'+ 
+                    '<td>'+
+                    '<label>'+
+                    '  <input name="checks[]" type="checkbox" class="selectall" value="'+data[i].id_num_pago+'"/>'+
+                    '  <span></span>'+
+                    '</label>'+
+                    '</td>'+ 
+                    '</tr> ';
+                }
+                
+                
+
+                $("#tablaPagos").html(d);
+            }
+            
+        }               
+    }
+    
+    var respPagoReflejado = function(data) { 
+        if (!data && data == null) 
+        return; 
+
+        M.toast({html: 'Pagos realizados', classes: 'rounded green'}); 
+        console.log("HECHO");
+
+        location.reload();
+          
+    }
+    
+    var respCargarReporte = function(data) { 
+        
+        if (!data && data == null) 
+        return; 
+
+
+        console.log(data);
+        var d = '';
+        var x = '';
+
+        
+
+        for (var i = 0; i < data.length; i++) 
+        {
+            var suma = data[i].numde_quincenasPag * data[i].descuento_mensual;
+            var cantidad_restante = data[i].monto_total-suma; 
+            var estatus="";
+            if(data[i].numde_quincenasPag >= data[i].quincenas_totales)
+            {
+                estatus= "Pagado";
+            }
+            else
+            {
+                estatus="Adeudo";
+            }
+            var nombre=String(data[i].capturista);
+            console.log("-------"+nombre);
+            if(nombre=="undefined")
+            {
+               d+= '<tr>'+
+               '<td>Sin Datos</td>'+
+               '<td class="left">'+ 
+               '</tr> ';  
+               $("#tablaReportesPp").html(d);
+               
+            }
+            else
+            {
+                d+= '<tr>'+
+                '<td>'+data[i].nombre_sucursal+'</td>'+
+                '<td>'+data[i].id_capturista+'</td>'+
+                '<td>'+data[i].capturista+'</td>'+ 
+                '<td>'+data[i].fecha_ingreso+'</td>'+ 
+                '<td>'+data[i].monto_autorizado+'</td>'+ 
+                '<td>'+data[i].monto_total+'</td>'+ 
+                '<td>'+data[i].inicio_descuento+'</td>'+ 
+                '<td>'+data[i].fin_descuento+'</td>'+ 
+                '<td>'+data[i].numde_quincenasPag+'</td>'+ 
+                '<td>'+data[i].quincenas_totales+'</td>'+ 
+                '<td>'+data[i].descuento_mensual+'</td>'+ 
+                '<td>'+suma+'</td>'+ 
+                '<td>'+cantidad_restante+'</td>'+ 
+                '<td>'+estatus+'</td>'+ 
+                '</tr> ';
+            
+                $("#tablaReportesPp").html(d);
+            }
+            
+        }               
+          
+    }
+
+    var respDispersado  = function(data) 
+    {
+        M.toast({html: 'Dispersión realizada', classes: 'rounded green'}); 
+        setTimeout('recargarPag()',3000);
+    } 
+    ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
+    function recargarPag(){
+        location.reload();
+       }
+    function CerrarYborrarDiv()
+    {
+        $("#nombreAbuscarCor").val("");
+        document.getElementById('listaEmpleadosBC').style.display = 'none';
+    }
+    function agregarAdiv(id_empleado)
+    {  
+        
+        document.getElementById('listaEmpleadosBC').style.display = 'none';
+        $("#IdEmpleadoSol").val(id_empleado);
+        var id=$("#IdEmpleadoSol").val();
+        onRequest({ opcion : 87 ,empleado_id:id}, respAgregarNombreAdiv);
+       
+
+
+    }
+
     function cargarCreacionSolicitud()
     {
         var f=new Date();
@@ -912,16 +1519,22 @@ $(document).ready(function(){
         if($('#chAutorizar').is(":checked")) 
         { 
             document.getElementById('montoAutorizar').style.display = 'block';
+            document.getElementById('inicio_pago').style.display = 'block';
         } 
         else
         {
             document.getElementById('montoAutorizar').style.display = 'none';
-
+            document.getElementById('inicio_pago').style.display = 'none';
         }
     }
     function cargarSolicitud()
     {
-        prestamosp({ opcion : 6}, respCargarSolicitudes);
+        
+        //$_REQUEST['sucursal'],$_REQUEST['estatus_id'],$_REQUEST['capturista_id'],$_REQUEST['fecha_ini'],$_REQUEST['fecha_fin'] 
+        prestamosp({ opcion : 6, sucursal:"0", estatus_id:"0", capturista_id:"0", fecha_ini:"0", fecha_fin:"0"}, respCargarSolicitudes);
+        prestamosp({ opcion : 18}, respCargarSucursales);
+        prestamosp({ opcion : 19}, respCargarEstatusSolicitudes);
+
         
     }
     
@@ -946,6 +1559,7 @@ $(document).ready(function(){
         //Carga el equipo por su id para despues deshabilitarla
         console.log("Prestamo ID:"+prestamoId);
         prestamosp({ opcion : 14, id_prestamo:prestamoId}, respImprimirResponsivaPP);
+
     }
     function subirResponsiva(prestamoId) {
 
@@ -963,10 +1577,147 @@ $(document).ready(function(){
         console.log("Prestamo ID:"+prestamoId);
         prestamosp({ opcion : 17, id_prestamo:prestamoId}, respImprimirSolicitudPrestamo);
     }
+    
+    function beneficiarioCheck()
+    {
+        if($('#chBeneficiario').is(":checked")) 
+        { 
+            var nombreBene=$('#nombre_solicitante').val();
+            $('#bnf_cta').val(nombreBene);
+        } 
+        else
+        {
+            $('#bnf_cta').val("");
+        }
+    }
+
+    function buscaEmpleadosSolicitudesP()
+    {
+        var bus= $("#nombreAbuscarSol").val();
+        if (bus.length>2)
+        {
+            document.getElementById('listaEmpleadosBC').style.display = 'block';
+            document.getElementById('rowNombre').style.display = 'block';
+            onRequest({ opcion : 84 ,nombre:bus}, respBuscarEmpleadosSolicitudes);
+        }
+        else
+        {
+            $('#IdEmpleadoSol').val(" ");
+            document.getElementById('listaEmpleadosBC').style.display = 'none';
+            document.getElementById('rowNombre').style.display = 'none';
+        }
+        console.log("Buscando texto:"+bus);
+        
+    }
+    function fnExcelReportSolicitudes()
+    {
+        var tab_text="<table border='2px' charset=UTF-8><tr> "+
+        "<th>Sucursal</th>"+
+        "<th>Id Capturista</th>"+
+        "<th>Nombre</th>"+
+        "<th>Monto Autorizado</th>"+ 
+        "<th>Quincenas</th>"+ 
+        "<th>Descuento Mensual</th>"+ 
+        "<th>Numero de cuenta</th>"+
+        "<th>Banco</th>"+
+        "<th>Beneficiario</th>"+
+        "<th>Estatus</th>"+
+        "</tr>";
+        var textRange; var j=0;
+        tab = document.getElementById('tablaSolicitudesExcel'); // id of table
+
+        for(j = 0 ; j < tab.rows.length; j++) 
+        {     
+            tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+            //tab_text=tab_text+"</tr>";
+        }
+
+        tab_text=tab_text+"</table>";
+        tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+        tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+        tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+        tab_text= tab_text.replace(/<a[^>]*>/gi, "");
+        var ua = window.navigator.userAgent;
+        var msie = ua.indexOf("MSIE "); 
+
+        if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+        {
+            txtArea1.document.open("txt/html","replace");
+            txtArea1.document.write(tab_text);
+            txtArea1.document.close();
+            txtArea1.focus(); 
+            sa=txtArea1.document.execCommand("SaveAs",true,"Say Thanks to Sumit.xls");
+        }  
+        else                 //other browser not tested on IE 11
+            sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));  
+
+        return (sa);
+    }
+
+    function fnExcelReportesPrestamos()
+    {
+        var tab_text="<table border='2px' charset=UTF-8><tr> "+
+        "<th>Sucursal</th>"+
+        "<th>Id del solicitante</th>"+
+        "<th>Nombre del Solicitante</th>"+
+        "<th>Fecha de ingreso</th>"+
+        "<th>Monto Autorizado</th>"+
+        "<th>Monto Total</th>"+
+        "<th>Inicio descuento</th>"+
+        "<th>Fin descuento</th>"+
+        "<th>Quincenas Abonadas</th>"+
+        "<th>Quincenas Totales</th>"+
+        "<th>Descuento Mensual</th> "+
+        "<th>Suma</th> "+
+        "<th>Cantidad Restante</th>"+
+        "<th>Estatus</th>"+
+        "</tr>";
+        var textRange; var j=0;
+        tab = document.getElementById('tablaReportesPp'); // id of table
+
+        for(j = 0 ; j < tab.rows.length; j++) 
+        {     
+            tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+            //tab_text=tab_text+"</tr>";
+        }
+
+        tab_text=tab_text+"</table>";
+        tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+        tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+        tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+        tab_text= tab_text.replace(/<a[^>]*>/gi, "");
+        var ua = window.navigator.userAgent;
+        var msie = ua.indexOf("MSIE "); 
+
+        if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+        {
+            txtArea1.document.open("txt/html","replace");
+            txtArea1.document.write(tab_text);
+            txtArea1.document.close();
+            txtArea1.focus(); 
+            sa=txtArea1.document.execCommand("SaveAs",true,"Say Thanks to Sumit.xls");
+        }  
+        else                 //other browser not tested on IE 11
+            sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));  
+
+        return (sa);
+    }
+
+    function cargarReportePrestamo()
+    {
+        prestamosp({ opcion : 23, sucursal_id:"0"}, respCargarReporte);
+        prestamosp({ opcion : 18}, respCargarSucursales);
+        cargarMenuPorRol();
+    }
+
+    function dispersarPrestamo(id_prestamo)
+    {
+        console.log("YASTA id: "+id_prestamo);
+        Cookies.set("p_idprestamo",id_prestamo);
 
 
-    
-    
+    }
+
 //-------------------------------------------------------Funcion para sacar numero en letra--------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------------------

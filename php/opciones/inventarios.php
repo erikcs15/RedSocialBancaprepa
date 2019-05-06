@@ -80,6 +80,12 @@
 		case 24: 
  			   echo (json_encode($inventario->validarQuincenas($_REQUEST["articulo_id"])));
 		break;
+		case 25: 
+ 			   echo (json_encode($inventario->cargarAreasParaFiltrarInventario()));
+		break;
+		case 26:
+			echo (json_encode($inventario->cargarEquiposPorInventarioArea($_REQUEST['inventario_id'],$_REQUEST['sucursal'],$_REQUEST['area_id'])));
+		break;
 
 
 
