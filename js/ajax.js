@@ -21,7 +21,7 @@ var onRequest = function( prParams, callback,load=1) {
 		 
 		    // el tipo de información que se espera de respuesta
 		    dataType : 'json',
-		 
+		 	
 		    // código a ejecutar si la petición es satisfactoria;
 		    // la respuesta es pasada como argumento a la función
 		    success : function(json) {
@@ -254,12 +254,15 @@ var inventarios = function( prParams, callback,load=1) {
 	}
 
 	var fondoAhorros = function( prParams, callback,load=1) {	
+
+	var grupos = function( prParams, callback,load=1) {	
  
 		console.log(prParams);
 
 		$.ajax({
 		    // la URL para la petición
 		    url :"/RedSocialBancaprepa/php/opciones/ahorros.php", 
+		    url :"/RedSocialBancaprepa/php/opciones/grupos.php", 
 
 		     beforeSend: function () { 
 

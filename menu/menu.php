@@ -83,6 +83,18 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
                     </ul>
 
 
+                    <!---------------------------------------- grupos de trabajo------------------------------>
+
+                    <li><a   name ="stock" class="dropdown-trigger white-text" data-target='desplegableGrupoTrabajo'><i class="material-icons white-text">public</i><i class="material-icons right white-text">arrow_drop_down</i>Grupos de Trabajo</a></li>
+                    <ul id='desplegableGrupoTrabajo' class='dropdown-content blue darken-4'> 
+
+                      <li><a   class="waves-effect blue darken-4 white-text"  href="/RedSocialBancaprepa/gruposDeTrabajo/registro.php"><i class="material-icons white-text">queue</i>Crear Grupo</a></li> 
+    
+                    
+                    
+                    </ul>
+
+
                  <!--  <li><a id="m_mercancia" href="/RedSocialBancaprepa/cp/cp.php" class=" waves-effect white-text" ><i class="material-icons white-text">markunread_mailbox</i>CP</a></li> -->
 
 
@@ -122,6 +134,23 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
                     <ul id='fondo_menu' class='dropdown-content blue darken-4'>
                     <li><a id="m_fondoAhorro" style='display:none;' class="waves-effect blue darken-4 white-text" name ="capInv"  href="/RedSocialBancaprepa\fondoAhorro.php"><i class="material-icons white-text">local_mall</i>Carta Fondo de ahorro</a></li> 
                     <li><a id="m_SolicitudesfondoAhorro" style='display:none;'  class="waves-effect blue darken-4 white-text" name ="busquedaEquipo" href="/RedSocialBancaprepa\SolicitudesFondoAhorro.php"><i class="material-icons white-text">format_list_bulleted</i>Solicitudes</a></li> 
+                  <li><a id="correos" class=" waves-effect white-text"  name ="correos white-text"><i class="material-icons white-text">local_post_office</i>Correos</a></li> 
+                  <li><a   name ="stock" class="dropdown-trigger white-text" data-target='despegableActividades'><i class="material-icons white-text">content_paste</i><i class="material-icons right white-text">arrow_drop_down</i>Actividades</a></li>
+                    <ul id='despegableActividades' class='dropdown-content blue darken-4'> 
+
+                      <li><a   class="waves-effect blue darken-4 white-text"  href="/RedSocialBancaprepa/agendaActividades/crearGrupos.php"><i class="material-icons white-text">business_center</i>Crear Grupos</a></li>
+
+                      <li><a   class="waves-effect blue darken-4 white-text"  href="/RedSocialBancaprepa/agendaActividades/verAactividades.php"><i class="material-icons white-text">description</i>Ver Actividades</a></li>
+    
+                    
+                    
+                    </ul>
+                  <li><a  id="m_Prestamos" style='display:none;' name ="prestamosdd" class="dropdown-trigger white-text" data-target='prestamosdd'><i class="fas fa-hand-holding-usd white-text"></i><i class="material-icons right white-text">arrow_drop_down</i>Prest. Personales</a></li>
+                    <ul id='prestamosdd' class='dropdown-content blue darken-4'>
+                    <li><a id="m_crearSolicitud" style='display:none;' class="waves-effect blue darken-4 white-text" name ="m_crearSolicitud" href="\RedSocialBancaprepa\prestamospersonales\solicitarprestamo.php"><i class="material-icons white-text">add_circle_outline</i>Crear Solicitud</a></li> 
+                    <li><a id="m_solicitudes"  class="waves-effect blue darken-4 white-text" style='display:none;' name ="m_solicitudes" href="\RedSocialBancaprepa\prestamospersonales\solicitudes.php"><i class="material-icons white-text">bubble_chart</i>Solicitudes</a></li> 
+                    <li><a id="m_pagos"  class="waves-effect blue darken-4 white-text" style='display:none;' name ="m_pagos" href="\RedSocialBancaprepa\prestamospersonales\pagospp.php"><i class="material-icons white-text">bubble_chart</i>Pagos</a></li> 
+                    <li><a id="m_reportesp"  class="waves-effect blue darken-4 white-text" style='display:none;' name ="m_reportesp" href="\RedSocialBancaprepa\prestamospersonales\reportesPp.php"><i class="material-icons white-text">featured_play_list</i>Reportes</a></li> 
                     </ul>
                     <!--
                     <li><a  id="m_fondoAhorro_menu" style='display:none;' name ="m_fondoAhorro_menu" class="dropdown-trigger white-text" data-target='fondo_menu'><i class="material-icons white-text">local_mall</i><i class="material-icons right white-text">arrow_drop_down</i>Fondo de Ahorro</a></li>

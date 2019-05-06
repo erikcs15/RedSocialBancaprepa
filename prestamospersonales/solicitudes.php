@@ -28,6 +28,11 @@
                     <input placeholder="Id" id="IdEmpleadoSol" type="text" class="validate" style='display:none;' >
             </div>
             <div class="input-field col s6 l3 offset-l1">
+            <div class="input field col s12">
+                    <label for="Id" class="activate" '></label>
+                    <input placeholder="Id" id="IdEmpleadoSol" type="text" class="validate" style='display:none;' >
+            </div>
+            <div class="input-field col s6 l3">
                     <i class="material-icons prefix">business</i>
                     <select id="sucursalesSolicitudes">
                     </select>
@@ -40,6 +45,16 @@
                     <label>Estatus</label>
             </div>
             <div class="input-field col s8 l4">
+            <div class="input-field col s6 l3">
+                    <i class="material-icons prefix">date_range</i>
+                    <input id="desdeSol" type="date" class="validate">
+                    <label for="desdeSol">Desde:</label>
+            </div>
+            <div class="input-field col s6 l3">
+                        <input id="hastaSol" type="date" class="validate">
+                        <label for="hastaSol">Hasta:</label>
+            </div>
+            <div class="input-field col s8 l4 offset-l4 offset-s2">
                     <i class="material-icons prefix">account_circle</i>
                     <input id="nombreAbuscarSol" type="text" class="validate" placeholder="Nombre" onkeyup="buscaEmpleadosSolicitudesP()"/>
                     <label for="nombreAbuscarSol">Nombre</label>
@@ -47,6 +62,10 @@
         </div>
         <div class="row" style='display:none;' id="rowNombre">
             <div class="input-field col s8 l4 offset-l7 offset-s2" id="listaEmpleadosBC" >
+            
+        </div>
+        <div class="row">
+            <div class="input-field col s8 l4 offset-l4 offset-s2" id="listaEmpleadosBC">
                     <table class="highlight">
                                     <tbody id="listaEmpleadosTablaBC">
                                     
@@ -76,6 +95,16 @@
            
             <div class="col s12 l12">
                 <table class="highlight responsive-table" style="font-size:11px;">
+
+        <div class="row">
+            <div class="col s6 offset-s4">
+                <a id="btnBuscarSolicitudes" class="waves-effect btn-small blue darken-4"><i class="material-icons left">search</i>Buscar</a>
+                <a id="btnLimpiarSol" class="waves-effect btn-small blue darken-4"><i class="material-icons left">brush</i>Limpiar</a>
+                <a id="btnExcelSol" class="waves-effect btn-smalle blue darken-4"><i class="fas fa-file-excel"></i>Excel</a>
+            </div>
+           
+            <div class="col s12 l12">
+                <table class="highlight responsive-table">
                     <thead >
                     <tr>
                         <th>Id</th>
@@ -87,8 +116,7 @@
                         <th>Monto Autorizado</th>
                         <th>Descuento Mensual</th>
                         <th>Estatus</th>
-                        <th>Acciones</th>
-                                                         
+                        <th>Acciones</th>                       
                     </tr>
                     </thead>
 

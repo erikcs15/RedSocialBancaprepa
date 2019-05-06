@@ -281,12 +281,14 @@ $(document).ready(function(){
         
     });
     
+
     $( "#btnDispersarPrestamo" ).click(function() {
         console.log("DISPERSAR");
         var prestamo_id = Cookies.get('p_idprestamo');
         prestamosp({ opcion : 24, prestamo_id:prestamo_id}, respDispersado);
         
     });
+
 
 
     
@@ -826,13 +828,9 @@ $(document).ready(function(){
         Cookies.set("quincenas_Re",quincenasRE);
         Cookies.set("descuento_Re",descuentoRE);
         Cookies.set("total_pagar_re",total_pagarRE);
-
-
-
         
+        prestamosp({ opcion : 9, id_solicitud:id_solicitudRE, interes_prestamo:interesRE, descuento_mensual:descuentoRE, monto_total:total_pagarRE,monto_letra:totalConLetraRE},respAjusteRealizado);      
         prestamosp({ opcion : 9, id_solicitud:id_solicitudRE, interes_prestamo:interesRE, descuento_mensual:descuentoRE, monto_total:total_pagarRE,monto_letra:totalConLetraRE},respAjusteRealizado);
-        
-       
         
     }
 
@@ -1451,19 +1449,23 @@ $(document).ready(function(){
           
     }
 
+
     var respDispersado  = function(data) 
     {
         M.toast({html: 'Dispersión realizada', classes: 'rounded green'}); 
         setTimeout('recargarPag()',3000);
     } 
+
     ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////// FUNCIONES ////////////////////////////////////////////////////////////////
+
     function recargarPag(){
         location.reload();
        }
+
     function CerrarYborrarDiv()
     {
         $("#nombreAbuscarCor").val("");
@@ -1591,6 +1593,7 @@ $(document).ready(function(){
         }
     }
 
+
     function buscaEmpleadosSolicitudesP()
     {
         var bus= $("#nombreAbuscarSol").val();
@@ -1631,6 +1634,48 @@ $(document).ready(function(){
             tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
             //tab_text=tab_text+"</tr>";
         }
+
+
+
+    function buscaEmpleadosSolicitudesP()
+    {
+        var bus= $("#nombreAbuscarSol").val();
+        if (bus.length>2)
+        {
+            document.getElementById('listaEmpleadosBC').style.display = 'block';
+            onRequest({ opcion : 84 ,nombre:bus}, respBuscarEmpleadosSolicitudes);
+        }
+        else
+        {
+            $('#IdEmpleadoSol').val(" ");
+            document.getElementById('listaEmpleadosBC').style.display = 'none';
+        }
+        console.log("Buscando texto:"+bus);
+        
+    }
+    function fnExcelReportSolicitudes()
+    {
+        var tab_text="<table border='2px' charset=UTF-8><tr> "+
+        "<th>Sucursal</th>"+
+        "<th>Id Capturista</th>"+
+        "<th>Nombre</th>"+
+        "<th>Monto Autorizado</th>"+ 
+        "<th>Quincenas</th>"+ 
+        "<th>Descuento Mensual</th>"+ 
+        "<th>Numero de cuenta</th>"+
+        "<th>Banco</th>"+
+        "<th>Beneficiario</th>"+
+        "<th>Estatus</th>"+
+        "</tr>";
+        var textRange; var j=0;
+        tab = document.getElementById('tablaSolicitudesExcel'); // id of table
+
+        for(j = 0 ; j < tab.rows.length; j++) 
+        {     
+            tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+            //tab_text=tab_text+"</tr>";
+        }
+
 
         tab_text=tab_text+"</table>";
         tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
@@ -1710,6 +1755,7 @@ $(document).ready(function(){
         cargarMenuPorRol();
     }
 
+
     function dispersarPrestamo(id_prestamo)
     {
         console.log("YASTA id: "+id_prestamo);
@@ -1717,6 +1763,8 @@ $(document).ready(function(){
 
 
     }
+
+
 
 //-------------------------------------------------------Funcion para sacar numero en letra--------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------------------

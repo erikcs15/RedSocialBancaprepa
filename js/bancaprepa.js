@@ -1856,15 +1856,12 @@ var respAccesosPorRol  = function(data) {
             case '22':
                 $('#reportesPp').prop('checked', true); 
             break;
-            case '23':
                 $('#cartaFondoA').prop('checked', true); 
             break;
             case '24':
                 $('#solicitudesFondoAhorros').prop('checked', true); 
             break;
         }    
-    }
-} 
 
 
 //---------Respuesta para actualizar los accesos al menu de agregar publicacion
@@ -1996,8 +1993,6 @@ var respCargarMenu  = function(data) {
              document.getElementById('m_Prestamos').style.display = 'block'; 
              document.getElementById('m_reportesp').style.display = 'block';
             break;
-            case '23':
-             document.getElementById('m_fondoAhorro').style.display = 'block'; 
              document.getElementById('m_fondoAhorro_menu').style.display = 'block'; 
             break;
             case '24':
@@ -2005,11 +2000,7 @@ var respCargarMenu  = function(data) {
              document.getElementById('m_fondoAhorro_menu').style.display = 'block';  
             break;
         }    
-    }
-  //  $('#accesosRol').html(documento);
 }
-
-///////////////////////////////////////////////////////////////////////////////////////
 //funciones del catalogo de empresas
 function editarEmp(emp_id)
 {
@@ -2109,11 +2100,8 @@ function cargarAccesos(rol_id){
     $('#solicitudesPp').prop('checked', false);
     $('#pagosPp').prop('checked', false);
     $('#reportesPp').prop('checked', false);
-    $('#cartaFondoA').prop('checked', false);
     $('#solicitudesFondoAhorros').prop('checked', false);
 
-
-    onRequest({ opcion : 22 ,id_rol:rol_id}, respAccesosPorRol);
        
 }
 
