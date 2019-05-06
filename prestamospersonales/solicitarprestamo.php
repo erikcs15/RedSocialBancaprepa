@@ -63,87 +63,95 @@
       
         <h5 class="header" align="center" ><b>Información del Solicitante</b></h5>
         <div class="row ">
-            <div class="input-field col s6 offset-s1">
+            <div class="input-field col l6 s12 offset-l1">
                 <input placeholder="Nombre del solicitante" id="nombre_solicitante" type="text" class="validate" disabled>
                 <label for="nombre_solicitante"><b>Nombre del solicitante:</b></label>
             </div>
-            <div class="input-field col s3">
+            <div class="input-field col l3 s6">
                 <input placeholder="Fecha solicitud" id="fecha_solicitud" type="date" class="validate" disabled>
                 <label for="fecha_solicitud"><b>Fecha Solicitud:</b></label>
             </div>
-            <div class="input-field col s2">
-                <a id="btnAbrirPoliticas" class="waves-effect btn blue darken-4"><i class="material-icons left">book</i>Politicas</a>
+            <div class="input-field col l2 s4">
+                <a id="btnAbrirPoliticas" class="waves-effect btn blue darken-4 pulse"><i class="material-icons left">book</i>Politicas</a>
                 <br></br>
             </div>
-            <div class="input-field col s3 offset-s1">
+            <div class="input-field col l3 s6 offset-l1">
                 <input placeholder="Puesto" id="puesto_solicitud" type="text" class="validate" disabled>
                 <label for="puesto_solicitud"><b>Puesto:</b></label>
             </div>
-            <div class="input-field col s3 ">
+            <div class="input-field col l3 s6 ">
                 <input placeholder="Sucursal" id="sucursal_solicitud" type="text" class="validate" disabled>
                 <label for="sucursal_solicitud"><b>Sucursal:</b></label>
             </div>
-            <div class="input-field col s3 ">
+            <div class="input-field col l3  s6">
                 <input placeholder="Empresa" id="empresa_solicitud" type="text" class="validate" disabled>
                 <label for="empresa_solicitud"><b>Empresa:</b></label>
             </div>            
         </div>
         <h5 class="header" align="center" ><b>Información del Prestamo</b></h5>
         <div class="row">
-            <div class="input-field col s2 offset-s1">
+            <div class="input-field col l2 s12 offset-l1">
                 <input placeholder="Numero de Tarjeta" id="num_tarjeta" type="text" class="validate">
                 <label for="num_tarjeta"><b>Numero de Tarjeta:</b></label>
             </div>
-            <div class="input-field col s5">
+            <div class="input-field col l3 s6">
                 <input placeholder="Benificiario Cuenta" id="bnf_cta" type="text" class="validate">
                 <label for="bnf_cta"><b>Benificiario Cuenta:</b></label>
             </div>
-            <div class="input-field col s3">
+            <div class="input-field col l2 s1">
+           
+                <label>
+                    <input type="checkbox" id="chBeneficiario" onclick="beneficiarioCheck()" />
+                    <span>El beneficiario es el colaborador</span>
+                </label>
+           
+            </div>
+            <div class="input-field col l3 s12">
                 <input placeholder="Nombre Banco" id="nombre_banco" type="text" class="validate">
                 <label for="nombre_banco"><b>Nombre Banco:</b></label>
             </div>
-            <div class="input-field col s2 offset-s1">
+            <div class="input-field col l2 offset-l1 s12">
                 <input placeholder="Monto Solicitado" id="monto_solicitado" type="text" class="validate">
                 <label for="monto_solicitado"><b>Monto Solicitado:</b></label>
             </div>
-            <div class="input-field col s1">
+            <div class="input-field col l1 s6">
                 <input placeholder="Quincenas" id="quincenas" type="number" class="validate">
                 <label for="quincenas"><b>Quincenas:</b></label>
             </div>
-            <div class="input-field col s1">
-                <input placeholder="Meses pagar" id="meses_pagar" type="text" class="validate">
+            <div class="input-field col l1 s6">
+                <input placeholder="Meses pagar" id="meses_pagar" type="text" class="validate" disabled>
                 <label for="meses_pagar"><b>Meses pagar</b></label>
             </div>
-            <div class="input-field col s2">
-                <input placeholder="Interes del prestamo" id="interes_prestamo" type="text" class="validate">
+            <div class="input-field col l2 s6">
+                <input placeholder="Interes del prestamo" id="interes_prestamo" type="text" class="validate" disabled>
                 <label for="interes_prestamo"><b>Interes del prestamo:</b></label>
             </div>
-            <div class="input-field col s2">
+            <div class="input-field col l2 s6">
                 <input placeholder="Tipo de Abono" id="tipo_abono" type="text" class="validate" disabled>
                 <label for="tipo_abono"><b>Tipo de Abono:</b></label>
             </div>
-            <div class="input-field col s2">
-                <input placeholder="Descuendo de" id="descuento" type="text" class="validate">
+            <div class="input-field col l2 s6">
+                <input placeholder="Descuendo de" id="descuento" type="text" class="validate" disabled>
                 <label for="descuento"><b>Descuendo de:</b></label>
             </div>
-            <div class="input-field col s1 offset-s1">
-                <input placeholder="Monto Total a Pagar" id="monto_total_pagar" type="text" class="validate">
+            <div class="input-field col l1 offset-l1 s6">
+                <input placeholder="Monto Total a Pagar" id="monto_total_pagar" type="text" class="validate" disabled>
                 <label for="monto_total_pagar"><b>Monto Total:</b></label>
             </div>
-            <div class="input-field col s5">
-                <input placeholder="Monto Con Letra" id="monto_letra" type="text" class="validate">
+            <div class="input-field col l5 s6 ">
+                <input placeholder="Monto Con Letra" id="monto_letra" type="text" class="validate" disabled>
                 <label for="monto_letra"><b>Monto Con Letra:</b></label>
             </div>
-            <div class="input-field col s2">
-                <input placeholder="Inicio del Descuento" id="inicio_descuento" type="date" class="validate">
+            <div class="input-field col l2 s6">
+                <input placeholder="Inicio del Descuento" id="inicio_descuento" type="date" class="validate" disabled>
                 <label for="inicio_descuento"><b>Inicio del Descuento:</b></label>
             </div>
-            <div class="input-field col s2">
-                <input placeholder="Fin del Descuento" id="fin_descuento" type="date" class="validate">
+            <div class="input-field col l2 s6">
+                <input placeholder="Fin del Descuento" id="fin_descuento" type="date" class="validate" disabled>
                 <label for="fin_descuento"><b>Fin del Descuento:</b></label>
             </div>
         </div>
-        <div class="col s12" align="center">
+        <div class="col l12 s6" align="center" >
             <a id="btnCrearSolicitud" class="waves-effect btn blue darken-4"><i class="material-icons left">add</i>Crear Solicitud</a>
             <br></br>
         </div>
@@ -256,20 +264,13 @@
                             <input class="file-path validate"   type="text" id="archivoResponsiva">
                         </div>
                     </div>
-                    <div class="col s12" id="cargarArchivoSolicitud"  style='display:none;'>
+                    <div class="col 12 s12" id="cargarArchivoSolicitud"  style='display:none;'>
 
                     </div>
-                    <!--div class="row">
-                        <div class="file-field input-field s10 l10">
-                            <div  class="btn "> 
-                                    <span><i class="material-icons right">cloud_upload</i>Cargar</span>
-                                <input id="docId"  type="file" name="archivo[]" >
-                            </div>
-                            <div class="file-path-wrapper">
-                                <input id="archivoResponsiva" class="file-path validate" type="text">
-                            </div>
-                        </div>
-                    </div-->
+                    <br>
+                    <div class="col 12 s12" align="right">
+                        <a id="btnEliminarResp" class="waves-effect waves-light btn-small" disabled><i class="material-icons right">delete</i>Eliminar</a>
+                    </div>
                 </form>
                 </div>
            </div>

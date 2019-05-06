@@ -596,6 +596,104 @@
 				return $datos;
 			}
 
+			public function cargarAreasParaFiltrarInventario()
+			{
+  
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				
+				$sql="SELECT id, descripcion 
+				FROM b_cat_areas
+				WHERE estatus_id=5"; 
+
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+				   $datos[$i]['id'] = $res[0];
+				   $datos[$i]['descripcion'] = $res[1];
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
+			public function cargarEquiposPorInventarioArea($inventario_id, $sucursal_id, $area_id)
+			{
+				$q="";
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				if($area_id==0)
+				{
+						$sql="SELECT e.id, t.`descripcion`, s.`nomComercial`, IFNULL(c.`descripcion`,'-'),IFNULL(d.`equipo_id`,'-') AS invetariado,
+						a.`descripcion`, e.`descripcion`,e.marca, e.`modelo`, e.`valor_factura`, e.`serie`
+						FROM i_equipo e 
+						LEFT JOIN i_inventario_detalle d ON d.`equipo_id`=e.`id` AND d.`inventario_id`= $inventario_id
+						INNER JOIN sucursales s ON s.id=e.`sucursal_id`
+						LEFT JOIN capturistas c ON c.id=e.`encargado_id`
+						INNER JOIN i_tipo_equipo t ON t.id=e.`tipo_equipo_id`
+						INNER JOIN b_cat_areas a ON a.id=e.`area_id` 
+						WHERE e.`sucursal_id`= $sucursal_id 
+						ORDER BY invetariado DESC";
+				}
+				else
+				{
+						$sql="SELECT e.id, t.`descripcion`, s.`nomComercial`, IFNULL(c.`descripcion`,'-'),IFNULL(d.`equipo_id`,'-') AS invetariado,
+						a.`descripcion`, e.`descripcion`,e.marca, e.`modelo`, e.`valor_factura`, e.`serie`
+						FROM i_equipo e 
+						LEFT JOIN i_inventario_detalle d ON d.`equipo_id`=e.`id` AND d.`inventario_id`= $inventario_id
+						INNER JOIN sucursales s ON s.id=e.`sucursal_id`
+						LEFT JOIN capturistas c ON c.id=e.`encargado_id`
+						INNER JOIN i_tipo_equipo t ON t.id=e.`tipo_equipo_id`
+						INNER JOIN b_cat_areas a ON a.id=e.`area_id` 
+						WHERE e.`sucursal_id`= $sucursal_id AND a.id=$area_id
+						ORDER BY invetariado DESC";
+				}
+				
+
+				
+				
+				$resultado = mysqli_query($this->con(), $sql); 
+
+				while ($res = mysqli_fetch_row($resultado)) {
+
+				   $datos[$i]['id_equipo'] = $res[0];
+				   $datos[$i]['tipo_equipo'] = $res[1];
+				   $datos[$i]['sucursal_nombre'] = $res[2];
+				   $datos[$i]['encargado'] = $res[3];
+				   $datos[$i]['inventariado'] = $res[4];
+				   $datos[$i]['area'] = $res[5];
+					 $datos[$i]['descripcion'] = $res[6];
+					 $datos[$i]['marca'] = $res[7];
+				   $datos[$i]['modelo'] = $res[8];
+					 $datos[$i]['valor_factura'] = $res[9];
+					 $datos[$i]['serie'] = $res[10];
+				  
+				   $i++;
+
+				} 
+				
+				if ( count($datos )==0) { 
+					$datos[0]['id_equipo']  =0;
+					return  $datos; 
+				  }
+
+
+				return $datos;  
+
+			}
+
 }
 
 ?>

@@ -54,6 +54,8 @@
                         <p><label><input type="checkbox" id="capAreas" onChange="habDesAccesos(tipoRolAc.value,'capAreas',18)"/><span>Captura de Areas</span></label></p>
                         <p><label><input type="checkbox" id="crearSolpp" onChange="habDesAccesos(tipoRolAc.value,'crearSolpp',19)"/><span>Crear Solicitudes Prestamos Personales</span></label></p>
                         <p><label><input type="checkbox" id="solicitudesPp" onChange="habDesAccesos(tipoRolAc.value,'solicitudesPp',20)"/><span>Solicitudes Prestamos Personales</span></label></p>
+                        <p><label><input type="checkbox" id="pagosPp" onChange="habDesAccesos(tipoRolAc.value,'pagosPp',21)"/><span>Pagos Prestamos Personales</span></label></p>
+                        <p><label><input type="checkbox" id="reportesPp" onChange="habDesAccesos(tipoRolAc.value,'reportesPp',22)"/><span>Reportes Prestamos Personales</span></label></p>
                     </div>
             </div>             
            

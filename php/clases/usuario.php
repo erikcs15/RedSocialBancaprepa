@@ -166,35 +166,35 @@
 
 				if($capid>0 AND $suc<=0 AND $puesto<=0)
 				{	
-					$q = "WHERE c.id=$capid";
+					$q = "AND c.id=$capid";
 				}
 				if($capid>0 AND $suc>0 AND $puesto<=0)
 				{
-					$q = "WHERE c.id=$capid AND c.sucursal_id=$suc";
+					$q = "AND c.id=$capid AND c.sucursal_id=$suc";
 				}
 				if($capid>0 AND $suc<=0 AND $puesto>0)
 				{
-					$q = "WHERE c.id=$capid AND c.rol_id=$puesto";
+					$q = "AND c.id=$capid AND c.rol_id=$puesto";
 				}
 				if($capid<=0 AND $suc<=0 AND $puesto>0)
 				{
-					$q = "WHERE c.rol_id=$puesto";
+					$q = "AND c.rol_id=$puesto";
 				}
 				if($capid<=0 AND $suc>0 AND $puesto>0)
 				{
-					$q = "WHERE c.rol_id=$puesto AND c.sucursal_id=$suc";
+					$q = "AND c.rol_id=$puesto AND c.sucursal_id=$suc";
 				}
 				if($capid<=0 AND $suc>0 AND $puesto<=0)
 				{
-					$q = "WHERE c.sucursal_id=$suc";
+					$q = "AND c.sucursal_id=$suc";
 				}
 				if($capid<=0 AND $suc<=0 AND $puesto<=0)
 				{
-					$q = "";
+					$q = " ";
 				}
 				if($capid>0 AND $suc>0 AND $puesto>0)
 				{
-					$q = "WHERE c.id=$capid AND c.sucursal_id=$suc AND  c.rol_id=$puesto";
+					$q = "AND c.id=$capid AND c.sucursal_id=$suc AND  c.rol_id=$puesto";
 				}
 
 				
@@ -203,7 +203,7 @@
 						INNER JOIN b_correos cor ON cor.capturista_id=c.id
 						INNER JOIN sucursales s ON s.id = c.sucursal_id 
 						INNER JOIN roles r ON c.`rol_id`=r.`id`
-						INNER JOIN estatus e ON e.id=c.estatus_id ".$q." ORDER BY cor.id DESC"; 
+						INNER JOIN estatus e ON e.id=c.estatus_id WHERE c.estatus_id=5 ".$q."  ORDER BY cor.id DESC"; 
 				$resultado = mysqli_query($this->con(), $sql); 
 
 				
@@ -3468,7 +3468,7 @@
 				
 
 				$sql="SELECT e.id, t.`descripcion`, s.`nomComercial`, IFNULL(c.`descripcion`,'-'),IFNULL(d.`equipo_id`,'-') AS invetariado,
-				a.`descripcion`, e.`descripcion`
+				a.`descripcion`, e.`descripcion`,e.marca, e.`modelo`, e.`valor_factura`, e.`serie`
 				FROM i_equipo e 
 				LEFT JOIN i_inventario_detalle d ON d.`equipo_id`=e.`id` AND d.`inventario_id`= $inventario_id
 				INNER JOIN sucursales s ON s.id=e.`sucursal_id`
@@ -3488,7 +3488,11 @@
 				   $datos[$i]['encargado'] = $res[3];
 				   $datos[$i]['inventariado'] = $res[4];
 				   $datos[$i]['area'] = $res[5];
-				   $datos[$i]['descripcion'] = $res[6];
+					 $datos[$i]['descripcion'] = $res[6];
+					 $datos[$i]['marca'] = $res[7];
+				   $datos[$i]['modelo'] = $res[8];
+					 $datos[$i]['valor_factura'] = $res[9];
+					 $datos[$i]['serie'] = $res[10];
 				  
 				   $i++;
 

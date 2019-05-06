@@ -41,9 +41,9 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <i class="material-icons prefix">description</i>
+                          
                             <textarea id="descripcionTicket" class="materialize-textarea"></textarea>
-                            <label for="descripcionTicket">Descripcion</label>
+                            
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix">email</i>
@@ -135,16 +135,22 @@
     </div>
 
     <script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="../js/summernote.js"></script>
     <script type="text/javascript" src="../js/materialize.min.js"></script>
     <script type="text/javascript" src="../js/ajax.js"></script>
     <script type="text/javascript" src="../js/bancaprepa.js"></script>
     <script type="text/javascript" src="../js/js.cookie.js"></script>
     <script type="text/javascript" src="../js/tickets.js"></script>
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-lite.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-lite.js"></script>
     <script>
         $(document).ready(function(){
             $('.sidenav').sidenav();
+
+           
         });
+
+        
     </script> 
 
     

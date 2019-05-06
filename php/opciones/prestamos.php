@@ -24,7 +24,7 @@
 				echo (json_encode($prestamos->calcularFechaPagoInicialYFinal($_REQUEST['fecha'],$_REQUEST['quincenas'])));
 		break;
 		case 6: 
-				echo (json_encode($prestamos->cargarSolicitudes()));
+				echo (json_encode($prestamos->cargarSolicitudes($_REQUEST['sucursal'],$_REQUEST['estatus_id'],$_REQUEST['capturista_id'],$_REQUEST['fecha_ini'],$_REQUEST['fecha_fin'] )));
 		break;
 		case 7: 
 				echo (json_encode($prestamos->autorizarPrestamo($_REQUEST['id_prestamo'],$_REQUEST['coment'],$_REQUEST['capturista_autoriza'],$_REQUEST['montoAutorizado'])));
@@ -59,7 +59,24 @@
 		case 17: 
 				echo (json_encode($prestamos->cargarInfoSolicitudXId($_REQUEST['id_prestamo'])));
 		break;
- 
+		case 18: 
+				echo (json_encode($prestamos->cargarSucursales()));
+		break;
+		case 19: 
+				echo (json_encode($prestamos->cargarEstatus()));
+		break;
+		case 20: 
+				echo (json_encode($prestamos->eliminarResponsiva($_REQUEST['id_prestamo'])));
+		break;
+		case 21: 
+				echo (json_encode($prestamos->cargarPagosPorFecha($_REQUEST['fecha'])));
+		break;
+		case 22: 
+				echo (json_encode($prestamos->reflejarPago($_REQUEST['corrida_prestamo_id'])));
+		break;
+		case 23: 
+				echo (json_encode($prestamos->cargarReporte1Excel($_REQUEST['sucursal_id'])));
+		break;
  	}
  
 ?>

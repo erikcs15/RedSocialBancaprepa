@@ -100,6 +100,14 @@ $(document).ready(function(){
 
     });
 
+    $("#btnExcelInventario").click(function() {
+
+        console.log("presionado excel");
+        //descargarExcel();
+        fnExcelReportInventario();
+
+    });
+
     $("#cerrarYactualizarModalResp").click(function() {
         onRequest({ opcion : 70 }, respcargasucursales);
 
@@ -363,6 +371,19 @@ $(document).ready(function(){
                     }
 
    });
+
+   
+
+   $("#btnBusquedaPorArea").click(function() {
+       var areaid=$("#areadd").val();
+       console.log("||||AREA: "+areaid);
+       var inventario_id=Cookies.get('i_id_inventario');
+       var sucursal_id=Cookies.get('i_sucursal');
+       
+       inventarios({ opcion : 26 ,inventario_id:inventario_id, sucursal:sucursal_id , area_id:areaid},respCargarInventarioXArea);
+       
+       
+   });
     
 
 });
@@ -487,33 +508,11 @@ $(document).ready(function(){
     function asignarEquipo()
     {  
         var equip = Cookies.get('i_idequipo');
-        var id_emp = $("#IdResponsable").val();
-        var fecha_ent = $("#respFecha_ent").val();
-        var numEquipo = Cookies.get('i_numequipo');
-        if(id_emp=="")
-        {
-            M.toast({html: 'Agregue al responsable porfavor!', classes: 'rounded red'}); 
-            return;
-        }
-        if(fecha_ent=="")
-        {
-            M.toast({html: 'Agrega la fecha de entrega!', classes: 'rounded red'}); 
-            return;
-        }
         
-        var comentarios = $("#comenEquipo").val();
-        if(comentarios=="")
-        {
-            M.toast({html: 'Agregue comentarios sobre el equipo porfavor!.', classes: 'rounded red'}); 
-            return;
-        }
-        console.log("id de empleado:"+id_emp+" equipo id:"+equip+"fecha entrega:"+fecha_ent);
 
         //Deshabilitamos las resopnsivas que tenga ese equipo
         inventarios({ opcion : 6, equipo_id:equip},respDeshabilitarResponsivas);  
-        onRequest({ opcion : 85 ,id_empleado:id_emp, idequipo:equip, fecha_ent:fecha_ent, comen:comentarios}, respAsignarResponsiva);
-        onRequest({ opcion : 91 ,equipo_id:equip, encargado:id_emp}, respAsignarResponsivaAEquipo);
-        onRequest({ opcion : 90 ,num_equipo:numEquipo}, respVerificarSiTeniaResponsiva);
+        
 
     }
 
@@ -553,6 +552,52 @@ $(document).ready(function(){
         "</tr>";
         var textRange; var j=0;
         tab = document.getElementById('tablaEquipos2'); // id of table
+
+        for(j = 0 ; j < tab.rows.length; j++) 
+        {     
+            tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+            //tab_text=tab_text+"</tr>";
+        }
+
+        tab_text=tab_text+"</table>";
+        tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+        tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+        tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+        tab_text= tab_text.replace(/<a[^>]*>/gi, "");
+        var ua = window.navigator.userAgent;
+        var msie = ua.indexOf("MSIE "); 
+
+        if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+        {
+            txtArea1.document.open("txt/html","replace");
+            txtArea1.document.write(tab_text);
+            txtArea1.document.close();
+            txtArea1.focus(); 
+            sa=txtArea1.document.execCommand("SaveAs",true,"Say Thanks to Sumit.xls");
+        }  
+        else                 //other browser not tested on IE 11
+            sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));  
+
+        return (sa);
+    }
+
+    function fnExcelReportInventario()
+    {
+        var tab_text="<table border='2px' charset=UTF-8><tr> "+
+        "<th>Id</th>"+
+        "<th>Tipo de Equipo</th>"+
+        "<th>Descripcion</th>"+
+        "<th>Sucursal</th>"+
+        "<th>Area</th>"+
+        "<th>Encargado</th>"+
+        "<th>Inventariado</th>"+
+        "<th>Marca</th>"+
+        "<th>Modelo</th>"+
+        "<th>Valor Factura</th>"+
+        "<th>Serie</th>"+
+        "</tr>";
+        var textRange; var j=0;
+        tab = document.getElementById('tablaInventarioDeEquipoVer2'); // id of table
 
         for(j = 0 ; j < tab.rows.length; j++) 
         {     
@@ -624,6 +669,9 @@ $(document).ready(function(){
 
         var suc= $('#sucursalesdd').val();
        console.log("SUCURSAL: "+ suc);
+
+       Cookies.set("i_id_inventario", id_inventario );
+       Cookies.set("i_sucursal", suc );
         onRequest({ opcion : 119, inventario_id:id_inventario, sucursal:suc}, respCargarInventarioParaVer);
     } 
     
@@ -1301,7 +1349,33 @@ $(document).ready(function(){
             M.toast({html: 'Ocurrío un problema, contacte al equipo de sistemas.', classes: 'rounded red'}); 
             return;
         }
-
+        
+        var equip = Cookies.get('i_idequipo');
+        var id_emp = $("#IdResponsable").val();
+        var fecha_ent = $("#respFecha_ent").val();
+        var numEquipo = Cookies.get('i_numequipo');
+        if(id_emp=="")
+        {
+            M.toast({html: 'Agregue al responsable porfavor!', classes: 'rounded red'}); 
+            return;
+        }
+        if(fecha_ent=="")
+        {
+            M.toast({html: 'Agrega la fecha de entrega!', classes: 'rounded red'}); 
+            return;
+        }
+        
+        var comentarios = $("#comenEquipo").val();
+        if(comentarios=="")
+        {
+            M.toast({html: 'Agregue comentarios sobre el equipo porfavor!.', classes: 'rounded red'}); 
+            return;
+        }
+        console.log("id de empleado:"+id_emp+" equipo id:"+equip+"fecha entrega:"+fecha_ent);
+ 
+        onRequest({ opcion : 85 ,id_empleado:id_emp, idequipo:equip, fecha_ent:fecha_ent, comen:comentarios}, respAsignarResponsiva);
+        onRequest({ opcion : 91 ,equipo_id:equip, encargado:id_emp}, respAsignarResponsivaAEquipo);
+        onRequest({ opcion : 90 ,num_equipo:numEquipo}, respVerificarSiTeniaResponsiva);
         console.log("estatus dado de baja");
        
     }
@@ -1393,6 +1467,7 @@ $(document).ready(function(){
                 
                 found=1;
                 M.toast({html: 'Dato repetido.', classes: 'rounded red'}); 
+                $('#codArticulo').val("");
                 return;
             }
             else
@@ -1412,6 +1487,7 @@ $(document).ready(function(){
             if(Descripcion=="undefined")
             {
                 M.toast({html: 'Sin datos sobre ese equipo!.', classes: 'rounded red'}); 
+                $('#codArticulo').val("");
             
             }
             else
@@ -1451,6 +1527,7 @@ $(document).ready(function(){
         else
         {
             M.toast({html: 'Dato repetido.', classes: 'rounded red'}); 
+            $('#codArticulo').val("");
             return;
         }
         
@@ -1772,6 +1849,7 @@ $(document).ready(function(){
         return; 
 
         var d="";
+        var d2="";
        var inv="";
 
         for (var i = 0; i < data.length; i++) 
@@ -1804,12 +1882,29 @@ $(document).ready(function(){
                 '<td>'+inv+'</td>'+             
                 '</tr> ';
 
+                d2+="<tr> "+
+                '<td>'+data[i].id_equipo+'</td>'+ 
+                '<td>'+data[i].tipo_equipo+'</td>'+  
+                '<td>'+data[i].descripcion+'</td>'+   
+                '<td>'+data[i].sucursal_nombre+'</td>'+   
+                '<td>'+data[i].area+'</td>'+               
+                '<td>'+data[i].encargado+'</td>'+          
+                '<td>'+inv+'</td>'+   
+                '<td>'+data[i].marca+'</td>'+   
+                '<td>'+data[i].modelo+'</td>'+   
+                '<td>'+data[i].valor_factura+'</td>'+               
+                '<td>'+data[i].serie+'</td>'+            
+                '</tr> ';
+
             }
             
             
         }
 
         $("#tablaInventarioDeEquipoVer").html(d);
+        $("#tablaInventarioDeEquipoVer2").html(d2);
+
+        inventarios({ opcion : 25},respCargarAreasTodas);  
 
         
     }
@@ -1836,8 +1931,85 @@ $(document).ready(function(){
         $("#modalCrearInventario").modal("close");
     }
 
-
     
+    var respCargarAreasTodas = function(data) { 
+        if(!data && data == NULL)
+            RETURN;  
+     
+        var documento='<option value=0 selected>Todas</option>';
+    
+        for(var i=0; i<data.length; i++){
+            documento+='<option value='+data[i].id+'>'+data[i].descripcion+'</option>';
+        }
+        
+        $('#areadd').html(documento);
+        $('#areadd').formSelect(); 
+    
+    }
+
+
+    var respCargarInventarioXArea = function(data) 
+    {
+        if (!data && data == null) 
+        return; 
+
+        var d="";
+        var d2="";
+       var inv="";
+
+        for (var i = 0; i < data.length; i++) 
+        {
+            var sucursal=String(data[i].sucursal_nombre);
+            console.log("-------"+sucursal);
+            if(sucursal=="undefined")
+            {
+                d+="<tr> "+
+                '<td>Sin equipos registrados en este inventario. </td>'+
+                '</tr> ';
+            }
+            else
+            {
+                if(data[i].inventariado=="-")
+                {
+                    inv="No";
+                }
+                else
+                {
+                    inv="Si";
+                }
+                d+="<tr> "+
+                '<td>'+data[i].id_equipo+'</td>'+ 
+                '<td>'+data[i].tipo_equipo+'</td>'+  
+                '<td>'+data[i].descripcion+'</td>'+   
+                '<td>'+data[i].sucursal_nombre+'</td>'+   
+                '<td>'+data[i].area+'</td>'+               
+                '<td>'+data[i].encargado+'</td>'+          
+                '<td>'+inv+'</td>'+             
+                '</tr> ';
+
+                d2+="<tr> "+
+                '<td>'+data[i].id_equipo+'</td>'+ 
+                '<td>'+data[i].tipo_equipo+'</td>'+  
+                '<td>'+data[i].descripcion+'</td>'+   
+                '<td>'+data[i].sucursal_nombre+'</td>'+   
+                '<td>'+data[i].area+'</td>'+               
+                '<td>'+data[i].encargado+'</td>'+          
+                '<td>'+inv+'</td>'+   
+                '<td>'+data[i].marca+'</td>'+   
+                '<td>'+data[i].modelo+'</td>'+   
+                '<td>'+data[i].valor_factura+'</td>'+               
+                '<td>'+data[i].serie+'</td>'+            
+                '</tr> ';
+
+            }
+            
+            
+        }
+
+        $("#tablaInventarioDeEquipoVer").html(d);
+        $("#tablaInventarioDeEquipoVer2").html(d2);
+        
+    }
 
     
     

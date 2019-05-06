@@ -5,15 +5,9 @@ $c = new Conectar();
 
 class DF extends PDF
 {
-    public function Header()
-    {
-        parent::Header();
-    }
+    
 
-    public function Footer()
-    {
-        parent::Footer();
-    }
+    
 }
 
 
@@ -21,17 +15,29 @@ class DF extends PDF
 $fecha_entrega 	= $_REQUEST[ 'fecha' ];
 $nombre 	= $_REQUEST[ 'nombre' ];
 $monto 	= $_REQUEST[ 'monto' ];
+$id_solicitud 	= $_REQUEST[ 'id_solicitud' ];
+$fecha_final_completa 	= $_REQUEST[ 'final_completa' ];
 //$id_equipo = $_REQUEST[ 'id_equipo' ];
 
-/*
 
 
+$sql = "SELECT s.monto_total, s.fin_descuento, c.dom_calle, c.dom_colonia, c.dom_poblacion
+		FROM b_prestamo_solicitudes s 
+		INNER JOIN capturistas c ON c.id = s.capturista_id
+		WHERE s.id=$id_solicitud";
+	$resultado = mysqli_query($c->con(), $sql); 
+	while ($res = mysqli_fetch_row($resultado)) 
+	{
+		$montoTotal = $res[ 0 ];
+		$fin_descuento = $res[ 1 ];
+		$dom_calle = $res[ 2 ];
+		$dom_colonia = $res[ 3 ];
+		$dom_poblacion = $res[ 4 ];
+	}
 
-$sql = "SELECT nomComercial FROM sucursales WHERE id = $sucursal_id";
-$arreglo = $funcion->consulta( $sql );
-while ( $fila = mysqli_fetch_array( $arreglo ) )
-    $sucursal = $fila[ 0 ];
-*/
+
+    
+
 $df = new DF();
 $df->FPDF( 'P', 'mm', 'Letter' );
 $df->AddPage();
@@ -52,17 +58,23 @@ $totalFondo 	= 0;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //											 BUSCAR LOS PAGO DE RELACION DE VALES 														//
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-$df->SetFont('Arial','B',17);
+$df->SetFont('Arial','B',15);
 $df->Ln(50);
 $df->Cell(50);
-$df->Cell(95,5,"CARTA RESPONSIVA DE PRESTAMO PERSONAL",0,0,'C',false);
+$df->Cell(95,5,utf8_decode("Pagaré"),0,0,'C',false);
+$df->Ln(8);
+$df->SetFont('Arial','',10);
+$df->Cell(195,5,"Bueno por $$montoTotal",0,0,0,false);
+$df->Ln(8);
+$df->Cell(195,5,"Lugar y fecha de suscripcion",0,0,0,false);
+$df->Ln(5);
+$df->Cell(195,5,"Culiacan, Sinaloa a $fecha_entrega",0,0,0,false);
+$df->SetFont('Arial','',10);
 
-$df->SetFont('Arial','',12);
-
-$df->Ln(18);
+$df->Ln(10);
 
 
-$df->Multicell(190,15,utf8_decode("En la ciudad de ________________, _______________ a $fecha_entrega, a través del presente se hace constar que comparece ante mi el C. $nombre, quien recibe la cantidad de $".number_format($monto,2)." pesos (moneda nacional), por concepto de Prestamo Personal de igual manera en este mismo acto se hace constar que el  C. $nombre se compromete hacer la devolucion del monto otorgado en prestamo una vez terminado la relacion laboral dentro de la empresa denominada Prestaciones Responsables S.A. de C.V. aunando que este se podra descontar de su finiquito que tendria que percibir al momento de la recisión laboral."),0,'J',0);
+$df->Multicell(190,8,utf8_decode("Debe (mos) y pagare (mos) incondicionalmente por este pagaré a la orden de Prestaciones Responsables SA de CV en Culiacan, Sinaloa, el día $fecha_final_completa, la cantidad de $$montoTotal. Valor recibido a mi (nuestra) entera satisfacción por concepto de prestamo personal. Este pagaré forma parte de una seria numerada del 1 al 1 y todos están sujetos a la condición de que, al no pagarse cualquiera de ellos a su vencimiento, seran exigibles todos los que le sigan en número, además de los ya vencidos, desde la fecha de vencimiento de este documento hasta el día de su liquidación, causara intereses moratorios al tipo 3% mensual, pagadero es esta ciudad juntamente con el principal. "),0,'J',0);
 $df->Ln(10);
 /*
 if($num_equipo > 0)
@@ -102,12 +114,25 @@ if($num_equipo > 0)
 	}
 }*/
 $df->Ln(6);
-$df->Multicell(180,5,utf8_decode("                                                 ________________________________                   "),0,'',0);
-$df->Multicell(180,5,utf8_decode("                                               $nombre "),0,'',0);
-$df->Multicell(180,5,utf8_decode("                                                     Acreedor del prestamo personal  "),0,'',0);
-$df->Ln(16);
-$df->Multicell(180,5,utf8_decode("        ________________________________             _________________________________   "),0,'',0);
-$df->Multicell(180,5,utf8_decode("                          Nombre Gerente                                                       Firma Gerente               "),0,'',0);
+$df->SetFont('Arial','B',10);
+$df->Cell(95,5,utf8_decode("                        Datos del deudor"),0,0,'',false);
+$df->Ln(6);
+$df->Cell(95,5,utf8_decode("Nombre: $nombre"),0,0,'',false);
+$df->Ln(6);
+$df->Cell(95,5,utf8_decode("Dirección: $dom_calle COLONIA $dom_colonia"),0,0,'',false);
+$df->Ln(6);
+$df->Cell(95,5,utf8_decode("Población: $dom_poblacion"),0,0,'',false);
+$df->Ln(20);
+$df->Cell(95,5,utf8_decode("Firma (s):_________________________________"),0,0,'',false);
+$df->Ln(6);
+$df->Cell(95,5,utf8_decode("                Acepto y Pagaré"),0,0,'',false);
+$df->Ln(20);
+$df->Cell(95,5,utf8_decode("                        Datos de gerente"),0,0,'',false);
+$df->Ln(10);
+$df->Cell(95,5,utf8_decode("Nombre:__________________________________________"),0,0,'',false);
+$df->Ln(15);
+$df->Cell(95,5,utf8_decode("Firma:____________________________________________"),0,0,'',false);
+
 
 //Fondo del texto Gris Claro Claro
 /*

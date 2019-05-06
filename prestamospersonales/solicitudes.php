@@ -9,6 +9,7 @@
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
             <link rel="stylesheet" type="text/css" href="../css/materialize.min.css">
             <link rel="stylesheet" type="text/css" href="../css/bancaprepa.css"> 
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
             
     </head>
     <link rel="icon" type="image/png" href="/img/favicon.ico" /> 
@@ -22,11 +23,61 @@
         <h3 class="header " align="center" style="color:#1a237e;">Solicitudes de Prestamos Personales</h3> 
       
         <div class="row"><!-- CONTENEDOR 1 -->
-            <div class="col s12">
-                <table class="highlight">
+            <div class="input field col s12">
+                    <label for="Id" class="activate" '></label>
+                    <input placeholder="Id" id="IdEmpleadoSol" type="text" class="validate" style='display:none;' >
+            </div>
+            <div class="input-field col s6 l3">
+                    <i class="material-icons prefix">business</i>
+                    <select id="sucursalesSolicitudes">
+                    </select>
+                    <label>Sucursal</label>
+            </div>
+            <div class="input-field col s6 l3">
+                    <i class="material-icons prefix">menu</i>
+                    <select id="estatusSolicitudes">
+                    </select>
+                    <label>Estatus</label>
+            </div>
+            <div class="input-field col s6 l3">
+                    <i class="material-icons prefix">date_range</i>
+                    <input id="desdeSol" type="date" class="validate">
+                    <label for="desdeSol">Desde:</label>
+            </div>
+            <div class="input-field col s6 l3">
+                        <input id="hastaSol" type="date" class="validate">
+                        <label for="hastaSol">Hasta:</label>
+            </div>
+            <div class="input-field col s8 l4 offset-l4 offset-s2">
+                    <i class="material-icons prefix">account_circle</i>
+                    <input id="nombreAbuscarSol" type="text" class="validate" placeholder="Nombre" onkeyup="buscaEmpleadosSolicitudesP()"/>
+                    <label for="nombreAbuscarSol">Nombre</label>
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="input-field col s8 l4 offset-l4 offset-s2" id="listaEmpleadosBC">
+                    <table class="highlight">
+                                    <tbody id="listaEmpleadosTablaBC">
+                                    
+                                    </tbody>
+                    </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s6 offset-s4">
+                <a id="btnBuscarSolicitudes" class="waves-effect btn-small blue darken-4"><i class="material-icons left">search</i>Buscar</a>
+                <a id="btnLimpiarSol" class="waves-effect btn-small blue darken-4"><i class="material-icons left">brush</i>Limpiar</a>
+                <a id="btnExcelSol" class="waves-effect btn-smalle blue darken-4"><i class="fas fa-file-excel"></i>Excel</a>
+            </div>
+           
+            <div class="col s12 l12">
+                <table class="highlight responsive-table">
                     <thead >
                     <tr>
                         <th>Id</th>
+                        <th>Sucursal</th>
                         <th>Nombre del Solicitante</th>
                         <th>Fecha Solicitud</th>
                         <th>Monto Solicitado</th>
@@ -34,8 +85,7 @@
                         <th>Monto Autorizado</th>
                         <th>Descuento Mensual</th>
                         <th>Estatus</th>
-                        <th>Acciones</th>
-                                                         
+                        <th>Acciones</th>                       
                     </tr>
                     </thead>
 
@@ -43,10 +93,29 @@
                         
                     </tbody>
                 </table>
+                <table class="highlight" width="100%"  border="0" cellspacing="0" cellpadding="0" style="display:none">
+                    <thead >
+                    <tr>
+                        <th>Sucursal</th>
+                        <th>Id</th>
+                        <th>Nombre</th> 
+                        <th>Monto Solicitado</th>
+                        <th>Numero de cuenta</th>
+                        <th>Banco</th>
+                        <th>Beneficiario</th>
+                        <th>Estatus</th>
+                        
+                    </tr>
+                    </thead>
+
+                    <tbody id="tablaSolicitudesExcel">
+                        
+                    </tbody>
+                </table>
             </div>
         </div>
 
-    </div>        
+         
 
         <script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
         <script type="text/javascript" src="../js/materialize.min.js"></script>
@@ -82,7 +151,7 @@
                         </label>
                 </div>
                 <div class="row">
-                    <div class="input-field col s6">
+                    <div class="input-field col s5">
                         Comentario:
                         <textarea id="txtArea" class="materialize-textarea"></textarea> 
                     </div>
@@ -91,11 +160,15 @@
                         <input id="montoAutorizar" style='display:none;' type="text" class="validate">
                         
                     </div>
-                    <div class="col s2">
-                        <br>
-                        <br>
-                        <a id="btnAutorizarPrestamo" class="waves-effect waves-light btn teal lighten-1 right"><i class="material-icons left">thumbs_up_down</i>Autorizar</a>
+                    <div class="input-field col s3">
+                        Fecha de inicio de pago:
+                        <input id="inicio_pago" style='display:none;' type="date" class="validate">
+                        
                     </div>
+                    <div class="col s1">
+                        <a id="btnAutorizarPrestamo" class="waves-effect waves-light btn teal lighten-1 right"><i class="material-icons center">thumbs_up_down</i></a>
+                    </div>
+                        
                 </div>
                 <div class="row">
                 <div class="col s12" id="cargarArchivoSolicitud"  style='display:none;'>

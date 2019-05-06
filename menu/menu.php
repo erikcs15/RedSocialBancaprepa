@@ -14,7 +14,7 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
                 <div class="nav-wrapper">
                     
                         <a href="#" class="brand-logo hide-on-small-only"><i class="material-icons ">grain</i>Intranet Bancaprepa</a>
-                        <a href="#" class="brand-logo hide-on-large-only"><i class="material-icons ">grain</i>Intranet</a>
+                       
 
                         <ul class="right hide-on-med-and-down">
                             <li><span id="mensajesUnread" class="counts white-text"></span> <a href="#modalInbox" id="inbox" class='waves-effect waves-dark modal-trigger' ><i  class="material-icons">email</i> </a>
@@ -65,11 +65,11 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
                   <li><a id="m_articulos_venta" href="/RedSocialBancaprepa/sales/sales.php" class=" waves-effect white-text" ><i class="material-icons white-text">local_grocery_store</i>Articulos en Venta</a></li>
                   <li><a id="M_cargaA" style='display:none;' href="/RedSocialBancaprepa\documentos\addfile.php" class=" waves-effect white-text"><i class="material-icons white-text">file_upload</i>Carga de Archivos</a></li>
                   
-                  <li><a id="m_politicas"  href="/RedSocialBancaprepa/rh/verpoliticas.php" class=" waves-effect white-text" ><i class="material-icons white-text">priority_high</i>Politicas</a></li>
+<!--                  <li><a id="m_politicas"  href="/RedSocialBancaprepa/rh/verpoliticas.php" class=" waves-effect white-text" ><i class="material-icons white-text">priority_high</i>Politicas</a></li>
                   <li><a id="m_formatos" href="/RedSocialBancaprepa/rh/verpoliticas.php" class=" waves-effect white-text" ><i class="material-icons white-text">format_line_spacing</i>Formatos</a></li>
                   <li><a id="m_manuales" href="/RedSocialBancaprepa/rh/verpoliticas.php" class=" waves-effect white-text" ><i class="material-icons white-text">import_contacts</i>Manuales</a></li>
                  
-
+-->
                      <!------------------------------------------------------->
                   <li><a   name ="stock" class="dropdown-trigger white-text" data-target='desplegableStock'><i class="material-icons white-text">card_travel</i><i class="material-icons right white-text">arrow_drop_down</i>Articulos</a></li>
                     <ul id='desplegableStock' class='dropdown-content blue darken-4'> 
@@ -83,7 +83,19 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
                     </ul>
 
 
-                   <li><a id="m_mercancia" href="/RedSocialBancaprepa/cp/cp.php" class=" waves-effect white-text" ><i class="material-icons white-text">markunread_mailbox</i>CP</a></li>
+                    <!---------------------------------------- grupos de trabajo------------------------------>
+
+                    <li><a   name ="stock" class="dropdown-trigger white-text" data-target='desplegableGrupoTrabajo'><i class="material-icons white-text">public</i><i class="material-icons right white-text">arrow_drop_down</i>Grupos de Trabajo</a></li>
+                    <ul id='desplegableGrupoTrabajo' class='dropdown-content blue darken-4'> 
+
+                      <li><a   class="waves-effect blue darken-4 white-text"  href="/RedSocialBancaprepa/gruposDeTrabajo/registro.php"><i class="material-icons white-text">queue</i>Crear Grupo</a></li> 
+    
+                    
+                    
+                    </ul>
+
+
+                 <!--  <li><a id="m_mercancia" href="/RedSocialBancaprepa/cp/cp.php" class=" waves-effect white-text" ><i class="material-icons white-text">markunread_mailbox</i>CP</a></li> -->
 
 
                   <li><a id="m_mantenimientoPub" style='display:none;' href="/RedSocialBancaprepa\mantPub.php" class=" waves-effect white-text" name ="m_mantenimientoPub"><i class="material-icons white-text">featured_play_list</i>Mmto. Publicaciones</a></li>
@@ -101,10 +113,22 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
                     <li><a id="m_mantenimientoTickets" style='display:none;' class=" waves-effect blue darken-4 white-text" name ="mantenimientoTickets" ><i class="material-icons white-text">build</i>Mantenimiento de tickets</a></li>
                     </ul>
                   <li><a id="correos" class=" waves-effect white-text"  name ="correos white-text"><i class="material-icons white-text">local_post_office</i>Correos</a></li> 
-                  <li><a  id="m_Prestamos" style='display:none;' name ="prestamosdd" class="dropdown-trigger white-text" data-target='prestamosdd'><i class="material-icons white-text">bubble_chart</i><i class="material-icons right white-text">arrow_drop_down</i>Prest. Personales</a></li>
+                  <li><a   name ="stock" class="dropdown-trigger white-text" data-target='despegableActividades'><i class="material-icons white-text">content_paste</i><i class="material-icons right white-text">arrow_drop_down</i>Actividades</a></li>
+                    <ul id='despegableActividades' class='dropdown-content blue darken-4'> 
+
+                      <li><a   class="waves-effect blue darken-4 white-text"  href="/RedSocialBancaprepa/agendaActividades/crearGrupos.php"><i class="material-icons white-text">business_center</i>Crear Grupos</a></li>
+
+                      <li><a   class="waves-effect blue darken-4 white-text"  href="/RedSocialBancaprepa/agendaActividades/verAactividades.php"><i class="material-icons white-text">description</i>Ver Actividades</a></li>
+    
+                    
+                    
+                    </ul>
+                  <li><a  id="m_Prestamos" style='display:none;' name ="prestamosdd" class="dropdown-trigger white-text" data-target='prestamosdd'><i class="fas fa-hand-holding-usd white-text"></i><i class="material-icons right white-text">arrow_drop_down</i>Prest. Personales</a></li>
                     <ul id='prestamosdd' class='dropdown-content blue darken-4'>
                     <li><a id="m_crearSolicitud" style='display:none;' class="waves-effect blue darken-4 white-text" name ="m_crearSolicitud" href="\RedSocialBancaprepa\prestamospersonales\solicitarprestamo.php"><i class="material-icons white-text">add_circle_outline</i>Crear Solicitud</a></li> 
                     <li><a id="m_solicitudes"  class="waves-effect blue darken-4 white-text" style='display:none;' name ="m_solicitudes" href="\RedSocialBancaprepa\prestamospersonales\solicitudes.php"><i class="material-icons white-text">bubble_chart</i>Solicitudes</a></li> 
+                    <li><a id="m_pagos"  class="waves-effect blue darken-4 white-text" style='display:none;' name ="m_pagos" href="\RedSocialBancaprepa\prestamospersonales\pagospp.php"><i class="material-icons white-text">bubble_chart</i>Pagos</a></li> 
+                    <li><a id="m_reportesp"  class="waves-effect blue darken-4 white-text" style='display:none;' name ="m_reportesp" href="\RedSocialBancaprepa\prestamospersonales\reportesPp.php"><i class="material-icons white-text">featured_play_list</i>Reportes</a></li> 
                     </ul>
                     <li><div class="divider"></div></li>
                   <li><a  id="m_Inventario" style='display:none;' name ="ticketsdd" class="dropdown-trigger white-text" data-target='inventariodd'><i class="material-icons white-text">content_paste</i><i class="material-icons right white-text">arrow_drop_down</i>Inventario</a></li>
