@@ -10,6 +10,8 @@
          for($i=0;$i<count($_FILES["archivo"]["name"]);$i++)
          {
  
+            $_FILES["archivo"]["name"][0] = $_COOKIE["b_capturista_id"]."_".date("Y-m-d")."_".$_FILES["archivo"]["name"][0];
+            
              # si es un formato de imagen
              if($_FILES["archivo"]["type"][$i]=="application/pdf" || $_FILES["archivo"]["type"][$i]=="image/jpeg" || $_FILES["archivo"]["type"][$i]=="image/pjpeg" || $_FILES["archivo"]["type"][$i]=="image/gif" || $_FILES["archivo"]["type"][$i]=="image/png")
              {

@@ -82,7 +82,7 @@
             <div class="card-content">
                 <div id="content">
                     <div class="row"><!-- CONTENEDOR 1 -->
-                            <div class="col s12"><!-- CONTENEDOR 2 -->
+                            <div class="col s12 l12"><!-- CONTENEDOR 2 -->
                                     <table class="highlight responsive-table" width="100%"  border="0" cellspacing="0" cellpadding="0" style="font-size:13px">
                                         <thead >
                                         <tr>
@@ -257,6 +257,7 @@
                        <div class="input field col s8">
                            <input placeholder="Correo" id="correoBorrar" type="text" class="validate" disabled>
                            <label for="Correo" class="activate"></label>
+                           <input placeholder="Correo" id="id_correo" type="text" class="validate" disabled style='display:none;'>
                        </div>          
                    </div>
                </form>

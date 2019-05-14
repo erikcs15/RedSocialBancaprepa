@@ -283,10 +283,10 @@
                     <a class="waves-effect waves-light btn-small red darken-4 modal-close">Cancelar</a>
                 </div>
             </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cerrar</a>
+            </div>
         </div>
-        <div class="modal-footer">
-            <a href="#!" class= " modal-action modal-close waves-effect waves-green btn-flat left">Cerrar</a>
-        </div>
-    </div>
     </body>
 </html>

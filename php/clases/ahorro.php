@@ -46,7 +46,7 @@
             $resultado  =array();
             $i=0;
 
-
+            $ruta=$capturistaId.'_'.date("Y-m-d").'_'.$ruta;
             $sql="INSERT INTO b_carta_fondoahorro (capturista_id, ruta_archivo, fecha_subida, hora_subida, aceptar) 
                      VALUES($capturistaId, '$ruta', CURDATE(), CURTIME(),'$acepto')";
         

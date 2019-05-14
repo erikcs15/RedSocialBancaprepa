@@ -1,7 +1,7 @@
 // Funcion principal de Jquery la cual escanea en tiempo real nuestro documento para verificar que los eventos se ejecuten correctamente
 $(document).ready(function(){
 
-    $('.collapsible').collapsible();
+
 
     //Inicialización de los select Materialize
     $('select').formSelect();
@@ -484,10 +484,10 @@ $("#btnEliDoc").click(function() {
 });
 //--------------------------------------------Eliminar Correo----------------------------
 $("#btnBorrarCorreo").click(function() {
-    var idusuario ='';
-    idusuario = $("#idBorrarCorreo").val();
-    console.log("Presionaste boton de eliminar "+idusuario);
-    onRequest({ opcion : 67 ,usuario_id:idusuario}, respBorrarCorreoFinal);
+    var correoid ='';
+    correoid = $("#id_correo").val();
+    console.log("Presionaste boton de eliminar "+correoid);
+    onRequest({ opcion : 67 ,id_correo:correoid}, respBorrarCorreoFinal);
 });
 //------------------------------------------Boton agregar configuracion de usuarios-----------------------------
 $("#btnAgregarUsu_Rol").click(function() {
@@ -593,7 +593,7 @@ $("#BtnAgregarPub").click(function() {
     console.log(documento);
  
     return;
-   // onRequest({ opcion : 21, texto:textoPublicacion, tipopub:tipodoc},respAgregaPublicacion);
+    onRequest({ opcion : 21, texto:textoPublicacion, tipopub:tipodoc},respAgregaPublicacion);
 
 });
 //----------------------------------------CORREOS------------------------------------
@@ -720,7 +720,20 @@ $("#passEmpleado").keypress(function(e) {
     });
 
 
+    $("#CrearTicketbtn").click(function() {
+        var usuario = Cookies.get('b_capturista_id');
+        var area=$("#areaApoyo").val();
+        var titulo=$("#tituloDD option:selected").text();
+        var desc=$("#descripcionTicket").val();
+        var correo=$("#email").val();
+        var telefono=$("#tel").val();
+        console.log("ID empleado="+usuario+" Area de apoyo:"+area+" titulo:"+titulo);
+        console.log("desc:"+desc+" email:"+correo+" telefono:"+telefono);
+        onRequest({ opcion : 73, usuario_id:usuario, area_id:area,titulo:titulo, descripcion:desc, correo:correo, telefono:telefono },respAgregaTicket);
+
+      
     
+    });
 
     
     $("#btnEditPub").click(function() {
@@ -824,6 +837,10 @@ function cargarCorreos(){
     
 }
 
+function cargarTickets(){
+    onRequest({ opcion : 75 }, respCargarTickets);
+    
+}
 
 function cargarMenuPorRol(){
     
@@ -834,8 +851,6 @@ function cargarMenuPorRol(){
     onRequest({ opcion : 62 ,usuario_id:empleadoid}, respNotificaciones);
 
     onRequest({ opcion : 27}, respCargarTipoDedoc);
-
-    inventarios({ opcion : 22}, respInboxPendientes); 
 
 }
 
@@ -924,7 +939,6 @@ function eliminarEmp(empid) {
      M.toast({html: 'No olvides agregar los puestos!', classes: 'rounded blue'}); 
      onRequest({ opcion : 43 ,idemp:empresa}, respCargarRolesXempChb);
      onRequest({ opcion : 102 ,empresa:empresa}, respCargaSucursalesXEmpresa);
-     inventarios({ opcion : 22}, respInboxPendientes); 
  }
 
 
@@ -1241,7 +1255,7 @@ var respCorreos = function(data) {
                 '<td class="'+x+' left">'+
                 '<a onclick="editarCorreo('+data[i].id_empleado+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarCorreo"><i class="material-icons">edit</i></a>' + 
                 //'<a onclick="deshabDoc('+data[i].id_empleado+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabDoc"><i class="material-icons">do_not_disturb_alt</i></a>' + 
-                '<a onclick="BorrarCorreo('+data[i].id_empleado+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarCorreo"><i class="material-icons">delete</i></a>' +
+                '<a onclick="BorrarCorreo('+data[i].id_correo+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarCorreo"><i class="material-icons">delete</i></a>' +
                 '</td>'  +'</tr> ';
             }
         }
@@ -1850,18 +1864,28 @@ var respAccesosPorRol  = function(data) {
             case '20':
                 $('#solicitudesPp').prop('checked', true); 
             break;
-            case '21':
-                $('#pagosPp').prop('checked', true); 
+             case '21':
+                $('#registroStock').prop('checked', true); 
             break;
             case '22':
+                $('#solicitudArticulo').prop('checked', true); 
+            break;
+            case '23':
+                $('#pagosPp').prop('checked', true); 
+            break;  
+            case '24':
                 $('#reportesPp').prop('checked', true); 
             break;
+            case '25':
                 $('#cartaFondoA').prop('checked', true); 
             break;
-            case '24':
+            case '26':
                 $('#solicitudesFondoAhorros').prop('checked', true); 
             break;
+
         }    
+    }
+} 
 
 
 //---------Respuesta para actualizar los accesos al menu de agregar publicacion
@@ -1904,8 +1928,9 @@ var respCargarMenu  = function(data) {
 
        // console.log(data)
         var usuario = Cookies.get('b_capturista_id');
-        if(usuario<1){ 
-          window.location = "RedSocialBancaprepa/login.html";
+        if(usuario<1){
+          console.log('vale');
+          window.location = "/RedSocialBancaprepa/login.html";
         }
 
         console.log(data);
@@ -1947,8 +1972,7 @@ var respCargarMenu  = function(data) {
                 document.getElementById('correos').style.display = 'block';
                 break;
             case '11':
-              //document.getElementById('m_bancaprepa').style.display = 'block'; 
-              console.log("a");
+             // document.getElementById('m_bancaprepa').style.display = 'block';
               break;
             case '12':
               document.getElementById('catEquipo').style.display = 'block';
@@ -1959,7 +1983,7 @@ var respCargarMenu  = function(data) {
               document.getElementById('m_tickets').style.display = 'block'; 
               break;
             case '14':
-              document.getElementById('m_mantenimientoTickets').style.display = 'block';
+             
               document.getElementById('m_tickets').style.display = 'block'; 
             break;
             case '15':
@@ -1986,21 +2010,35 @@ var respCargarMenu  = function(data) {
              document.getElementById('m_solicitudes').style.display = 'block';
             break;
             case '21':
+            // document.getElementById('desplegableStockm').style.display = 'block'; 
+            // document.getElementById('m_registroStock').style.display = 'block';
+            break;
+            case '22':
+          //   document.getElementById('desplegableStockm').style.display = 'block'; 
+            // document.getElementById('m_gestionSolicitud').style.display = 'block';
+            break;
+            case '23':
              document.getElementById('m_Prestamos').style.display = 'block'; 
              document.getElementById('m_pagos').style.display = 'block';
             break;
-            case '22':
+            case '24':
              document.getElementById('m_Prestamos').style.display = 'block'; 
              document.getElementById('m_reportesp').style.display = 'block';
             break;
-             document.getElementById('m_fondoAhorro_menu').style.display = 'block'; 
+            case '25':
+             document.getElementById('m_fondoAhorro').style.display = 'block'; 
+             document.getElementById('m_fondoAhorro_menu').style.display = 'block';  
             break;
-            case '24':
+            case '26':
              document.getElementById('m_SolicitudesfondoAhorro').style.display = 'block';
              document.getElementById('m_fondoAhorro_menu').style.display = 'block';  
             break;
         }    
+    }
+  //  $('#accesosRol').html(documento);
 }
+
+///////////////////////////////////////////////////////////////////////////////////////
 //funciones del catalogo de empresas
 function editarEmp(emp_id)
 {
@@ -2068,10 +2106,10 @@ function editarUsu(usuarioid)
      a.click();
 }
 
-function BorrarCorreo(id_usu)
+function BorrarCorreo(correo_id)
 {
-    console.log(id_usu);
-    onRequest({ opcion : 65 ,usuario_id:id_usu}, respBorrarCorreo);  
+    console.log(correo_id);
+    onRequest({ opcion : 65 ,id_correo:correo_id}, respBorrarCorreo);  
 
 }
 
@@ -2100,8 +2138,10 @@ function cargarAccesos(rol_id){
     $('#solicitudesPp').prop('checked', false);
     $('#pagosPp').prop('checked', false);
     $('#reportesPp').prop('checked', false);
+    $('#cartaFondoA').prop('checked', false);
     $('#solicitudesFondoAhorros').prop('checked', false);
 
+    onRequest({ opcion : 22 ,id_rol:rol_id}, respAccesosPorRol);
        
 }
 
@@ -2164,21 +2204,21 @@ function btnVista(id_publicacion)
 //respuesta de menu publicaciones 
 var respCargaPublicacionesB = function(data) { 
     if (!data && data == null)
-             return;  
+    return;  
 
-                //console.log(data)
-             var documento='';
-             var primerMenu=0;
-                
-            primerMenu = 1;
-            documento+="<li class='tab'><a class='white-text  waves-effect waves-dark' id='tab1' onClick='cargarPublicacion(1)' ><strong>Comunicados</strong></a></li>";
-        
-         
-             $('#tipoPublicacion').html(documento); 
+       //console.log(data)
+    var documento='';
+    var primerMenu=0;
+       
+   primerMenu = 1;
+   documento+="<li class='tab'><a class='white-text  waves-effect waves-dark' id='tab1' onClick='cargarPublicacion(1)' ><strong>Comunicados</strong></a></li>";
 
-             cargarPublicacion(primerMenu);
 
-             cargarMenuPorRol();
+    $('#tipoPublicacion').html(documento); 
+
+    cargarPublicacion(primerMenu);
+
+    cargarMenuPorRol();
 }
 
 function cargarPublicacion(primerMenu){
@@ -2620,8 +2660,6 @@ var respCargaSucursalesXEmpresa = function(data) {
     }
     $('#sucursalesDD').html(documento);
     $('#sucursalesDD').formSelect(); 
-
-    inventarios({ opcion : 22}, respInboxPendientes);
     
 }
 
@@ -2739,12 +2777,11 @@ var respInsertarTablaTemp = function(data) {
         return;
     }
     
-    
-    var id_publicacion=data[0].id;
-    $("#idpublicacion1").val(id_publicacion);
-    //se le asigna a un input que esta oculto para guardarlo y que no se borre
+      
+       var id_publicacion=data[0].id;
+       $("#idpublicacion1").val(id_publicacion);
+       //se le asigna a un input que esta oculto para guardarlo y que no se borro
 
-    
 
     //se toma el id del usuario para cargar los datos de la tabla temporal
     var usuario = Cookies.get('b_capturista_id');
@@ -2803,7 +2840,7 @@ var respCargarParaInsertarTablaConfirmaciones = function(data) {
         var puesto=data[i].puesto_id;
         var empresa=data[i].empresa_id;
         var sucursal=data[i].sucursal_id;
-        console.log("publicacion:"+publicacion+" puesto"+puesto+" empresa:"+empresa+"  Sucursal:"+sucursal);
+        console.log("publicacion:"+publicacion+" puesto"+puesto+" empresa:"+empresa);
         if(puesto==0)
         {
             console.log("Puesto es igual a 0");
@@ -2900,33 +2937,33 @@ var respCargaPublicacionesFinal = function(data) {
         }
         else{
             $("#CargarPublicacionesVaciasVistas").empty();
-                if(data[i].formato=="PDF"){ 
-                    console.log("ES PDF");   
-                        pubdd+='<div class="col s10 m3 l2 mb-5 mt-5 mr-5 z-depth-2">'+
-                        '<a class="modal-trigger" onclick="abrirModalImg('+data[i].id_publicacion+')"  href="#">'+
-                        '<img class="mosaico z-depth-5" src="/img/pdf.png"></a>'+
-                        '<b> <p class="break-word" >'+data[i].titulo.substring(0,20)+'</p></b>'+
-                        '</div> ';  
+            if(data[i].formato=="PDF"){ 
+                console.log("ES PDF");   
+                    pubdd+='<div class="col s10 m3 l2 mb-5 mt-5 mr-5 z-depth-2">'+
+                    '<a class="modal-trigger" onclick="abrirModalImg('+data[i].id_publicacion+')"  href="#">'+
+                    '<img class="mosaico z-depth-5" src="/img/pdf.png"></a>'+
+                    '<b> <p class="break-word" >'+data[i].titulo.substring(0,20)+'</p></b>'+
+                    '</div> ';  
+            }
+            else{
+                if(data[i].formato=="IMG")
+                {
+                    pubdd+='<div class="col s10 m3 l2 mb-5 mt-5 mr-5 z-depth-2"  >'+
+                    '<a class="modal-trigger" onclick="abrirModalImg('+data[i].id_publicacion+')"  href="#">'+
+                    '<img class="mosaico  z-depth-5" src="imagenes/publicaciones/'+ruta+'"></a>'+
+                    '<b> <p class="break-word" >'+data[i].titulo.substring(0,20)+'</p></b>'+
+                   '</div> ';  
                 }
-                else{
-                    if(data[i].formato=="IMG")
-                    {
-                        pubdd+='<div class="col s10 m3 l2 mb-5 mt-5 mr-5 z-depth-2"  >'+
-                        '<a class="modal-trigger" onclick="abrirModalImg('+data[i].id_publicacion+')"  href="#">'+
-                        '<img class="mosaico  z-depth-5" src="imagenes/publicaciones/'+ruta+'"></a>'+
-                        '<b> <p class="break-word" >'+data[i].titulo.substring(0,20)+'</p></b>'+
-                       '</div> ';  
-                    }
-                    else
-                    {
-                        pubdd+='<div class="col s10 m3 l2 mb-5 mt-5 mr-5 z-depth-2"  >'+
-                        '<a class="modal-trigger" onclick="abrirModalImg('+data[i].id_publicacion+')"  href="#">'+
-                        '<img class="mosaico z-depth-5" src="imagenes/publicaciones/video.jpg"></a>'+
-                        '<b> <p class="break-word" >'+data[i].titulo.substring(0,20)+'</p></b>'+
-                       '</div> '; 
-                    }
-                        
+                else
+                {
+                    pubdd+='<div class="col s10 m3 l2 mb-5 mt-5 mr-5 z-depth-2"  >'+
+                    '<a class="modal-trigger" onclick="abrirModalImg('+data[i].id_publicacion+')"  href="#">'+
+                    '<img class="mosaico z-depth-5" src="imagenes/publicaciones/video.jpg"></a>'+
+                    '<b> <p class="break-word" >'+data[i].titulo.substring(0,20)+'</p></b>'+
+                   '</div> '; 
                 }
+                    
+            }
         }
     }
     $("#CargarPublicacionesFinal").html(pubdd);
@@ -3077,7 +3114,6 @@ var respCargaPublicacionesFinalNuevas = function(data) {
                         
                         pubdd+='<div class="video-container"></a> </div>';   
                     }
-                        
                 }
         }
     }
@@ -3141,7 +3177,7 @@ var respVerificarPublicacionesVistas = function(data) {
     else
     {
         vacio+='<div class="sinPub">'+
-            '<h4>Sin publicaciones</h4>'+
+            '<h4>Sin publicaciones vistas</h4>'+
             '<h5>Bienvenido '+nombre+'!</h5>'+
             '</div>';
             $("#CargarPublicacionesFinal").html(vacio);
@@ -3176,7 +3212,6 @@ var respNotificaciones = function(data) {
     
     $("#btnNotiF").html(txt);    
 }
-
 
 
 var respCargarEmpleadoCorreo = function(data) { 
@@ -3341,7 +3376,7 @@ var respBorrarCorreo = function(data) {
     $("#idBorrarCorreo").val(data[0].id_empleado);
     $("#nomBorrarcorreo").val(data[0].nombrecompleto);
     $("#correoBorrar").val(data[0].correo);
-    
+    $("#id_correo").val(data[0].id_correo);
 
 }
 
@@ -3363,6 +3398,56 @@ var respBorrarCorreoFinal = function(data) {
 
 
 
+var respAgregaTicket = function(data) { 
+    //se insertan los datos en la tabla confirmaciones!
+    if (!data && data == null)
+    {
+        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
+        return;
+    }
+    
+
+    M.toast({html: 'Ticket insertado correctamente ', classes: 'rounded green'}); 
+    location.href="/mandarTicket.php";
+    
+}
+
+var respCargarTickets = function(data) { 
+    
+    if (!data && data == null) 
+    return; 
+
+    var d = '';
+    var x = '';
+
+
+
+     for (var i = 0; i < data.length; i++) {
+     if(i%2==0)
+     {
+         x='even';
+     }
+     else
+     {
+         x='odd';
+     }
+     d+= '<tr>'+
+     '<td>'+data[i].id+'</td>'+
+     '<td>'+data[i].titulo+'</td>'+
+     '<td>'+data[i].descripcion+'</td>'+
+     '<td>'+data[i].solicitado+'</td>'+
+     '<td>'+data[i].estatus+'</td>'+ 
+     '<td class="'+x+' left">'+
+     //'<a onclick="editarDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger" href="#modalEditarDoc"><i class="material-icons">edit</i></a>' + 
+     //'<a onclick="deshabDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabDoc"><i class="material-icons">do_not_disturb_alt</i></a>' + 
+     //'<a onclick="BorrarDoc('+data[i].doc_id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarDoc"><i class="material-icons">delete</i></a>' +
+     '</td>'  +'</tr> ';
+     }
+     
+     $("#tablaTicketsGeneral").html(d);
+
+     cargarMenuPorRol();
+}
 
 
 var respPermitirPublicacion = function(data) { 
@@ -3835,12 +3920,13 @@ var cargaImg = function(data) {
 
 
       }else{
+
         if(data[i].formato=="IMG")
         {
             pubdd+=  '<div class="col s12 l8 offset-l2" > '+
             '<div class="card"> '+
             '       <div class="card-image waves-effect waves-block waves-light">'+
-            '          <img class="activator" src="/RedSocialBancaprepa/imagenes/publicaciones/'+data[i].imagen+'">'+
+            '          <img class="activator" src="/RedSocialBancaprepa//imagenes/publicaciones/'+data[i].imagen+'">'+
             '     </div>'+
             '    <div class="card-content">'+
             '        <span class="card-title activator grey-text text-darken-4"><strong>'+data[i].titulo+'</strong><i class="material-icons right">more_vert</i></span>'+
@@ -3873,30 +3959,8 @@ var cargaImg = function(data) {
             '  </div>'+
             '</div> '; 
         }
-
-         
       }
     
     $("#contPublicacion").html(pubdd);
    
-}
-
-
-var respInboxPendientes = function(data) { 
-    //se insertan los datos en la tabla confirmaciones!
-    if (!data && data == null)
-    {
-        M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
-        return;
-    }
-    
-    if(data[0].mensajes>0)
-    {
-      $("#inbox").addClass('red-text');
-    }
-    else{
-      $("#inbox").removeClass('red-text');
-    }
-
-    $("#mensajesUnread").html(data[0].mensajes);    
 }

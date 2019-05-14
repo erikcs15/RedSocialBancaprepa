@@ -54,11 +54,13 @@
                         <p><label><input type="checkbox" id="capAreas" onChange="habDesAccesos(tipoRolAc.value,'capAreas',18)"/><span>Captura de Areas</span></label></p>
                         <p><label><input type="checkbox" id="crearSolpp" onChange="habDesAccesos(tipoRolAc.value,'crearSolpp',19)"/><span>Crear Solicitudes Prestamos Personales</span></label></p>
                         <p><label><input type="checkbox" id="solicitudesPp" onChange="habDesAccesos(tipoRolAc.value,'solicitudesPp',20)"/><span>Solicitudes Prestamos Personales</span></label></p>
-                        <p><label><input type="checkbox" id="pagosPp" onChange="habDesAccesos(tipoRolAc.value,'pagosPp',21)"/><span>Pagos Prestamos Personales</span></label></p>
-                        <p><label><input type="checkbox" id="reportesPp" onChange="habDesAccesos(tipoRolAc.value,'reportesPp',22)"/><span>Reportes Prestamos Personales</span></label></p>
-                        <p><label><input type="checkbox" id="cartaFondoA" onChange="habDesAccesos(tipoRolAc.value,'cartaFondoA',23)"/><span>Carta Para Fondo de Ahorro</span></label></p>
-                        <p><label><input type="checkbox" id="solicitudesFondoAhorros" onChange="habDesAccesos(tipoRolAc.value,'solicitudesFondoAhorros',24)"/><span>Solicitudes Para Fondo de Ahorro</span></label></p>
-                    </div>
+                        <p><label><input type="checkbox" id="registroStock" onChange="habDesAccesos(tipoRolAc.value,'registroStock',21)"/><span>Registro de Stock</span></label></p>
+                        <p><label><input type="checkbox" id="solicitudArticulo" onChange="habDesAccesos(tipoRolAc.value,'solicitudArticulo',22)"/><span>Solicitudes de Articulos</span></label></p>
+                        <p><label><input type="checkbox" id="pagosPp" onChange="habDesAccesos(tipoRolAc.value,'pagosPp',23)"/><span>Pagos Prestamos Personales</span></label></p>
+                        <p><label><input type="checkbox" id="reportesPp" onChange="habDesAccesos(tipoRolAc.value,'reportesPp',24)"/><span>Reportes Prestamos Personales</span></label></p>
+                        <p><label><input type="checkbox" id="cartaFondoA" onChange="habDesAccesos(tipoRolAc.value,'cartaFondoA',25)"/><span>Carta Fondo de Ahorro</span></label></p>
+                        <p><label><input type="checkbox" id="solicitudesFondoAhorros" onChange="habDesAccesos(tipoRolAc.value,'solicitudesFondoAhorros',26)"/><span>Solicitudes Para Fondo de Ahorro</span></label></p>
+                        
                     </div>
             </div>             
            

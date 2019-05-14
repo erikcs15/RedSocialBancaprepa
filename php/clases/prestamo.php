@@ -24,7 +24,6 @@
             return $dias_mes;
         }
         public function crearSolicitud($capturista_id,$fechaSolicitud, $puesto_id, $sucursal_id, $empresa_id, $numTarjeta, $beneficiarioCta, $nombreBanco, $montoSolicitado, $quincenas, $mesesApagar, $interes_prestamo, $tipo_abono, $descuento_mensual, $monto_total, $inicioDes, $finDes,$monto_letra, $porc_interes)
-        public function crearSolicitud($capturista_id,$fechaSolicitud, $puesto_id, $sucursal_id, $empresa_id, $numTarjeta, $beneficiarioCta, $nombreBanco, $montoSolicitado, $quincenas, $mesesApagar, $interes_prestamo, $tipo_abono, $descuento_mensual, $monto_total, $inicioDes, $finDes,$monto_letra)
         {
             $res=array();
 				$datos=array();
@@ -665,8 +664,11 @@
             $res=array();
             $datos=array();
             $resultado  =array();
-           
+            $capturistaId = 0;
+            $capturistaId = $_COOKIE["b_capturista_id"];
+            $ruta_responsiva=$capturistaId.'_'.date("Y-m-d").'_'.$ruta_responsiva;
             $sql="UPDATE b_prestamo_solicitudes SET archivo_responsiva='$ruta_responsiva' WHERE id=$prestamoId";
+            
             
             $resultado = mysqli_query($this->con(), $sql);   
             $datos['b_prestamo_solicitudes'] =  array('0' => '0' );
@@ -707,7 +709,6 @@
             $sql="SELECT id,descripcion 
                     FROM estatus
                     WHERE id=5 OR id=4 OR id=3 OR id=14"; 
-                    WHERE id=5 OR id=4 OR id=3"; 
                 
             $resultado = mysqli_query($this->con(), $sql); 
             while ($res = mysqli_fetch_row($resultado)) {
@@ -749,7 +750,6 @@
                 INNER JOIN b_prestamo_corridas cor ON cor.prestamo_personal_id=s.id
                 INNER JOIN capturistas c ON c.id=s.capturista_id
                 WHERE cor.fecha_pago='$fecha' AND s.estatus_id=14
-                WHERE cor.fecha_pago='$fecha' AND s.estatus_id=5 
                 UNION
                 SELECT c.id, c.descripcion, s.id, cor.num_pago, cor.abono, cor.abonado, cor.fecha_pago, 
                 IF('$fecha'<=cor.fecha_pago, 'Actual', 'Atrasado') AS actual, cor.id 
@@ -757,7 +757,6 @@
                 INNER JOIN b_prestamo_corridas cor ON cor.prestamo_personal_id=s.id
                 INNER JOIN capturistas c ON c.id=s.capturista_id
                 WHERE cor.fecha_pago<='$fecha' AND s.estatus_id=14 AND cor.abonado='NO'"; 
-                WHERE cor.fecha_pago<='$fecha' AND s.estatus_id=5 AND cor.abonado='NO'"; 
                 
             $resultado = mysqli_query($this->con(), $sql); 
             while ($res = mysqli_fetch_row($resultado)) {

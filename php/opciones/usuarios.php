@@ -221,13 +221,13 @@
 			echo (json_encode($usuario->insertarCorreos($_REQUEST['usuario_id'],$_REQUEST['dominio'],$_REQUEST['correo'],$_REQUEST['pass'])));
 		break;
 		case 65:
-			echo (json_encode($usuario->catalogoCorreosxID($_REQUEST['usuario_id'])));
+			echo (json_encode($usuario->catalogoCorreosxID($_REQUEST['id_correo'])));
 		break;
 		case 66:
 			echo (json_encode($usuario->actualizarCorreos($_REQUEST['usuario_id'],$_REQUEST['correo'],$_REQUEST['pass'],$_REQUEST['entregado'],$_REQUEST['estatus'])));
 		break;	
 		case 67:
-			echo (json_encode($usuario->eliminarCorreos($_REQUEST['usuario_id'])));
+			echo (json_encode($usuario->eliminarCorreos($_REQUEST['id_correo'])));
 		break;
 		case 68:
 			echo (json_encode($usuario->cargarInventarios()));

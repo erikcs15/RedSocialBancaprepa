@@ -198,7 +198,7 @@
 				}
 
 				
-				$sql="SELECT c.id, cor.dominio, s.nomComercial, c.descripcion, cor.correo, cor.pass, cor.entregado, e.descripcion, r.`descripcion`
+				$sql="SELECT c.id, cor.dominio, s.nomComercial, c.descripcion, cor.correo, cor.pass, cor.entregado, e.descripcion, r.`descripcion`, cor.id
 						FROM capturistas c
 						INNER JOIN b_correos cor ON cor.capturista_id=c.id
 						INNER JOIN sucursales s ON s.id = c.sucursal_id 
@@ -217,7 +217,8 @@
 				   $datos[$i]['pass']=$res[5];
 				   $datos[$i]['entregado']=$res[6]; 
 				   $datos[$i]['estatus']=$res[7]; 
-				   $datos[$i]['puesto']=$res[8];
+					 $datos[$i]['puesto']=$res[8];
+					 $datos[$i]['id_correo']=$res[9];
 				   $i++;
 
 				} 
@@ -1768,7 +1769,7 @@
 				
 			}
 
-			public function catalogoCorreosxID($usuarioid)
+			public function catalogoCorreosxID($id_correo)
 			{
   
 				$res=array();
@@ -1776,11 +1777,11 @@
 				$i=0; 
 
 				
-				$sql="SELECT c.id, cor.dominio, s.nomComercial, c.descripcion, cor.correo, cor.pass, cor.entregado, cor.estatus
+				$sql="SELECT c.id, cor.dominio, s.nomComercial, c.descripcion, cor.correo, cor.pass, cor.entregado, cor.estatus, cor.id
 						FROM capturistas c
 						INNER JOIN b_correos cor ON cor.capturista_id=c.id
 						INNER JOIN sucursales s ON s.id = c.sucursal_id 
-						WHERE c.id=$usuarioid"; 
+						WHERE cor.id=$id_correo"; 
 
 				$resultado = mysqli_query($this->con(), $sql); 
 
@@ -1792,7 +1793,8 @@
 				   $datos[$i]['correo']=$res[4];
 				   $datos[$i]['pass']=$res[5];
 				   $datos[$i]['entregado']=$res[6]; 
-				   $datos[$i]['estatus']=$res[7]; 
+					 $datos[$i]['estatus']=$res[7];
+					 $datos[$i]['id_correo']=$res[8]; 
 				   $i++;
 
 				} 
@@ -1827,7 +1829,7 @@
 				
 			}
 
-			public function eliminarCorreos($usuarioid)
+			public function eliminarCorreos($id_correo)
 			{
 				$res=array();
 				$datos=array();
@@ -1836,7 +1838,7 @@
 
 				
 
-				$sql="DELETE FROM b_correos WHERE capturista_id=$usuarioid";
+				$sql="DELETE FROM b_correos WHERE id=$id_correo";
 				
 				$resultado = mysqli_query($this->con(), $sql);   
 

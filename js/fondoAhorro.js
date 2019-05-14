@@ -90,9 +90,9 @@ $(document).ready(function(){
         fondoAhorros({ opcion : 1, capturista_id:id}, respCargarDatosFondoAhorro);
     }
 
-    function informacionArchivo()
+    function informacionArchivo(capturista_id)
     {
-        var id = Cookies.get('b_capturista_id');
+        var id = capturista_id;
         console.log("ID= "+id);
         fondoAhorros({ opcion : 1, capturista_id:id}, respCargarArchivoModal);
         
@@ -207,7 +207,9 @@ $(document).ready(function(){
         if(data[0].id>0)
         {
             console.log("Si hay datos");
-            document.getElementById('tablaFondo').style.display = 'block';
+            document.getElementById('tablaFondo').style.display = 'block';           
+            $("#btnCrearFondoAhorro").attr('disabled', "disabled");
+            $("#btnCargarImagen").attr('disabled', "disabled");
             d+= '<tr>'+
                     '<td>'+data[0].id+'</td>'+
                     '<td>'+data[0].capturista_id+'</td>'+
@@ -216,7 +218,7 @@ $(document).ready(function(){
                     '<td>'+data[0].hora_subida+'</td>'+ 
                     '<td>'+data[0].acepto+'</td>'+ 
                     '<td class="center">'+
-                    '<a onClick="informacionArchivo('+data[0].id+');" class="waves-effect waves-light btn-floating btn-small blue darken-4 btn modal-trigger" href="#modalVerArchivo"><i class="material-icons">remove_red_eye</i></a>' + 
+                    '<a onClick="informacionArchivo('+data[0].capturista_id+');" class="waves-effect waves-light btn-floating btn-small blue darken-4 btn modal-trigger" href="#modalVerArchivo"><i class="material-icons">remove_red_eye</i></a>' + 
                     '</tr> ';
             $("#datosFondo").html(d);
         }
@@ -230,6 +232,7 @@ $(document).ready(function(){
 
     var respCargarArchivoModal = function(data)
     {
+        console.log("LIGA:" +data[0].ruta_archivo);
         if (!data && data == null)
         {
             M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
@@ -281,7 +284,7 @@ $(document).ready(function(){
                         '<td>'+data[i].hora_subida+'</td>'+ 
                         '<td>'+data[i].acepto+'</td>'+ 
                         '<td class="center">'+
-                        '<a onClick="informacionArchivo('+data[i].id+');" class="waves-effect waves-light btn-floating btn-small blue darken-4 btn modal-trigger" href="#modalVerArchivoDesdeSolicitudes"><i class="material-icons">remove_red_eye</i></a>' + 
+                        '<a onClick="informacionArchivo('+data[i].capturista_id+');" class="waves-effect waves-light btn-floating btn-small blue darken-4 btn modal-trigger" href="#modalVerArchivoDesdeSolicitudes"><i class="material-icons">remove_red_eye</i></a>' + 
                         '</tr> ';
                 d2+='<tr>'+
                     '<td>'+data[i].id+'</td>'+
