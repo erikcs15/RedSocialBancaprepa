@@ -77,7 +77,7 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
                     <li><a id="m_mandarT" style='display:none;' class=" waves-effect blue darken-4 white-text" href="/RedSocialBancaprepa/tickets\mandarTicket.php"><i class="material-icons white-text">drafts</i>Mandar ticket</a></li>
                     <li><a id="m_misTickets" style='display:none;' class=" waves-effect blue darken-4 white-text" href="/RedSocialBancaprepa/tickets\tickets.php" name ="misTickets" ><i class="material-icons white-text">build</i>Mmto. Tickets</a></li> 
                     </ul>
-                   <li><a id="m_mercancia" href="/RedSocialBancaprepa/cp/cp.php" class=" waves-effect white-text" ><i class="material-icons white-text">markunread_mailbox</i>CP</a></li>
+                  <!-- <li><a id="m_mercancia" href="/RedSocialBancaprepa/cp/cp.php" class=" waves-effect white-text" ><i class="material-icons white-text">markunread_mailbox</i>CP</a></li> -->
                   <li><a id="correos" class=" waves-effect white-text"  name ="correos white-text"><i class="material-icons white-text">local_post_office</i>Correos</a></li> 
                   <li><a  id="m_Prestamos" style='display:none;' name ="prestamosdd" class="dropdown-trigger white-text" data-target='prestamosdd'><i class="material-icons white-text">bubble_chart</i><i class="material-icons right white-text">arrow_drop_down</i>Prest. Personales</a></li>
                     <ul id='prestamosdd' class='dropdown-content blue darken-4'>
