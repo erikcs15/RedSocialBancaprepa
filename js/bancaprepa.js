@@ -236,28 +236,28 @@ $(document).ready(function(){
 
      //Redirige al login 
      $( "#salirsesion" ).click(function() { 
-        location.href="/login.html";
+        location.href="/RedSocialBancaprepa/login.html";
      });
      //Redirige al catalogo de empresas
      $( "#catemp" ).click(function() { 
         
-        location.href="/catalogos/catemp.php";
+        location.href="/RedSocialBancaprepa/catalogos/catemp.php";
      });
     //Redirige al catalogo de rolas
      $( "#catroles" ).click(function() { 
-        location.href="/catalogos/catroles.php";
+        location.href="/RedSocialBancaprepa/catalogos/catroles.php";
      });
      //Redirige al catalogo de tipo de documentos
      $( "#catdoc" ).click(function() { 
-        location.href="/catalogos/catdoc.php";
+        location.href="/RedSocialBancaprepa/catalogos/catdoc.php";
      });
      //Redirige al inicio
      $( "#m_inicio" ).click(function() { 
-        location.href="/index.php";
+        location.href="/RedSocialBancaprepa/index.php";
      });
       //Redirige a los accesos
      $( "#m_accesos" ).click(function() { 
-        location.href="/mantenimiento/accesos.php";
+        location.href="/RedSocialBancaprepa/mantenimiento/accesos.php";
      });
      
      $( "#tipoRolAc" ).keypress(function() { 
@@ -265,19 +265,19 @@ $(document).ready(function(){
      });
      
      $( "#correos" ).click(function() { 
-        location.href="/catalogos/catcorreos.php";
+        location.href="/RedSocialBancaprepa/catalogos/catcorreos.php";
      });
 
      $( "#m_rol_usu" ).click(function() { 
-        location.href="/mantenimiento/rolusu.php";
+        location.href="/RedSocialBancaprepa/mantenimiento/rolusu.php";
      });
 
      $( "#m_usuarios" ).click(function() { 
-        location.href="/mantenimiento/usuariosTabla.php";
+        location.href="/RedSocialBancaprepa/mantenimiento/usuariosTabla.php";
      });
      
      $( "#catEquipo" ).click(function() { 
-        location.href="/catalogos/cattiposequipo.php";
+        location.href="/RedSocialBancaprepa/catalogos/cattiposequipo.php";
      });
      
 

@@ -232,16 +232,35 @@ $(document).ready(function(){
 
     var respCargarArchivoModal = function(data)
     {
-        console.log("LIGA:" +data[0].ruta_archivo);
+        
+      
         if (!data && data == null)
         {
             M.toast({html: 'Ocurrio un problema, contacte con el departamento de sistemas', classes: 'rounded red'});  
             return;
         }
 
+        console.log("LIGA:" +data[0].ruta_archivo);
+        var ligaArchivo=data[0].ruta_archivo;
+        var archivoCargado="";
+        var ultimas3Letras=ligaArchivo.substr( ligaArchivo.length-3, ligaArchivo.length-3);
+        console.log("ULTIMAS 3 Letras= "+ultimas3Letras);	
 
-        var archivoCargado =   '<img class="materialboxed" width="650" src="imagenesFondoAhorro/'+data[0].ruta_archivo+'">';
-        $("#cargarArchivo").html(archivoCargado);
+        if(ultimas3Letras=="jpg" || ultimas3Letras=="png")
+        {
+            archivoCargado+= '<div class="col s12 l8 offset-l2" > '+
+            '<img class="materialboxed" width="650" src="imagenesFondoAhorro/'+ligaArchivo+'">'+
+            '</div> ';     
+            $("#cargarArchivo").html(archivoCargado);
+        }
+        else
+        {
+            archivoCargado+= '<div class="col s12 l8 offset-l2" > '+
+            '<iframe src="imagenesFondoAhorro/'+ligaArchivo+'"  class="col s12" style="border: none;height:500px"></iframe>'+
+            '</div> '; 
+            $("#cargarArchivo").html(archivoCargado);
+
+        }
 
     }
 

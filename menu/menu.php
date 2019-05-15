@@ -1,7 +1,7 @@
 <?php
 if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_null($_COOKIE["b_capturista"])){
        // header('http://wwww.intranet.bancaprepa.com/login.html');
-     echo "<script> window.location='http://www.intranet.bancaprepa.com/login.html'; </script>";
+     echo "<script> window.location='/RedSocialBancaprepa/login.html'; </script>";
 }
 
 ?>
