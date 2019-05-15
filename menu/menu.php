@@ -44,7 +44,7 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
                   <li>
                     <div class="user-view">
                       <div class="background" id="sidenav2">
-                        <img src="/img/logo_bancaprepa.png"  style="width: 300px">
+                        <img src="/RedSocialBancaprepa/img/logo_bancaprepa.png"  style="width: 300px">
                       </div>
                       <br><br>
                       
