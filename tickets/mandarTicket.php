@@ -25,56 +25,12 @@
     
         <h4 class="header " align="center" style="color:#1a237e;">Crear Ticket</h4>
         <div class="row">
-
             <div class="col l10 s12 offset-l1 right-align">
                 <a class="waves-effect waves-light btn-small indigo darken-3 btn modal-trigger"  href="#modalCrearTicket"><i class="material-icons left">add_circle_outline</i>Crear Ticket</a>
             </div>
         </div>
         <div class="row center-align">
         <div class="col s12 l10 offset-l1">
-
-            <form class="col s8 offset-s2">
-                    <div class="row">
-                        <div class="input-field col s6">
-                        <i class="material-icons prefix">mode_edit</i>
-                            <select id="tituloDD">
-                                <option value="" disabled selected>Titulo</option>
-                                <option value="1">Creacion de usuarios y/o correos</option>
-                                <option value="2">Cancelacion de pagos</option>
-                                <option value="3">Cancelacion de desembolsos</option>
-                                <option value="4">Soporte</option>
-                                <option value="5">Instalacion de impresoras, miniprinters</option>
-                                <option value="6">Configuracion de correos</option>
-                            </select>
-                            <label>Seleccione una opcion</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                          
-                            <textarea id="descripcionTicket" class="materialize-textarea"></textarea>
-                            
-                        </div>
-                        <div class="input-field col s6">
-                            <i class="material-icons prefix">email</i>
-                            <input id="email" type="email" class="validate">
-                            <label for="email">Email para contacto</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <i class="material-icons prefix">phone</i>
-                            <input id="tel" type="tel" class="validate">
-                            <label for="tel">Telefono para contacto</label>
-                        </div> 
-                       
-                        <div class="col s12" align="center">
-                            <a id="CrearTicketbtn" class="waves-effect btn blue darken-4"><i class="material-icons left">add</i>Crear Ticket</a>
-                        </div>
-                       
-                    </div>
-
-                   
-            </form>
-            <div class="col s12">
         <div class="card">
             <div class="card-content">
                 <div id="content">
@@ -231,17 +187,14 @@
     </div>
 
     <script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
-    <script type="text/javascript" src="../js/summernote.js"></script>
     <script type="text/javascript" src="../js/materialize.min.js"></script>
     <script type="text/javascript" src="../js/ajax.js"></script>
     <script type="text/javascript" src="../js/bancaprepa.js"></script>
     <script type="text/javascript" src="../js/js.cookie.js"></script>
     <script type="text/javascript" src="../js/tickets.js"></script>
     <script type="text/javascript" src="../js/textboxio/textboxio.js"></script> 
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-lite.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-lite.js"></script>
-
+    
+    
     <script>
         $(document).ready(function(){
             $('.sidenav').sidenav();
@@ -249,6 +202,7 @@
            
         });
 
+      
     </script> 
 
     

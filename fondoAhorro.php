@@ -64,11 +64,18 @@
                 ?>
             </div>
             <h3 class="header " align="center" style="color:#1a237e;">Solicitud de ingreso al fondo de ahorro</h3> 
+
             <div class="row">
-                <div class="col l12 center-align s12" >
+                <div class="col l4 s4 right-align offset-l2" >
                     <a id="btnCrearFondoAhorro" class="waves-effect waves-light btn-small indigo darken-4"><i class="material-icons left">local_mall</i>Crear</a>
+                </div>
+                <div class="col l2 s4" >
                     <a id="btnCargarImagen" onclick="verifcarArchivo()" class="waves-effect waves-light btn-small indigo darken-4 btn modal-trigger" href="#modalCargarFondoAhorro"><i class="material-icons left">backup</i>Cargar</a>
                 </div>
+                <div class="col l3 right-align s4">
+                    <a id="btnAscr" class="waves-effect waves-light btn-small indigo darken-4 btn modal-trigger" href="#!"><i class="material-icons left">backup</i>Cargar</a>
+                </div>
+                    
             </div>
             <div class="row">
                 <div class="col l10 s12 offset-l1" id="tablaFondo"  style='display:none;'>

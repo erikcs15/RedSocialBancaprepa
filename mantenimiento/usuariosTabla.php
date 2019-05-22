@@ -82,6 +82,7 @@
                                             <th>Pass</th>
                                             <th>Entregado</th>
                                             <th>Estatus</th>
+                                            <th>Acciones</th>
                                         </tr>
                                         </thead>
 

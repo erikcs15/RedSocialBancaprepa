@@ -391,7 +391,9 @@
 		case 120:
 			echo (json_encode($usuario->eliminarInvRecienCreado($_REQUEST['inventario_id'])));
 		break;
-
+		case 121:
+			echo (json_encode($usuario->editarUsuario($_REQUEST['usuario'],$_REQUEST['contra'],$_REQUEST['empleado_id'])));
+		break;
 
  	}
  

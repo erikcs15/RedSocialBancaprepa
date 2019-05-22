@@ -98,13 +98,12 @@
                         Comentario:
                         <textarea id="comentarioTicketAdm"></textarea> 
                         <br>
-                     
+                        <a id="btnActualizarEstatusticket" class="waves-effect waves-light btn indigo darken-4 left"><i class="material-icons left">thumb_up</i>Finalizar</a> 
+                        <a id="btnComentarioTicketAdm" class="waves-effect waves-light btn indigo darken-4 right"><i class="material-icons left">send</i>enviar</a> 
                </div>
                </form>
               
-               <div class=" col s12 l12">
-                    <a id="btnActualizarEstatusticket" class="waves-effect waves-light btn indigo darken-4 left"><i class="material-icons left">thumb_up</i>Finalizar</a> 
-                    <a id="btnComentarioTicketAdm" class="waves-effect waves-light btn indigo darken-4 right"><i class="material-icons left">send</i>enviar</a> 
+               <div class="s2">
                   <!--  <a id="btnComentarioTicket" class="waves-effect waves-light btn blue right"><i class="material-icons left">delete</i>Aceptar</a> -->
                 </div>
            </div>

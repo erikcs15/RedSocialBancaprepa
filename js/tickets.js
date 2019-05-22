@@ -6,7 +6,7 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////// INICIALIZAR VARIABLES ////////////////////////////////////////////////////////////////
          $('.modal').modal();
 
-
+         
      
          
 /*
@@ -36,14 +36,6 @@ $(document).ready(function(){
           });
 
           */
-
-         $('#descripcionTicket').summernote({
-            placeholder: 'Escriba la descripción',
-            tabsize: 2,
-            height: 100,                 // set editor height
-            minHeight: null,             // set minimum height of editor
-            maxHeight: null
-          });
          
     ///////////////////////////////////////////////////////// EVENTOS ////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////// EVENTOS ////////////////////////////////////////////////////////////////

@@ -37,8 +37,8 @@
                                         <th>Id</th>
                                         <th>Empleado Id</th>
                                         <th>Empleado</th>
-                                        <th>Fecha subido</th>   
-                                        <th>Hora subido</th>  
+                                        <th>Fecha de registro</th>   
+                                        <th>Hora de registro</th>  
                                         <th>Acepto porcentaje de aceptación</th>   
                                         <th>Acciones</th>         
                                         

@@ -943,7 +943,7 @@
 
 				if($usuario != "")
 				{	
-					$q = "Where c.id='$usuario'";
+					$q = "AND c.id='$usuario'";
 				}
 
 				$sql="SELECT c.id, c.`descripcion` AS Nombre, u.`nombre` AS Usuario, 
@@ -951,7 +951,7 @@
 					FROM usuarios u
 					INNER JOIN capturistas c ON c.id=u.`empleado`
 					INNER JOIN estatus e ON c.estatus_id=e.id
-					INNER JOIN sucursales s ON s.`id`=c.`sucursal_id` ".$q." ORDER BY c.id DESC";
+					INNER JOIN sucursales s ON s.`id`=c.`sucursal_id` WHERE c.`estatus_id`=5 ".$q." ORDER BY c.id DESC";
 				
 				$resultado = mysqli_query($this->con(), $sql); 
 
@@ -3525,6 +3525,25 @@
 				$resultado = mysqli_query($this->con(), $sql);   
 	
 				$datos['i_inventario'] =  array('0' => '0' );
+				return  $datos;	
+				
+			}
+
+			public function editarUsuario($user, $pass, $empleado_id)
+			{
+				
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;
+	
+				 
+	
+				$sql="UPDATE usuarios SET nombre='$user', pwdtmp='$pass',clave= MD5('$pass') WHERE empleado=$empleado_id";
+			    
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['usuarios'] =  array('0' => '0' );
 				return  $datos;	
 				
 			}

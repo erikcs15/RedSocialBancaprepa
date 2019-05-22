@@ -2,7 +2,8 @@
 $(document).ready(function(){
 
 
-
+        M.updateTextFields();
+      
     //Inicialización de los select Materialize
     $('select').formSelect();
     
@@ -720,20 +721,6 @@ $("#passEmpleado").keypress(function(e) {
     });
 
 
-    $("#CrearTicketbtn").click(function() {
-        var usuario = Cookies.get('b_capturista_id');
-        var area=$("#areaApoyo").val();
-        var titulo=$("#tituloDD option:selected").text();
-        var desc=$("#descripcionTicket").val();
-        var correo=$("#email").val();
-        var telefono=$("#tel").val();
-        console.log("ID empleado="+usuario+" Area de apoyo:"+area+" titulo:"+titulo);
-        console.log("desc:"+desc+" email:"+correo+" telefono:"+telefono);
-        onRequest({ opcion : 73, usuario_id:usuario, area_id:area,titulo:titulo, descripcion:desc, correo:correo, telefono:telefono },respAgregaTicket);
-
-      
-    
-    });
 
     
     $("#btnEditPub").click(function() {
@@ -780,6 +767,27 @@ $("#passEmpleado").keypress(function(e) {
         onRequest({ opcion : 26,cap_id:id_empleado,sucursal:sucursalB, puesto:puestoB},respCorreos);
         
       });
+
+      
+      $("#btnAceptarEdit").click(function() {
+      
+        var a = getParameterByName("usuario_id");
+        console.log("usuario:"+a);
+        var user =  $("#usuario_edit").val();
+        var pass =  $("#pass_edit").val();
+        var pass2 =  $("#pass_edit2").val();
+
+       if(pass===pass2)
+       {
+           console.log("Go on!!");
+           onRequest({ opcion : 121 , usuario:user, contra:pass, empleado_id:a}, respEditUsuario);
+       }
+       else
+       {
+            M.toast({html: 'Contraseñas no coinciden!', classes: 'rounded red'});
+       }        
+      });
+
 
      
       
@@ -885,6 +893,14 @@ function cargarConfUsuarios(){
     
 }
 
+
+function cargarConfEditUsuarios(){
+    var a = getParameterByName("usuario_id");
+    console.log("usuario:"+a);
+    onRequest({ opcion : 35, usuario_id:a}, respCargarEditUsuario);
+    
+    
+}
 function cargarConfEmpresa(){
     var a = getParameterByName("empresa_id");
     console.log("empresa:"+a);
@@ -1090,6 +1106,25 @@ function agregarAdivUsuario(id_empleado)
     onRequest({ opcion : 96,usuario_id:id},respCargarEmpleadoUsuario);
     onRequest({ opcion : 87 ,empleado_id:id}, respAgregarNombreAdivADD);
 
+}
+
+function mostrarPassEditCorreo()
+{
+    console.log("Mostrar contraseña");
+    
+    if($("#pass_edit").attr("type")=="password" )
+    {
+        console.log("Es tipo contraseña"); 
+        $("#pass_edit").attr("type","text");
+        $("#pass_edit2").attr("type","text");
+    }
+    else
+    {
+        console.log("Es tipo text"); 
+        $("#pass_edit").attr("type","password");
+        $("#pass_edit2").attr("type","password");
+    }
+     
 }
 //----------------------------------------Funcion de respuesta de la consulta que aplicamos con ajax-----------------------------
 var respUser = function(data) { 
@@ -2095,15 +2130,19 @@ function BorrarDoc(doc_id)
      onRequest({ opcion : 12 ,doc_id:doc_id}, respEliDoc);
 }
 
+function asignarPermisos(usuarioid)
+{
+    var a = document.createElement('a');
+    a.href="/RedSocialBancaprepa/mantenimiento/rolusu.php?usuario_id="+usuarioid;
+    document.body.appendChild(a);
+    a.click();
+}
 function editarUsu(usuarioid)
 {
-     //Carga los datos del usuario, su empresa(s) y rol(es)
-     //
-
-     var a = document.createElement('a');
-     a.href="/mantenimiento/rolusu.php?usuario_id="+usuarioid;
-     document.body.appendChild(a);
-     a.click();
+    var a = document.createElement('a');
+    a.href="/RedSocialBancaprepa/mantenimiento/editarusu.php?usuario_id="+usuarioid;
+    document.body.appendChild(a);
+    a.click();
 }
 
 function BorrarCorreo(correo_id)
@@ -2412,7 +2451,7 @@ var respCargaUsuarios  = function(data) {
             '<td>'+data[i].estatus+'</td>' +
             '<td class="left">'+
             '<a onclick="editarUsu('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small blue btn modal-trigger"><i class="material-icons">edit</i></a>'+
-            //'<a onclick="deshabEmp('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small orange darken-3 btn modal-trigger" href="#modalDeshabEmp"><i class="material-icons">do_not_disturb_alt</i></a>' + 
+            '<a onclick="asignarPermisos('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small black btn modal-trigger"><i class="material-icons">person_pin</i></a>'+
             //'<a onclick="BorrarEmp('+data[i].id+')" class="waves-effect waves-light btn-floating btn-small red accent-4 btn modal-trigger" href="#modalEliminarEmp"><i class="material-icons">delete</i></a>' +
             '</td>'  +'</tr> ';
         }
@@ -3882,6 +3921,17 @@ var respVerifNombreUsuario = function(data) {
    
 }
 
+
+
+var respEditUsuario = function(data) { 
+    if (!data && data == null)
+        return;  
+        M.toast({html: 'Usuario editado con éxito!', classes: 'rounded green'});
+
+        location.href="usuariosTabla.php";
+}
+
+
 function abrirModalImg(id){
  
 
@@ -3963,4 +4013,16 @@ var cargaImg = function(data) {
     
     $("#contPublicacion").html(pubdd);
    
+}
+
+var respCargarEditUsuario = function(data)
+{
+    if (!data && data == null)
+    return;  
+
+    $("#usuario_edit").val(data[0].usuario);
+    $("#pass_edit").val(data[0].pass);
+    $("#pass_edit2").val(data[0].pass);
+
+    cargarMenuPorRol();
 }
