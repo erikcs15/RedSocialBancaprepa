@@ -261,6 +261,85 @@
 				return $datos;	 
 			}
 
+			public function cargarGruposPorCapturista($capturista_id){
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				$query="SELECT gru.id, gru.`descripcion`
+				FROM b_detalle_grupos g 
+				INNER JOIN capturistas c ON c.id=g.`integrante_id`
+				INNER JOIN b_grupos_trabajo gru ON gru.`id`=g.`grupo_id`
+				WHERE c.id=$capturista_id";  
+				$respuesta= mysqli_query($this->con(), $query);  
+				while ($res = mysqli_fetch_row($respuesta)) { 
+				   $datos[$i]['id_grupo'] = $res[0];
+				   $datos[$i]['grupo'] = $res[1]; 
+				   $i++;
+ 				}
+
+				return $datos;	 
+			}
+
+			
+
+			public function cargarActividadesPorGrupo($grupo_id)
+			{
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				$query="SELECT act.id, act.descripcion, act.fecha_inicio, act.fecha_fin, c.`descripcion`, act.grupo_id
+				FROM b_grupo_act act 
+				INNER JOIN b_grupos_trabajo g ON g.id=act.grupo_id
+				INNER JOIN capturistas c ON c.id=act.capturista_id
+				WHERE act.grupo_id=$grupo_id";  
+
+				$respuesta= mysqli_query($this->con(), $query);  
+
+				while ($res = mysqli_fetch_row($respuesta)) { 
+				$datos[$i]['act_id'] = $res[0];
+				$datos[$i]['descripcion_act'] = $res[1];
+				$datos[$i]['fecha_inicio'] = $res[2];
+				$datos[$i]['fecha_fin'] = $res[3]; 
+				$datos[$i]['capturistas'] = $res[4];
+				$datos[$i]['grupo_id'] = $grupo_id;
+				$i++;
+				}
+
+				return $datos;	 
+			}
+
+			
+
+			public function cargarSubActividades($act_id)
+			{
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				$query="SELECT sub.id, sub.descripcion, act.id, c.`descripcion`, sub.fecha_inicio, sub.fecha_fin
+				FROM b_grupo_subact sub
+				INNER JOIN b_grupo_act act ON act.id=sub.actividad_id
+				INNER JOIN capturistas c ON c.id=sub.capturista_id WHERE act.id=$act_id";  
+
+				$respuesta= mysqli_query($this->con(), $query);  
+
+				while ($res = mysqli_fetch_row($respuesta)) { 
+				$datos[$i]['sub_id'] = $res[0];
+				$datos[$i]['descripcion'] = $res[1];
+				$datos[$i]['actividad_id'] = $res[2];
+				$datos[$i]['capturista'] = $res[3];
+				$datos[$i]['fecha_inicio'] = $res[4]; 
+				$datos[$i]['fecha_fin'] = $res[5];
+				$i++;
+				}
+
+				return $datos;	 
+			}
+
+
+
 }
 
 ?>

@@ -35,6 +35,17 @@
 		case 9: 
  			   echo (json_encode($grupo->detalleDeGrupo($_REQUEST['grupo_id'])));
 			break;
+		case 10: 
+ 			   echo (json_encode($grupo->cargarGruposPorCapturista($_REQUEST['capturista_id'])));
+			break;
+		case 11: 
+ 			   echo (json_encode($grupo->cargarActividadesPorGrupo($_REQUEST['grupo_id'])));
+			break;
+		case 12: 
+			   echo (json_encode($grupo->cargarSubActividades($_REQUEST['act_id'])));
+			break;
+
+			
 
 
 	  

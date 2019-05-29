@@ -59,6 +59,11 @@ if(is_null($_COOKIE["b_capturista"]) || empty($_COOKIE["b_capturista"]) || is_nu
                   <!--<li><a id="m_agregarPub" class="subheader waves-effect modal-trigger" href="#modalAgregarPub"><i class="material-icons">add_circle</i>Agregar publicación</a></li>  -->
                   <li><a id="M_cargaA" style='display:none;' href="/RedSocialBancaprepa/documentos\addfile.php" class=" waves-effect white-text"><i class="material-icons white-text">file_upload</i>Carga de Archivos</a></li>
                   <li><a id="m_mantenimientoPub" style='display:none;' href="/RedSocialBancaprepa/mantPub.php" class=" waves-effect white-text" name ="m_mantenimientoPub"><i class="material-icons white-text">featured_play_list</i>Mmto. Publicaciones</a></li> 
+                  <li><a  id="m_actividades" class="dropdown-trigger white-text" data-target='actividadesdd'><i class="material-icons white-text">assignment</i><i class="material-icons right white-text">arrow_drop_down</i>Actividades</a></li>
+                    <ul id='actividadesdd' class='dropdown-content blue darken-4'>
+                    <li><a id="m_registroAct" class=" waves-effect blue darken-4 white-text" href="/RedSocialBancaprepa/gruposDeTrabajo\registro.php"><i class="material-icons white-text">assignment_ind</i>Registro</a></li>
+                    <li><a id="m_agendaAct" class=" waves-effect blue darken-4 white-text" href="/RedSocialBancaprepa/gruposDeTrabajo\agendaAct.php"  ><i class="material-icons white-text">insert_invitation</i>Agenda de Act.</a></li> 
+                    </ul>
                   <li><div class="divider"></div></li>
                    <!------------------------------------------------------->
                   <li><a  id='desplegableStockm' name ="desplegableStockm" style='display:none;'  class="dropdown-trigger white-text" data-target='desplegableStock'><i class="material-icons white-text">card_travel</i><i class="material-icons right white-text">arrow_drop_down</i>Articulos</a></li>
