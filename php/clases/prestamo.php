@@ -807,11 +807,14 @@
             else{
                 $add="";
             }
-            $sql='SELECT suc.nomComercial,c.id, c.descripcion, c.fecha_ingreso, c.sueldo_complemento, s.monto_autorizado, 
+            $sql='SELECT suc.nomComercial,c.id, c.descripcion, c.fecha_ingreso, 0,s.monto_autorizado, 
                     s.monto_total, s.inicio_descuento, s.fin_descuento, 
                     (SELECT COUNT(id)
                     FROM b_prestamo_corridas cor
-                    WHERE prestamo_personal_id = s.id AND abonado="SI") , s.quincenas, s.descuento_mensual
+                    WHERE prestamo_personal_id = s.id AND abonado="SI") AS "Quincenas pagadas", s.quincenas, s.descuento_mensual,
+                    IF((SELECT COUNT(id)
+                    FROM b_prestamo_corridas cor
+                    WHERE prestamo_personal_id = s.id AND abonado="SI")>=s.quincenas, "Pagado", "Adeudo") AS estatus
                     FROM b_prestamo_solicitudes s
                     INNER JOIN capturistas c ON c.id=s.capturista_id 
                     INNER JOIN sucursales suc ON suc.id=c.sucursal_id
@@ -832,6 +835,7 @@
                 $datos[$i]['numde_quincenasPag'] = $res[9];
                 $datos[$i]['quincenas_totales'] = $res[10];
                 $datos[$i]['descuento_mensual'] = $res[11];
+                $datos[$i]['estatus'] = $res[12];
                 $i++;
 
             } 

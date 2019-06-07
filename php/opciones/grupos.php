@@ -44,7 +44,27 @@
 		case 12: 
 			   echo (json_encode($grupo->cargarSubActividades($_REQUEST['act_id'])));
 			break;
-
+		case 13: 
+			   echo (json_encode($grupo->insertarActividades($_REQUEST['grupo_id'],$_REQUEST['titulo'],$_REQUEST['descripcion'],$_REQUEST['fecha_ini'],$_REQUEST['fecha_fin'],$_REQUEST['capturista_id'])));
+			break;
+		case 14: 
+				echo (json_encode($grupo->insertarSubactividades($_REQUEST['actividad_id'],$_REQUEST['titulo'],$_REQUEST['descripcion'],$_REQUEST['capturista_id'],$_REQUEST['fecha_ini'],$_REQUEST['fecha_fin'])));
+			 break;
+		case 15: 
+				echo (json_encode($grupo->insertarComentariosSubActividad($_REQUEST['porcentaje'],$_REQUEST['comentario'], $_REQUEST['id_subActividad'],$_REQUEST['capturista_id'])));
+		 	 break;
+		case 16: 
+				echo (json_encode($grupo->cargarPorcentaje($_REQUEST['subact_id'])));
+			 break;
+		case 17: 
+			    echo (json_encode($grupo->actualizarPorcentaje($_REQUEST['porcentaje'],$_REQUEST['comentario'], $_REQUEST['id_subActividad'])));
+		  	 break;
+		case 18: 
+			    echo (json_encode($grupo->sacarPorcentajesPorActividad($_REQUEST['act_id'])));
+			 break;
+		case 19: 
+			 	echo (json_encode($grupo->actualizarPorcentajeEnActividad($_REQUEST['porcentaje'],$_REQUEST['act_id'])));
+		  	 break;
 			
 
 

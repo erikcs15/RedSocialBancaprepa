@@ -221,7 +221,7 @@
 			echo (json_encode($usuario->insertarCorreos($_REQUEST['usuario_id'],$_REQUEST['dominio'],$_REQUEST['correo'],$_REQUEST['pass'])));
 		break;
 		case 65:
-			echo (json_encode($usuario->catalogoCorreosxID($_REQUEST['id_correo'])));
+			echo (json_encode($usuario->catalogoCorreosxID($_REQUEST['usuario_id'])));
 		break;
 		case 66:
 			echo (json_encode($usuario->actualizarCorreos($_REQUEST['usuario_id'],$_REQUEST['correo'],$_REQUEST['pass'],$_REQUEST['entregado'],$_REQUEST['estatus'])));

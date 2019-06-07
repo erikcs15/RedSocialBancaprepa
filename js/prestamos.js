@@ -1409,14 +1409,7 @@ $(document).ready(function(){
             var suma = data[i].numde_quincenasPag * data[i].descuento_mensual;
             var cantidad_restante = data[i].monto_total-suma; 
             var estatus="";
-            if(data[i].numde_quincenasPag >= data[i].quincenas_totales)
-            {
-                estatus= "Pagado";
-            }
-            else
-            {
-                estatus="Adeudo";
-            }
+            estatus=data[i].estatus;
             var nombre=String(data[i].capturista);
             console.log("-------"+nombre);
             if(nombre=="undefined")

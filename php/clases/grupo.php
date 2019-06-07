@@ -289,7 +289,7 @@
 				$datos=array();
 				$i=0; 
 
-				$query="SELECT act.id, act.descripcion, act.fecha_inicio, act.fecha_fin, c.`descripcion`, act.grupo_id
+				$query="SELECT act.id, act.descripcion, act.fecha_inicio, act.fecha_fin, c.`descripcion`, act.grupo_id, act.titulo, act.porcentaje
 				FROM b_grupo_act act 
 				INNER JOIN b_grupos_trabajo g ON g.id=act.grupo_id
 				INNER JOIN capturistas c ON c.id=act.capturista_id
@@ -303,7 +303,9 @@
 				$datos[$i]['fecha_inicio'] = $res[2];
 				$datos[$i]['fecha_fin'] = $res[3]; 
 				$datos[$i]['capturistas'] = $res[4];
-				$datos[$i]['grupo_id'] = $grupo_id;
+				$datos[$i]['grupo_id'] = $res[5];
+				$datos[$i]['titulo'] = $res[6];
+				$datos[$i]['porcentaje'] = $res[7];
 				$i++;
 				}
 
@@ -318,7 +320,7 @@
 				$datos=array();
 				$i=0; 
 
-				$query="SELECT sub.id, sub.descripcion, act.id, c.`descripcion`, sub.fecha_inicio, sub.fecha_fin
+				$query="SELECT sub.id, sub.descripcion, act.id, c.`descripcion`, sub.fecha_inicio, sub.fecha_fin, sub.titulo, sub.porcentaje
 				FROM b_grupo_subact sub
 				INNER JOIN b_grupo_act act ON act.id=sub.actividad_id
 				INNER JOIN capturistas c ON c.id=sub.capturista_id WHERE act.id=$act_id";  
@@ -332,11 +334,140 @@
 				$datos[$i]['capturista'] = $res[3];
 				$datos[$i]['fecha_inicio'] = $res[4]; 
 				$datos[$i]['fecha_fin'] = $res[5];
+				$datos[$i]['titulo'] = $res[6];
+				$datos[$i]['porcentaje'] = $res[7];
 				$i++;
 				}
 
 				return $datos;	 
 			}
+
+			public function insertarActividades($grupo_id, $titulo, $descripcion, $fecha_ini, $fecha_fin, $capturista_id)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;	
+				$sql="INSERT INTO b_grupo_act (grupo_id, titulo, descripcion, fecha_inicio, fecha_fin,capturista_id, estatus_id, fecha_creacion)
+						VALUES ($grupo_id, '$titulo', '$descripcion', '$fecha_ini', '$fecha_fin', $capturista_id, 5, CURDATE())";
+           
+                
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['b_grupo_act'] =  array('0' => '0' );
+				return  $datos;	
+			}
+			
+
+			public function insertarSubactividades($actividad_id, $titulo, $descripcion, $capturista_id, $fecha_ini, $fecha_fin )
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;	
+				$sql="INSERT INTO b_grupo_subact (actividad_id, titulo, descripcion, capturista_id, fecha_inicio, fecha_fin, estatus_id, fecha_creacion) 
+						VALUES($actividad_id, '$titulo', '$descripcion', $capturista_id, '$fecha_ini', '$fecha_fin', 5, CURDATE())";
+           
+                
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['b_grupo_subact'] =  array('0' => '0' );
+				return  $datos;	
+			}
+
+			public function insertarComentariosSubActividad($porcentaje, $comentario, $id_subActividad, $capturista_id)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;	
+				$sql="INSERT INTO b_grupo_coment_sub (subactividad_id, porcentaje, comentario, fecha, hora, capturista_id)
+						VALUES ($id_subActividad, $porcentaje, '$comentario', CURDATE(), CURTIME(), $capturista_id)";
+
+				
+                
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['b_grupo_coment_sub'] =  array('0' => '0' );
+				return  $datos;	
+			}
+
+			public function cargarPorcentaje($subact_id)
+			{
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				$query="SELECT id, porcentaje
+				FROM b_grupo_subact
+				WHERE id=$subact_id";  
+
+				$respuesta= mysqli_query($this->con(), $query);  
+
+				while ($res = mysqli_fetch_row($respuesta)) { 
+				$datos[$i]['subact_id'] = $res[0];
+				$datos[$i]['porcentaje'] = $res[1];
+				
+				$i++;
+				}
+
+				return $datos;	 
+			}
+
+			public function actualizarPorcentaje($porcentaje, $comentario, $id_subActividad)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;	
+				$sql="UPDATE b_grupo_subact SET comentario='$comentario', porcentaje=$porcentaje WHERE id=$id_subActividad";
+
+				
+                
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['b_grupo_subact'] =  array('0' => '0' );
+				return  $datos;	
+			}
+
+			public function sacarPorcentajesPorActividad($act_id)
+			{
+				$res=array();
+				$datos=array();
+				$i=0; 
+
+				$query="SELECT sub.id, sub.`titulo`, sub.`porcentaje`
+				FROM b_grupo_subact sub
+				INNER JOIN b_grupo_act act ON act.`id`=sub.`actividad_id`
+				WHERE act.id=$act_id";  
+
+				$respuesta= mysqli_query($this->con(), $query);  
+
+				while ($res = mysqli_fetch_row($respuesta)) { 
+				$datos[$i]['sub_id'] = $res[0];
+				$datos[$i]['titulo'] = $res[1];
+				$datos[$i]['porcentaje'] = $res[2];
+				$i++;
+				}
+
+				return $datos;	 
+			}
+			public function actualizarPorcentajeEnActividad($porcentaje, $id_Actividad)
+			{
+				$res=array();
+				$datos=array();
+				$resultado  =array();
+				$i=0;	
+				$sql="UPDATE b_grupo_act SET porcentaje='$porcentaje' WHERE id=$id_Actividad";
+
+				
+                
+				$resultado = mysqli_query($this->con(), $sql);   
+	
+				$datos['b_grupo_act'] =  array('0' => '0' );
+				return  $datos;	
+			}
+				
 
 
 

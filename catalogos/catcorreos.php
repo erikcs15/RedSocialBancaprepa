@@ -29,7 +29,7 @@
         <div class="row">
                 <div class="row">
                     <div class="input field col l1 s12">
-                            <label for="Id" class="activate" '></label>
+                            <label for="Id" class="activate"></label>
                             <input placeholder="Id" id="IdEmpleadoCor" type="text" class="validate" style='display:none;' >
                     </div>
                     <div class="input-field col l4 s12">
